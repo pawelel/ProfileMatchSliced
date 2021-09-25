@@ -58,7 +58,7 @@ namespace ProfileMatch
 
 
             //Repositories
-          
+            services.ConfigureRepositoryWrapper();
 
             //Mapping
             services.AddAutoMapper(typeof(UserProfile));
