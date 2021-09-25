@@ -6,8 +6,6 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Services

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Services
 {
-  public  class UriQueryBuilder
+    public class UriQueryBuilder
     {
         private readonly StringBuilder _builder = new();
 

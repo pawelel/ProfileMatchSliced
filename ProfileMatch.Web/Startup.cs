@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Blazored.LocalStorage;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +12,12 @@ using Microsoft.Extensions.Hosting;
 
 using MudBlazor.Services;
 
-using ProfileMatch.Web.Areas.Identity;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Profiles;
 using ProfileMatch.Services;
-using ProfileMatch.Repositories;
+using ProfileMatch.Web.Areas.Identity;
 
 namespace ProfileMatch
 {
@@ -44,7 +36,7 @@ namespace ProfileMatch
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ProfileMatch.Web")));
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.Configure<IdentityOptions>(options =>

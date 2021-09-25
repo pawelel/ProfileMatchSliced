@@ -1,18 +1,88 @@
 ﻿@inherits LayoutComponentBase
+@inject IThemeService ThemeService
+@implements IDisposable
+@inject NavigationManager NavigationManager
 
-<div class="page">
-    <div class="sidebar">
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudThemeProvider Theme="currentTheme" />
+<MudLayout>
+    <MudAppBar Elevation="4">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudAvatar />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Typo="Typo.h6" Class="ml-4">People Match</MudText>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudText Typo="Typo.subtitle2">People Match</MudText>
+        </MudHidden>
+        <MudSpacer />
+        <LoginDisplay />
+        <CultureSelector />
+        <ThemeToggle />
+        <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
+            <ActivatorContent>
+                <MudAvatar Image="https://randomuser.me/api/portraits/men/1.jpg" />
+            </ActivatorContent>
+            <ChildContent>
+                <UserCard Class="mt-n2" />
+                <MudDivider Class="mb-2" />
+                <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/personal/account" />
+                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" Href="/pages/authentication/login" />
+            </ChildContent>
+        </MudMenu>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
         <NavMenu />
-    </div>
+    </MudDrawer>
+    <MudMainContent>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudToolBar DisableGutters="true">
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+            </MudToolBar>
+        </MudHidden>
+        @Body
+    </MudMainContent>
+</MudLayout>
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+@code{
+    bool _drawerOpen = true;
 
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
-</div>
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private Preferences _preferences = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ThemeService.OnChange += ThemeServiceOnChange;
+        if (firstRender)
+        {
+            _preferences = await ThemeService.GetPreferences();
+            currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
+            StateHasChanged();
+        }
+
+    }
+
+    private void ThemeServiceOnChange(Preferences newPreferences)
+    {
+        _preferences = newPreferences;
+        currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnChange -= ThemeServiceOnChange;
+    }
+
+    MudTheme defaultTheme = new GeneralTheme();
+    MudTheme currentTheme;
+    MudTheme darkTheme = new DarkTheme();
+}

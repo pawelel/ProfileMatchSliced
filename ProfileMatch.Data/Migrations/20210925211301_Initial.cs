@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProfileMatch.Migrations
+namespace ProfileMatch.Data.Migrations
 {
     public partial class Initial : Migration
     {
@@ -333,9 +333,9 @@ namespace ProfileMatch.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "57448fa8-b59e-4fc5-a13f-49ba79a098e2", "a32d23fa-6d9f-45f0-b75f-a2c309d3eb26", "User", "USER" },
-                    { "ac8d86ce-ffe1-422e-b45a-ef6965a1614d", "8d9ed20d-4843-49ee-bd21-3d7b27e04a75", "Admin", "ADMIN" },
-                    { "910a4a98-1161-4cf3-9684-2960fcb9f698", "f31cb685-2625-409d-8d5c-86b5916dba60", "SuperUser", "SUPERUSER" }
+                    { "55ec6b51-8730-483e-8025-521ac981e13d", "d8ad3946-b94d-479d-a625-d70d924f03ec", "User", "USER" },
+                    { "5248499a-c5a9-4e2e-9506-eaae1f788254", "86c573df-5973-4e95-b323-5a710bef1e79", "Admin", "ADMIN" },
+                    { "33ca3f43-d1a5-4586-8d25-db30f795b427", "fc0d677a-f80b-409b-9a76-d634865b4069", "SuperUser", "SUPERUSER" }
                 });
 
             migrationBuilder.InsertData(

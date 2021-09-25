@@ -2,8 +2,6 @@
 
 using ProfileMatch.Models.ViewModels;
 
-using System;
-
 namespace ProfileMatch.Validations
 {
     public class EditUserValidator : AbstractValidator<EditUserModel>

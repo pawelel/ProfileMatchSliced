@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+
 using ProfileMatch.Models.Models;
+
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 {
@@ -69,11 +68,11 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
-                return RedirectToPage("./Login", new {ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -83,7 +82,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -111,7 +110,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             // Get the information about the user from the external login provider
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -138,7 +137,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
                         var callbackUrl = Url.Page(
                             "/Account/ConfirmEmail",
                             pageHandler: null,
-                            values: new { area = "Identity", userId = userId, code = code },
+                            values: new { area = "Identity", userId, code },
                             protocol: Request.Scheme);
 
                         await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -147,7 +146,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
+                            return RedirectToPage("./RegisterConfirmation", new { Input.Email });
                         }
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProfileMatch.Models.Models
+﻿namespace ProfileMatch.Models.Models
 {
     public class UserNote
     {

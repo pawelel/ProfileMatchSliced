@@ -1,0 +1,64 @@
+﻿@inherits LayoutComponentBase
+@inject IThemeService ThemeService
+@implements IDisposable
+@inject NavigationManager NavigationManager
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudThemeProvider Theme="currentTheme" />
+<MudLayout>
+
+
+    <MudAppBar Dense="true">
+        <MudSpacer />
+        <CultureSelector />
+        <ThemeToggle />
+    </MudAppBar>
+    <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
+        <div class="d-flex flex-column mud-width-full">
+
+            <MudPaper Elevation="25" Class="pa-7" Width="100%" MaxWidth="500px">
+                @Body
+            </MudPaper>
+        </div>
+    </MudContainer>
+</MudLayout>
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private Preferences _preferences = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ThemeService.OnChange += ThemeServiceOnChange;
+        if (firstRender)
+        {
+            _preferences = await ThemeService.GetPreferences();
+            currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
+            StateHasChanged();
+        }
+
+    }
+    private void ThemeServiceOnChange(Preferences newPreferences)
+    {
+        _preferences = newPreferences;
+        currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnChange -= ThemeServiceOnChange;
+    }
+
+    MudTheme defaultTheme = new GeneralTheme();
+    MudTheme currentTheme;
+    MudTheme darkTheme = new DarkTheme();
+
+
+
+}

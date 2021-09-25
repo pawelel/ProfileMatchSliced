@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Text;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using ProfileMatch.Models.Models;
 
+using System;
+
 namespace ProfileMatch.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -31,7 +28,6 @@ namespace ProfileMatch.Data
             builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned" });
             base.OnModelCreating(builder);
         }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Question> Questions { get; set; }

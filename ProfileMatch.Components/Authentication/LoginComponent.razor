@@ -1,0 +1,71 @@
+﻿@inject IStringLocalizer<Resource> localizer
+
+<MudText Align="Align.Center" Typo="Typo.h3">
+    Profile Match
+</MudText>
+<MudText Align="Align.Center" Typo="Typo.h3">
+    @localizer["welcome"]
+</MudText>
+<AuthorizeView Context="Account">
+    <NotAuthorized>
+        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <MudTextField T="string" @bind-Value="@loginFormModel.UserName" Variant="Variant.Outlined" Class="my-6" Required="true" Label="Email" RequiredError="Email is required!"
+                          Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })" />
+
+            <MudTextField T="string" Label="Password" @bind-Value="loginFormModel.Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" Required="true" RequiredError="Password is required!" />
+        </MudForm>
+        <div Class="d-flex justify-space-between align-center">
+            <MudLink Href="/pages/authentication/forgot-password">Forgot pwd?</MudLink>
+        </div>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large"  FullWidth="true">Sign In</MudButton>
+        <MudExpansionPanels>
+            <MudExpansionPanel Text="@($"Show Errors ({errors.Length})")">
+                @foreach (var error in errors)
+                {
+                    <MudText Color="@Color.Error">@error</MudText>
+                }
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </NotAuthorized>
+    <Authorizing>
+        Authorizing in process...
+    </Authorizing>
+    <Authorized>
+        <MudButton Color="Color.Primary">Logout</MudButton>
+    </Authorized>
+
+</AuthorizeView>
+        
+        @code {
+            MudForm form;
+            bool success;
+            string[] errors = { };
+            private LoginVM loginFormModel = new();
+            protected override async Task OnInitializedAsync()
+            {
+                await Task.Delay(0);
+                loginFormModel = new LoginVM();
+            }
+
+            bool PasswordVisibility;
+            InputType PasswordInput = InputType.Password;
+            string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+            void TogglePasswordVisibility()
+            {
+                @if (PasswordVisibility)
+                {
+                    PasswordVisibility = false;
+                    PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                    PasswordInput = InputType.Password;
+                }
+                else
+                {
+                    PasswordVisibility = true;
+                    PasswordInputIcon = Icons.Material.Filled.Visibility;
+                    PasswordInput = InputType.Text;
+                }
+            }
+
+            
+        }

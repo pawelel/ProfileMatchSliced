@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Web.Controllers
 {
@@ -15,7 +11,7 @@ namespace ProfileMatch.Web.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IRepositoryWrapper _repoWrapper;
+        private readonly IRepositoryWrapper _repoWrapper;
 
         public UsersController(IRepositoryWrapper repoWrapper)
         {

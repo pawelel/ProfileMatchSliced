@@ -1,17 +1,11 @@
 ﻿using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ProfileMatch.Repositories
 {
-  public  class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper : IRepositoryWrapper
     {
-        private ApplicationDbContext _repoContext;
+        private readonly ApplicationDbContext _repoContext;
         private IUserRepository _user;
         private IDepartmentRepository _department;
 
@@ -19,7 +13,7 @@ namespace ProfileMatch.Repositories
         {
             get
             {
-                if (_user==null)
+                if (_user == null)
                 {
                     _user = new UserRepository(_repoContext);
                 }
@@ -30,7 +24,7 @@ namespace ProfileMatch.Repositories
         {
             get
             {
-                if (_department==null)
+                if (_department == null)
                 {
                     _department = new DepartmentRepository(_repoContext);
                 }

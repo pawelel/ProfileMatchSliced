@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
-namespace ProfileMatch.Migrations
+namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210925161000_Initial")]
+    [Migration("20210925211301_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,22 +50,22 @@ namespace ProfileMatch.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "57448fa8-b59e-4fc5-a13f-49ba79a098e2",
-                            ConcurrencyStamp = "a32d23fa-6d9f-45f0-b75f-a2c309d3eb26",
+                            Id = "55ec6b51-8730-483e-8025-521ac981e13d",
+                            ConcurrencyStamp = "d8ad3946-b94d-479d-a625-d70d924f03ec",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ac8d86ce-ffe1-422e-b45a-ef6965a1614d",
-                            ConcurrencyStamp = "8d9ed20d-4843-49ee-bd21-3d7b27e04a75",
+                            Id = "5248499a-c5a9-4e2e-9506-eaae1f788254",
+                            ConcurrencyStamp = "86c573df-5973-4e95-b323-5a710bef1e79",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "910a4a98-1161-4cf3-9684-2960fcb9f698",
-                            ConcurrencyStamp = "f31cb685-2625-409d-8d5c-86b5916dba60",
+                            Id = "33ca3f43-d1a5-4586-8d25-db30f795b427",
+                            ConcurrencyStamp = "fc0d677a-f80b-409b-9a76-d634865b4069",
                             Name = "SuperUser",
                             NormalizedName = "SUPERUSER"
                         });

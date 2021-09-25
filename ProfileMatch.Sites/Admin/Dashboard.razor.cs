@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Components;
 
-using Microsoft.AspNetCore.Components;
-
-using ProfileMatch.Models;
 using ProfileMatch.Models.Models;
+
+using System.Collections.Generic;
 
 namespace ProfileMatch.Pages.Admin.Pages
 {

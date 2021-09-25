@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace ProfileMatch.Components
+namespace ProfileMatch.Components.Theme
 {
     public class GeneralTheme : MudTheme
     {

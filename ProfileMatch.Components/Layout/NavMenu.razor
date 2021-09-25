@@ -1,37 +1,19 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">ProfileMatch</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿<UserCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text);" />
+<MudDivider Class="mb-4" />
+<MudNavMenu>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Personal</MudText>
+    <MudNavLink Href="personal/account" Icon="@Icons.Material.Outlined.Person">My Account</MudNavLink>
+    <MudNavLink Href="personal/dashboard" Icon="@Icons.Material.Outlined.Dashboard">Dashboard</MudNavLink>
+    <MudNavLink Href="personal/surveys" Icon="@Icons.Filled.FactCheck">Surveys</MudNavLink>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Management</MudText>
+    <MudNavLink Href="manager/dashboard" Icon="@Icons.Filled.List">Manager Dashboard</MudNavLink>
+    <MudNavLink Href="manager/projects" Icon="@Icons.Filled.Business">Projects</MudNavLink>
+    <MudNavLink Href="manager/compare" Icon="@Icons.Filled.BarChart">Compare</MudNavLink>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Administration</MudText>
+    <MudNavLink Href="admin/dashboard" Icon="@Icons.Filled.List">Admin Dashboard</MudNavLink>
+    <MudNavLink Href="admin/surveymanager" Icon="@Icons.Filled.Category">Admin Survey</MudNavLink>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">SU</MudText>
+    <MudNavLink Href="su/dashboard" Icon="@Icons.Filled.Dangerous">Red Zone</MudNavLink>
+</MudNavMenu>

@@ -1,12 +1,6 @@
 ﻿using MudBlazor;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProfileMatch.Components
+namespace ProfileMatch.Components.Theme
 {
     public class DarkTheme : MudTheme
     {
