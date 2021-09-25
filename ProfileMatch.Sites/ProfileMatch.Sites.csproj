@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.10" />
+    <PackageReference Include="MudBlazor" Version="5.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProfileMatch.Components\ProfileMatch.Components.csproj" />
+    <ProjectReference Include="..\ProfileMatch.Contracts\ProfileMatch.Contracts.csproj" />
+    <ProjectReference Include="..\ProfileMatch.Models\ProfileMatch.Models.csproj" />
+    <ProjectReference Include="..\ProfileMatch.Repositories\ProfileMatch.Repositories.csproj" />
+    <ProjectReference Include="..\ProfileMatch.Services\ProfileMatch.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Manager\" />
+    <Folder Include="User\" />
+    <Folder Include="SuperUser\" />
+  </ItemGroup>
+
+</Project>
