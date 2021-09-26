@@ -1,100 +1,91 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ProfileMatch.Models.Enumerations;
+using AutoMapper;
+using FluentValidation;
+using ProfileMatch.Validations;
+using Microsoft.AspNetCore.Components;
 
-//using AutoMapper;
+using MudBlazor;
 
-//using Microsoft.AspNetCore.Components;
+using ProfileMatch.Contracts;
 
-//using MudBlazor;
+using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
-//using ProfileMatch.Models;
-//using ProfileMatch.Models.Models;
-//using ProfileMatch.Models.ViewModels;
-//using ProfileMatch.Services;
+namespace ProfileMatch.Sites.Admin
+{
+    public partial class EditUser : ComponentBase
+    {
+        [Parameter] public EventCallback OnSaveCallBack { get; set; }
 
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
 
-//namespace ProfileMatch.Pages.Admin.Pages
-//{
-//    public partial class AdminEditUserPage : ComponentBase
-//    {
-//        ApplicationUser result = null;
-//        [Parameter] public EventCallback OnSaveCallBack { get; set; }
+        [Inject]
+        public IMapper Mapper { get; set; }
 
-//        [Inject]
-//        NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public IUserService UserService { get; set; }
 
-//        [Inject]
-//        public IMapper Mapper { get; set; }
+        [Inject]
+        public IDepartmentService DepartmentService { get; set; }
 
+        [Parameter] public string Id { get; set; }
+        protected MudForm Form { get; set; } // TODO add validations
+        private bool _success;
 
-//        [Parameter] public string Id { get; set; }
-//        protected MudForm Form { get; set; } // TODO add validations
-//        private bool _success;
-//        private ApplicationUser User { get; set; } = new();
-//        private DateTime? _dob;
-//        private IEnumerable<Department> Departments = new List<Department>();
+        private DateTime? _dob;
+        private IEnumerable<Department> Departments = new List<Department>();
 
-//        protected override async Task OnInitializedAsync()
-//        {
-//            await LoadData();
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadData();
+        }
 
-//        }
+        private async Task LoadData()
+        {
+            if (await UserService.Exist(Id))
+            {
+                EditUserVM = await UserService.FindSingleByIdAsync(Id);
+            }
+            else
+            {
+                EditUserVM = new()
+                {
+                    DepartmentId = 1,
+                    DateOfBirth = DateTime.Now,
+                    PhotoPath = "images/nophoto.jpg"
+                };
+            }
 
-//        private async Task LoadData()
-//        {
+            Departments = (await DepartmentService.FindAllAsync()).ToList();
 
-//            if (int.TryParse(Id, out int userId) && userId != 0)
-//            {
-//                User = await UserService.GetUser(int.Parse(Id));
-//            }
-//            else
-//            {
-//                User = new ApplicationUser
-//                {
-//                    DepartmentId = 1,
-//                    DateOfBirth = DateTime.Now,
-//                    PhotoPath = "images/nophoto.jpg"
-//                };
-//            }
+            _dob = EditUserVM.DateOfBirth;
+            StateHasChanged();
+        }
 
-//            Departments = (await DepartmentService.GetOnlyDepartments()).ToList();
-//            Mapper.Map(User, EditUserModel);
-//            _dob = EditUserModel.DateOfBirth;
-//            StateHasChanged();
-//        }
+        public EditUserVM EditUserVM { get; set; } = new();
 
-//        public EditUserModel EditUserModel { get; set; } = new();
-
-//        protected async Task HandleSave()
-//        {
-//                Mapper.Map(EditUserModel, User);
-//          await  Form.Validate();
-//            if (Form.IsValid)
-//            {
-//            if (string.IsNullOrWhiteSpace(User.Id))
-//            {
-//                result = await UserService.UpdateUser(User);
-//            }
-//            else
-//            {
-//                result = await UserService.CreateUser(User);
-//            }
-
-
-//                if (result != null)
-//                {
-//                    //await OnSaveCallBack.InvokeAsync();
-//                    NavigationManager.NavigateTo("/admin/dashboard");
-//                    await Refresh();
-//                }
-//            }
-//        }
-
-//        private async Task Refresh()
-//        {
-//            await LoadData();
-//        }
-//    }
-//}
+        protected async Task HandleSave()
+        {
+            await Form.Validate();
+            if (Form.IsValid)
+            {
+                var exist = await UserService.Exist(Id);
+                if (!exist)
+                {
+                    await UserService.Update(EditUserVM);
+                }
+                NavigationManager.NavigateTo("/admin/dashboard");
+                await Refresh();
+            }
+        }
+        private async Task Refresh()
+        {
+            await LoadData();
+        }
+    }
+}

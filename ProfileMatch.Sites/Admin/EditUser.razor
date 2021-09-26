@@ -1,8 +1,8 @@
-﻿@*@page "/admin/edituser/{id}"
+﻿@page "/admin/edituser/{id}"
 @page "/admin/edituser"
 
 
-@if (EditUserModel == null || Departments == null)
+@if (EditUserVM == null || Departments == null)
 {
     <p>loading</p>
 }
@@ -10,7 +10,7 @@ else
 {
     <MudContainer>
         <MudForm @ref="Form" @bind-IsValid="@_success">
-            <MudSelect @bind-Value="@EditUserModel.DepartmentId"
+            <MudSelect @bind-Value="@EditUserVM.DepartmentId"
                        T="int"
                        OffsetY="true"
                        CloseIcon="@Icons.Material.Filled.LocationCity"
@@ -21,17 +21,17 @@ else
                     <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
                 }
             </MudSelect>
-            <MudSwitch @bind-Checked="@EditUserModel.IsActive"
+            <MudSwitch @bind-Checked="@EditUserVM.IsActive"
                        T="bool"
                        Label="Is Active?"
                        Color="Color.Success" />
-            <MudTextField T="string" @bind-Value="@EditUserModel.FirstName" Immediate="true" Label="First Name"
+            <MudTextField T="string" @bind-Value="@EditUserVM.FirstName" Immediate="true" Label="First Name"
                           Required="true" RequiredError="Person name is required!" />
-            <MudTextField T="string" @bind-Value="@EditUserModel.LastName" Immediate="true" Label="Last Name" Required="true" RequiredError="Person name is required!" />
-            <MudTextField T="string" Label="Email" @bind-Value="@EditUserModel.Email" Required="true" RequiredError="Email is required!"
-                          Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-            <MudTextField T="string" @bind-Value="@EditUserModel.ConfirmEmail" Immediate="true" Label="Confirm Email" Required="true" RequiredError="Person name is required!" />
-            <MudSelect T="Gender?" Label="Select Gender" @bind-Value="@EditUserModel.Gender"
+            <MudTextField T="string" @bind-Value="@EditUserVM.LastName" Immediate="true" Label="Last Name" Required="true" RequiredError="Person name is required!" />
+            <MudTextField T="string" Label="Email" @bind-Value="@EditUserVM.Email" Required="true" RequiredError="Email is required!"/>
+                          
+            <MudTextField T="string" @bind-Value="@EditUserVM.ConfirmEmail" Immediate="true" Label="Confirm Email" Required="true" RequiredError="Person name is required!" />
+            <MudSelect T="Gender?" Label="Select Gender" @bind-Value="@EditUserVM.Gender"
                        OffsetY="true"
                        CloseIcon="@Icons.Material.Filled.LocationCity"
                        HelperText="Select Gender"
@@ -51,4 +51,4 @@ else
         </MudForm>
         <MudButton OnClick="@HandleSave">Save</MudButton>
     </MudContainer>
-}*@
+}
