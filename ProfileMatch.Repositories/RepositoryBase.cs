@@ -4,8 +4,10 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Repositories
 {
@@ -35,6 +37,16 @@ namespace ProfileMatch.Repositories
         public void Delete(T entity)
         {
             this.RepositoryContext.Set<T>().Remove(entity);
+        }
+
+        public async Task<IEnumerable<T>> FindAllAsync()
+        {
+            return await this.RepositoryContext.Set<T>().AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
+        {
+            return await this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
         }
     }
 }

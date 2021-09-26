@@ -1,4 +1,6 @@
-﻿using ProfileMatch.Contracts;
+﻿using System.Threading.Tasks;
+
+using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 
 namespace ProfileMatch.Repositories
@@ -39,6 +41,11 @@ namespace ProfileMatch.Repositories
         public void Save()
         {
             _repoContext.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+           await _repoContext.SaveChangesAsync();
         }
     }
 }

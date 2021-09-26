@@ -7,6 +7,6 @@
         public AnswerOption AnswerOption { get; set; }
         public int AnswerOptionId { get; set; }
         public bool IsConfirmed { get; set; }
-        public int SupervisorId { get; set; }
+        public string SupervisorId { get; set; }
     }
 }

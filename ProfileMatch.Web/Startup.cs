@@ -53,11 +53,12 @@ namespace ProfileMatch
             services.ConfigureRepositoryWrapper();
 
             //Mapping
-            services.AddAutoMapper(typeof(UserProfile));
+            services.AddAutoMapper(typeof(Startup));
+            //used for Api
+            services.AddControllers();
             //MudBlazor
             services.AddMudServices();
-            //used for culture controller
-            services.AddControllers();
+            
             //dark theme toggler
             services.AddScoped<IThemeService, ThemeService>();
             //local storage - blazored

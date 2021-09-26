@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
-
+﻿using System;
+using System.Collections.Generic;
 using ProfileMatch.Models.Enumerations;
 
-using System;
-using System.Collections.Generic;
+using ProfileMatch.Models.Models;
 
-namespace ProfileMatch.Models.Models
+namespace ProfileMatch.Models.ViewModels
 {
-    public class ApplicationUser : IdentityUser
+    public class EditUserVM
     {
+        public string Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public Gender? Gender { get; set; }
 
@@ -25,5 +25,7 @@ namespace ProfileMatch.Models.Models
         public List<UserNeedCategory> UserNeedCategories { get; set; }
         public List<UserAnswer> UserAnswers { get; set; }
         public string JobTitle { get; set; }
+        public string ConfirmEmail { get; set; }
+        public string Email { get; set; }
     }
 }

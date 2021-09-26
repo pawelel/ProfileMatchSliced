@@ -4,7 +4,7 @@ using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Validations
 {
-    public class EditUserValidator : AbstractValidator<EditUserModel>
+    public class EditUserValidator : AbstractValidator<EditUserVM>
     {
         public EditUserValidator()
         {

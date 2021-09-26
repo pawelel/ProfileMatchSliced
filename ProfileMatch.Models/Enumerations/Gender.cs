@@ -1,4 +1,4 @@
-﻿namespace ProfileMatch.Models.Models
+﻿namespace ProfileMatch.Models.Enumerations
 {
     public enum Gender
     {
