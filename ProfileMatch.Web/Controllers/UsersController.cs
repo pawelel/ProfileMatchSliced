@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Web.Controllers
 {
+    //test controller for api alternative
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IRepositoryWrapper _repoWrapper;
-        private readonly ILogger logger;
         private readonly IMapper mapper;
 
-        public UsersController(IRepositoryWrapper repoWrapper, ILogger logger, IMapper mapper)
+        public UsersController(IRepositoryWrapper repoWrapper, IMapper mapper)
         {
             _repoWrapper = repoWrapper;
-            this.logger = logger;
             this.mapper = mapper;
         }
 
@@ -41,15 +42,13 @@ namespace ProfileMatch.Web.Controllers
             try
             {
                 var users = await _repoWrapper.User.FindAllAsync();
-                logger.LogInformation($"Returned all users from database.");
                 var usersResult = mapper.Map<IEnumerable<EditUserVM>>(users);
                 return Ok(usersResult);
             }
             catch (Exception ex)
             {
 
-                logger.LogError($"Something went wrong inside FindAllAsync action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error {ex.Message}");
             }
 
         }
@@ -59,13 +58,11 @@ namespace ProfileMatch.Web.Controllers
             try
             {
                 var user = await _repoWrapper.User.FindSingleByConditionAsync(x => x.Id == id);
-                logger.LogInformation($"Returned user from database.");
                 return Ok(user);
             }
             catch (Exception ex)
             {
-                logger.LogError($"Something went wrong inside FindAllAsync action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error {ex.Message}");
             }
         }
     }

@@ -57,10 +57,12 @@ namespace ProfileMatch
 
             //Repositories
             services.ConfigureRepositoryWrapper();
+            services.ConfigureRepositoryServices();
+            
 
             //Mapping
             services.AddAutoMapper(typeof(Startup));
-            //used for Api
+            //used for Api and Culture
             services.AddControllers();
             //MudBlazor
             services.AddMudServices();

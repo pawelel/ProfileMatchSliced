@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Repositories;
@@ -12,5 +13,9 @@ namespace ProfileMatch.Services
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
+        public static void ConfigureRepositoryServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+        }
     }
 }

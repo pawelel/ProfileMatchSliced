@@ -1,7 +1,4 @@
-﻿@inherits LayoutComponentBase
-@inject IThemeService ThemeService
-@implements IDisposable
-@inject NavigationManager NavigationManager
+﻿
 
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -50,39 +47,5 @@
 </MudLayout>
 
 @code{
-    bool _drawerOpen = true;
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
-
-    private Preferences _preferences = new();
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        ThemeService.OnChange += ThemeServiceOnChange;
-        if (firstRender)
-        {
-            _preferences = await ThemeService.GetPreferences();
-            currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
-            StateHasChanged();
-        }
-
-    }
-
-    private void ThemeServiceOnChange(Preferences newPreferences)
-    {
-        _preferences = newPreferences;
-        currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        ThemeService.OnChange -= ThemeServiceOnChange;
-    }
-
-    MudTheme defaultTheme = new GeneralTheme();
-    MudTheme currentTheme;
-    MudTheme darkTheme = new DarkTheme();
+   
 }

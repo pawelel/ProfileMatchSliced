@@ -20,10 +20,10 @@ namespace ProfileMatch.Web.Controllers
                     CookieRequestCultureProvider.MakeCookieValue(
                         new RequestCulture(culture, culture)));
             }
-            if (redirectUri==null)
-            {
-                return LocalRedirect("/");
-            }
+            //if (redirectUri==null)
+            //{
+            //    return LocalRedirect("/");
+            //}
             return LocalRedirect(redirectUri);
         }
     }
