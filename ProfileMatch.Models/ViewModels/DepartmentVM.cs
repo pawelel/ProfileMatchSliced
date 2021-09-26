@@ -13,6 +13,6 @@ namespace ProfileMatch.Models.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<EditUserVM> Users { get; set; }
+        public List<EditUserVM> ApplicationUsers { get; set; }
     }
 }

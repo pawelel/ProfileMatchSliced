@@ -30,8 +30,8 @@ namespace ProfileMatch.Components.Admin
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            //if (person.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //    return true;
+            if (person.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             if (person.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (person.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))

@@ -35,15 +35,12 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject]
         public IDepartmentService DepartmentService { get; set; }
-
-        private IEnumerable<DepartmentVM> FilledDepartments;
         [Parameter] public int id { get; set; }
 
         private IEnumerable<DepartmentVM> Departments;
         protected override async Task OnInitializedAsync()
         {
             Departments = await DepartmentService.GetDepartmentsWithPeople();
-            FilledDepartments = Departments.Where(x => x.Users.Count > 0);
         }
 
         
