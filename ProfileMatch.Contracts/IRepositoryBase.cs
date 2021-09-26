@@ -15,5 +15,6 @@ namespace ProfileMatch.Contracts
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task<T> FindSingleByConditionAsync(Expression<Func<T, bool>> expression);
     }
 }

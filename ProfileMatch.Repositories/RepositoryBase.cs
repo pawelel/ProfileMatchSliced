@@ -48,5 +48,10 @@ namespace ProfileMatch.Repositories
         {
             return await this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
         }
+
+        public async Task<T> FindSingleByConditionAsync(Expression<Func<T, bool>> expression)
+        {
+            return await this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().FirstOrDefaultAsync();
+        }
     }
 }
