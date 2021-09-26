@@ -26,11 +26,27 @@ using ProfileMatch.Components.Theme;
 using Microsoft.Extensions.Localization;
 using ProfileMatch.Models.Enumerations;
 using Microsoft.AspNetCore.Components;
+using ProfileMatch.Repositories;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin
 {
     public partial class DepartmentsList : ComponentBase
     {
+        [Inject]
+        public IDepartmentService DepartmentService { get; set; }
 
+        private IEnumerable<DepartmentVM> FilledDepartments;
+        [Parameter] public int id { get; set; }
+
+        private IEnumerable<DepartmentVM> Departments;
+        protected override async Task OnInitializedAsync()
+        {
+            Departments = await DepartmentService.GetDepartmentsWithPeople();
+            FilledDepartments = Departments.Where(x => x.Users.Count > 0);
+        }
+
+        
+       
     }
 }

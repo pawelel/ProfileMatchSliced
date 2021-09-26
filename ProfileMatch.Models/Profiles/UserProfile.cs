@@ -11,6 +11,8 @@ namespace ProfileMatch.Models.Profiles
         {
             CreateMap<ApplicationUser, EditUserVM>();
             CreateMap<EditUserVM, ApplicationUser>();
+            CreateMap<Department, DepartmentVM>();
+            CreateMap<DepartmentVM, Department>();
         }
     }
 }

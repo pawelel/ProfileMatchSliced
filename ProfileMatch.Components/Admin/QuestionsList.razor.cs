@@ -27,8 +27,6 @@ using Microsoft.Extensions.Localization;
 using ProfileMatch.Models.Enumerations;
 using Microsoft.AspNetCore.Components;
 
-using Microsoft.AspNetCore.Components;
-
 namespace ProfileMatch.Components.Admin
 {
     public partial class QuestionsList : ComponentBase

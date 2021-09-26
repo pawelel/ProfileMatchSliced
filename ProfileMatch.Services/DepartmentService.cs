@@ -17,10 +17,12 @@ namespace ProfileMatch.Services
     {
 
         private IRepositoryWrapper wrapper;
+        private readonly IMapper mapper;
 
-        public DepartmentService(IRepositoryWrapper wrapper)
+        public DepartmentService(IRepositoryWrapper wrapper, IMapper mapper)
         {
             this.wrapper = wrapper;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<Department>> FindAllAsync()
@@ -30,18 +32,18 @@ namespace ProfileMatch.Services
 
         public async Task<Department> Create(Department entity)
         {
-            var doesExist = await wrapper.Department.FindSingleByConditionAsync(d=>d.Name.Contains(entity.Name));
-            if (doesExist==null)
+            var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Name.Contains(entity.Name));
+            if (doesExist == null)
             {
                 wrapper.Department.Create(entity);
             }
-            return await wrapper.Department.FindSingleByConditionAsync(d=>d.Name==entity.Name);
+            return await wrapper.Department.FindSingleByConditionAsync(d => d.Name == entity.Name);
         }
 
         public async Task<Department> Update(Department entity)
         {
-            var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Id==entity.Id);
-            if (doesExist!=null)
+            var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Id == entity.Id);
+            if (doesExist != null)
             {
                 wrapper.Department.Update(entity);
             }
@@ -69,6 +71,12 @@ namespace ProfileMatch.Services
             return await wrapper.Department.GetDepartment(id);
         }
 
+        public async Task<IEnumerable<DepartmentVM>> GetDepartmentsWithPeople()
+        {
+            var depts = await wrapper.Department.GetDepartmentsWithPeople();
+           var result = mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentVM>>(depts);
+            return result;
+        }
     }
 }
 

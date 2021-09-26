@@ -1,1 +1,46 @@
-﻿
+﻿<MudText>List of Departments</MudText>
+<MudTable Items="@FilledDepartments" Hover="true" Breakpoint="Breakpoint.Sm">
+    <ColGroup>
+        <col />
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh>Edit Name</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        
+        <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small"></MudButton></MudTd>
+    </RowTemplate>
+    <ChildRowContent>
+    
+            <MudTr>
+                <td colspan="4">
+                    <MudCard Elevation="0">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1">Member List for <strong>@context.Name</strong></MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTable Items="@context.Users" Context="Person" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
+                                <ColGroup>
+                                    <col />
+                                    <col />
+                                </ColGroup>
+                                <HeaderContent>
+                                    <MudTh>First Name</MudTh>
+                                    <MudTh>Last Name</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="First Name">@Person.FirstName</MudTd>
+                                    <MudTd DataLabel="Last Name">@Person.LastName</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudCardContent>
+                    </MudCard>
+                </td>
+            </MudTr>
+        
+    </ChildRowContent>
+</MudTable>
