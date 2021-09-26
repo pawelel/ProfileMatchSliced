@@ -61,7 +61,7 @@ namespace ProfileMatch
             
 
             //Mapping
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(UserProfile));
             //used for Api and Culture
             services.AddControllers();
             //MudBlazor
