@@ -1,1 +1,122 @@
-﻿
+﻿@page "/categoriestable"
+@inject ICategoryRepository categoryRepository
+@inject IQuestionRepository questionRepository
+@inject IAnswerOptionRepository answerOptionRepository
+
+@if (loading)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="options">
+        @foreach (var cat in GetCategories())
+        {
+            <MudSelectItem T="string" Value="@cat.Name" />
+        }
+    </MudSelect>
+    <MudItem xs="12" md="6">
+        <MudText Typo="Typo.body2">SelectedValues:  @(string.Join(", ", options.Select(x=>$"\"{x}\""))) </MudText>
+    </MudItem>
+    <MudTable Items="@(GetQuestions())" SortLabel="Sort By" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Questions Table</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">Category</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">Question</MudTableSortLabel></MudTh>
+            <MudTh>Options</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Category">@context.Category.Name</MudTd>
+            <MudTd DataLabel="Question">@context.Name</MudTd>
+            <MudTd DataLabel="Options">
+                <MudButton>Display</MudButton>
+                <MudButton>Edit</MudButton>
+            </MudTd>
+
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
+                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString="My Row My Table"
+                           InfoFormat="{first_item}-{last_item} / {all_items}" />
+        </PagerContent>
+    </MudTable>
+
+    <MudItem class="d-flex flex-wrap mt-4">
+        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+        <MudSpacer />
+        <MudItem style="min-width:200px;">
+            <MudText Inline="true" Class="align-self-center">Selected1: @selectedItem1?.Title</MudText>
+        </MudItem>
+    </MudItem>
+}
+@code{
+    bool loading;
+    [Parameter] public int id { get; set; }
+    IEnumerable<Question> questions;
+    IEnumerable<Question> questions1;
+    IEnumerable<Category> categories;
+    private HashSet<string> options { get; set; } = new HashSet<string>() { };
+    private string value { get; set; } = "Nothing selected";
+    public bool ShowDetails { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        loading = true;
+        categories = await categoryRepository.GetCategories();
+        questions = await questionRepository.GetQuestionsWithCategories();
+        questions1 = questions;
+        loading = false;
+    }
+    bool dense = true;
+    bool hover = true;
+    bool bordered = true;
+    bool striped = false;
+    private string searchString1 = "";
+    private Question selectedItem1 = null;
+    private HashSet<Question> selectedItems = new HashSet<Question>();
+    private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
+
+    private bool FilterFunc(Question question, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (question.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (question.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+    IEnumerable<Question> GetQuestions()
+    {
+        if (options.Count() == 0)
+        {
+            questions1 = questions;
+        }
+        else
+        {
+
+
+            questions1 = from q in questions
+                         from o in options
+                         where q.Category.Name == o
+                         select q;
+        }
+        //return questions1;
+    }
+    IEnumerable<Category> GetCategories()
+    {
+
+        questions1 = questions.GroupBy(x => x.Category.Name).Select(y => y.First()).Distinct();
+        categories = from q in questions1
+                     where q.Category.Name != null
+                     select q.Category;
+
+        return categories;
+    }
+}
