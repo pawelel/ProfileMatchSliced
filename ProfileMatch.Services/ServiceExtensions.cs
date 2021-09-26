@@ -16,6 +16,7 @@ namespace ProfileMatch.Services
         public static void ConfigureRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
         }
     }
 }

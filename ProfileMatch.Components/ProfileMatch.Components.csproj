@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ProfileMatch.Models\ProfileMatch.Models.csproj" />
     <ProjectReference Include="..\ProfileMatch.Repositories\ProfileMatch.Repositories.csproj" />
     <ProjectReference Include="..\ProfileMatch.Services\ProfileMatch.Services.csproj" />
+    <ProjectReference Include="..\ProfileMatch.Validations\ProfileMatch.Validations.csproj" />
   </ItemGroup>
 
 </Project>

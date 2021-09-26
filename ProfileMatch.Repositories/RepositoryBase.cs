@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
@@ -53,5 +54,15 @@ namespace ProfileMatch.Repositories
         {
             return await this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().FirstOrDefaultAsync();
         }
+        public async Task<bool> Exist(Expression<Func<T, bool>> expression)
+        {
+           var _=  await this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().FirstOrDefaultAsync();
+            if (_!=null)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

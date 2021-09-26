@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -23,9 +24,9 @@ namespace ProfileMatch.Components.Admin
         private bool _dense = false;
         public bool disabled = false;
 
-        private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
+        private bool FilterFunc1(EditUserVM person) => FilterFunc(person, SearchString);
 
-        private static bool FilterFunc(ApplicationUser person, string searchString)
+        private static bool FilterFunc(EditUserVM person, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -40,11 +41,11 @@ namespace ProfileMatch.Components.Admin
             return false;
         }
 
-        public List<ApplicationUser> Users { get; set; }
+        public IEnumerable<EditUserVM> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await UserService.GetAllUsers();
+            Users = await UserService.FindAllAsync();
         }
 
         private void ShowProfile(string id)

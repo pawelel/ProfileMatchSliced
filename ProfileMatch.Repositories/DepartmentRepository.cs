@@ -1,6 +1,11 @@
-﻿using ProfileMatch.Contracts;
+﻿using System.Linq.Expressions;
+using System.Linq;
+using System.Threading.Tasks;
+
+using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProfileMatch.Repositories
 {
@@ -8,6 +13,11 @@ namespace ProfileMatch.Repositories
     {
         public DepartmentRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
         {
+        }
+
+        public async Task<Department> GetDepartment(int id)
+{
+           return await this.RepositoryContext.Set<Department>().Where(d=>d.Id==id).Include(u=>u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
         }
     }
 }

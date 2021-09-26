@@ -7,7 +7,7 @@
 }
 else
 {
-    <MudTable Items="@Users" Dense="@_dense" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel="Sort By">
+    <MudTable Items="@Users" Dense="@_dense" Filter="new Func<EditUserVM,bool>(FilterFunc1)" SortLabel="Sort By">
         <ToolBarContent>
             <MudText Typo="Typo.h6">People Administration</MudText>
             <MudSpacer />
@@ -29,7 +29,7 @@ else
             <MudTd DataLabel="Photo"><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
             <MudTd DataLabel="First Name">@context.FirstName</MudTd>
             <MudTd DataLabel="Last Name">@context.LastName</MudTd>
-            <MudTd DataLabel="Date Of Birth">@context.DateOfBirth.ToString("dd.MM.yyyy")</MudTd>
+            <MudTd DataLabel="Date Of Birth">@context.DateOfBirth</MudTd>
             <MudTd DataLabel="Is Active"><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
             <MudTd DataLabel="">
                 <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context.Id))" Disabled="@(!disabled)" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
