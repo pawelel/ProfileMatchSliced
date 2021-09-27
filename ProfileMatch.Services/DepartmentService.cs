@@ -9,6 +9,7 @@ using AutoMapper;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Services
@@ -25,12 +26,12 @@ namespace ProfileMatch.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Department>> FindAllAsync()
+        public async Task<ServiceResponse<List<Department>>> FindAllAsync()
         {
             return await wrapper.Department.FindAllAsync();
         }
 
-        public async Task<Department> Create(Department entity)
+        public async Task<ServiceResponse<Department>> Create(Department entity)
         {
             var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Name.Contains(entity.Name));
             if (doesExist == null)
@@ -40,7 +41,7 @@ namespace ProfileMatch.Services
             return await wrapper.Department.FindSingleByConditionAsync(d => d.Name == entity.Name);
         }
 
-        public async Task<Department> Update(Department entity)
+        public async Task<ServiceResponse<Department>> Update(Department entity)
         {
             var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Id == entity.Id);
             if (doesExist != null)

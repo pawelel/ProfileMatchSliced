@@ -32,9 +32,16 @@ namespace ProfileMatch.Services
 
         public async Task Create(QuestionVM questionVM)
         {
+            var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(questionVM.Name));
            var request = mapper.Map<Question>(questionVM);
-          await  wrapper.Question.Create(request);
+            wrapper.Question.Create(request);
         }
 
     }
+}
+var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail.Equals(user.Email.ToUpper()));
+if (doesExist == null)
+{
+    var userResult = mapper.Map<ApplicationUser>(user);
+    wrapper.User.Create(userResult);
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Contracts
@@ -15,7 +16,7 @@ namespace ProfileMatch.Contracts
         Task Create(ApplicationUserVM user);
         Task Delete(string id);
         Task Update(ApplicationUserVM user);
-        Task<IEnumerable<ApplicationUserVM>> FindAllAsync();
+        Task<ServiceResponse<List<ApplicationUserVM>>> FindAllAsync();
         Task<ApplicationUserVM> FindSingleByIdAsync(string id);
         Task<ApplicationUser> FindSingleByEmailAsync(string email);
         Task<bool> Exist(ApplicationUserVM editUserVM);

@@ -9,6 +9,7 @@ using AutoMapper;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Services
@@ -23,12 +24,11 @@ namespace ProfileMatch.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<ApplicationUserVM>> FindAllAsync()
+        public async Task<ServiceResponse<List<ApplicationUserVM>>> FindAllAsync()
         {
-            var users = await wrapper.User.FindAllAsync();
-
-            var userResult = mapper.Map<IEnumerable<ApplicationUserVM>>(users);
-            return userResult;
+            ServiceResponse<List<ApplicationUserVM>> response = new();
+               var users = await wrapper.User.FindAllAsync();
+            return mapper.Map<ServiceResponse<List<ApplicationUserVM>>>(users);
         }
 
         public async Task Create(ApplicationUserVM user)
