@@ -15,7 +15,7 @@ namespace ProfileMatch.Services
 {
     public class UserService : IUserService
     {
-        private IRepositoryWrapper wrapper;
+        private readonly IRepositoryWrapper wrapper;
         private readonly IMapper mapper;
         public UserService(IRepositoryWrapper wrapper, IMapper mapper)
         {

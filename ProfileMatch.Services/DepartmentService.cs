@@ -16,7 +16,7 @@ namespace ProfileMatch.Services
     public class DepartmentService : IDepartmentService
     {
 
-        private IRepositoryWrapper wrapper;
+        private readonly IRepositoryWrapper wrapper;
         private readonly IMapper mapper;
 
         public DepartmentService(IRepositoryWrapper wrapper, IMapper mapper)

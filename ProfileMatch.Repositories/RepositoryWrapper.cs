@@ -12,7 +12,23 @@ namespace ProfileMatch.Repositories
         private IDepartmentRepository _department;
         private IAnswerOptionRepository _answerOption;
         private ICategoryRepository _category;
-        pri
+        private IQuestionRepository _question;
+        private IUserAnswerRepository _userAnswer;
+        private IUserNeedCategoryRepository _userNeedCategory;
+        private IUserNoteRepository _userNote;
+        private INoteRepository _note;
+
+        public IQuestionRepository Question
+        {
+            get
+            {
+                if (_question == null)
+                {
+                    _question = new QuestionRepository(_repoContext);
+                }
+                return _question;
+            }
+        }
 
         public ICategoryRepository Category
         {
@@ -71,7 +87,53 @@ namespace ProfileMatch.Repositories
 
         public async Task SaveAsync()
         {
-           await _repoContext.SaveChangesAsync();
+            await _repoContext.SaveChangesAsync();
+        }
+
+        public IUserAnswerRepository UserAnswer
+        {
+            get
+            {
+
+                if (_userAnswer == null)
+                {
+                    _userAnswer = new UserAnswerRepository(_repoContext);
+                }
+                return _userAnswer;
+            }
+        }
+        public IUserNeedCategoryRepository UserNeedCategory {
+            get
+            {
+
+                if (_userNeedCategory == null)
+                {
+                    _userNeedCategory = new UserNeedCategoryRepository(_repoContext);
+                }
+                return _userNeedCategory;
+            }
+        }
+        public IUserNoteRepository UserNote {
+            get
+            {
+
+                if (_userNote == null)
+                {
+                    _userNote = new UserNoteRepository(_repoContext);
+                }
+                return _userNote;
+            }
+        }
+        public INoteRepository Note {
+            get
+            {
+
+                if (_note == null)
+                {
+                    _note = new NoteRepository(_repoContext);
+                }
+                return _note;
+            }
         }
     }
 }
