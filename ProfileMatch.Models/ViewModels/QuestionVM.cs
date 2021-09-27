@@ -8,11 +8,14 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Models.ViewModels
 {
-  public  class DepartmentVM
+  public class QuestionVM
     {
         public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
         public string Description { get; set; }
-        public List<ApplicationUserVM> ApplicationUsers { get; set; }
+        public CategoryVM Category { get; set; }
+        public List<AnswerOptionVM> AnswerOptions { get; set; }
     }
 }

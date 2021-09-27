@@ -67,7 +67,7 @@ namespace ProfileMatch.Sites.Admin
             StateHasChanged();
         }
 
-        public EditUserVM EditUserVM { get; set; } = new();
+        public ApplicationUserVM EditUserVM { get; set; } = new();
 
         protected async Task HandleSave()
         {

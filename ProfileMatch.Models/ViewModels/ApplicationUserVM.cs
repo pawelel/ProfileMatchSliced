@@ -6,7 +6,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Models.ViewModels
 {
-    public class EditUserVM
+    public class ApplicationUserVM
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -18,12 +18,12 @@ namespace ProfileMatch.Models.ViewModels
         public Gender? Gender { get; set; }
 
         public int DepartmentId { get; set; } = 1; //NOTE had to initialize
-        public Department Department { get; set; }
+        public DepartmentVM Department { get; set; }
         public string PhotoPath { get; set; }
         public string Bio { get; set; }
         public bool IsActive { get; set; }
-        public List<UserNeedCategory> UserNeedCategories { get; set; }
-        public List<UserAnswer> UserAnswers { get; set; }
+        public List<UserNeedCategoryVM> UserNeedCategories { get; set; }
+        public List<UserAnswerVM> UserAnswers { get; set; }
         public string JobTitle { get; set; }
         public string ConfirmEmail { get; set; }
         public string Email { get; set; }

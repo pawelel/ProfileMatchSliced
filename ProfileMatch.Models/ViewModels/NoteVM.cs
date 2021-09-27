@@ -8,11 +8,10 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Models.ViewModels
 {
-  public  class DepartmentVM
+    class NoteVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public List<ApplicationUserVM> ApplicationUsers { get; set; }
+        public List<UserNoteVM> UserNotes { get; set; }
     }
 }

@@ -24,9 +24,9 @@ namespace ProfileMatch.Components.Admin
         private bool _dense = false;
         public bool disabled = false;
 
-        private bool FilterFunc1(EditUserVM person) => FilterFunc(person, SearchString);
+        private bool FilterFunc1(ApplicationUserVM person) => FilterFunc(person, SearchString);
 
-        private static bool FilterFunc(EditUserVM person, string searchString)
+        private static bool FilterFunc(ApplicationUserVM person, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -41,7 +41,7 @@ namespace ProfileMatch.Components.Admin
             return false;
         }
 
-        public IEnumerable<EditUserVM> Users { get; set; }
+        public IEnumerable<ApplicationUserVM> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

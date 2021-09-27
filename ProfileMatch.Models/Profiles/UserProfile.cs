@@ -9,8 +9,8 @@ namespace ProfileMatch.Models.Profiles
     {
         public UserProfile()
         {
-            CreateMap<ApplicationUser, EditUserVM>();
-            CreateMap<EditUserVM, ApplicationUser>();
+            CreateMap<ApplicationUser, ApplicationUserVM>();
+            CreateMap<ApplicationUserVM, ApplicationUser>();
             CreateMap<Department, DepartmentVM>();
             CreateMap<DepartmentVM, Department>();
         }

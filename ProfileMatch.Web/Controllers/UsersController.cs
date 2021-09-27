@@ -42,7 +42,7 @@ namespace ProfileMatch.Web.Controllers
             try
             {
                 var users = await _repoWrapper.User.FindAllAsync();
-                var usersResult = mapper.Map<IEnumerable<EditUserVM>>(users);
+                var usersResult = mapper.Map<IEnumerable<ApplicationUserVM>>(users);
                 return Ok(usersResult);
             }
             catch (Exception ex)

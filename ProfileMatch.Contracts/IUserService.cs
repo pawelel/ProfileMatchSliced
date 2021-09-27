@@ -12,13 +12,13 @@ namespace ProfileMatch.Contracts
 {
    public interface IUserService
     {
-        Task Create(EditUserVM user);
+        Task Create(ApplicationUserVM user);
         Task Delete(string id);
-        Task Update(EditUserVM user);
-        Task<IEnumerable<EditUserVM>> FindAllAsync();
-        Task<EditUserVM> FindSingleByIdAsync(string id);
+        Task Update(ApplicationUserVM user);
+        Task<IEnumerable<ApplicationUserVM>> FindAllAsync();
+        Task<ApplicationUserVM> FindSingleByIdAsync(string id);
         Task<ApplicationUser> FindSingleByEmailAsync(string email);
-        Task<bool> Exist(EditUserVM editUserVM);
+        Task<bool> Exist(ApplicationUserVM editUserVM);
         Task<bool> Exist(string id);
     }
 }

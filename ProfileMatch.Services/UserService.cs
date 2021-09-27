@@ -23,15 +23,15 @@ namespace ProfileMatch.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<EditUserVM>> FindAllAsync()
+        public async Task<IEnumerable<ApplicationUserVM>> FindAllAsync()
         {
             var users = await wrapper.User.FindAllAsync();
 
-            var userResult = mapper.Map<IEnumerable<EditUserVM>>(users);
+            var userResult = mapper.Map<IEnumerable<ApplicationUserVM>>(users);
             return userResult;
         }
 
-        public async Task Create(EditUserVM user)
+        public async Task Create(ApplicationUserVM user)
         {
             var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail.Equals(user.Email.ToUpper()));
             if (doesExist == null)
@@ -50,7 +50,7 @@ namespace ProfileMatch.Services
             }
         }
 
-        public async Task Update(EditUserVM user)
+        public async Task Update(ApplicationUserVM user)
         {
             var doesExist = await wrapper.User.Exist(u=>u.Id==user.Id);
             if (doesExist)
@@ -61,10 +61,10 @@ namespace ProfileMatch.Services
             }
         }
 
-        public async Task<EditUserVM> FindSingleByIdAsync(string id)
+        public async Task<ApplicationUserVM> FindSingleByIdAsync(string id)
         {
             var test = await wrapper.User.FindSingleByConditionAsync(u => u.Id == id);
-            var userResult = mapper.Map<EditUserVM>(test);
+            var userResult = mapper.Map<ApplicationUserVM>(test);
             return userResult;
         }
         public async Task<ApplicationUser> FindSingleByEmailAsync(string email)
@@ -72,7 +72,7 @@ namespace ProfileMatch.Services
             return await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail==email.ToUpper());
         }
 
-        public async Task<bool> Exist(EditUserVM editUserVM)
+        public async Task<bool> Exist(ApplicationUserVM editUserVM)
         {
             return await wrapper.User.Exist(u=>u.Id==editUserVM.Id);
         }
