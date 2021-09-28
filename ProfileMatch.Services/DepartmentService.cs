@@ -70,9 +70,9 @@ namespace ProfileMatch.Services
 
         public async Task<IEnumerable<Department>> GetDepartmentsWithPeople()
         {
-            var depts = await wrapper.Department.GetDepartmentsWithPeople();
-            var result = mapper.Map<IEnumerable<Department>, IEnumerable<Department>>(depts);
-            return result;
+           return await wrapper.Department.GetDepartmentsWithPeople();
+           
+    
         }
     }
 }

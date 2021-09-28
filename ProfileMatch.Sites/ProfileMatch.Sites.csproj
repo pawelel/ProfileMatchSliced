@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.10" />
-    <PackageReference Include="MudBlazor" Version="5.1.4" />
+    <PackageReference Include="MudBlazor" Version="5.1.5" />
   </ItemGroup>
 
   <ItemGroup>

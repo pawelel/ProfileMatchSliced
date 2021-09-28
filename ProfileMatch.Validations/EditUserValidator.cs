@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-
+using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Validations
 {

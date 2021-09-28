@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
-
+using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Admin
 {

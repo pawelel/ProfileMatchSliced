@@ -28,9 +28,6 @@ namespace ProfileMatch.Sites.Admin
         private NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public IMapper Mapper { get; set; }
-
-        [Inject]
         public IUserService UserService { get; set; }
 
         [Inject]
@@ -42,7 +39,7 @@ namespace ProfileMatch.Sites.Admin
         DateTime? _dob;
         string currentUserName;
         ServiceResponse<ApplicationUser> loadedUserResponse = new();
-        ApplicationUser EditUser { get; set; } = new();
+        ApplicationUser User { get; set; } = new();
         private IEnumerable<Department> Departments = new List<Department>();
         private async Task GetUserDetails()
         {
@@ -63,7 +60,7 @@ var authState = await authSP.GetAuthenticationStateAsync();
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-            EditUser = loadedUserResponse.Data;
+            User = loadedUserResponse.Data;
             await GetUserDetails();
         }
 
@@ -88,13 +85,13 @@ var authState = await authSP.GetAuthenticationStateAsync();
             await Form.Validate();
             if (Form.IsValid)
             {
-                if (await UserService.Exist(EditUser.Email))
+                if (await UserService.Exist(User.Email))
                 {
-                await UserService.Update(EditUser);
+                await UserService.Update(User);
                 }
                 else
                 {
-                   await UserService.Create(EditUser);
+                   await UserService.Create(User);
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");
