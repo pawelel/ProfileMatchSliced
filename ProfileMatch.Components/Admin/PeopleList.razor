@@ -7,7 +7,7 @@
 }
 else
 {
-    <MudTable Items="@Users" Dense="@_dense" Filter="new Func<EditUserVM,bool>(FilterFunc1)" SortLabel="Sort By">
+    <MudTable Items="@Users" Dense="@_dense" Filter="new Func<ApplicationUserVM,bool>(FilterFunc1)" SortLabel="Sort By">
         <ToolBarContent>
             <MudText Typo="Typo.h6">People Administration</MudText>
             <MudSpacer />
@@ -15,12 +15,12 @@ else
             <MudTextField @bind-Value="SearchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<EditUserVM, object>(x=>x.Department.Name)" SortLabel="Department" T="EditUserVM">Department</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUserVM, object>(x=>x.Department.Name)" SortLabel="Department" T="ApplicationUserVM">Department</MudTableSortLabel></MudTh>
             <MudTh>Photo</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<EditUserVM, object>(x=>x.FirstName)" SortLabel="First Name" T="EditUserVM">First Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<EditUserVM, object>(x=>x.LastName)" SortLabel="Last Name" T="EditUserVM">Last Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<EditUserVM, object>(x=>x.DateOfBirth)" SortLabel="Date Of Birth" T="EditUserVM">Birth Date</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<EditUserVM, object>(x=>x.IsActive)" SortLabel="Is Active" T="EditUserVM">Is Active</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUserVM, object>(x=>x.FirstName)" SortLabel="First Name" T="ApplicationUserVM">First Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUserVM, object>(x=>x.LastName)" SortLabel="Last Name" T="ApplicationUserVM">Last Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUserVM, object>(x=>x.DateOfBirth)" SortLabel="Date Of Birth" T="ApplicationUserVM">Birth Date</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUserVM, object>(x=>x.IsActive)" SortLabel="Is Active" T="ApplicationUserVM">Is Active</MudTableSortLabel></MudTh>
             <MudTh><MudSwitch @bind-Checked="@disabled" Color="Color.Secondary">Edit</MudSwitch></MudTh>
             <MudTh>Profile</MudTh>
         </HeaderContent>

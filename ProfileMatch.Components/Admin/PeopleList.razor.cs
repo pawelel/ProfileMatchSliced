@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Components.Admin
@@ -40,12 +41,13 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-
-        public IEnumerable<ApplicationUserVM> Users { get; set; }
+        ServiceResponse<List<ApplicationUserVM>> usersResponse = new();
+        public List<ApplicationUserVM> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await UserService.FindAllAsync();
+            usersResponse = await UserService.FindAllAsync();
+            Users = usersResponse.Data;
         }
 
         private void ShowProfile(string id)
