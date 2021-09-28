@@ -11,14 +11,14 @@ using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Contracts
 {
-   public interface IUserService
+    public interface IUserService
     {
-        Task Create(ApplicationUserVM user);
-        Task Delete(string id);
-        Task Update(ApplicationUserVM user);
         Task<ServiceResponse<List<ApplicationUserVM>>> FindAllAsync();
-        Task<ApplicationUserVM> FindSingleByIdAsync(string id);
-        Task<ApplicationUser> FindSingleByEmailAsync(string email);
+        Task<ServiceResponse<ApplicationUserVM>> Create(ApplicationUserVM user);
+        Task<ServiceResponse<ApplicationUserVM>> Delete(string id);
+        ServiceResponse<ApplicationUserVM> Update(ApplicationUserVM userVM);
+        Task<ServiceResponse<ApplicationUserVM>> FindSingleByIdAsync(string id);
+        Task<ServiceResponse<ApplicationUserVM>> FindSingleByEmailAsync(string email);
         Task<bool> Exist(ApplicationUserVM editUserVM);
         Task<bool> Exist(string id);
     }

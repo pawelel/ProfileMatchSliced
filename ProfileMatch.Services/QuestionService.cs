@@ -8,6 +8,7 @@ using AutoMapper;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Services
@@ -30,18 +31,21 @@ namespace ProfileMatch.Services
 
         }
 
-        public async Task Create(QuestionVM questionVM)
+        public async Task<ServiceResponse<QuestionVM>> Create(QuestionVM questionVM)
         {
             var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(questionVM.Name));
+            if (!doesExist.Success)
+            {
            var request = mapper.Map<Question>(questionVM);
-            wrapper.Question.Create(request);
+           var response = wrapper.Question.Create(request);
+                return mapper.Map<ServiceResponse<QuestionVM>>(response);
+            }
+            return new ServiceResponse<QuestionVM>()
+            {
+                Message = "Question with that name already exists.",
+                Success = false
+            };
         }
 
     }
-}
-var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail.Equals(user.Email.ToUpper()));
-if (doesExist == null)
-{
-    var userResult = mapper.Map<ApplicationUser>(user);
-    wrapper.User.Create(userResult);
 }

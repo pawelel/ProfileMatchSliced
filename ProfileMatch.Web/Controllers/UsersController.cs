@@ -30,10 +30,10 @@ namespace ProfileMatch.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ApplicationUser> GetAll()
+        public IEnumerable<ApplicationUserVM> GetAll()
         {
-            var people = _repoWrapper.User.FindAll();
-            return people;
+            var peopleResponseList = _repoWrapper.User.FindAllAsync();
+            return mapper.Map<List<ApplicationUserVM>>(peopleResponseList);
         }
         [Route("[action]", Name = "GetUsers")]
         [HttpGet]

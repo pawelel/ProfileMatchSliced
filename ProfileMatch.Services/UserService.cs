@@ -31,45 +31,46 @@ namespace ProfileMatch.Services
             return mapper.Map<ServiceResponse<List<ApplicationUserVM>>>(users);
         }
 
-        public async Task Create(ApplicationUserVM user)
+        public async Task<ServiceResponse<ApplicationUserVM>> Create(ApplicationUserVM user)
         {
             var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail.Equals(user.Email.ToUpper()));
-            if (doesExist == null)
+            if (!doesExist.Success)
             {
                 var userResult = mapper.Map<ApplicationUser>(user);
-                wrapper.User.Create(userResult);
+               var response = wrapper.User.Create(userResult);
+                return mapper.Map<ServiceResponse<ApplicationUserVM>>(response);
+            }
+            else
+            {
+                return mapper.Map<ServiceResponse<ApplicationUserVM>>(doesExist);
             }
         }
 
-        public async Task Delete(string id)
+        public async Task<ServiceResponse<ApplicationUserVM>> Delete(string id)
         {
             var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.Id == id);
-            if (doesExist != null)
-            {
-                wrapper.User.Delete(doesExist);
-            }
+           
+              var response =  wrapper.User.Delete(doesExist.Data);
+            return mapper.Map<ServiceResponse<ApplicationUserVM>>(response);
         }
 
-        public async Task Update(ApplicationUserVM user)
+        public ServiceResponse<ApplicationUserVM> Update(ApplicationUserVM userVM)
         {
-            var doesExist = await wrapper.User.Exist(u=>u.Id==user.Id);
-            if (doesExist)
-            {
-                var userResult = mapper.Map<ApplicationUser>(user);
-
-                wrapper.User.Update(userResult);
-            }
+            var user = mapper.Map<ServiceResponse<ApplicationUser>>(userVM);
+            var response = wrapper.User.Update(user.Data);
+            return mapper.Map<ServiceResponse<ApplicationUserVM>>(response);
         }
 
-        public async Task<ApplicationUserVM> FindSingleByIdAsync(string id)
+        public async Task<ServiceResponse<ApplicationUserVM>> FindSingleByIdAsync(string id)
         {
             var test = await wrapper.User.FindSingleByConditionAsync(u => u.Id == id);
-            var userResult = mapper.Map<ApplicationUserVM>(test);
-            return userResult;
+           return mapper.Map<ServiceResponse<ApplicationUserVM>>(test);
+            
         }
-        public async Task<ApplicationUser> FindSingleByEmailAsync(string email)
+        public async Task<ServiceResponse<ApplicationUserVM>> FindSingleByEmailAsync(string email)
         {
-            return await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail==email.ToUpper());
+            var response= await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail==email.ToUpper());
+            return mapper.Map<ServiceResponse<ApplicationUserVM>>(response);
         }
 
         public async Task<bool> Exist(ApplicationUserVM editUserVM)
@@ -81,5 +82,7 @@ namespace ProfileMatch.Services
         {
             return await wrapper.User.Exist(u => u.Id == id);
         }
+
+        
     }
 }

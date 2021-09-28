@@ -14,7 +14,7 @@ namespace ProfileMatch.Contracts
     {
         Task<ServiceResponse<Department>> Create(Department entity);
         Task<bool> Delete(Department entity);
-        public async Task<ServiceResponse<List<Department>>> FindAllAsync();
+        Task<ServiceResponse<List<Department>>> FindAllAsync();
         Task<IEnumerable<DepartmentVM>> GetDepartmentsWithPeople();
         Task<ServiceResponse<Department>> Update(Department entity);
         Task<bool> Exist(Department entity);
