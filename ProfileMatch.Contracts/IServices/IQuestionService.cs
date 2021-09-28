@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ProfileMatch.Models.Responses;
+using ProfileMatch.Models.ViewModels;
+
 namespace ProfileMatch.Contracts
 {
-  public  interface IQuestionService
+    public interface IQuestionService
     {
+        Task<ServiceResponse<List<QuestionVM>>> GetQuestionsWithCategories();
     }
 }

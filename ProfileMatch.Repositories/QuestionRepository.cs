@@ -14,8 +14,6 @@ namespace ProfileMatch.Repositories
     {
         public QuestionRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
         {
-
         }
-
     }
 }

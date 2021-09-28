@@ -13,7 +13,7 @@ using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Services
 {
-    class QuestionService
+    class QuestionService : IQuestionService
     {
         private readonly IRepositoryWrapper wrapper;
         private readonly IMapper mapper;
@@ -46,6 +46,5 @@ namespace ProfileMatch.Services
                 Success = false
             };
         }
-
     }
 }

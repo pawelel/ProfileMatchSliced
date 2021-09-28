@@ -26,7 +26,6 @@ namespace ProfileMatch.Services
 
         public async Task<ServiceResponse<List<ApplicationUserVM>>> FindAllAsync()
         {
-            ServiceResponse<List<ApplicationUserVM>> response = new();
                var users = await wrapper.User.FindAllAsync();
             return mapper.Map<ServiceResponse<List<ApplicationUserVM>>>(users);
         }
