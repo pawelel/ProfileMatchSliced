@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Validations
 {
-    public class EditUserValidator : AbstractValidator<ApplicationUserVM>
+    public class EditUserValidator : AbstractValidator<ApplicationUser>
     {
         public EditUserValidator()
         {

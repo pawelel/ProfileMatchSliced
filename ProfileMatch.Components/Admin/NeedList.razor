@@ -27,9 +27,9 @@ else
 
 @code {
     IEnumerable<Category> categories;
-    EditUserVM person;
+    EditUser person;
     IEnumerable<UserNeedCategory> needs;
-    IEnumerable<EditUserVM> people;
+    IEnumerable<EditUser> people;
 
     public async Task<IEnumerable<Category>> GetCategories()
     {
@@ -42,12 +42,12 @@ else
         return await needRepository.GetNeeds();
     }
 
-    public async Task<EditUserVM> GetPerson()
+    public async Task<EditUser> GetPerson()
     {
         return await personRepository.GetPerson(1);
 
     }
-    protected async Task<IEnumerable<EditUserVM>> GetPeople()
+    protected async Task<IEnumerable<EditUser>> GetPeople()
     {
         return await personRepository.GetPeople();
     }

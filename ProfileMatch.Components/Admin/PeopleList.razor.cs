@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Responses;
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Components.Admin
 {
@@ -16,16 +16,16 @@ namespace ProfileMatch.Components.Admin
         public IUserService UserService { get; set; }
 
         [Inject]
-        private NavigationManager NavMan { get; set; }
+        private NavigationManager Naan { get; set; }
 
         public string SearchString { get; set; }
 
         private bool _dense = false;
         public bool disabled = false;
 
-        private bool FilterFunc1(ApplicationUserVM person) => FilterFunc(person, SearchString);
+        private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
 
-        private static bool FilterFunc(ApplicationUserVM person, string searchString)
+        private static bool FilterFunc(ApplicationUser person, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -39,8 +39,8 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-        ServiceResponse<List<ApplicationUserVM>> usersResponse = new();
-        public List<ApplicationUserVM> Users { get; set; }
+        ServiceResponse<List<ApplicationUser>> usersResponse = new();
+        public List<ApplicationUser> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,12 +50,12 @@ namespace ProfileMatch.Components.Admin
 
         private void ShowProfile(string id)
         {
-            NavMan.NavigateTo($"/admin/users/{id}");
+            Naan.NavigateTo($"/admin/users/{id}");
         }
 
         private void EditProfile(string id)
         {
-            NavMan.NavigateTo($"/admin/edituser/{id}");
+            Naan.NavigateTo($"/admin/edituser/{id}");
         }
     }
 }

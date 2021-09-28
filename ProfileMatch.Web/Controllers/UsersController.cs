@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AutoMapper;
+
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using ProfileMatch.Contracts;
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Web.Controllers
 {
@@ -19,19 +19,19 @@ namespace ProfileMatch.Web.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IRepositoryWrapper _repoWrapper;
-        private readonly IMapper mapper;
+        
 
-        public UsersController(IRepositoryWrapper repoWrapper, IMapper mapper)
+        public UsersController(IRepositoryWrapper repoWrapper)
         {
             _repoWrapper = repoWrapper;
-            this.mapper = mapper;
+            
         }
 
         [HttpGet]
-        public IEnumerable<ApplicationUserVM> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             var peopleResponseList = _repoWrapper.User.FindAllAsync();
-            return mapper.Map<List<ApplicationUserVM>>(peopleResponseList);
+            return mapper.Map<List<ApplicationUser>>(peopleResponseList);
         }
         [Route("[action]", Name = "GetUsers")]
         [HttpGet]
@@ -40,7 +40,7 @@ namespace ProfileMatch.Web.Controllers
             try
             {
                 var users = await _repoWrapper.User.FindAllAsync();
-                var usersResult = mapper.Map<IEnumerable<ApplicationUserVM>>(users);
+                var usersResult = mapper.Map<IEnumerable<ApplicationUser>>(users);
                 return Ok(usersResult);
             }
             catch (Exception ex)

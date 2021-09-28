@@ -2,51 +2,55 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AutoMapper;
+
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Responses;
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Services
 {
     class QuestionService : IQuestionService
     {
         private readonly IRepositoryWrapper wrapper;
-        private readonly IMapper mapper;
+        
 
-        public QuestionService(IRepositoryWrapper wrapper, IMapper mapper)
+        public QuestionService(IRepositoryWrapper wrapper)
         {
             this.wrapper = wrapper;
-            this.mapper = mapper;
+            
         }
 
-        public async Task<List<QuestionVM>> FindAllAsync()
+        public async Task<ServiceResponse<List<Question>>> FindAllAsync()
         {
-            var request = await wrapper.Question.FindAllAsync();
-            return mapper.Map<List<Question>, List<QuestionVM>>(request.Data);
+            return await wrapper.Question.FindAllAsync();
 
         }
 
-        public async Task<ServiceResponse<QuestionVM>> Create(QuestionVM questionVM)
+        public async Task<ServiceResponse<Question>> Create(Question question)
         {
-                ServiceResponse<QuestionVM> result = new();
-            var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(questionVM.Name));
+        
+            var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(question.Name));
             if (!doesExist.Success)
             {
-                var request = mapper.Map<QuestionVM, Question>(questionVM);
-                var response = await wrapper.Question.Create(request);
-                result.Data = mapper.Map<Question, QuestionVM>(response.Data);
-                result.Message = response.Message;
-                result.Success = response.Success;
+
+                return await wrapper.Question.Create(question);
             }
-                return result;
+            else
+            {
+                return new()
+                {
+                    Success = false,
+                    Message = "User already exists."
+                };
+            }
+        
         }
 
-        public Task<ServiceResponse<List<QuestionVM>>> GetQuestionsWithCategories()
+        public async Task<ServiceResponse<List<Question>>> GetQuestionsWithCategories()
         {
-            throw new NotImplementedException();
+            return await wrapper.Question.GetQuestionsWithCategories();
         }
     }
 }

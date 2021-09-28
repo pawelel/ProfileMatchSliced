@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AutoMapper;
+
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Responses;
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Services
 {
@@ -14,12 +14,12 @@ namespace ProfileMatch.Services
     {
 
         private readonly IRepositoryWrapper wrapper;
-        private readonly IMapper mapper;
+        
 
-        public DepartmentService(IRepositoryWrapper wrapper, IMapper mapper)
+        public DepartmentService(IRepositoryWrapper wrapper)
         {
             this.wrapper = wrapper;
-            this.mapper = mapper;
+            
         }
 
         public async Task<ServiceResponse<List<Department>>> FindAllAsync()
@@ -68,10 +68,10 @@ namespace ProfileMatch.Services
             return await wrapper.Department.GetDepartment(id);
         }
 
-        public async Task<IEnumerable<DepartmentVM>> GetDepartmentsWithPeople()
+        public async Task<IEnumerable<Department>> GetDepartmentsWithPeople()
         {
             var depts = await wrapper.Department.GetDepartmentsWithPeople();
-            var result = mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentVM>>(depts);
+            var result = mapper.Map<IEnumerable<Department>, IEnumerable<Department>>(depts);
             return result;
         }
     }

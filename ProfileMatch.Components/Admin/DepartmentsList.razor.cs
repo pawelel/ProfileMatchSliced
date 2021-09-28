@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
-using ProfileMatch.Models.ViewModels;
+
 
 namespace ProfileMatch.Components.Admin
 {
@@ -14,7 +14,7 @@ namespace ProfileMatch.Components.Admin
         public IDepartmentService DepartmentService { get; set; }
         [Parameter] public int id { get; set; }
 
-        private IEnumerable<DepartmentVM> Departments;
+        private IEnumerable<Department> Departments;
         protected override async Task OnInitializedAsync()
         {
             Departments = await DepartmentService.GetDepartmentsWithPeople();

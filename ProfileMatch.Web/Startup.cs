@@ -16,7 +16,6 @@ using MudBlazor.Services;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Profiles;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
 
@@ -59,9 +58,6 @@ namespace ProfileMatch
             services.ConfigureRepositoryWrapper();
             services.ConfigureRepositoryServices();
 
-
-            //Mapping
-            services.AddAutoMapper(typeof(UserProfile));
             //used for Api and Culture
             services.AddControllers();
             //MudBlazor
