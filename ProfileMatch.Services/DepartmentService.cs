@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using AutoMapper;
@@ -36,7 +32,7 @@ namespace ProfileMatch.Services
             var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Name.Contains(entity.Name));
             if (doesExist == null)
             {
-                wrapper.Department.Create(entity);
+              await  wrapper.Department.Create(entity);
             }
             return await wrapper.Department.FindSingleByConditionAsync(d => d.Name == entity.Name);
         }
@@ -46,7 +42,7 @@ namespace ProfileMatch.Services
             var doesExist = await wrapper.Department.FindSingleByConditionAsync(d => d.Id == entity.Id);
             if (doesExist != null)
             {
-                wrapper.Department.Update(entity);
+             await   wrapper.Department.Update(entity, entity.Id);
             }
             return await wrapper.Department.FindSingleByConditionAsync(d => d.Id == entity.Id);
         }
@@ -75,7 +71,7 @@ namespace ProfileMatch.Services
         public async Task<IEnumerable<DepartmentVM>> GetDepartmentsWithPeople()
         {
             var depts = await wrapper.Department.GetDepartmentsWithPeople();
-           var result = mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentVM>>(depts);
+            var result = mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentVM>>(depts);
             return result;
         }
     }

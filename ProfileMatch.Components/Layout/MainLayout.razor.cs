@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
@@ -11,7 +8,6 @@ using MudBlazor;
 using ProfileMatch.Components.Theme;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Layout
 {

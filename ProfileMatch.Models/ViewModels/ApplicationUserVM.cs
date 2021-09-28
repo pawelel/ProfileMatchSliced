@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProfileMatch.Models.Enumerations;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Enumerations;
 
 namespace ProfileMatch.Models.ViewModels
 {

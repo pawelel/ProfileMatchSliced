@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +7,6 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Responses;
-using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Repositories
 {
@@ -25,7 +20,7 @@ namespace ProfileMatch.Repositories
         {
             ServiceResponse<List<Category>> response = new();
             response.Data = await this.RepositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
-            if (response.Data==null)
+            if (response.Data == null)
             {
                 response.Message = "Query returned no data.";
                 response.Success = false;

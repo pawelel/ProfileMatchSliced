@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Contracts;
-using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Responses;
 using ProfileMatch.Models.ViewModels;
 

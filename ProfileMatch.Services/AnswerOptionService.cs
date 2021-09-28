@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using AutoMapper;
+
 using ProfileMatch.Contracts;
 
 namespace ProfileMatch.Services
 {
-   public class AnswerOptionService : IAnswerOptionService
+    public class AnswerOptionService : IAnswerOptionService
     {
         private readonly IRepositoryWrapper wrapper;
         private readonly IMapper mapper;

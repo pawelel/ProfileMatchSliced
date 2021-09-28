@@ -1,7 +1,7 @@
-﻿using ProfileMatch.Models.Models;
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
+
+using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Contracts
 {

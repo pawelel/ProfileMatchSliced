@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Identity;
 
 using ProfileMatch.Models.Enumerations;
-
-using System;
-using System.Collections.Generic;
 
 namespace ProfileMatch.Models.Models
 {

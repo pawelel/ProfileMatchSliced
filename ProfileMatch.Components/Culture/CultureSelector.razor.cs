@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+
+using Microsoft.AspNetCore.Components;
 
 using ProfileMatch.Services;
-
-using System;
 
 namespace ProfileMatch.Components.Culture
 {

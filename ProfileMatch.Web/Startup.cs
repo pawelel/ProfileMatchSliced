@@ -58,7 +58,7 @@ namespace ProfileMatch
             //Repositories
             services.ConfigureRepositoryWrapper();
             services.ConfigureRepositoryServices();
-            
+
 
             //Mapping
             services.AddAutoMapper(typeof(UserProfile));
@@ -66,7 +66,7 @@ namespace ProfileMatch
             services.AddControllers();
             //MudBlazor
             services.AddMudServices();
-            
+
             //dark theme toggler
             services.AddScoped<IThemeService, ThemeService>();
             //local storage - blazored

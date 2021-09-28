@@ -1,33 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor;
-using ProfileMatch.Models;
-using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Profiles;
-using ProfileMatch.Models.ViewModels;
-using ProfileMatch.Components;
-using ProfileMatch.Services;
-using ProfileMatch.Contracts;
-using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using ProfileMatch;
-using ProfileMatch.Components.Culture;
-using ProfileMatch.Components.Layout;
-using ProfileMatch.Components.Theme;
-using Microsoft.Extensions.Localization;
-using ProfileMatch.Models.Enumerations;
-using Microsoft.AspNetCore.Components;
-using ProfileMatch.Repositories;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Components;
+
+using ProfileMatch.Models.Responses;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -35,18 +14,23 @@ namespace ProfileMatch.Components.Admin
     {
         bool loading;
         [Parameter] public int id { get; set; }
-        IEnumerable<QuestionVM> questions;
-        IEnumerable<QuestionVM> questions1;
-        IEnumerable<CategoryVM> categories;
+        List<QuestionVM> questions;
+        List<QuestionVM> questions1;
+        List<CategoryVM> categories;
         private HashSet<string> options { get; set; } = new HashSet<string>() { };
         private string value { get; set; } = "Nothing selected";
         public bool ShowDetails { get; set; }
+        ServiceResponse<List<CategoryVM>> responseCategories = new();
+        ServiceResponse<List<QuestionVM>> responseQuestions = new();
+        public DateTime? _dob;
         protected override async Task OnInitializedAsync()
-{
-loading = true;
-            categories = await categoryService.GetCategories();
-            questions = await questionService.GetQuestionsWithCategories();
+        {
+            loading = true;
+            responseCategories = await categoryService.GetCategories();
+            responseQuestions = await questionService.GetQuestionsWithCategories();
             questions1 = questions;
+            categories = responseCategories.Data;
+            questions = responseQuestions.Data;
             loading = false;
         }
         bool dense = true;
@@ -68,7 +52,8 @@ loading = true;
                 return true;
             return false;
         }
-        IEnumerable<QuestionVM> GetQuestions()
+
+        List<QuestionVM> GetQuestions()
         {
             if (options.Count() == 0)
             {
@@ -78,20 +63,20 @@ loading = true;
             {
 
 
-                questions1 = from q in questions
-                             from o in options
-                             where q.Category.Name == o
-                             select q;
+                questions1 = (List<QuestionVM>)(from q in questions
+                                                from o in options
+                                                where q.Category.Name == o
+                                                select q);
             }
-            //return questions1;
+            return questions1;
         }
-        IEnumerable<Category> GetCategories()
+        IEnumerable<CategoryVM> GetCategories()
         {
 
-            questions1 = questions.GroupBy(x => x.Category.Name).Select(y => y.First()).Distinct();
-            categories = from q in questions1
-                         where q.Category.Name != null
-                         select q.Category;
+            questions1 = (List<QuestionVM>)questions.GroupBy(x => x.Category.Name).Select(y => y.First()).Distinct();
+            categories = (List<CategoryVM>)(from q in questions1
+                                            where q.Category.Name != null
+                                            select q.Category);
 
             return categories;
         }

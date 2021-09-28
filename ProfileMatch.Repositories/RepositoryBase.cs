@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
-using ProfileMatch.Contracts;
-using ProfileMatch.Data;
-using ProfileMatch.Models.Responses;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+
+using ProfileMatch.Contracts;
+using ProfileMatch.Data;
+using ProfileMatch.Models.Responses;
 
 namespace ProfileMatch.Repositories
 {
@@ -22,11 +21,11 @@ namespace ProfileMatch.Repositories
         }
 
 
-        public ServiceResponse<T> Create(T entity)
+        public async Task<ServiceResponse<T>> Create(T entity)
         {
             ServiceResponse<T> response = new();
-            var data = this.RepositoryContext.Set<T>().Add(entity).Entity;
-            if (data == null)
+           
+            if (entity == null)
             {
                 response.Success = false;
                 response.Message = "There was an error with provided data.";
@@ -36,25 +35,55 @@ namespace ProfileMatch.Repositories
 
                 response.Success = true;
                 response.Message = "Created";
-                response.Data = data;
+                var data = await RepositoryContext.AddAsync(entity);
+                await RepositoryContext.SaveChangesAsync();
+                response.Data = data.Entity;
             }
             return response;
         }
-        public ServiceResponse<T> Update(T entity)
+        public async Task<ServiceResponse<T>> Update(T entity, int key)
         {
             ServiceResponse<T> response = new();
-            var data = this.RepositoryContext.Set<T>().Update(entity).Entity;
-            if (data == null)
+            T existing = await RepositoryContext.Set<T>().FindAsync(key);
+           
+
+            
+            if (existing==null)
             {
                 response.Success = false;
                 response.Message = "There was an error with provided data.";
+                response.Data = null;
             }
             else
             {
-
+                RepositoryContext.Entry(existing).CurrentValues.SetValues(entity);
                 response.Success = true;
                 response.Message = "Updated";
-                response.Data = data;
+                await RepositoryContext.SaveChangesAsync();
+                response.Data = existing;
+            }
+            return response;
+        }
+        public async Task<ServiceResponse<T>> Update(T entity, string key)
+        {
+            ServiceResponse<T> response = new();
+            T existing = await RepositoryContext.Set<T>().FindAsync(key);
+
+
+
+            if (existing == null)
+            {
+                response.Success = false;
+                response.Message = "There was an error with provided data.";
+                response.Data = null;
+            }
+            else
+            {
+                RepositoryContext.Entry(existing).CurrentValues.SetValues(entity);
+                response.Success = true;
+                response.Message = "Updated";
+                await RepositoryContext.SaveChangesAsync();
+                response.Data = existing;
             }
             return response;
         }
@@ -114,7 +143,23 @@ namespace ProfileMatch.Repositories
             }
             return response;
         }
-
+        public ServiceResponse<T> FindSingleByCondition(Expression<Func<T, bool>> expression)
+        {
+            ServiceResponse<T> response = new();
+            var data =  this.RepositoryContext.Set<T>().Where(expression).AsNoTracking().FirstOrDefault();
+            if (data == null)
+            {
+                response.Message = "The query returned no data";
+                response.Success = false;
+            }
+            else
+            {
+                response.Success = true;
+                response.Message = "Data received with success.";
+                response.Data = data;
+            }
+            return response;
+        }
         public async Task<ServiceResponse<T>> FindSingleByConditionAsync(Expression<Func<T, bool>> expression)
         {
             ServiceResponse<T> response = new();

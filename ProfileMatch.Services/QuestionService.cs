@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using AutoMapper;
@@ -24,27 +22,31 @@ namespace ProfileMatch.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<QuestionVM>> FindAllAsync()
+        public async Task<List<QuestionVM>> FindAllAsync()
         {
             var request = await wrapper.Question.FindAllAsync();
-            return mapper.Map<IEnumerable<QuestionVM>>(request);
+            return mapper.Map<List<Question>, List<QuestionVM>>(request.Data);
 
         }
 
         public async Task<ServiceResponse<QuestionVM>> Create(QuestionVM questionVM)
         {
+                ServiceResponse<QuestionVM> result = new();
             var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(questionVM.Name));
             if (!doesExist.Success)
             {
-           var request = mapper.Map<Question>(questionVM);
-           var response = wrapper.Question.Create(request);
-                return mapper.Map<ServiceResponse<QuestionVM>>(response);
+                var request = mapper.Map<QuestionVM, Question>(questionVM);
+                var response = await wrapper.Question.Create(request);
+                result.Data = mapper.Map<Question, QuestionVM>(response.Data);
+                result.Message = response.Message;
+                result.Success = response.Success;
             }
-            return new ServiceResponse<QuestionVM>()
-            {
-                Message = "Question with that name already exists.",
-                Success = false
-            };
+                return result;
+        }
+
+        public Task<ServiceResponse<List<QuestionVM>>> GetQuestionsWithCategories()
+        {
+            throw new NotImplementedException();
         }
     }
 }

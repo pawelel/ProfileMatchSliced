@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ProfileMatch.Models.Enumerations;
+
 using AutoMapper;
-using FluentValidation;
-using ProfileMatch.Validations;
+
 using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
-
-using ProfileMatch.Models.Models;
-using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Models.Responses;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Sites.Admin
 {
@@ -35,6 +31,7 @@ namespace ProfileMatch.Sites.Admin
         [Parameter] public string Id { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
         private bool _success;
+        DateTime? _dob;
         ServiceResponse<ApplicationUserVM> loadedUserResponse = new();
         ApplicationUserVM EditUserVM { get; set; } = new();
         private IEnumerable<DepartmentVM> Departments = new List<DepartmentVM>();
@@ -67,10 +64,7 @@ namespace ProfileMatch.Sites.Admin
             await Form.Validate();
             if (Form.IsValid)
             {
-                await LoadData();
-
-
-                UserService.Update(EditUserVM);
+                await UserService.Update(EditUserVM);
 
                 NavigationManager.NavigateTo("/admin/dashboard");
                 await Refresh();

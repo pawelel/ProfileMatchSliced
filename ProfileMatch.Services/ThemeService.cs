@@ -1,12 +1,12 @@
-﻿using Blazored.LocalStorage;
+﻿using System;
+using System.Threading.Tasks;
+
+using Blazored.LocalStorage;
 
 using Microsoft.JSInterop;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-
-using System;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Services
 {

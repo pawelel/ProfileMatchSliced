@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System;
 
-using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
 {

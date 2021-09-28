@@ -13,7 +13,7 @@ namespace ProfileMatch.Contracts
         IUserNeedCategoryRepository UserNeedCategory { get; }
         IUserNoteRepository UserNote { get; }
         INoteRepository Note { get; }
-        
+
 
         void Save();
         Task SaveAsync();

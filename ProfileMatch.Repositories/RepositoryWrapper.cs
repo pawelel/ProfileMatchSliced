@@ -102,7 +102,8 @@ namespace ProfileMatch.Repositories
                 return _userAnswer;
             }
         }
-        public IUserNeedCategoryRepository UserNeedCategory {
+        public IUserNeedCategoryRepository UserNeedCategory
+        {
             get
             {
 
@@ -113,7 +114,8 @@ namespace ProfileMatch.Repositories
                 return _userNeedCategory;
             }
         }
-        public IUserNoteRepository UserNote {
+        public IUserNoteRepository UserNote
+        {
             get
             {
 
@@ -124,7 +126,8 @@ namespace ProfileMatch.Repositories
                 return _userNote;
             }
         }
-        public INoteRepository Note {
+        public INoteRepository Note
+        {
             get
             {
 

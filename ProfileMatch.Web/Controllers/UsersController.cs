@@ -1,16 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using AutoMapper;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using ProfileMatch.Contracts;
-using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
-
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Web.Controllers
 {
