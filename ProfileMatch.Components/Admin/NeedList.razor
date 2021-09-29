@@ -1,64 +1,65 @@
 ﻿@*@page "/needs"
-@inject IUserRepository personRepository
-@inject ICategoryRepository categoryRepository
-@inject INeedRepository needRepository
+    @inject IUserRepository personRepository
+    @inject ICategoryRepository categoryRepository
+    @inject INeedRepository needRepository
+        <MudButton Link="/admin/edituserneedcategories" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
 
-@if (person == null || categories == null)
-{
-    <p>loading</p>
-}
-else
-{
-    <MudTable Items="@needs">
-        <HeaderContent>
-            <MudTh>Category Name</MudTh>
-            <MudTh>Need</MudTh>
-            <MudTh>First Name</MudTh>
-            <MudTh>Last Name</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Category Name">@context.CategoryName</MudTd>
-            <MudTd DataLabel="Need">@context.Want</MudTd>
-            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
-            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
-        </RowTemplate>
-    </MudTable>
-}
-
-@code {
-    IEnumerable<Category> categories;
-    EditUser person;
-    IEnumerable<UserNeedCategory> needs;
-    IEnumerable<EditUser> people;
-
-    public async Task<IEnumerable<Category>> GetCategories()
+    @if (person == null || categories == null)
     {
-        return await categoryRepository.GetCategories();
-
+        <p>loading</p>
+    }
+    else
+    {
+        <MudTable Items="@needs">
+            <HeaderContent>
+                <MudTh>Category Name</MudTh>
+                <MudTh>Need</MudTh>
+                <MudTh>First Name</MudTh>
+                <MudTh>Last Name</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Category Name">@context.CategoryName</MudTd>
+                <MudTd DataLabel="Need">@context.Want</MudTd>
+                <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+            </RowTemplate>
+        </MudTable>
     }
 
-    public async Task<IEnumerable<UserNeedCategory>> GetNeeds()
-    {
-        return await needRepository.GetNeeds();
-    }
+    @code {
+        IEnumerable<Category> categories;
+        EditUser person;
+        IEnumerable<UserNeedCategory> needs;
+        IEnumerable<EditUser> people;
 
-    public async Task<EditUser> GetPerson()
-    {
-        return await personRepository.GetPerson(1);
+        public async Task<IEnumerable<Category>> GetCategories()
+        {
+            return await categoryRepository.GetCategories();
 
-    }
-    protected async Task<IEnumerable<EditUser>> GetPeople()
-    {
-        return await personRepository.GetPeople();
-    }
+        }
+
+        public async Task<IEnumerable<UserNeedCategory>> GetNeeds()
+        {
+            return await needRepository.GetNeeds();
+        }
+
+        public async Task<EditUser> GetPerson()
+        {
+            return await personRepository.GetPerson(1);
+
+        }
+        protected async Task<IEnumerable<EditUser>> GetPeople()
+        {
+            return await personRepository.GetPeople();
+        }
 
 
 
-    protected async override Task OnInitializedAsync()
-    {
-        person = await GetPerson();
-        categories = await GetCategories();
-        needs = await GetNeeds();
-        people = await GetPeople();
-    }
-}*@
+        protected async override Task OnInitializedAsync()
+        {
+            person = await GetPerson();
+            categories = await GetCategories();
+            needs = await GetNeeds();
+            people = await GetPeople();
+        }
+    }*@

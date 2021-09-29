@@ -1,22 +1,20 @@
-﻿@page "/categoriestable"
-@inject ICategoryService categoryService
-@inject IQuestionService questionService
-@inject IAnswerOptionRepository answerOptionRepository
-
+﻿
 @if (loading)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
 else
 {
-    <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="options">
-        @foreach (var cat in GetCategories())
+
+    <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="Options">
+        @foreach (var cat in categories)
         {
             <MudSelectItem T="string" Value="@cat.Name" />
         }
     </MudSelect>
+    <MudButton Link="/admin/editcategory" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
     <MudItem xs="12" md="6">
-        <MudText Typo="Typo.body2">SelectedValues:  @(string.Join(", ", options.Select(x=>$"\"{x}\""))) </MudText>
+        <MudText Typo="Typo.body2">SelectedValues:  @(string.Join(", ", Options.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
     <MudTable Items="@(GetQuestions())" SortLabel="Sort By" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>

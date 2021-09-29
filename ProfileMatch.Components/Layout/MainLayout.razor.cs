@@ -52,7 +52,7 @@ namespace ProfileMatch.Components.Layout
             ThemeService.OnChange -= ThemeServiceOnChange;
         }
 
-        MudTheme defaultTheme = new GeneralTheme();
+        readonly MudTheme defaultTheme = new GeneralTheme();
         MudTheme currentTheme;
         MudTheme darkTheme = new DarkTheme();
     }

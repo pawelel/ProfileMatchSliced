@@ -1,0 +1,9 @@
+﻿@page "/admin/editdepartment/{id}"
+@page  "/admin/editdepartment/"
+<MudForm @ref="Form" @bind-IsValid="@_success">
+    <MudTextField T="string" @bind-Value="@Dep.Name" Immediate="true" Label="Department Name"
+                  Required="true" RequiredError="Department name is required!" />
+    <MudTextField T="string" @bind-Value="@Dep.Description" Immediate="true" Label="Department Description"
+                  Lines="5"/>
+</MudForm>
+<MudButton OnClick="HandleSave">Save</MudButton>

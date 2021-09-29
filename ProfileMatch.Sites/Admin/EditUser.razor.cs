@@ -20,7 +20,7 @@ namespace ProfileMatch.Sites.Admin
     public partial class EditUser : ComponentBase
     {
         [Inject]
-        AuthenticationStateProvider authSP { get; set; }
+        AuthenticationStateProvider AuthSP { get; set; }
 
         [Inject]
         UserManager<ApplicationUser> UserManager { get; set; }
@@ -42,7 +42,7 @@ namespace ProfileMatch.Sites.Admin
         private List<Department> Departments = new();
         private async Task GetUserDetails()
         {
-var authState = await authSP.GetAuthenticationStateAsync();
+var authState = await AuthSP.GetAuthenticationStateAsync();
         var user = authState.User;
             if (user.Identity.IsAuthenticated)
             {
@@ -67,6 +67,7 @@ var authState = await authSP.GetAuthenticationStateAsync();
         {
             Departments = await DepartmentService.FindAllAsync();
             User = await UserService.FindSingleByIdAsync(Id);
+            _dob = User.DateOfBirth;
             StateHasChanged();
         }
 
@@ -75,6 +76,7 @@ var authState = await authSP.GetAuthenticationStateAsync();
             await Form.Validate();
             if (Form.IsValid)
             {
+                User.DateOfBirth = (DateTime)_dob;
                 User.UserName = User.Email;
                 User.NormalizedEmail = User.Email.ToUpper();
                 if (await UserService.Exist(User.Email))

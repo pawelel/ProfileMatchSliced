@@ -49,7 +49,7 @@ namespace ProfileMatch.Services
 
         public async Task<bool> Delete(Department entity)
         {
-            var doesExist = await Exist(entity);
+            var doesExist = await Exist(entity.Id);
             if (doesExist)
             {
                 wrapper.Department.Delete(entity);
@@ -58,9 +58,9 @@ namespace ProfileMatch.Services
             return false;
         }
 
-        public async Task<bool> Exist(Department entity)
+        public async Task<bool> Exist(int id)
         {
-            return await wrapper.Department.Exist(d => d == entity);
+            return await wrapper.Department.Exist(d => d.Id == id);
         }
 
         public async Task<Department> GetDepartment(int id)

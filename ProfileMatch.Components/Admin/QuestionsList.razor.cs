@@ -5,30 +5,35 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
+using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Responses;
+using ProfileMatch.Services;
 
 
 namespace ProfileMatch.Components.Admin
 {
     public partial class QuestionsList : ComponentBase
     {
+        [Inject]
+        ICategoryService CategoryService { get; set; }
+        [Inject]
+        IQuestionService QuestionService { get; set; }
+        [Inject]
+        IAnswerOptionService AnswerOptionService { get; set; }
+
         bool loading;
-        [Parameter] public int id { get; set; }
+        [Parameter] public int Id { get; set; }
         List<Question> questions;
         List<Question> questions1;
         List<Category> categories;
-        private HashSet<string> options { get; set; } = new HashSet<string>() { };
-        private string value { get; set; } = "Nothing selected";
+        private HashSet<string> Options { get; set; } = new HashSet<string>() { };
+        private string Value { get; set; } = "Nothing selected";
         public bool ShowDetails { get; set; }
-        List<Category> responseCategories = new();
-        List<Question> responseQuestions = new();
-        public DateTime? _dob;
         protected override async Task OnInitializedAsync()
         {
             loading = true;
-            categories = await categoryService.GetCategories();
-            questions = await questionService.GetQuestionsWithCategories();
+            categories = await CategoryService.GetCategories();
+            questions = await QuestionService.GetQuestionsWithCategories();
             questions1 = questions;
             loading = false;
         }
@@ -38,10 +43,10 @@ namespace ProfileMatch.Components.Admin
         bool striped = false;
         private string searchString1 = "";
         private Question selectedItem1 = null;
-        private HashSet<Question> selectedItems = new HashSet<Question>();
+        private readonly HashSet<Question> selectedItems = new();
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
-        private bool FilterFunc(Question question, string searchString)
+        private static bool FilterFunc(Question question, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -54,7 +59,7 @@ namespace ProfileMatch.Components.Admin
 
         List<Question> GetQuestions()
         {
-            if (options.Count() == 0)
+            if (Options.Count == 0)
             {
                 questions1 = questions;
             }
@@ -63,21 +68,12 @@ namespace ProfileMatch.Components.Admin
 
 
                 questions1 = (List<Question>)(from q in questions
-                                                from o in options
-                                                where q.Category.Name == o
-                                                select q);
+                                              from o in Options
+                                              where q.Category.Name == o
+                                              select q);
             }
             return questions1;
         }
-        IEnumerable<Category> GetCategories()
-        {
-
-            questions1 = (List<Question>)questions.GroupBy(x => x.Category.Name).Select(y => y.First()).Distinct();
-            categories = (List<Category>)(from q in questions1
-                                            where q.Category.Name != null
-                                            select q.Category);
-
-            return categories;
-        }
+        
     }
 }

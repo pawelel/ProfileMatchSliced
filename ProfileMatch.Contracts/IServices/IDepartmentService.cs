@@ -14,7 +14,7 @@ namespace ProfileMatch.Contracts
         Task<List<Department>> FindAllAsync();
         Task<IEnumerable<Department>> GetDepartmentsWithPeople();
         Task<Department> Update(Department entity);
-        Task<bool> Exist(Department entity);
+        Task<bool> Exist(int id);
         Task<Department> GetDepartment(int id);
 
     }

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileMatch.Data", "Profil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileMatch.Components", "ProfileMatch.Components\ProfileMatch.Components.csproj", "{6DCC9EC1-9F43-4159-92A8-714816092E05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileMatch.Tests", "ProfileMatch.Tests\ProfileMatch.Tests.csproj", "{0D6701F6-BC3E-46F0-8B59-4DEC06EDB6F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{6DCC9EC1-9F43-4159-92A8-714816092E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DCC9EC1-9F43-4159-92A8-714816092E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DCC9EC1-9F43-4159-92A8-714816092E05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D6701F6-BC3E-46F0-8B59-4DEC06EDB6F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D6701F6-BC3E-46F0-8B59-4DEC06EDB6F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D6701F6-BC3E-46F0-8B59-4DEC06EDB6F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D6701F6-BC3E-46F0-8B59-4DEC06EDB6F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

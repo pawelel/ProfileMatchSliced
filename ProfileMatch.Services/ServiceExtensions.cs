@@ -16,6 +16,9 @@ namespace ProfileMatch.Services
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IAnswerOptionService, AnswerOptionService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IQuestionService, QuestionService>();
         }
     }
 }

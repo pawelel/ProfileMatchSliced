@@ -26,12 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Manager\" />
-    <Folder Include="User\" />
-    <Folder Include="SuperUser\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Admin\EditUser.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
