@@ -1,9 +1,36 @@
 ﻿@page "/admin/editdepartment/{id}"
 @page  "/admin/editdepartment/"
 <MudForm @ref="Form" @bind-IsValid="@_success">
-    <MudTextField T="string" @bind-Value="@Dep.Name" Immediate="true" Label="Department Name"
-                  Required="true" RequiredError="Department name is required!" />
-    <MudTextField T="string" @bind-Value="@Dep.Description" Immediate="true" Label="Department Description"
-                  Lines="5"/>
+            <MudTextField T="string" @bind-Value="@Dep.Name" Immediate="true" Label="Project Name"
+                      Required="true" RequiredError="Project name is required!" />
+            <MudTextField T="string" @bind-Value="@Dep.Description" Immediate="true" Label="Project Description"
+                      Lines="5" />
 </MudForm>
 <MudButton OnClick="HandleSave">Save</MudButton>
+
+<MudTable Items="@Departments" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Departments</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Members</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Members">@context.ApplicationUsers.Count</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
