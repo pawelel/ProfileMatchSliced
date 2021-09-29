@@ -38,10 +38,8 @@ namespace ProfileMatch.Sites.Admin
         private bool _success;
         DateTime? _dob;
         string currentUserName;
-        ServiceResponse<ApplicationUser> loadedUserResponse = new();
-        ServiceResponse<List<Department>> DepartmentsSource = new();
         ApplicationUser User { get; set; } = new();
-        private IEnumerable<Department> Departments = new List<Department>();
+        private List<Department> Departments = new();
         private async Task GetUserDetails()
         {
 var authState = await authSP.GetAuthenticationStateAsync();
@@ -61,17 +59,14 @@ var authState = await authSP.GetAuthenticationStateAsync();
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-            User = loadedUserResponse.Data;
+      
             await GetUserDetails();
-            
-            Departments = DepartmentsSource.Data;
         }
 
         private async Task LoadData()
         {
-            DepartmentsSource = await DepartmentService.FindAllAsync();
-            loadedUserResponse = await UserService.FindSingleByIdAsync(Id);
-            Departments = DepartmentsSource.Data;
+            Departments = await DepartmentService.FindAllAsync();
+            User = await UserService.FindSingleByIdAsync(Id);
             StateHasChanged();
         }
 

@@ -17,27 +17,10 @@ namespace ProfileMatch.Repositories
         {
         }
 
-        public async Task<List<Question>>> GetQuestionsWithCategories()
+        public async Task<List<Question>> GetQuestionsWithCategories()
         {
-            var qlist = await RepositoryContext.Set<Question>().Include(c => c.Category).AsNoTracking().ToListAsync();
-            if (qlist != null)
-            {
-                return new()
-                {
-                    Message = "Questions with categories",
-                    Success = true,
-                    Data = qlist
-                };
-            }
-            else
-            {
-                return new()
-                {
-                    Message = "There are no questions.",
-                    Success = false,
-                    Data = new List<Question>()
-                };
-            }
+           return await RepositoryContext.Set<Question>().Include(c => c.Category).AsNoTracking().ToListAsync();
+        
 
         }
     }

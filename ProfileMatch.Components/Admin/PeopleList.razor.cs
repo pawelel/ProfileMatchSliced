@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
+using ProfileMatch.Components.Layout;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.Responses;
@@ -17,7 +18,7 @@ namespace ProfileMatch.Components.Admin
         public IUserService UserService { get; set; }
 
         [Inject]
-        private NavigationManager Naan { get; set; }
+        private NavigationManager NavMan { get; set; }
 
         public string SearchString { get; set; }
 
@@ -45,18 +46,18 @@ namespace ProfileMatch.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            usersResponse = await UserService.FindAllAsync();
-            Users = usersResponse.Data;
+            Users = await UserService.FindAllAsync();
+           
         }
 
         private void ShowProfile(string id)
-        {
-            Naan.NavigateTo($"/admin/users/{id}");
+{
+            NavMan.NavigateTo($"/admin/users/{id}");
         }
 
         private void EditProfile(string id)
         {
-            Naan.NavigateTo($"/admin/edituser/{id}");
+            NavMan.NavigateTo($"/admin/edituser/{id}");
         }
     }
 }

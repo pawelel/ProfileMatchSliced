@@ -27,11 +27,9 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             loading = true;
-            responseCategories = await categoryService.GetCategories();
-            responseQuestions = await questionService.GetQuestionsWithCategories();
+            categories = await categoryService.GetCategories();
+            questions = await questionService.GetQuestionsWithCategories();
             questions1 = questions;
-            categories = responseCategories.Data;
-            questions = responseQuestions.Data;
             loading = false;
         }
         bool dense = true;
