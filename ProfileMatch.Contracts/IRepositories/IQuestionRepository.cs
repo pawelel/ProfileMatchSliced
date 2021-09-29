@@ -9,6 +9,6 @@ namespace ProfileMatch.Contracts
 {
     public interface IQuestionRepository : IRepositoryBase<Question>
     {
-        Task<ServiceResponse<List<Question>>> GetQuestionsWithCategories();
+        Task<List<Question>> GetQuestionsWithCategories();
     }
 }

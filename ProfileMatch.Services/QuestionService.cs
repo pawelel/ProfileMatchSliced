@@ -22,33 +22,29 @@ namespace ProfileMatch.Services
             
         }
 
-        public async Task<ServiceResponse<List<Question>>> FindAllAsync()
+        public async Task<List<Question>> FindAllAsync()
         {
             return await wrapper.Question.FindAllAsync();
 
         }
 
-        public async Task<ServiceResponse<Question>> Create(Question question)
+        public async Task<Question> Create(Question question)
         {
         
             var doesExist = await wrapper.Question.FindSingleByConditionAsync(q => q.Name.Contains(question.Name));
-            if (!doesExist.Success)
+            if (doesExist!=null)
             {
 
                 return await wrapper.Question.Create(question);
             }
             else
             {
-                return new()
-                {
-                    Success = false,
-                    Message = "User already exists."
-                };
+                return null;
             }
         
         }
 
-        public async Task<ServiceResponse<List<Question>>> GetQuestionsWithCategories()
+        public async Task<List<Question>> GetQuestionsWithCategories()
         {
             return await wrapper.Question.GetQuestionsWithCategories();
         }

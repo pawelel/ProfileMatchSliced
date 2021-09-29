@@ -39,6 +39,7 @@ namespace ProfileMatch.Sites.Admin
         DateTime? _dob;
         string currentUserName;
         ServiceResponse<ApplicationUser> loadedUserResponse = new();
+        ServiceResponse<List<Department>> DepartmentsSource = new();
         ApplicationUser User { get; set; } = new();
         private IEnumerable<Department> Departments = new List<Department>();
         private async Task GetUserDetails()
@@ -62,22 +63,16 @@ var authState = await authSP.GetAuthenticationStateAsync();
             await LoadData();
             User = loadedUserResponse.Data;
             await GetUserDetails();
+            
+            Departments = DepartmentsSource.Data;
         }
 
         private async Task LoadData()
         {
-
+            DepartmentsSource = await DepartmentService.FindAllAsync();
             loadedUserResponse = await UserService.FindSingleByIdAsync(Id);
-            if (loadedUserResponse.Data == null)
-            {
-                loadedUserResponse.Data = new()
-                {
-                    DepartmentId = 1,
-                    DateOfBirth = DateTime.Now,
-                    PhotoPath = "images/nophoto.jpg"
-                };
-            }
-                        
+            Departments = DepartmentsSource.Data;
+            StateHasChanged();
         }
 
         protected async Task HandleSave()
@@ -85,8 +80,11 @@ var authState = await authSP.GetAuthenticationStateAsync();
             await Form.Validate();
             if (Form.IsValid)
             {
+                User.UserName = User.Email;
+                User.NormalizedEmail = User.Email.ToUpper();
                 if (await UserService.Exist(User.Email))
                 {
+                   
                 await UserService.Update(User);
                 }
                 else
@@ -95,12 +93,7 @@ var authState = await authSP.GetAuthenticationStateAsync();
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");
-                await Refresh();
             }
-        }
-        private async Task Refresh()
-        {
-            await LoadData();
         }
     }
 }

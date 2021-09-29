@@ -40,7 +40,7 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-        ServiceResponse<List<ApplicationUser>> usersResponse = new();
+      
         public List<ApplicationUser> Users { get; set; }
 
         protected override async Task OnInitializedAsync()

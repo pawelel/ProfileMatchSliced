@@ -21,8 +21,8 @@ namespace ProfileMatch.Components.Admin
         private HashSet<string> options { get; set; } = new HashSet<string>() { };
         private string value { get; set; } = "Nothing selected";
         public bool ShowDetails { get; set; }
-        ServiceResponse<List<Category>> responseCategories = new();
-        ServiceResponse<List<Question>> responseQuestions = new();
+        List<Category> responseCategories = new();
+        List<Question> responseQuestions = new();
         public DateTime? _dob;
         protected override async Task OnInitializedAsync()
         {

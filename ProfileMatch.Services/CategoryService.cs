@@ -21,7 +21,7 @@ namespace ProfileMatch.Services
             
         }
 
-        public async Task<ServiceResponse<List<Category>>> GetCategories()
+        public async Task<List<Category>> GetCategories()
         {
                return await wrapper.Category.FindAllAsync();
         }

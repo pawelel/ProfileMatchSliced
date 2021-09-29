@@ -16,10 +16,10 @@ namespace ProfileMatch.Repositories
         {
         }
 
-        public async Task<ServiceResponse<List<Category>>> GetCategoriesWithQuestions()
+        public async Task<List<Category>>> GetCategoriesWithQuestions()
         {
-            ServiceResponse<List<Category>> response = new();
-            response.Data = await this.RepositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
+            List<Category> response = new();
+            response = await this.RepositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
             if (response.Data == null)
             {
                 response.Message = "Query returned no data.";

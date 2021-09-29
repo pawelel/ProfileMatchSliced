@@ -8,6 +8,6 @@ namespace ProfileMatch.Contracts
 {
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
-        Task<ServiceResponse<List<Category>>> GetCategoriesWithQuestions();
+        Task<List<Category>> GetCategoriesWithQuestions();
     }
 }

@@ -17,7 +17,7 @@ namespace ProfileMatch.Repositories
         {
         }
 
-        public async Task<ServiceResponse<List<Question>>> GetQuestionsWithCategories()
+        public async Task<List<Question>>> GetQuestionsWithCategories()
         {
             var qlist = await RepositoryContext.Set<Question>().Include(c => c.Category).AsNoTracking().ToListAsync();
             if (qlist != null)

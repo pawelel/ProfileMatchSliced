@@ -9,6 +9,6 @@ namespace ProfileMatch.Contracts
 {
     public interface IQuestionService
     {
-        Task<ServiceResponse<List<Question>>> GetQuestionsWithCategories();
+        Task<List<Question>> GetQuestionsWithCategories();
     }
 }

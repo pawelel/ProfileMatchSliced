@@ -9,6 +9,6 @@ namespace ProfileMatch.Contracts
 {
     public interface ICategoryService
     {
-        Task<ServiceResponse<List<Category>>> GetCategories();
+        Task<List<Category>> GetCategories();
     }
 }

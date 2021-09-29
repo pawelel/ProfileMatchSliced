@@ -20,43 +20,39 @@ namespace ProfileMatch.Services
             
         }
 
-        public async Task<ServiceResponse<List<ApplicationUser>>> FindAllAsync()
+        public async Task<List<ApplicationUser>> FindAllAsync()
         {
             return await wrapper.User.FindAllAsync();
-            
         }
 
-        public async Task<ServiceResponse<ApplicationUser>> Create(ApplicationUser user)
+        public async Task<ApplicationUser> Create(ApplicationUser user)
         {
 
             var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail.Equals(user.Email.ToUpper() ));
-            if (!doesExist.Success)
+            if (doesExist==null)
             {
 
-                var response = await wrapper.User.Create(user);
-                return response;
+               return await wrapper.User.Create(user);
+           
             }
             else
             {
-                return new()
-                {
-                    Message = "User already exists.",
-                    Success = false
-                };
+                return null;
+                
             }
         }
 
-        public async Task<ServiceResponse<ApplicationUser>> Delete(string id)
+        public async Task<ApplicationUser> Delete(string id)
         {
             
             var doesExist = await wrapper.User.FindSingleByConditionAsync(u => u.Id == id);
 
-            return wrapper.User.Delete(doesExist.Data);
+            return wrapper.User.Delete(doesExist);
         
          
         }
 
-        public async Task<ServiceResponse<ApplicationUser>> Update(ApplicationUser user)
+        public async Task<ApplicationUser> Update(ApplicationUser user)
         {
 
             if (await Exist(user.Email))
@@ -66,21 +62,17 @@ namespace ProfileMatch.Services
             }
             else
             {
-                return new()
-                {
-                    Message = "User with provided data doesn't exist.",
-                    Success = false
-                };
+                return null;
             }
         }
 
-        public async Task<ServiceResponse<ApplicationUser>> FindSingleByIdAsync(string id)
+        public async Task<ApplicationUser> FindSingleByIdAsync(string id)
         {
             
             return await wrapper.User.FindSingleByConditionAsync(u => u.Id == id);
             
         }
-        public async Task<ServiceResponse<ApplicationUser>> FindSingleByEmailAsync(string email)
+        public async Task<ApplicationUser> FindSingleByEmailAsync(string email)
         {
             
             return await wrapper.User.FindSingleByConditionAsync(u => u.NormalizedEmail == email.ToUpper());
