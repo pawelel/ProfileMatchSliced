@@ -9,6 +9,7 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -53,7 +54,22 @@ namespace ProfileMatch.Components.Admin
         {
             var parameters = new DialogParameters { ["Dep"] = department };
            var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-            await dialog.Result;
+           var data = await dialog.Result;
+            if (!dialog.Result.IsCanceled)
+            {
+                if (await DepartmentService.Exist(department))
+                {
+                    await DepartmentService.Update((Department)data.Data);
+                }
+                else
+                {
+                    await DepartmentService.Create((Department)data.Data);
+                }
+            }
+            else
+            {
+                return;
+            }
         }
         async Task DepartmentDialog()
         {
@@ -61,5 +77,8 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
             Departments = await GetDepartmentsAsync();
         }
+
+        
+
     }
 }

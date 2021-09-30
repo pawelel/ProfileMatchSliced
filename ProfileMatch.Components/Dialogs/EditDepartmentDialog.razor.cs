@@ -13,7 +13,6 @@ namespace ProfileMatch.Components.Dialogs
     {
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
-        [Inject] private ISnackbar Snackbar { get; set; }
 
         [Inject] public IDepartmentService DepartmentService { get; set; }
 
@@ -24,15 +23,7 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                if (await DepartmentService.Exist(Dep))
-                {
-                    await DepartmentService.Update(Dep);
-                }
-                else
-                {
-                    await DepartmentService.Create(Dep);
-                }
-                    MudDialog.Close();
+               MudDialog.Close(DialogResult.Ok(Dep));   
             }
         }
 
