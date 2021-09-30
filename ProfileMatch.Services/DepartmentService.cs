@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 
@@ -73,6 +74,11 @@ namespace ProfileMatch.Services
            return await wrapper.Department.GetDepartmentsWithPeople();
            
     
+        }
+
+        public async Task<bool> Exist(Department department)
+        {
+            return await wrapper.Department.Exist(d => d == department);
         }
     }
 }

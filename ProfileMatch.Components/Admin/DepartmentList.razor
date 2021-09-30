@@ -1,13 +1,8 @@
-﻿@page "/admin/editdepartment/{id}"
-@page  "/admin/editdepartment/"
-<MudForm @ref="Form" @bind-IsValid="@_success">
-            <MudTextField T="string" @bind-Value="@Dep.Name" Immediate="true" Label="Project Name"
-                      Required="true" RequiredError="Project name is required!" />
-            <MudTextField T="string" @bind-Value="@Dep.Description" Immediate="true" Label="Project Description"
-                      Lines="5" />
-</MudForm>
-<MudButton OnClick="HandleSave">Save</MudButton>
-
+﻿<MudButton OnClick="DepartmentDialog" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
+<MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
 <MudTable Items="@Departments" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Departments</MudText>
@@ -18,19 +13,20 @@
         <MudTh>Name</MudTh>
         <MudTh>Description</MudTh>
         <MudTh>Members</MudTh>
+        <MudTh>Actions</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Members">@context.ApplicationUsers.Count</MudTd>
+        <MudTd DataLabel="Edit">
+            <MudButton OnClick="((e)=>DepartmentDialog(context))">Edit</MudButton>
+
+        </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager />
     </PagerContent>
 </MudTable>
 
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-    <MudSpacer />
+

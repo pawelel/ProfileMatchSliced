@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using ProfileMatch.Models.Models;
@@ -16,6 +18,6 @@ namespace ProfileMatch.Contracts
         Task<Department> Update(Department entity);
         Task<bool> Exist(int id);
         Task<Department> GetDepartment(int id);
-
+        Task<bool> Exist(Department department);
     }
 }
