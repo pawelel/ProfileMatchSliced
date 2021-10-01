@@ -15,11 +15,11 @@ namespace ProfileMatch.Components.Admin
     public partial class QuestionsList : ComponentBase
     {
         [Inject]
-        ICategoryService CategoryService { get; set; }
+        ICategoryRepository CategoryRepository { get; set; }
         [Inject]
-        IQuestionService QuestionService { get; set; }
+        IQuestionRepository QuestionRepository { get; set; }
         [Inject]
-        IAnswerOptionService AnswerOptionService { get; set; }
+        IAnswerOptionRepository AnswerOptionRepository { get; set; }
 
         bool loading;
         [Parameter] public int Id { get; set; }
@@ -32,8 +32,8 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             loading = true;
-            categories = await CategoryService.GetCategories();
-            questions = await QuestionService.GetQuestionsWithCategories();
+            categories = await CategoryRepository.GetCategories();
+            questions = await QuestionRepository.GetQuestionsWithCategories();
             questions1 = questions;
             loading = false;
         }

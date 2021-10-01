@@ -22,8 +22,11 @@ namespace ProfileMatch.Repositories
         public async Task<List<Category>> GetCategoriesWithQuestions()
         {
            
-           return await repositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
-        
+           return await repositoryContext.Categories.Include(q => q.Questions).AsNoTracking().ToListAsync();
+        }
+        public async Task<List<Category>> GetCategories()
+        {
+            return await repositoryContext.Categories.AsNoTracking().ToListAsync();
         }
     }
 }

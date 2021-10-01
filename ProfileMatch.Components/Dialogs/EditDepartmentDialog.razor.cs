@@ -14,7 +14,7 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
 
-        [Inject] public IDepartmentService DepartmentService { get; set; }
+        [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
 
         private MudForm Form;
 

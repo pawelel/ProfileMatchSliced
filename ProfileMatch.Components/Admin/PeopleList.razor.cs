@@ -15,7 +15,7 @@ namespace ProfileMatch.Components.Admin
     public partial class PeopleList : ComponentBase
     {
         [Inject]
-        public IUserService UserService { get; set; }
+        public IUserRepository UserRepo { get; set; }
 
         [Inject]
         private NavigationManager NavMan { get; set; }
@@ -46,7 +46,7 @@ namespace ProfileMatch.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await UserService.FindAllAsync();
+            Users = await UserRepo.GetAll();
            
         }
 

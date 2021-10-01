@@ -19,14 +19,37 @@ namespace ProfileMatch.Repositories
             this.repositoryContext = repositoryContext;
         }
 
-        public async Task<Department> GetDepartment(int id)
+        public async Task<Department> GetById(int id)
         {
-            return await this.repositoryContext.Set<Department>().Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
+            return await this.repositoryContext.Departments.Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Department>> GetDepartmentsWithPeople()
         {
-            return await this.repositoryContext.Set<Department>().Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
+            return await this.repositoryContext.Departments.Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
+        }
+        public async Task<List<Department>> GetAll()
+        {
+            return await repositoryContext.Departments.AsNoTracking().ToListAsync();
+        }
+        public async Task<Department> Create(Department dep)
+        {
+            var data = await repositoryContext.Departments.AddAsync(dep);
+            await repositoryContext.SaveChangesAsync();
+            return data.Entity;
+        }
+        public async Task<Department> Update(Department dep)
+        {
+            var existing = await repositoryContext.Departments.FindAsync(dep.Id);
+            repositoryContext.Entry(existing).CurrentValues.SetValues(dep);
+            await repositoryContext.SaveChangesAsync();
+            return existing;
+        }
+        public async Task<Department> Delete(Department dep)
+        {
+            var data = repositoryContext.Departments.Remove(dep).Entity;
+            await repositoryContext.SaveChangesAsync();
+            return data;
         }
     }
 }

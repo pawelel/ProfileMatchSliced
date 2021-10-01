@@ -28,10 +28,10 @@ namespace ProfileMatch.Sites.Admin
         private NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public IUserService UserService { get; set; }
+        public IUserRepository UserRepository { get; set; }
 
         [Inject]
-        public IDepartmentService DepartmentService { get; set; }
+        public IDepartmentRepository DepartmentRepository { get; set; }
         [Parameter] public string Id { get; set; }
         ApplicationUser currentUser = new();
         protected MudForm Form { get; set; } // TODO add validations
@@ -65,8 +65,8 @@ var authState = await AuthSP.GetAuthenticationStateAsync();
 
         private async Task LoadData()
         {
-            Departments = await DepartmentService.FindAllAsync();
-            User = await UserService.FindSingleByIdAsync(Id);
+            Departments = await DepartmentRepository.GetAll();
+            User = await UserRepository.FindById(Id);
             _dob = User.DateOfBirth;
             StateHasChanged();
         }
@@ -79,14 +79,14 @@ var authState = await AuthSP.GetAuthenticationStateAsync();
                 User.DateOfBirth = (DateTime)_dob;
                 User.UserName = User.Email;
                 User.NormalizedEmail = User.Email.ToUpper();
-                if (await UserService.Exist(User.Email))
+                if (await UserRepository.FindByEmail(User.Email)!=null)
                 {
                    
-                await UserService.Update(User);
+                await UserRepository.Update(User);
                 }
                 else
                 {
-                   await UserService.Create(User);
+                   await UserRepository.Create(User);
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");

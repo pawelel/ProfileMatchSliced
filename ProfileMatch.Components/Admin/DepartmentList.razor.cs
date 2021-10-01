@@ -18,11 +18,11 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         IDialogService DialogService { get; set; }
         [Inject]
-        public IDepartmentService DepartmentService { get; set; }
+        public IDepartmentRepository DepartmentRepository { get; set; }
 
         private async Task<IEnumerable<Department>> GetDepartmentsAsync()
         {
-            return await DepartmentService.GetDepartmentsWithPeople();
+            return await DepartmentRepository.GetDepartmentsWithPeople();
         }
 
         protected override async Task OnInitializedAsync()
@@ -52,14 +52,15 @@ namespace ProfileMatch.Components.Admin
         }
         async Task DepartmentUpdate(Department department)
         {
+            if (await DepartmentRepository.GetById(department.Id)!=null)
+                {
             var parameters = new DialogParameters { ["Dep"] = department };
             var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
             var data = await dialog.Result;
-            if (!dialog.Result.IsCanceled && data != null)
+            if (!dialog.Result.IsCanceled)
             {
-                if (await DepartmentService.Exist(department))
-                {
-                    await DepartmentService.Update((Department)data.Data);
+               
+                    await DepartmentRepository.Update((Department)data.Data);
                 }
                 else
                 {
@@ -73,7 +74,7 @@ namespace ProfileMatch.Components.Admin
             var dialog = DialogService.Show<EditDepartmentDialog>("Create Department");
             var data = await dialog.Result;
             Department dep = (Department)data.Data;
-            await DepartmentService.Create(dep);
+            await DepartmentRepository.Create(dep);
             Departments = await GetDepartmentsAsync();
         }
     }
