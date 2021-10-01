@@ -6,11 +6,13 @@ using ProfileMatch.Models.Models;
 namespace ProfileMatch.Repositories
 {
 
-    public class UserNoteRepository : RepositoryBase<UserNote>, IUserNoteRepository
+    public class UserNoteRepository : IUserNoteRepository
     {
-        public UserNoteRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
-        {
+        private readonly ApplicationDbContext repositoryContext;
 
+        public UserNoteRepository(ApplicationDbContext repositoryContext)
+        {
+            this.repositoryContext = repositoryContext;
         }
     }
 }

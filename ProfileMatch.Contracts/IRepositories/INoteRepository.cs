@@ -3,7 +3,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Contracts
 {
-    public interface INoteRepository : IRepositoryBase<Note>
+    public interface INoteRepository
     {
     }
 }

@@ -9,16 +9,15 @@ namespace ProfileMatch.Services
     {
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-        }
-
-        public static void ConfigureRepositoryServices(this IServiceCollection services)
-        {
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IAnswerOptionService, AnswerOptionService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IAnswerOptionRepository, AnswerOptionRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IUserAnswerRepository, UserAnswerRepository>();
+            services.AddScoped<INoteRepository, NoteRepository>();
+            services.AddScoped<IUserNeedCategoryRepository, UserNeedCategoryRepository>();
+            services.AddScoped<IUserNoteRepository, UserNoteRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

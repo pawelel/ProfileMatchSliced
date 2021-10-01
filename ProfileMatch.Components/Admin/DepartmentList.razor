@@ -1,4 +1,4 @@
-﻿<MudButton OnClick="DepartmentDialog" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
+﻿<MudButton OnClick="(()=>DepartmentCreate())" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
 <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
 <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
 <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
@@ -20,7 +20,7 @@
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Members">@context.ApplicationUsers.Count</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton OnClick="((e)=>DepartmentDialog(context))">Edit</MudButton>
+            <MudButton OnClick="(()=>DepartmentUpdate(context))">Edit</MudButton>
 
         </MudTd>
     </RowTemplate>

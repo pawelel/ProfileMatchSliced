@@ -7,7 +7,7 @@ using ProfileMatch.Models.Responses;
 
 namespace ProfileMatch.Contracts
 {
-    public interface IQuestionRepository : IRepositoryBase<Question>
+    public interface IQuestionRepository 
     {
         Task<List<Question>> GetQuestionsWithCategories();
     }

@@ -5,11 +5,13 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Repositories
 {
-    public class AnswerOptionRepository : RepositoryBase<AnswerOption>, IAnswerOptionRepository
+    public class AnswerOptionRepository :  IAnswerOptionRepository
     {
-        public AnswerOptionRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
-        {
+        private readonly ApplicationDbContext repositoryContext;
 
+        public AnswerOptionRepository(ApplicationDbContext repositoryContext)
+        {
+            this.repositoryContext = repositoryContext;
         }
     }
 }

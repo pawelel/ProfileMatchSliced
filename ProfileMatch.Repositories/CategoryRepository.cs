@@ -10,16 +10,19 @@ using ProfileMatch.Models.Responses;
 
 namespace ProfileMatch.Repositories
 {
-    public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
-        public CategoryRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
+        private readonly ApplicationDbContext repositoryContext;
+
+        public CategoryRepository(ApplicationDbContext repositoryContext)
         {
+            this.repositoryContext = repositoryContext;
         }
 
         public async Task<List<Category>> GetCategoriesWithQuestions()
         {
            
-           return await this.RepositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
+           return await repositoryContext.Set<Category>().Include(q => q.Questions).AsNoTracking().ToListAsync();
         
         }
     }

@@ -6,7 +6,7 @@ using ProfileMatch.Models.Responses;
 
 namespace ProfileMatch.Contracts
 {
-    public interface ICategoryRepository : IRepositoryBase<Category>
+    public interface ICategoryRepository 
     {
         Task<List<Category>> GetCategoriesWithQuestions();
     }

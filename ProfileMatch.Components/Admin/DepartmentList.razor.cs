@@ -50,12 +50,12 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-        async Task DepartmentDialog(Department department)
+        async Task DepartmentUpdate(Department department)
         {
             var parameters = new DialogParameters { ["Dep"] = department };
-           var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-           var data = await dialog.Result;
-            if (!dialog.Result.IsCanceled)
+            var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
+            var data = await dialog.Result;
+            if (!dialog.Result.IsCanceled && data != null)
             {
                 if (await DepartmentService.Exist(department))
                 {
@@ -63,22 +63,18 @@ namespace ProfileMatch.Components.Admin
                 }
                 else
                 {
-                    await DepartmentService.Create((Department)data.Data);
+                    return;
                 }
             }
-            else
-            {
-                return;
-            }
+
         }
-        async Task DepartmentDialog()
+        async Task DepartmentCreate()
         {
             var dialog = DialogService.Show<EditDepartmentDialog>("Create Department");
-            await dialog.Result;
+            var data = await dialog.Result;
+            Department dep = (Department)data.Data;
+            await DepartmentService.Create(dep);
             Departments = await GetDepartmentsAsync();
         }
-
-        
-
     }
 }

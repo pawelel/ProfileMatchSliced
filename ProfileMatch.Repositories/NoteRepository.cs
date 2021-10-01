@@ -5,11 +5,13 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Repositories
 {
-    public class NoteRepository : RepositoryBase<Note>, INoteRepository
+    public class NoteRepository :  INoteRepository
     {
-        public NoteRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
-        {
+        private readonly ApplicationDbContext repositoryContext;
 
+        public NoteRepository(ApplicationDbContext repositoryContext)
+        {
+            this.repositoryContext = repositoryContext;
         }
     }
 }

@@ -1,6 +1,3 @@
-
-using Blazored.LocalStorage;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 using MudBlazor.Services;
+using Blazored.LocalStorage;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
@@ -48,15 +45,8 @@ namespace ProfileMatch
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProfileMatch.Api", Version = "v1" });
-            });
-
             //Repositories
             services.ConfigureRepositoryWrapper();
-            services.ConfigureRepositoryServices();
 
             //used for Api and Culture
             services.AddControllers();
@@ -93,14 +83,7 @@ namespace ProfileMatch
 
             app.UseAuthentication();
             app.UseAuthorization();
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProfileMatch.Api V1");
-            });
+                   
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

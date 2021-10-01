@@ -10,20 +10,23 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Repositories
 {
-    public class DepartmentRepository : RepositoryBase<Department>, IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
-        public DepartmentRepository(ApplicationDbContext repositoryContext) : base(repositoryContext)
+        private readonly ApplicationDbContext repositoryContext;
+
+        public DepartmentRepository(ApplicationDbContext repositoryContext)
         {
+            this.repositoryContext = repositoryContext;
         }
 
         public async Task<Department> GetDepartment(int id)
         {
-            return await this.RepositoryContext.Set<Department>().Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
+            return await this.repositoryContext.Set<Department>().Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Department>> GetDepartmentsWithPeople()
         {
-            return await this.RepositoryContext.Set<Department>().Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
+            return await this.repositoryContext.Set<Department>().Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
         }
     }
 }
