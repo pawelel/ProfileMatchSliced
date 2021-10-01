@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
-
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -11,13 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Responses;
 
-
-namespace ProfileMatch.Sites.Admin
+namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditUser : ComponentBase
+    public partial class EditUserDialog : ComponentBase
     {
         [Inject]
         AuthenticationStateProvider AuthSP { get; set; }
@@ -42,12 +40,12 @@ namespace ProfileMatch.Sites.Admin
         private List<Department> Departments = new();
         private async Task GetUserDetails()
         {
-var authState = await AuthSP.GetAuthenticationStateAsync();
-        var user = authState.User;
+            var authState = await AuthSP.GetAuthenticationStateAsync();
+            var user = authState.User;
             if (user.Identity.IsAuthenticated)
             {
-        currentUser = await UserManager.GetUserAsync(user);
-        currentUserName = currentUser.FirstName + " " + currentUser.LastName;
+                currentUser = await UserManager.GetUserAsync(user);
+                currentUserName = currentUser.FirstName + " " + currentUser.LastName;
             }
             else
             {
@@ -55,11 +53,11 @@ var authState = await AuthSP.GetAuthenticationStateAsync();
             }
 
         }
-        
+
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-      
+
             await GetUserDetails();
         }
 
@@ -79,14 +77,14 @@ var authState = await AuthSP.GetAuthenticationStateAsync();
                 User.DateOfBirth = (DateTime)_dob;
                 User.UserName = User.Email;
                 User.NormalizedEmail = User.Email.ToUpper();
-                if (await UserRepository.FindByEmail(User.Email)!=null)
+                if (await UserRepository.FindByEmail(User.Email) != null)
                 {
-                   
-                await UserRepository.Update(User);
+
+                    await UserRepository.Update(User);
                 }
                 else
                 {
-                   await UserRepository.Create(User);
+                    await UserRepository.Create(User);
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");

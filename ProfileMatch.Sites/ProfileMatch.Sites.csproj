@@ -25,10 +25,4 @@
     <ProjectReference Include="..\ProfileMatch.Services\ProfileMatch.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Admin\EditUser.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
 </Project>

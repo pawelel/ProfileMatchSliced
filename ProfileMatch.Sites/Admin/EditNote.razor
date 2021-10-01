@@ -1,8 +1,0 @@
-﻿@page "/admin/editnote/{id}"
-@page  "/admin/editnote/"
-<MudForm @ref="Form" @bind-IsValid="@_success">
-            <MudTextField T="string" @bind-Value="@note.Name" Immediate="true" Label="Project Name"
-                      Required="true" RequiredError="Project name is required!" />
-            <MudTextField T="string" @bind-Value="@note.Description" Immediate="true" Label="Project Description"
-                      Lines="5" />
-</MudForm>

@@ -4,9 +4,9 @@ using System.Linq;
 
 using Microsoft.AspNetCore.Components;
 
-namespace ProfileMatch.Sites.Admin
+namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditCategory : ComponentBase
+    public partial class EditQuestionDialog : ComponentBase
     {
 
     }
