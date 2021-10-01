@@ -54,15 +54,15 @@ namespace ProfileMatch.Components.Admin
         {
                  var parameters = new DialogParameters { ["Dep"] = department };
                 var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-                var data = await dialog.Result;
-                if (dialog.Result.IsCanceled)
+                var result = await dialog.Result;
+                if (!result.Cancelled)
                 {
-                    return;
-                }
-                else
-                {
-                    await DepartmentRepository.Update((Department)data.Data);
-                }
+                    await DepartmentRepository.Update((Department)result.Data);
+            }
+            else
+            {
+                Departments = await GetDepartmentsAsync();
+            }
         }
         async Task DepartmentCreate()
         {

@@ -17,7 +17,10 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
 
         private MudForm Form;
-
+        private void Cancel()
+        {
+            MudDialog.Cancel();
+        }
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -29,9 +32,6 @@ namespace ProfileMatch.Components.Dialogs
 
         private bool _success;
 
-        private void Cancel()
-        {
-            MudDialog.Cancel();
-        }
+        
     }
 }

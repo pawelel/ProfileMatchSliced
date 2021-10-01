@@ -20,7 +20,7 @@
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Members">@context.ApplicationUsers.Count</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton OnClick="(()=>DepartmentUpdate(context))">Edit</MudButton>
+            <MudButton OnClick="((e)=>DepartmentUpdate(context))">Edit</MudButton>
 
         </MudTd>
     </RowTemplate>
