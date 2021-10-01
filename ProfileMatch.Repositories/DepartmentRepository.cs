@@ -41,9 +41,16 @@ namespace ProfileMatch.Repositories
         public async Task<Department> Update(Department dep)
         {
             var existing = await repositoryContext.Departments.FindAsync(dep.Id);
+            if (existing!=null)
+            {
             repositoryContext.Entry(existing).CurrentValues.SetValues(dep);
             await repositoryContext.SaveChangesAsync();
             return existing;
+            }
+            else
+            {
+                return dep;
+            }
         }
         public async Task<Department> Delete(Department dep)
         {

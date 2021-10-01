@@ -52,22 +52,17 @@ namespace ProfileMatch.Components.Admin
         }
         async Task DepartmentUpdate(Department department)
         {
-            if (await DepartmentRepository.GetById(department.Id)!=null)
-                {
-            var parameters = new DialogParameters { ["Dep"] = department };
-            var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-            var data = await dialog.Result;
-            if (!dialog.Result.IsCanceled)
-            {
-               
-                    await DepartmentRepository.Update((Department)data.Data);
-                }
-                else
+                 var parameters = new DialogParameters { ["Dep"] = department };
+                var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
+                var data = await dialog.Result;
+                if (dialog.Result.IsCanceled)
                 {
                     return;
                 }
-            }
-
+                else
+                {
+                    await DepartmentRepository.Update((Department)data.Data);
+                }
         }
         async Task DepartmentCreate()
         {
