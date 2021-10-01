@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
@@ -7,11 +9,11 @@ namespace ProfileMatch.Repositories
 {
     public class NoteRepository :  INoteRepository
     {
-        private readonly ApplicationDbContext repositoryContext;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public NoteRepository(ApplicationDbContext repositoryContext)
+        public NoteRepository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            this.repositoryContext = repositoryContext;
+            this.contextFactory = contextFactory;
         }
     }
 }

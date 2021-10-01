@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
@@ -8,11 +10,11 @@ namespace ProfileMatch.Repositories
 
     public class UserNoteRepository : IUserNoteRepository
     {
-        private readonly ApplicationDbContext repositoryContext;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public UserNoteRepository(ApplicationDbContext repositoryContext)
+        public UserNoteRepository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            this.repositoryContext = repositoryContext;
+            this.contextFactory = contextFactory;
         }
     }
 }

@@ -12,20 +12,21 @@ namespace ProfileMatch.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly ApplicationDbContext repositoryContext;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public CategoryRepository(ApplicationDbContext repositoryContext)
+        public CategoryRepository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            this.repositoryContext = repositoryContext;
+            this.contextFactory = contextFactory;
         }
 
         public async Task<List<Category>> GetCategoriesWithQuestions()
         {
-           
-           return await repositoryContext.Categories.Include(q => q.Questions).AsNoTracking().ToListAsync();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Categories.Include(q => q.Questions).AsNoTracking().ToListAsync();
         }
         public async Task<List<Category>> GetCategories()
         {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Categories.AsNoTracking().ToListAsync();
         }
     }

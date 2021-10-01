@@ -12,34 +12,39 @@ namespace ProfileMatch.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {
-        private readonly ApplicationDbContext repositoryContext;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public DepartmentRepository(ApplicationDbContext repositoryContext)
+        public DepartmentRepository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            this.repositoryContext = repositoryContext;
+            this.contextFactory = contextFactory;
         }
 
         public async Task<Department> GetById(int id)
         {
-            return await this.repositoryContext.Departments.Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Departments.Where(d => d.Id == id).Include(u => u.ApplicationUsers).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Department>> GetDepartmentsWithPeople()
         {
-            return await this.repositoryContext.Departments.Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Departments.Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
         }
         public async Task<List<Department>> GetAll()
         {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Departments.AsNoTracking().ToListAsync();
         }
         public async Task<Department> Create(Department dep)
         {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             var data = await repositoryContext.Departments.AddAsync(dep);
             await repositoryContext.SaveChangesAsync();
             return data.Entity;
         }
         public async Task<Department> Update(Department dep)
         {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             var existing = await repositoryContext.Departments.FindAsync(dep.Id);
             if (existing!=null)
             {
@@ -54,6 +59,7 @@ namespace ProfileMatch.Repositories
         }
         public async Task<Department> Delete(Department dep)
         {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             var data = repositoryContext.Departments.Remove(dep).Entity;
             await repositoryContext.SaveChangesAsync();
             return data;
