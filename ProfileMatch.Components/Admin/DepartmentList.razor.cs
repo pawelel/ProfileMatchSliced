@@ -16,6 +16,8 @@ namespace ProfileMatch.Components.Admin
     public partial class DepartmentList : ComponentBase
     {
         [Inject]
+        public ISnackbar Snackbar { get; set; }
+        [Inject]
         IDialogService DialogService { get; set; }
         [Inject]
         public IDepartmentRepository DepartmentRepository { get; set; }
@@ -52,17 +54,15 @@ namespace ProfileMatch.Components.Admin
         }
         async Task DepartmentUpdate(Department department)
         {
-                 var parameters = new DialogParameters { ["Dep"] = department };
-                var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-                var result = await dialog.Result;
-                if (!result.Cancelled)
-                {
-                    await DepartmentRepository.Update((Department)result.Data);
-            }
-            else
+            var parameters = new DialogParameters { ["Dep"] = department };
+            var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
             {
-                Departments = await GetDepartmentsAsync();
+                var editDep = (Department)result.Data;
+                Snackbar.Add($"Department {editDep.Name} {editDep.Description} updated.");
             }
+
         }
         async Task DepartmentCreate()
         {

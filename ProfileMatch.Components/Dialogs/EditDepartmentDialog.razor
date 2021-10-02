@@ -7,9 +7,9 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="Form" @bind-IsValid="@_success">
-            <MudTextField T="string" @bind-Value="@Dep.Name" Immediate="true" Label="Project Name"
+            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Project Name"
                           Required="true" RequiredError="Project name is required!" />
-            <MudTextField T="string" @bind-Value="@Dep.Description" Immediate="true" Label="Project Description"
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Project Description"
                           Lines="5" />
         </MudForm>
     </DialogContent>
