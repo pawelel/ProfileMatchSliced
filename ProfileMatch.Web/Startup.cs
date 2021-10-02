@@ -15,6 +15,7 @@ using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
+using MudBlazor;
 
 namespace ProfileMatch
 {
@@ -52,7 +53,15 @@ namespace ProfileMatch
             //used for Api and Culture
             services.AddControllers();
             //MudBlazor
-            services.AddMudServices();
+            services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
+
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = true;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
 
             //dark theme toggler
             services.AddScoped<IThemeService, ThemeService>();

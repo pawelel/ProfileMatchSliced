@@ -55,22 +55,13 @@ namespace ProfileMatch.Components.Admin
         async Task DepartmentUpdate(Department department)
         {
             var parameters = new DialogParameters { ["Dep"] = department };
-            var dialog = DialogService.Show<EditDepartmentDialog>("Edit Department", parameters);
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                var editDep = (Department)result.Data;
-                Snackbar.Add($"Department {editDep.Name} {editDep.Description} updated.");
-            }
-
+            var dialog = DialogService.Show<EditDepartmentDialog>("Update Department", parameters);
+            await dialog.Result;
         }
         async Task DepartmentCreate()
         {
-            var dialog = DialogService.Show<EditDepartmentDialog>("Create Department");
-            var data = await dialog.Result;
-            Department dep = (Department)data.Data;
-            await DepartmentRepository.Create(dep);
-            Departments = await GetDepartmentsAsync();
+          var dialog =  DialogService.Show<EditDepartmentDialog>("Create Department");
+         await dialog.Result;
         }
     }
 }

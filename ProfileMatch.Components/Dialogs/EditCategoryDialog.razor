@@ -1,1 +1,12 @@
-﻿
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm @ref="Form">
+            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Category Name" Required="true" RequiredError="Category name is required!" />
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Category Description" Lines="5" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="HandleSave">Save</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,12 +1,6 @@
 ﻿<MudDialog>
-    <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3 mb-n1" />
-            Edit Department
-        </MudText>
-    </TitleContent>
     <DialogContent>
-        <MudForm @ref="Form" @bind-IsValid="@_success">
+        <MudForm @ref="Form">
             <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Project Name"
                           Required="true" RequiredError="Project name is required!" />
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Project Description"
