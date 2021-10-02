@@ -53,8 +53,6 @@
             return await personRepository.GetPeople();
         }
 
-
-
         protected async override Task OnInitializedAsync()
         {
             person = await GetPerson();

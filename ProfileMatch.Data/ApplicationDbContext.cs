@@ -14,6 +14,7 @@ namespace ProfileMatch.Data
             : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //composite keys
@@ -28,6 +29,7 @@ namespace ProfileMatch.Data
             builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned" });
             base.OnModelCreating(builder);
         }
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Question> Questions { get; set; }

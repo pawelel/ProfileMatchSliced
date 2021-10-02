@@ -9,7 +9,6 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -17,8 +16,10 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject]
         public ISnackbar Snackbar { get; set; }
+
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         public IDepartmentRepository DepartmentRepository { get; set; }
 
@@ -52,16 +53,19 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-        async Task DepartmentUpdate(Department department)
+
+        private async Task DepartmentUpdate(Department department)
         {
             var parameters = new DialogParameters { ["Dep"] = department };
             var dialog = DialogService.Show<EditDepartmentDialog>("Update Department", parameters);
             await dialog.Result;
         }
-        async Task DepartmentCreate()
+
+        private async Task DepartmentCreate()
         {
-          var dialog =  DialogService.Show<EditDepartmentDialog>("Create Department");
-         await dialog.Result;
+            var dialog = DialogService.Show<EditDepartmentDialog>("Create Department");
+            await dialog.Result;
+            Departments = await GetDepartmentsAsync();
         }
     }
 }

@@ -1,3 +1,5 @@
+using Blazored.LocalStorage;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -7,15 +9,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using MudBlazor;
 using MudBlazor.Services;
-using Blazored.LocalStorage;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
-using MudBlazor;
 
 namespace ProfileMatch
 {
@@ -93,7 +94,7 @@ namespace ProfileMatch
 
             app.UseAuthentication();
             app.UseAuthorization();
-                   
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -1,8 +1,5 @@
 ﻿@page "/pages/authentication/register"
 
-
-
-
 <MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
 
 <MudTextField T="string" Label="Username" Variant="Variant.Outlined" Class="my-4"></MudTextField>
@@ -12,7 +9,6 @@
 <MudTextField @bind-Value="@Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" Class="mt-4" />
 
 <MudButton Variant="Variant.Filled" Color="Color.Primary" Link="/pages/authentication/login" Size="Size.Large" FullWidth="true">Register</MudButton>
-
 
     }
 }

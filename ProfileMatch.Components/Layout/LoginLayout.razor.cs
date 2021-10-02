@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
 
-
 using ProfileMatch.Components.Theme;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
@@ -16,13 +15,16 @@ namespace ProfileMatch.Components.Layout
     {
         [Parameter]
         public RenderFragment Body { get; set; }
+
         [Inject]
         public IThemeService ThemeService { get; set; }
+
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-        bool _drawerOpen = true;
 
-        void DrawerToggle()
+        private bool _drawerOpen = true;
+
+        private void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
         }
@@ -38,8 +40,8 @@ namespace ProfileMatch.Components.Layout
                 currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
                 StateHasChanged();
             }
-
         }
+
         private void ThemeServiceOnChange(Preferences newPreferences)
         {
             _preferences = newPreferences;
@@ -52,9 +54,8 @@ namespace ProfileMatch.Components.Layout
             ThemeService.OnChange -= ThemeServiceOnChange;
         }
 
-        readonly MudTheme defaultTheme = new GeneralTheme();
-        MudTheme currentTheme;
-        readonly MudTheme darkTheme = new DarkTheme();
-
+        private readonly MudTheme defaultTheme = new GeneralTheme();
+        private MudTheme currentTheme;
+        private readonly MudTheme darkTheme = new DarkTheme();
     }
 }

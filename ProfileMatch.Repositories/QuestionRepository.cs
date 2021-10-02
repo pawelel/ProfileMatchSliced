@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Responses;
 
 namespace ProfileMatch.Repositories
 {
@@ -26,8 +24,6 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions.Include(c => c.Category).AsNoTracking().ToListAsync();
-        
-
         }
 
         public Task<Question> Create(Question question)

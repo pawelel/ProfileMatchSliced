@@ -15,19 +15,22 @@ namespace ProfileMatch.Components.Layout
     {
         [Parameter]
         public RenderFragment Body { get; set; }
+
         [Inject]
         public IThemeService ThemeService { get; set; }
+
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        bool _drawerOpen = true;
+        private bool _drawerOpen = true;
 
-        void DrawerToggle()
+        private void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
         }
 
         private Preferences _preferences = new();
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             ThemeService.OnChange += ThemeServiceOnChange;
@@ -37,7 +40,6 @@ namespace ProfileMatch.Components.Layout
                 currentTheme = _preferences.DarkMode ? darkTheme : defaultTheme;
                 StateHasChanged();
             }
-
         }
 
         private void ThemeServiceOnChange(Preferences newPreferences)
@@ -52,8 +54,8 @@ namespace ProfileMatch.Components.Layout
             ThemeService.OnChange -= ThemeServiceOnChange;
         }
 
-        readonly MudTheme defaultTheme = new GeneralTheme();
-        MudTheme currentTheme;
-        MudTheme darkTheme = new DarkTheme();
+        private readonly MudTheme defaultTheme = new GeneralTheme();
+        private MudTheme currentTheme;
+        private MudTheme darkTheme = new DarkTheme();
     }
 }

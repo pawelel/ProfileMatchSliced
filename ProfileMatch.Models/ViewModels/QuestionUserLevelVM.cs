@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProfileMatch.Models.ViewModels
+﻿namespace ProfileMatch.Models.ViewModels
 {
-  public class QuestionUserLevelVM
+    public class QuestionUserLevelVM
     {
         public int QuestionId { get; set; }
         public string QuestionName { get; set; }

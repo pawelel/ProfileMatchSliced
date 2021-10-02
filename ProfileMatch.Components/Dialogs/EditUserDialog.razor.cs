@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
@@ -18,10 +17,11 @@ namespace ProfileMatch.Components.Dialogs
     public partial class EditUserDialog : ComponentBase
     {
         [Inject]
-        AuthenticationStateProvider AuthSP { get; set; }
+        private AuthenticationStateProvider AuthSP { get; set; }
 
         [Inject]
-        UserManager<ApplicationUser> UserManager { get; set; }
+        private UserManager<ApplicationUser> UserManager { get; set; }
+
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
@@ -30,14 +30,16 @@ namespace ProfileMatch.Components.Dialogs
 
         [Inject]
         public IDepartmentRepository DepartmentRepository { get; set; }
+
         [Parameter] public string Id { get; set; }
-        ApplicationUser currentUser = new();
+        private ApplicationUser currentUser = new();
         protected MudForm Form { get; set; } // TODO add validations
         private bool _success;
-        DateTime? _dob;
-        string currentUserName;
-        ApplicationUser User { get; set; } = new();
+        private DateTime? _dob;
+        private string currentUserName;
+        private ApplicationUser User { get; set; } = new();
         private List<Department> Departments = new();
+
         private async Task GetUserDetails()
         {
             var authState = await AuthSP.GetAuthenticationStateAsync();
@@ -51,7 +53,6 @@ namespace ProfileMatch.Components.Dialogs
             {
                 currentUserName = "Please log in.";
             }
-
         }
 
         protected override async Task OnInitializedAsync()
@@ -79,7 +80,6 @@ namespace ProfileMatch.Components.Dialogs
                 User.NormalizedEmail = User.Email.ToUpper();
                 if (await UserRepository.FindByEmail(User.Email) != null)
                 {
-
                     await UserRepository.Update(User);
                 }
                 else

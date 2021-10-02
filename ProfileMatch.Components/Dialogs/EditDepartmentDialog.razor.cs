@@ -12,27 +12,28 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class EditDepartmentDialog : ComponentBase
     {
-
-        [Inject] ISnackbar Snackbar { get; set; }
+        [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
         public string TempName { get; set; }
         public string TempDescription { get; set; }
+
         protected override void OnInitialized()
         {
-        
-
             TempName = Dep.Name;
             TempDescription = Dep.Description;
         }
+
         [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
 
         private MudForm Form;
+
         private void Cancel()
         {
             MudDialog.Cancel();
             Snackbar.Add("Operation cancelled", Severity.Warning);
         }
+
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -43,14 +44,12 @@ namespace ProfileMatch.Components.Dialogs
                 try
                 {
                     await Save();
-
                 }
                 catch (Exception ex)
                 {
-
-                    Snackbar.Add($"There was an error: {ex.Message}",Severity.Error);
+                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
                 }
-                
+
                 MudDialog.Close(DialogResult.Ok(Dep));
             }
         }

@@ -1,5 +1,3 @@
-using System;
-
 using Xunit;
 
 namespace ProfileMatch.Tests
@@ -9,7 +7,6 @@ namespace ProfileMatch.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

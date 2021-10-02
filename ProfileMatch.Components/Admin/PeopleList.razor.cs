@@ -4,11 +4,8 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
-using ProfileMatch.Components.Layout;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.Responses;
-
 
 namespace ProfileMatch.Components.Admin
 {
@@ -41,17 +38,16 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-      
+
         public List<ApplicationUser> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             Users = await UserRepo.GetAll();
-           
         }
 
         private void ShowProfile(string id)
-{
+        {
             NavMan.NavigateTo($"/admin/users/{id}");
         }
 

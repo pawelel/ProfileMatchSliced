@@ -30,11 +30,13 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Departments.Include(u => u.ApplicationUsers).AsNoTracking().ToListAsync();
         }
+
         public async Task<List<Department>> GetAll()
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Departments.AsNoTracking().ToListAsync();
         }
+
         public async Task<Department> Create(Department dep)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -42,21 +44,23 @@ namespace ProfileMatch.Repositories
             await repositoryContext.SaveChangesAsync();
             return data.Entity;
         }
+
         public async Task<Department> Update(Department dep)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             var existing = await repositoryContext.Departments.FindAsync(dep.Id);
-            if (existing!=null)
+            if (existing != null)
             {
-            repositoryContext.Entry(existing).CurrentValues.SetValues(dep);
-            await repositoryContext.SaveChangesAsync();
-            return existing;
+                repositoryContext.Entry(existing).CurrentValues.SetValues(dep);
+                await repositoryContext.SaveChangesAsync();
+                return existing;
             }
             else
             {
                 return dep;
             }
         }
+
         public async Task<Department> Delete(Department dep)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();

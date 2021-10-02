@@ -1,16 +1,14 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 using Microsoft.AspNetCore.Components;
 
-using ProfileMatch.Contracts;
-
-using ProfileMatch.Models.Models;
-using System.Linq;
 using MudBlazor;
+
 using ProfileMatch.Components.Dialogs;
+using ProfileMatch.Contracts;
+using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -18,12 +16,14 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject]
         public ISnackbar Snackbar { get; set; }
+
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         public ICategoryRepository CategoryRepository { get; set; }
 
-        private async Task<IEnumerable<Category>> GetCategoriesAsync()
+        private async Task<List<Category>> GetCategoriesAsync()
         {
             return await CategoryRepository.GetCategoriesWithQuestions();
         }
@@ -39,7 +39,7 @@ namespace ProfileMatch.Components.Admin
         private bool bordered = false;
         private string searchString1 = "";
         private Category selectedItem1 = null;
-        private IEnumerable<Category> Categories = new List<Category>();
+        private List<Category> Categories = new List<Category>();
 
         private bool FilterFunc1(Category category) => FilterFunc(category, searchString1);
 
@@ -53,16 +53,19 @@ namespace ProfileMatch.Components.Admin
                 return true;
             return false;
         }
-        async Task CategoryUpdate(Category category)
+
+        private async Task CategoryUpdate(Category category)
         {
             var parameters = new DialogParameters { ["Cat"] = category };
             var dialog = DialogService.Show<EditCategoryDialog>("Update Category", parameters);
             await dialog.Result;
         }
-        async Task CategoryCreate()
+
+        private async Task CategoryCreate()
         {
             var dialog = DialogService.Show<EditCategoryDialog>("Create Category");
             await dialog.Result;
+            Categories = await GetCategoriesAsync();
         }
     }
 }

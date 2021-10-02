@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 
 using MudBlazor;
@@ -18,14 +12,14 @@ namespace ProfileMatch.Components.Authentication
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        string Password { get; set; }
+        private string Password { get; set; }
 
-
-        bool PasswordVisibility;
-        InputType PasswordInput = InputType.Password;
-        string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        private bool PasswordVisibility;
+        private InputType PasswordInput = InputType.Password;
+        private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         private RegisterVM registerVM = new();
-        void TogglePasswordVisibility()
+
+        private void TogglePasswordVisibility()
         {
             if (PasswordVisibility)
             {

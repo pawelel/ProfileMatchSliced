@@ -11,9 +11,9 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        readonly ILogger<ResetAuthenticatorModel> _logger;
+        private readonly ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
             UserManager<ApplicationUser> userManager,

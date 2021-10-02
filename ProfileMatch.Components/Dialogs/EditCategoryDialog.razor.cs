@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
@@ -15,22 +13,28 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class EditCategoryDialog : ComponentBase
     {
+        [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Category Cat { get; set; } = new();
         public string TempName { get; set; }
         public string TempDescription { get; set; }
+
         protected override void OnInitialized()
         {
             TempName = Cat.Name;
             TempDescription = Cat.Description;
         }
+
         [Inject] public ICategoryRepository CategoryRepository { get; set; }
 
         private MudForm Form;
+
         private void Cancel()
         {
             MudDialog.Cancel();
+            Snackbar.Add("Operation cancelled", Severity.Warning);
         }
+
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -38,10 +42,31 @@ namespace ProfileMatch.Components.Dialogs
             {
                 Cat.Name = TempName;
                 Cat.Description = TempDescription;
-                await CategoryRepository.Update(Cat);
+                try
+                {
+                    await Save();
+                }
+                catch (Exception ex)
+                {
+                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                }
+
                 MudDialog.Close(DialogResult.Ok(Cat));
+            }
+        }
+
+        private async Task Save()
+        {
+            if (Cat.Id == 0)
+            {
+                var result = await CategoryRepository.Create(Cat);
+                Snackbar.Add($"Category {result.Name} created", Severity.Success);
+            }
+            else
+            {
+                var result = await CategoryRepository.Update(Cat);
+                Snackbar.Add($"Category {result.Name} updated", Severity.Success);
             }
         }
     }
 }
-

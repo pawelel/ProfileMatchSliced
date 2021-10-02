@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Repositories
 {
-    public class AnswerOptionRepository :  IAnswerOptionRepository
+    public class AnswerOptionRepository : IAnswerOptionRepository
     {
         private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
