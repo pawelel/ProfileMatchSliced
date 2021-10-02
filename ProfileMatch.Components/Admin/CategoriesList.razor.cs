@@ -67,5 +67,10 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
             Categories = await GetCategoriesAsync();
         }
+
+        private async Task QuestionCreate(int id)
+        {
+
+        }
     }
 }

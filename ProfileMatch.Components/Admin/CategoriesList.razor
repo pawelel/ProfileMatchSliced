@@ -21,6 +21,7 @@
         <MudTd DataLabel="Questions">@context.Questions.Count</MudTd>
         <MudTd DataLabel="Edit">
             <MudButton OnClick="((e)=>CategoryUpdate(context))">Edit</MudButton>
+            <MudButton OnClick="((e)=>QuestionCreate(context.Id))">Edit</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
