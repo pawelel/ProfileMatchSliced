@@ -23,7 +23,7 @@ namespace ProfileMatch.Components.Admin
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        private List<Question> questions;
+        private List<Question> questions=new();
         private List<Question> questions1;
         private List<Category> categories;
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
@@ -68,10 +68,10 @@ namespace ProfileMatch.Components.Admin
             }
             else
             {
-                questions1 = (List<Question>)(from q in questions
-                                              from o in Options
-                                              where q.Category.Name == o
-                                              select q);
+                questions1 = (from q in questions
+                              from o in Options
+                              where q.Category.Name == o
+                              select q).ToList();
             }
             return questions1;
         }
