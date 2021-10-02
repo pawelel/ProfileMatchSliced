@@ -5,7 +5,7 @@
         public bool Want { get; set; }
         public string ApplicationUserId { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

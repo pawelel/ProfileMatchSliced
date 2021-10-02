@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using ProfileMatch.Models.Models;
@@ -17,6 +19,6 @@ namespace ProfileMatch.Contracts
         Task<List<Question>> GetQuestionsForCategory(int categoryId);
         Task<List<Question>> GetAll();
         Task<Question> Update(Question question);
-        Task<List<Question>> GetQuestionsWithCondition();
+        Task<List<Question>> GetQuestionsWithCondition(Expression<Func<Question, bool>> expression);
     }
 }

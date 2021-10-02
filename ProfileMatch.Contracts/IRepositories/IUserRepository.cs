@@ -14,5 +14,6 @@ namespace ProfileMatch.Contracts
         Task<ApplicationUser> FindById(string id);
         Task<List<ApplicationUser>> GetAll();
         Task<ApplicationUser> Update(ApplicationUser user);
+        Task<List<ApplicationUser>> GetApplicationUsersWithQuestionAnswerLevel(int questionId, int level);
     }
 }
