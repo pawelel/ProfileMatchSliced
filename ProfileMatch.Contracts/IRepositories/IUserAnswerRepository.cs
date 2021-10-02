@@ -14,7 +14,7 @@ namespace ProfileMatch.Contracts
         Task<List<UserAnswer>> GetAll();
         Task<UserAnswer> Update(UserAnswer answer);
         Task<List<UserAnswer>> GetUserAnswersForQuestion(int questionId);
-        Task<List<AnswerOption>> GetAnswerOptionsForOptionAndQuestion(int answerOptionId, int questionId);
         Task<List<UserAnswer>> GetUserAnswersForUser(string userId);
+        Task<List<UserAnswer>> GetUserAnswersForAnswerOptionAndQuestion(int answerOptionId, int questionId);
     }
 }

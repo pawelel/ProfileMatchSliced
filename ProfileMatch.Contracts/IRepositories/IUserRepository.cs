@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Contracts
 {
@@ -14,6 +15,6 @@ namespace ProfileMatch.Contracts
         Task<ApplicationUser> FindById(string id);
         Task<List<ApplicationUser>> GetAll();
         Task<ApplicationUser> Update(ApplicationUser user);
-        Task<List<ApplicationUser>> GetApplicationUsersWithQuestionAnswerLevel(int questionId, int level);
+        Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel(int questionId, int level);
     }
 }

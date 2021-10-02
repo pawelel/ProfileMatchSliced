@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Repositories
 {
@@ -58,6 +59,31 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Users.FirstOrDefaultAsync(u => u.Email.ToUpper().Equals(email.ToUpper()));
         }
-        
+
+        public async Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel(int questionId, int level)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var users =  repositoryContext.Users;
+            var questions = repositoryContext.Questions;
+            var answers = repositoryContext.UserAnswers;
+            var options = repositoryContext.AnswerOptions;
+           return await (from u in users
+                         join a in answers
+                         on u.Id equals a.ApplicationUserId
+                         join o in options
+                         on a.AnswerOptionId equals o.Id
+                         join q in questions
+                         on o.QuestionId equals q.Id
+                         where q.Id == questionId && o.Level==level
+                         select new QuestionUserLevelVM
+                         {
+                             QuestionId = q.Id,
+                             QuestionName = q.Name,
+                             UserId=u.Id,
+                             FirstName = u.FirstName,
+                             LastName=u.LastName,
+                             Level = o.Level
+                         }).ToListAsync();
+        }
     }
 }

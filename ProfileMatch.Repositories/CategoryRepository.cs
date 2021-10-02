@@ -29,5 +29,35 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Categories.AsNoTracking().ToListAsync();
         }
+
+        public Task<Category> Create(Category category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Category> Delete(Category category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Category> FindByName(string categoryName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Category> FindById(int categoryId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<List<Category>> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Category> Update(Category category)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
