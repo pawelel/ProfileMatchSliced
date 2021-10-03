@@ -73,6 +73,7 @@ namespace ProfileMatch.Components.Admin
             var parameters = new DialogParameters { ["CategoryId"] = category.Id };
             var dialog = DialogService.Show<EditQuestionDialog>($"Create Question for {category.Name}", parameters);
              await dialog.Result;
+            Categories = await GetCategoriesAsync();
         }
     }
 }

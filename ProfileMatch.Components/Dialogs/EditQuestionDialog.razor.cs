@@ -15,6 +15,7 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Question Q { get; set; } = new();
+        [Parameter] public int CategoryId { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
 
@@ -41,6 +42,7 @@ namespace ProfileMatch.Components.Dialogs
             {
                 Q.Name = TempName;
                 Q.Description = TempDescription;
+                Q.CategoryId = CategoryId;
                 try
                 {
                     await Save();
