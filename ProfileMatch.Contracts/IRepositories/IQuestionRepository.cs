@@ -9,8 +9,6 @@ namespace ProfileMatch.Contracts
 {
     public interface IQuestionRepository
     {
-        Task<List<Question>> GetQuestionsWithCategories();
-
         Task<Question> Create(Question question);
 
         Task<Question> Delete(Question question);
@@ -24,5 +22,7 @@ namespace ProfileMatch.Contracts
         Task<List<Question>> GetAll();
 
         Task<Question> Update(Question question);
+        Task<List<Question>> GetQuestionsWithCategoriesAndOptions();
+        Task<List<Question>> GetQuestionsWithCategories();
     }
 }

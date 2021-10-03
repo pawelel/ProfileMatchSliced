@@ -39,7 +39,7 @@ namespace ProfileMatch.Components.Admin
         private bool bordered = false;
         private string searchString1 = "";
         private Category selectedItem1 = null;
-        private List<Category> Categories = new List<Category>();
+        private List<Category> Categories = new();
 
         private bool FilterFunc1(Category category) => FilterFunc(category, searchString1);
 

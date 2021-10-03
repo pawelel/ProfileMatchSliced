@@ -7,15 +7,23 @@ using MudBlazor;
 using ProfileMatch.Contracts;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
+using System.Collections.Generic;
 
 namespace ProfileMatch.Components.Dialogs
 {
     public partial class EditQuestionDialog : ComponentBase
     {
+        [Inject]
+        IAnswerOptionRepository AnswerOptionRepository { get; set; }
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Question Q { get; set; } = new();
         [Parameter] public int CategoryId { get; set; }
+
+        public int QuestionId { get; set; }
+        public int AoLevel { get; set; }
+        public string AoDescription { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
 
@@ -34,12 +42,34 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add("Operation cancelled", Severity.Warning);
         }
+        private async Task<List<AnswerOption>> AddLevels(Question question)
+        {
+            List<AnswerOption> answerOptions = new();
+             answerOptions = question.AnswerOptions;
+            if (answerOptions == null)
+            {
+                for (int i = 1; i < 6; i++)
+                {
+                    AnswerOption lvl = new()
+                    {
+                        QuestionId = question.Id,
+                        Description = string.Empty,
+                        Level = i
+                    };
+                    await AnswerOptionRepository.Create(lvl);
+                    answerOptions.Add(lvl);
+                }
+            }
+            StateHasChanged();
+            return answerOptions;
+        }
 
         protected async Task HandleSave()
         {
             await Form.Validate();
             if (Form.IsValid)
             {
+               Q.AnswerOptions = await AddLevels(Q);
                 Q.Name = TempName;
                 Q.Description = TempDescription;
                 Q.CategoryId = CategoryId;

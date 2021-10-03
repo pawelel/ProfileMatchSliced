@@ -26,6 +26,12 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions.Include(c => c.Category).AsNoTracking().ToListAsync();
         }
+        public async Task<List<Question>> GetQuestionsWithCategoriesAndOptions()
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions
+                .Include(question => question.Category).Include(question => question.Category).AsNoTracking().ToListAsync();   
+        }
 
         public async Task<Question> Create(Question question)
         {

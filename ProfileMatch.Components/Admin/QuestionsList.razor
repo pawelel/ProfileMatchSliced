@@ -30,7 +30,7 @@ else
             <MudTd DataLabel="Question">@context.Name</MudTd>
             <MudTd DataLabel="Actions">
                 <MudButton>Display</MudButton>
-                <MudButton>Edit</MudButton>
+                <MudButton OnClick="@(()=>EditQuestionDialog(context))">Edit</MudButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>

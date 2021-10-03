@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ProfileMatch.Components.Admin
+namespace ProfileMatch.Components.User
 {
     public partial class NeedList : ComponentBase
     {

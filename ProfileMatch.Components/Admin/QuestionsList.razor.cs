@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
+using MudBlazor;
+
+using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 
@@ -12,6 +15,8 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class QuestionsList : ComponentBase
     {
+        [Inject]
+        IDialogService DialogService { get; set; }
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
 
@@ -26,6 +31,7 @@ namespace ProfileMatch.Components.Admin
         private List<Question> questions=new();
         private List<Question> questions1;
         private List<Category> categories;
+        string Edit { get; set; } = "";
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
         private string Value { get; set; } = "Nothing selected";
         public bool ShowDetails { get; set; }
@@ -34,7 +40,7 @@ namespace ProfileMatch.Components.Admin
         {
             loading = true;
             categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetQuestionsWithCategories();
+            questions = await QuestionRepository.GetQuestionsWithCategoriesAndOptions();
             questions1 = questions;
             loading = false;
         }
@@ -74,6 +80,13 @@ namespace ProfileMatch.Components.Admin
                               select q).ToList();
             }
             return questions1;
+        }
+        private async Task EditQuestionDialog(Question question)
+        {
+            var parameters = new DialogParameters { ["Q"] = question };
+            var dialog = DialogService.Show<EditQuestionDialog>($"Edit Question {question.Name}", parameters);
+            await dialog.Result;
+            
         }
     }
 }
