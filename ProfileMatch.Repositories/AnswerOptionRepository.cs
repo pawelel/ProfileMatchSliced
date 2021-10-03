@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,44 +19,60 @@ namespace ProfileMatch.Repositories
             this.contextFactory = contextFactory;
         }
 
-        public Task<List<AnswerOption>> GetAnswerOptionsWithQuestions()
+        public async Task<List<AnswerOption>> GetAnswerOptionsWithQuestions()
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.AnswerOptions.Include(o => o.Question).AsNoTracking().ToListAsync();
         }
 
-        public Task<AnswerOption> Create(AnswerOption answerOption)
+        public async Task<AnswerOption> Create(AnswerOption answerOption)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.AnswerOptions.AddAsync(answerOption);
+            await repositoryContext.SaveChangesAsync();
+            return data.Entity;
         }
 
-        public Task<AnswerOption> Delete(AnswerOption answerOption)
+        public async Task<AnswerOption> Delete(AnswerOption answerOption)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = repositoryContext.AnswerOptions.Remove(answerOption).Entity;
+            await repositoryContext.SaveChangesAsync();
+            return data;
         }
 
-        public Task<AnswerOption> FindByName(string answerOptionName)
+        public async Task<AnswerOption> FindById(int answerOptionId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.AnswerOptions.SingleOrDefaultAsync(o => o.Id == answerOptionId);
         }
 
-        public Task<AnswerOption> FindById(int answerOptionId)
+        public async Task<List<AnswerOption>> GetAnswerOptionsForQuestion(int questionId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.AnswerOptions.Include(o=>o.Question).Where(o => o.QuestionId == questionId).AsNoTracking().ToListAsync();
         }
 
-        public Task<List<AnswerOption>> GetAnswerOptionsForQuestion(int questionId)
+        public async Task<List<AnswerOption>> GetAll()
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.AnswerOptions.ToListAsync();
         }
 
-        public Task<List<AnswerOption>> GetAll()
+        public async Task<AnswerOption> Update(AnswerOption answerOption)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<AnswerOption> Update(AnswerOption answerOption)
-        {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var existing = await repositoryContext.AnswerOptions.FindAsync(answerOption.Id);
+            if (existing != null)
+            {
+                repositoryContext.Entry(existing).CurrentValues.SetValues(answerOption);
+                await repositoryContext.SaveChangesAsync();
+                return existing;
+            }
+            else
+            {
+                return answerOption;
+            }
         }
     }
 }

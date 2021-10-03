@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -26,44 +27,60 @@ namespace ProfileMatch.Repositories
             return await repositoryContext.Questions.Include(c => c.Category).AsNoTracking().ToListAsync();
         }
 
-        public Task<Question> Create(Question question)
+        public async Task<Question> Create(Question question)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.Questions.AddAsync(question);
+            await repositoryContext.SaveChangesAsync();
+            return data.Entity;
         }
 
-        public Task<Question> Delete(Question question)
+        public async Task<Question> Delete(Question question)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = repositoryContext.Questions.Remove(question).Entity;
+            await repositoryContext.SaveChangesAsync();
+            return data;
         }
 
-        public Task<Question> FindByName(string questionName)
+        public async Task<Question> FindByName(string questionName)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions.SingleOrDefaultAsync(q => q.Name == questionName);
         }
 
-        public Task<Question> FindById(int questionId)
+        public async Task<Question> FindById(int questionId)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions.SingleOrDefaultAsync(q => q.Id == questionId);
         }
 
-        public Task<List<Question>> GetQuestionsForCategory(int categoryId)
+        public async Task<List<Question>> GetQuestionsForCategory(int categoryId)
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions.Where(q=>q.CategoryId==categoryId).ToListAsync();
         }
 
-        public Task<List<Question>> GetAll()
+        public async Task<List<Question>> GetAll()
         {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions.ToListAsync();
         }
 
-        public Task<Question> Update(Question question)
+        public async Task<Question> Update(Question question)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Question>> GetQuestionsWithCondition(Expression<Func<Question, bool>> expression)
-        {
-            throw new NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var existing = await repositoryContext.Questions.FindAsync(question.Id);
+            if (existing != null)
+            {
+                repositoryContext.Entry(existing).CurrentValues.SetValues(question);
+                await repositoryContext.SaveChangesAsync();
+                return existing;
+            }
+            else
+            {
+                return question;
+            }
         }
     }
 }

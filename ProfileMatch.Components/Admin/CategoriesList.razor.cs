@@ -68,9 +68,11 @@ namespace ProfileMatch.Components.Admin
             Categories = await GetCategoriesAsync();
         }
 
-        private async Task QuestionCreate(int id)
+        private async Task QuestionCreate(Category category)
         {
-
+            var parameters = new DialogParameters { ["CategoryId"] = category.Id };
+            var dialog = DialogService.Show<EditQuestionDialog>($"Create Question for {category.Name}", parameters);
+             await dialog.Result;
         }
     }
 }

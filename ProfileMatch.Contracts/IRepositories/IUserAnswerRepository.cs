@@ -21,6 +21,6 @@ namespace ProfileMatch.Contracts
 
         Task<List<UserAnswer>> GetUserAnswersForUser(string userId);
 
-        Task<List<UserAnswer>> GetUserAnswersForAnswerOptionAndQuestion(int answerOptionId, int questionId);
+        Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId);
     }
 }

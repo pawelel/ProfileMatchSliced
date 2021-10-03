@@ -13,8 +13,6 @@ namespace ProfileMatch.Contracts
 
         Task<AnswerOption> Delete(AnswerOption answerOption);
 
-        Task<AnswerOption> FindByName(string answerOptionName);
-
         Task<AnswerOption> FindById(int answerOptionId);
 
         Task<List<AnswerOption>> GetAnswerOptionsForQuestion(int questionId);

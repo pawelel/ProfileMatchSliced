@@ -9,6 +9,12 @@
         <MudSpacer />
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col style="width: 60%;"/>
+        <col />
+        <col />
+    </ColGroup>
     <HeaderContent>
         <MudTh>Name</MudTh>
         <MudTh>Description</MudTh>
@@ -20,8 +26,8 @@
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Questions">@context.Questions.Count</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton OnClick="((e)=>CategoryUpdate(context))">Edit</MudButton>
-            <MudButton OnClick="((e)=>QuestionCreate(context.Id))">Edit</MudButton>
+            <MudButton OnClick="((e)=>CategoryUpdate(context))" Color="Color.Tertiary">Edit Category</MudButton>
+            <MudButton OnClick="((e)=>QuestionCreate(context))" Color="Color.Success">Add Question</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

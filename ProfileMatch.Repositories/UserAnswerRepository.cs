@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,44 +19,66 @@ namespace ProfileMatch.Repositories
             this.contextFactory = contextFactory;
         }
 
-        public Task<UserAnswer> Create(UserAnswer answer)
+        public async Task<UserAnswer> Create(UserAnswer answer)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.UserAnswers.AddAsync(answer);
+            await repositoryContext.SaveChangesAsync();
+            return data.Entity;
         }
 
-        public Task<UserAnswer> Delete(UserAnswer answer)
+        public async Task<UserAnswer> Delete(UserAnswer answer)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = repositoryContext.UserAnswers.Remove(answer).Entity;
+            await repositoryContext.SaveChangesAsync();
+            return data;
         }
 
-        public Task<UserAnswer> FindById(string userId, int answerOptionId)
+        public async Task<UserAnswer> FindById(string userId, int answerOptionId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.FindAsync(userId, answerOptionId);
         }
 
-        public Task<List<UserAnswer>> GetAll()
+        public async Task<List<UserAnswer>> GetAll()
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.ToListAsync();
         }
 
-        public Task<UserAnswer> Update(UserAnswer answer)
+        public async Task<UserAnswer> Update(UserAnswer answer)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var existing = await repositoryContext.UserAnswers.FindAsync(answer.ApplicationUserId, answer.AnswerOptionId);
+            if (existing != null)
+            {
+                repositoryContext.Entry(existing).CurrentValues.SetValues(answer);
+                await repositoryContext.SaveChangesAsync();
+                return existing;
+            }
+            else
+            {
+                return answer;
+            }
         }
 
-        public Task<List<UserAnswer>> GetUserAnswersForQuestion(int questionId)
+        public async Task<List<UserAnswer>> GetUserAnswersForQuestion(int questionId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.Include(u => u.AnswerOption.Question).Where(o => o.AnswerOption.QuestionId == questionId).AsNoTracking().ToListAsync();
         }
 
-        public Task<List<UserAnswer>> GetUserAnswersForAnswerOptionAndQuestion(int answerOptionId, int questionId)
+        public async Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.Include(u => u.AnswerOption.Question).Where(o => o.AnswerOption.Level == level).Where(o => o.AnswerOption.QuestionId == questionId).AsNoTracking().ToListAsync();
         }
 
-        public Task<List<UserAnswer>> GetUserAnswersForUser(string userId)
+        public async Task<List<UserAnswer>> GetUserAnswersForUser(string userId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(a => a.AnswerOption).AsNoTracking().ToListAsync();
         }
     }
 }

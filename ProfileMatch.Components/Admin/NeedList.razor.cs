@@ -6,5 +6,3 @@ namespace ProfileMatch.Components.Admin
     {
     }
 }
-
-//todo add repositories and services for category and need, aswell view models

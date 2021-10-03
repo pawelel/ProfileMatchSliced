@@ -24,7 +24,5 @@ namespace ProfileMatch.Contracts
         Task<List<Question>> GetAll();
 
         Task<Question> Update(Question question);
-
-        Task<List<Question>> GetQuestionsWithCondition(Expression<Func<Question, bool>> expression);
     }
 }
