@@ -42,34 +42,13 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add("Operation cancelled", Severity.Warning);
         }
-        private async Task<List<AnswerOption>> AddLevels(Question question)
-        {
-            List<AnswerOption> answerOptions = new();
-             answerOptions = question.AnswerOptions;
-            if (answerOptions == null)
-            {
-                for (int i = 1; i < 6; i++)
-                {
-                    AnswerOption lvl = new()
-                    {
-                        QuestionId = question.Id,
-                        Description = string.Empty,
-                        Level = i
-                    };
-                    await AnswerOptionRepository.Create(lvl);
-                    answerOptions.Add(lvl);
-                }
-            }
-            StateHasChanged();
-            return answerOptions;
-        }
+        
 
         protected async Task HandleSave()
         {
             await Form.Validate();
             if (Form.IsValid)
             {
-               Q.AnswerOptions = await AddLevels(Q);
                 Q.Name = TempName;
                 Q.Description = TempDescription;
                 Q.CategoryId = CategoryId;
@@ -95,8 +74,8 @@ namespace ProfileMatch.Components.Dialogs
             }
             else
             {
-                var result = await QuestionRepository.Update(Q);
-                Snackbar.Add($"Question {result.Name} updated", Severity.Success);
+                await QuestionRepository.Update(Q);
+                Snackbar.Add($"Question {Q.Name} updated", Severity.Success);
             }
         }
     }

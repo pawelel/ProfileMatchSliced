@@ -88,5 +88,11 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
             
         }
+        private async Task QuestionDetailsDialog(Question question)
+        {
+            var parameters = new DialogParameters { ["Q"] = question };
+            var dialog = DialogService.Show<QuestionDetails>($"{question.Name}", parameters);
+            await dialog.Result;
+        }
     }
 }

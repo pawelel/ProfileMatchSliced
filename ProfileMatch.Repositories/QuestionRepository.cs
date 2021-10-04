@@ -73,20 +73,11 @@ namespace ProfileMatch.Repositories
             return await repositoryContext.Questions.ToListAsync();
         }
 
-        public async Task<Question> Update(Question question)
+        public async Task Update(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var existing = await repositoryContext.Questions.FindAsync(question.Id);
-            if (existing != null)
-            {
-                repositoryContext.Entry(existing).CurrentValues.SetValues(question);
-                await repositoryContext.SaveChangesAsync();
-                return existing;
-            }
-            else
-            {
-                return question;
-            }
+             repositoryContext.Questions.Update(question);
+            await repositoryContext.SaveChangesAsync();
         }
     }
 }

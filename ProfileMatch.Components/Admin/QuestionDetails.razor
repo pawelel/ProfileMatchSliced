@@ -1,0 +1,39 @@
+﻿<MudDialog>
+    <DialogContent>
+            <MudCard>
+                <MudCardContent>
+                    <MudItem Class="pt-8"></MudItem>
+                    <MudText Typo="Typo.h6">@Q.Name</MudText>
+                    @if (Q.AnswerOptions !=null)
+                    {
+                        <MudTabs Outlined="true"
+                                 Position="Position.Top"
+                                 Rounded="true"
+                                 Border="true"
+                                 ApplyEffectsToContainer="true"
+                                 PanelClass="pa-6 d-block">
+                            @foreach (var level in Q.AnswerOptions)
+                            {
+                                <MudTabPanel Text="@level.Level.ToString()">
+
+                                    <MudItem>
+                                        <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
+                                        <MudText Typo="Typo.subtitle2"
+                                                 @bind-Value="@level.Description">@level.Description</MudText>
+
+                                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small" OnClick="@(() => EditLevelDialog(level))">Edit Level</MudButton>
+
+                                            </MudItem>
+
+                                        </MudTabPanel>
+                                    }
+                        </MudTabs>
+                    }
+                    else
+                    {
+                        <MudButton OnClick="@(()=>AddLevels(Q))">Add Answer Options</MudButton>
+                    }
+                </MudCardContent>
+            </MudCard>
+    </DialogContent>
+</MudDialog>

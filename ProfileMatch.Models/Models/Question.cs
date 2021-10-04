@@ -10,6 +10,6 @@ namespace ProfileMatch.Models.Models
         public bool IsActive { get; set; }
         public string Description { get; set; }
         public virtual Category Category { get; set; }
-        public virtual List<AnswerOption> AnswerOptions { get; set; }
+        public virtual List<AnswerOption> AnswerOptions { get; set; } = new();
     }
 }

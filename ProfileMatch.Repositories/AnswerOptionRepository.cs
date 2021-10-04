@@ -59,20 +59,11 @@ namespace ProfileMatch.Repositories
             return await repositoryContext.AnswerOptions.ToListAsync();
         }
 
-        public async Task<AnswerOption> Update(AnswerOption answerOption)
+        public async Task Update(AnswerOption answerOption)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var existing = await repositoryContext.AnswerOptions.FindAsync(answerOption.Id);
-            if (existing != null)
-            {
-                repositoryContext.Entry(existing).CurrentValues.SetValues(answerOption);
-                await repositoryContext.SaveChangesAsync();
-                return existing;
-            }
-            else
-            {
-                return answerOption;
-            }
+            repositoryContext.AnswerOptions.Update(answerOption);
+            await repositoryContext.SaveChangesAsync();
         }
     }
 }

@@ -19,6 +19,6 @@ namespace ProfileMatch.Contracts
 
         Task<List<AnswerOption>> GetAll();
 
-        Task<AnswerOption> Update(AnswerOption answerOption);
+        Task Update(AnswerOption answerOption);
     }
 }

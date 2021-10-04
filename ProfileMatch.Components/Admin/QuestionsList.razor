@@ -29,7 +29,7 @@ else
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
             <MudTd DataLabel="Actions">
-                <MudButton>Display</MudButton>
+                <MudButton OnClick="@(()=>QuestionDetailsDialog(context))">Display</MudButton>
                 <MudButton OnClick="@(()=>EditQuestionDialog(context))">Edit</MudButton>
             </MudTd>
         </RowTemplate>

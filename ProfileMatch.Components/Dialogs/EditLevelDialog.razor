@@ -1,0 +1,11 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm @ref="Form">
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Level Description" Required="true" RequiredError="Level Description is required!" Lines="5" MaxLength="1500"/>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="HandleSave">Save</MudButton>
+    </DialogActions>
+</MudDialog>
