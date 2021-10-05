@@ -15,29 +15,34 @@ else
         <MudText Typo="Typo.body2">SelectedValues:  @(string.Join(", ", Options.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
     <MudTable Items="@(GetQuestions())" SortLabel="Sort By" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Questions Table</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">Category</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">Question</MudTableSortLabel></MudTh>
-            <MudTh>Options</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Category">@context.Category.Name</MudTd>
-            <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd DataLabel="Actions">
-                <MudButton OnClick="@(()=>QuestionDetailsDialog(context))">Display</MudButton>
-                <MudButton OnClick="@(()=>EditQuestionDialog(context))">Edit</MudButton>
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
-                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString="My Row My Table"
-                           InfoFormat="{first_item}-{last_item} / {all_items}" />
-        </PagerContent>
+        <ColGroup>
+            <col />
+            <col style="width: 60%;" />
+            <col />
+            </ColGroup>
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Questions Table</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">Category</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">Question</MudTableSortLabel></MudTh>
+                <MudTh>Options</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Category">@context.Category.Name</MudTd>
+                <MudTd DataLabel="Question">@context.Name</MudTd>
+                <MudTd DataLabel="Actions">
+                    <MudButton OnClick="@(()=>QuestionDetailsDialog(context))">Display</MudButton>
+                    <MudButton OnClick="@(()=>EditQuestionDialog(context))">Edit</MudButton>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
+                               PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString="My Row My Table"
+                               InfoFormat="{first_item}-{last_item} / {all_items}" />
+            </PagerContent>
     </MudTable>
 
     <MudItem class="d-flex flex-wrap mt-4">
