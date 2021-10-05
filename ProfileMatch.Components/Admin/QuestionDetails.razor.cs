@@ -24,20 +24,21 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         IQuestionRepository QuestionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
-        List<AnswerOption> answerOptions = new();
-        private void AddLevels(Question question)
+        private async Task AddLevels(Question question)
         {
             for (int i = 1; i < 6; i++)
             {
-                answerOptions.Add(
-                  new AnswerOption()
-                  {
-                      QuestionId = question.Id,
-                      Description = string.Empty,
-                      Level = i
-                  });
+                question.AnswerOptions.Add(
+                     await AnswerOptionRepository.Create(new AnswerOption()
+                     {
+                         QuestionId = question.Id,
+                         Description = string.Empty,
+                         Level = i
+                     })
+                );
+
             }
-            QuestionRepository.Update(question);
+
 
         }
         private async Task EditQuestionDialog(Question question)
@@ -53,12 +54,13 @@ namespace ProfileMatch.Components.Admin
             var dialog = DialogService.Show<EditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            answerOptions = Q.AnswerOptions;
-            if (answerOptions == null)
+            Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
+
+            if (Q.AnswerOptions.Count == 0||Q.AnswerOptions==null)
             {
-                AddLevels(Q);
+               await AddLevels(Q);
             }
         }
 

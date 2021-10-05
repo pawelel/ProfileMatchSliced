@@ -90,8 +90,9 @@ namespace ProfileMatch.Components.Admin
         }
         private async Task QuestionDetailsDialog(Question question)
         {
+            DialogOptions maxWidth = new() { FullScreen = true, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<QuestionDetails>($"{question.Name}", parameters);
+            var dialog = DialogService.Show<QuestionDetails>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
     }
