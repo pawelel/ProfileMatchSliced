@@ -9,6 +9,7 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -22,10 +23,9 @@ namespace ProfileMatch.Components.Dialogs
         [Parameter] public int CategoryId { get; set; }
 
         public int QuestionId { get; set; }
-        public int AoLevel { get; set; }
-        public string AoDescription { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
+        public bool TempIsActive { get; set; }
 
         protected override void OnInitialized()
         {
@@ -52,6 +52,8 @@ namespace ProfileMatch.Components.Dialogs
                 Q.Name = TempName;
                 Q.Description = TempDescription;
                 Q.CategoryId = CategoryId;
+                CanActivate();
+
                 try
                 {
                     await Save();
@@ -62,6 +64,19 @@ namespace ProfileMatch.Components.Dialogs
                 }
 
                 MudDialog.Close(DialogResult.Ok(Q));
+            }
+        }
+
+        private void CanActivate()
+        {
+            bool ee = Q.AnswerOptions.Any(e => string.IsNullOrWhiteSpace(e.Description));
+            if (ee)
+            {
+                Q.IsActive = false;
+            }
+            else
+            {
+                Q.IsActive = TempIsActive;
             }
         }
 
