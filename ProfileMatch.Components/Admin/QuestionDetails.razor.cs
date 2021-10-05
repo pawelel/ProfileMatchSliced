@@ -49,7 +49,7 @@ namespace ProfileMatch.Components.Admin
         }
         private async Task EditLevelDialog(AnswerOption answerOption)
         {
-            DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.ExtraExtraLarge, FullWidth = true };
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
             var dialog = DialogService.Show<EditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
