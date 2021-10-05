@@ -9,7 +9,7 @@ namespace ProfileMatch.Models.Models
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string Description { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual List<AnswerOption> AnswerOptions { get; set; } = new();
+        public  Category Category { get; set; }
+        public  List<AnswerOption> AnswerOptions { get; set; } = new();
     }
 }

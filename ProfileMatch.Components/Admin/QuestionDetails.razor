@@ -4,7 +4,7 @@
                 <MudCardContent>
                     <MudItem Class="pt-8"></MudItem>
                     <MudText Typo="Typo.h6">@Q.Name</MudText>
-                    @if (Q.AnswerOptions !=null)
+                    @if (Q.AnswerOptions.Count>0)
                     {
                         <MudTabs Outlined="true"
                                  Position="Position.Top"

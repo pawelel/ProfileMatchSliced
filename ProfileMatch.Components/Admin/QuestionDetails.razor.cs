@@ -25,21 +25,20 @@ namespace ProfileMatch.Components.Admin
         IQuestionRepository QuestionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
         List<AnswerOption> answerOptions = new();
-        private async Task AddLevels(Question question)
-        {               
+        private void AddLevels(Question question)
+        {
             for (int i = 1; i < 6; i++)
             {
-                AnswerOption lvl = new()
-                {
-                    QuestionId = question.Id,
-                    Description = string.Empty,
-                    Level = i
-                };
-                answerOptions.Add (await AnswerOptionRepository.Create(lvl));
-                
+                answerOptions.Add(
+                  new AnswerOption()
+                  {
+                      QuestionId = question.Id,
+                      Description = string.Empty,
+                      Level = i
+                  });
             }
-            question.AnswerOptions = answerOptions;
-           
+            QuestionRepository.Update(question);
+
         }
         private async Task EditQuestionDialog(Question question)
         {
@@ -51,15 +50,15 @@ namespace ProfileMatch.Components.Admin
         {
             DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.ExtraExtraLarge, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
-            var dialog = DialogService.Show<EditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters,maxWidth);
+            var dialog = DialogService.Show<EditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             answerOptions = Q.AnswerOptions;
-            if (answerOptions==null)
+            if (answerOptions == null)
             {
-              await  AddLevels(Q);
+                AddLevels(Q);
             }
         }
 
