@@ -57,13 +57,13 @@ namespace ProfileMatch.Components.Admin
         private async Task CategoryUpdate(Category category)
         {
             var parameters = new DialogParameters { ["Cat"] = category };
-            var dialog = DialogService.Show<EditCategoryDialog>("Update Category", parameters);
+            var dialog = DialogService.Show<AdminEditCategoryDialog>("Update Category", parameters);
             await dialog.Result;
         }
 
         private async Task CategoryCreate()
         {
-            var dialog = DialogService.Show<EditCategoryDialog>("Create Category");
+            var dialog = DialogService.Show<AdminEditCategoryDialog>("Create Category");
             await dialog.Result;
             Categories = await GetCategoriesAsync();
         }
@@ -71,7 +71,7 @@ namespace ProfileMatch.Components.Admin
         private async Task QuestionCreate(Category category)
         {
             var parameters = new DialogParameters { ["CategoryId"] = category.Id };
-            var dialog = DialogService.Show<EditQuestionDialog>($"Create Question for {category.Name}", parameters);
+            var dialog = DialogService.Show<AdminEditQuestionDialog>($"Create Question for {category.Name}", parameters);
              await dialog.Result;
             Categories = await GetCategoriesAsync();
         }

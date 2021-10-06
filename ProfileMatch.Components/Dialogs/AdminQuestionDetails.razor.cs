@@ -15,14 +15,12 @@ using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class QuestionDetails : ComponentBase
+    public partial class AdminQuestionDetails : ComponentBase
     {
         [Inject]
         IDialogService DialogService { get; set; }
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
-        [Inject]
-        IQuestionRepository QuestionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
         private async Task AddLevels(Question question)
         {
@@ -41,17 +39,11 @@ namespace ProfileMatch.Components.Admin
 
 
         }
-        private async Task EditQuestionDialog(Question question)
-        {
-            var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<EditQuestionDialog>($"Edit Question {question.Name}", parameters);
-            await dialog.Result;
-        }
         private async Task EditLevelDialog(AnswerOption answerOption)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
-            var dialog = DialogService.Show<EditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminEditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
         protected override async Task OnInitializedAsync()

@@ -84,7 +84,7 @@ namespace ProfileMatch.Components.Admin
         private async Task EditQuestionDialog(Question question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<EditQuestionDialog>($"Edit Question {question.Name}", parameters);
+            var dialog = DialogService.Show<AdminEditQuestionDialog>($"Edit Question {question.Name}", parameters);
             await dialog.Result;
             
         }
@@ -92,7 +92,7 @@ namespace ProfileMatch.Components.Admin
         {
             DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<QuestionDetails>($"{question.Name}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminQuestionDetails>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
     }

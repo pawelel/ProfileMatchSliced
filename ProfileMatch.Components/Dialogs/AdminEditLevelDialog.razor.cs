@@ -1,31 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
-
 using MudBlazor;
-
 using ProfileMatch.Contracts;
 
 using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditCategoryDialog : ComponentBase
+    public partial class AdminEditLevelDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Category Cat { get; set; } = new();
-        public string TempName { get; set; }
+        [Parameter] public AnswerOption O { get; set; } = new();
         public string TempDescription { get; set; }
 
         protected override void OnInitialized()
         {
-            TempName = Cat.Name;
-            TempDescription = Cat.Description;
+
+            TempDescription = O.Description;
         }
 
-        [Inject] public ICategoryRepository CategoryRepository { get; set; }
+        [Inject] public IAnswerOptionRepository AnswerOptionRepository { get; set; }
 
         private MudForm Form;
 
@@ -40,8 +39,8 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                Cat.Name = TempName;
-                Cat.Description = TempDescription;
+         
+                O.Description = TempDescription;
                 try
                 {
                     await Save();
@@ -51,21 +50,21 @@ namespace ProfileMatch.Components.Dialogs
                     Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(Cat));
+                MudDialog.Close(DialogResult.Ok(O));
             }
         }
 
         private async Task Save()
         {
-            if (Cat.Id == 0)
+            if (O.Id == 0)
             {
-                var result = await CategoryRepository.Create(Cat);
-                Snackbar.Add($"Category {result.Name} created", Severity.Success);
+                var result = await AnswerOptionRepository.Create(O);
+                Snackbar.Add($"Answer Option created", Severity.Success);
             }
             else
             {
-                var result = await CategoryRepository.Update(Cat);
-                Snackbar.Add($"Category {result.Name} updated", Severity.Success);
+                await AnswerOptionRepository.Update(O);
+                Snackbar.Add($"Answer Option updated", Severity.Success);
             }
         }
     }

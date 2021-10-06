@@ -75,13 +75,6 @@ namespace ProfileMatch.Components.User
             }
             return questions1;
         }
-        private async Task EditQuestionDialog(Question question)
-        {
-            var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<EditQuestionDialog>($"Edit Question {question.Name}", parameters);
-            await dialog.Result;
-            
-        }
         private async Task QuestionDetailsDialog(Question question)
         {
             DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };

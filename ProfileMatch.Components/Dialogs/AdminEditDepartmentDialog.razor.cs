@@ -10,7 +10,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditDepartmentDialog : ComponentBase
+    public partial class AdminEditDepartmentDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditQuestionDialog : ComponentBase
+    public partial class AdminEditQuestionDialog : ComponentBase
     {
         [Inject]
         IAnswerOptionRepository AnswerOptionRepository { get; set; }

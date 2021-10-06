@@ -14,7 +14,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditUserDialog : ComponentBase
+    public partial class AdminEditUserDialog : ComponentBase
     {
         [Inject]
         private AuthenticationStateProvider AuthSP { get; set; }

@@ -2,7 +2,7 @@
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class EditNoteDialog : ComponentBase
+    public partial class AdminEditNoteDialog : ComponentBase
     {
     }
 }
