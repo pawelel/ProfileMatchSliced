@@ -24,5 +24,6 @@ namespace ProfileMatch.Contracts
         Task Update(Question question);
         Task<List<Question>> GetQuestionsWithCategoriesAndOptions();
         Task<List<Question>> GetQuestionsWithCategories();
+        Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptions();
     }
 }

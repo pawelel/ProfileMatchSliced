@@ -37,7 +37,7 @@ namespace ProfileMatch.Components.User
         {
             loading = true;
             categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetQuestionsWithCategoriesAndOptions();
+            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
             questions1 = questions;
             loading = false;
         }
@@ -47,9 +47,6 @@ namespace ProfileMatch.Components.User
         private bool bordered = true;
         private bool striped = false;
         private string searchString1 = "";
-        private Question selectedItem1 = null;
-        private readonly HashSet<Question> selectedItems = new();
-
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
         private static bool FilterFunc(Question question, string searchString)
@@ -73,7 +70,7 @@ namespace ProfileMatch.Components.User
             {
                 questions1 = (from q in questions
                               from o in Options
-                              where q.Category.Name == o
+                              where q.Category.Name == o 
                               select q).ToList();
             }
             return questions1;
