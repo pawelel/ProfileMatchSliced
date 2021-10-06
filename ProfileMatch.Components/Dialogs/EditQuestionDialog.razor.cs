@@ -52,8 +52,7 @@ namespace ProfileMatch.Components.Dialogs
                 Q.Name = TempName;
                 Q.Description = TempDescription;
                 Q.CategoryId = CategoryId;
-                CanActivate();
-
+                Q.IsActive = TempIsActive;
                 try
                 {
                     await Save();
@@ -67,17 +66,15 @@ namespace ProfileMatch.Components.Dialogs
             }
         }
 
-        private void CanActivate()
+        
+        private bool CanActivate(Question question)
         {
-            bool ee = Q.AnswerOptions.Any(e => string.IsNullOrWhiteSpace(e.Description));
-            if (ee)
+            if (question.AnswerOptions == null || question.AnswerOptions.Any(x => x.Description == null ||
+                   x.Description.Trim() == string.Empty || question.AnswerOptions.Count == 0))
             {
-                Q.IsActive = false;
+                return false;
             }
-            else
-            {
-                Q.IsActive = TempIsActive;
-            }
+            return true;
         }
 
         private async Task Save()
