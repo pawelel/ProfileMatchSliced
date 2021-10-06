@@ -93,5 +93,17 @@ namespace ProfileMatch.Repositories
             var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
                 return data.AnswerOption.Level;
         }
+        public async Task<UserAnswer> GetUserAnswer(string userId, int optionId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
+            return data;
+        }
+
+        public async Task<UserAnswer> FindById(string userId, int optionId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserAnswers.FindAsync(userId, optionId);
+        }
     }
 }

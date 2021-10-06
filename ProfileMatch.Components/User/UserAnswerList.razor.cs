@@ -39,6 +39,7 @@ namespace ProfileMatch.Components.User
             questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptionsForUser(UserId);
             questions1 = questions;
             loading = false;
+            Console.WriteLine(UserId);
         }
 
         private bool dense = true;

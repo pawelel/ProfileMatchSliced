@@ -22,21 +22,50 @@ namespace ProfileMatch.Components.Dialogs
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
-       [Parameter] public UserAnswer UserAnswer { get; set; }
+        [Parameter] public UserAnswer UserAnswer { get; set; } = new();
+        [Parameter] public string UserId { get; set; }
         protected override async Task OnInitializedAsync()
         {
             UserAnswer = await UserAnswerRepository.FindById(UserAnswer);
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
-
         }
-       
-        private static bool CanSelect(UserAnswer answer, int optionId)
+
+        private async Task<bool> CanSelect(string userId, int optionId)
         {
-            if (answer.AnswerOptionId==optionId)
+            UserAnswer = await UserAnswerRepository.FindById(userId, optionId);
+            if (UserAnswer==null)
+            {
+                return true;
+            }else  if (UserAnswer.AnswerOptionId == optionId)
             {
                 return false;
             }
             return true;
+        }
+       async Task SelectLevelAsync(string UserId, int answerOptionId)
+        {var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, answerOptionId);
+            if (userAnswer == null)
+            {
+
+                userAnswer = new()
+                {
+                    SupervisorId = null,
+                    AnswerOptionId = answerOptionId,
+                    ApplicationUserId = UserId,
+                    IsConfirmed = false,
+                    LastModified = DateTime.Now
+                };
+               await UserAnswerRepository.Create(userAnswer);
+            }
+            else
+            {
+                userAnswer.ApplicationUserId = UserId;
+                userAnswer.AnswerOptionId = answerOptionId;
+                userAnswer.IsConfirmed = false;
+                userAnswer.LastModified = DateTime.Now;
+                userAnswer.SupervisorId = null;
+                await UserAnswerRepository.Update(userAnswer);
+            }
         }
     }
 }

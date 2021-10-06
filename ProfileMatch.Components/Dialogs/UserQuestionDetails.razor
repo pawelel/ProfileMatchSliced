@@ -18,9 +18,9 @@
                         <MudText Typo="Typo.subtitle1">Level @answerOption.Level.ToString()</MudText>
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
-                        @if (CanSelect(UserAnswer, answerOption.Id))
+                        @if (CanSelect(UserId, answerOption.Id).Result)
                         {
-                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small">This is my Level</MudButton>
+                                <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id))" Color="Color.Tertiary" Size="Size.Small">This is my Level</MudButton>
                         }
 
                             </MudItem>
