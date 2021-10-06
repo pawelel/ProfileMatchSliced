@@ -10,7 +10,7 @@ namespace ProfileMatch.Components.Authentication
 {
     public partial class Register : ComponentBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
 
         private string Password { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace ProfileMatch.Models.Models
+﻿using System;
+
+namespace ProfileMatch.Models.Models
 {
     public class UserAnswer
     {
@@ -8,5 +10,6 @@
         public int AnswerOptionId { get; set; }
         public bool IsConfirmed { get; set; }
         public string SupervisorId { get; set; }
+        public DateTime LastModified { get; set; }
     }
 }
