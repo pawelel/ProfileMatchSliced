@@ -2,6 +2,6 @@
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">User Dashboard</MudText>
 <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
-    <MudTabPanel Text="Surveys" Icon="@Icons.Filled.FactCheck"><EditUserAnswer /></MudTabPanel>
+    <MudTabPanel Text="Surveys" Icon="@Icons.Filled.FactCheck"><UserAnswerList UserId="@CurrentUserId"/></MudTabPanel>
     <MudTabPanel Text="Account" Icon="@Icons.Filled.PersonOutline"></MudTabPanel>
 </MudTabs>

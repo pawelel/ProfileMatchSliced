@@ -15,8 +15,6 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminEditQuestionDialog : ComponentBase
     {
-        [Inject]
-        IAnswerOptionRepository AnswerOptionRepository { get; set; }
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Question Q { get; set; } = new();
@@ -67,7 +65,7 @@ namespace ProfileMatch.Components.Dialogs
         }
 
         
-        private bool CanActivate(Question question)
+        private static bool CanActivate(Question question)
         {
             if (question.AnswerOptions == null || question.AnswerOptions.Any(x => x.Description == null ||
                    x.Description.Trim() == string.Empty || question.AnswerOptions.Count == 0))

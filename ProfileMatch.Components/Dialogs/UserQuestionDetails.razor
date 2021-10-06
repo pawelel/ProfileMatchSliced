@@ -10,16 +10,18 @@
                  Border="true"
                  ApplyEffectsToContainer="true"
                  PanelClass="pa-6 d-block">
-            @foreach (var level in Q.AnswerOptions)
+            @foreach (var answerOption in Q.AnswerOptions)
             {
-                <MudTabPanel Text="@level.Level.ToString()">
+                <MudTabPanel Text="@answerOption.Level.ToString()">
 
                     <MudItem>
-                        <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
+                        <MudText Typo="Typo.subtitle1">Level @answerOption.Level.ToString()</MudText>
                         <MudText Typo="Typo.subtitle2"
-                                 @bind-Value="@level.Description">@level.Description</MudText>
-
+                                 @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
+                        @if (CanSelect(UserAnswer, answerOption.Id))
+                        {
                                 <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small">This is my Level</MudButton>
+                        }
 
                             </MudItem>
 

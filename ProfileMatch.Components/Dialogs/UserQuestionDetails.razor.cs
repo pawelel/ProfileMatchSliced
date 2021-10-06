@@ -18,38 +18,25 @@ namespace ProfileMatch.Components.Dialogs
     public partial class UserQuestionDetails : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
+        IUserAnswerRepository UserAnswerRepository { get; set; }
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
-        [Inject]
-        IQuestionRepository QuestionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
-        private async Task AddLevels(Question question)
-        {
-            for (int i = 1; i < 6; i++)
-            {
-                question.AnswerOptions.Add(
-                     await AnswerOptionRepository.Create(new AnswerOption()
-                     {
-                         QuestionId = question.Id,
-                         Description = string.Empty,
-                         Level = i
-                     })
-                );
-
-            }
-
-
-        }
+       [Parameter] public UserAnswer UserAnswer { get; set; }
         protected override async Task OnInitializedAsync()
         {
+            UserAnswer = await UserAnswerRepository.FindById(UserAnswer);
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
 
-            if (Q.AnswerOptions.Count == 0||Q.AnswerOptions==null)
-            {
-               await AddLevels(Q);
-            }
         }
-
+       
+        private static bool CanSelect(UserAnswer answer, int optionId)
+        {
+            if (answer.AnswerOptionId==optionId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

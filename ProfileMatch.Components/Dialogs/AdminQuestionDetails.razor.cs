@@ -13,7 +13,7 @@ using ProfileMatch.Models.Models;
 
 using ProfileMatch.Repositories;
 
-namespace ProfileMatch.Components.Admin
+namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminQuestionDetails : ComponentBase
     {

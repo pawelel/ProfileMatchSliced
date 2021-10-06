@@ -11,11 +11,16 @@ namespace ProfileMatch.Sites.User
 {
     public partial class UserDashboard : ComponentBase
     {
-        [Parameter] public IEnumerable<ApplicationUser> Users { get; set; }
         [Inject]
         public AuthenticationStateProvider AuthStateProv { get; set; }
         [Inject]
         UserManager<ApplicationUser> UserManager { get; set; }
+        public string CurrentUserId { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await GetUserDetails();
+        }
         private async Task GetUserDetails()
         {
             var authState = await AuthStateProv.GetAuthenticationStateAsync();
@@ -23,7 +28,7 @@ namespace ProfileMatch.Sites.User
             if (user.Identity.IsAuthenticated)
             {
                 var currentUser = await UserManager.GetUserAsync(user);
-                var currentUserId = currentUser.Id;
+                CurrentUserId = currentUser.Id;
             }
         }
     }

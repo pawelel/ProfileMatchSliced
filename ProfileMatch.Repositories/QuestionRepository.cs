@@ -36,8 +36,15 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions.Where(q=>q.IsActive==true)
-                .Include(question => question.Category).Include(question => question.Category).AsNoTracking().ToListAsync();
+                .Include(question => question.Category).Include(question => question.AnswerOptions).AsNoTracking().ToListAsync();
         }
+        public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.Questions.Where(q => q.IsActive == true)
+                .Include(question => question.Category).Include(question => question.AnswerOptions).ThenInclude(u=>u.UserAnswers.Where(u=>u.ApplicationUserId== userId)).AsNoTracking().ToListAsync();
+        }
+
         public async Task<Question> Create(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();

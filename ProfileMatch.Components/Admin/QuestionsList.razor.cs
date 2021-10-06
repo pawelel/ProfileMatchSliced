@@ -23,17 +23,12 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
 
-        [Inject]
-        private IAnswerOptionRepository AnswerOptionRepository { get; set; }
-
         private bool loading;
         [Parameter] public int Id { get; set; }
         private List<Question> questions=new();
         private List<Question> questions1;
         private List<Category> categories;
-        string Edit { get; set; } = "";
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
-        private string Value { get; set; } = "Nothing selected";
         public bool ShowDetails { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -51,8 +46,6 @@ namespace ProfileMatch.Components.Admin
         private bool striped = false;
         private string searchString1 = "";
         private Question selectedItem1 = null;
-        private readonly HashSet<Question> selectedItems = new();
-
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
         private static bool FilterFunc(Question question, string searchString)

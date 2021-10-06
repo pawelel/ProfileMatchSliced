@@ -11,8 +11,6 @@ namespace ProfileMatch.Contracts
 
         Task<UserAnswer> Delete(UserAnswer answer);
 
-        Task<UserAnswer> FindById(string userId, int answerOptionId);
-
         Task<List<UserAnswer>> GetAll();
 
         Task<UserAnswer> Update(UserAnswer answer);
@@ -22,5 +20,7 @@ namespace ProfileMatch.Contracts
         Task<List<UserAnswer>> GetUserAnswersForUser(string userId);
 
         Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId);
+        Task<int> GetUserAnswerLevel(string userId, int optionId);
+        Task<UserAnswer> FindById(UserAnswer userAnswer);
     }
 }

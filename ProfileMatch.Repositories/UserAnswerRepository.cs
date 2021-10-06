@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Repositories
 {
@@ -35,10 +36,15 @@ namespace ProfileMatch.Repositories
             return data;
         }
 
-        public async Task<UserAnswer> FindById(string userId, int answerOptionId)
+        public async Task<UserAnswer> FindById(UserAnswer userAnswer)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.UserAnswers.FindAsync(userId, answerOptionId);
+            if (userAnswer == null)
+            {
+            return new();
+            }
+
+            return await repositoryContext.UserAnswers.FindAsync(userAnswer.ApplicationUserId, userAnswer.AnswerOptionId);
         }
 
         public async Task<List<UserAnswer>> GetAll()
@@ -79,6 +85,13 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(a => a.AnswerOption).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<int> GetUserAnswerLevel(string userId, int optionId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
+                return data.AnswerOption.Level;
         }
     }
 }

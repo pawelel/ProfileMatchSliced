@@ -10,10 +10,11 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class EditUserAnswer : ComponentBase
+    public partial class UserAnswerList : ComponentBase
     {
         [Inject]
         IDialogService DialogService { get; set; }
@@ -22,22 +23,20 @@ namespace ProfileMatch.Components.User
 
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
-
-        [Inject]
-        private IAnswerOptionRepository AnswerOptionRepository { get; set; }
-
         private bool loading;
         [Parameter] public int Id { get; set; }
+       [Parameter] public string UserId { get; set; }
         private List<Question> questions=new();
         private List<Question> questions1;
         private List<Category> categories;
+        private int Level { get; set; }
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
 
         protected override async Task OnInitializedAsync()
         {
             loading = true;
             categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
+            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptionsForUser(UserId);
             questions1 = questions;
             loading = false;
         }
@@ -78,9 +77,11 @@ namespace ProfileMatch.Components.User
         private async Task QuestionDetailsDialog(Question question)
         {
             DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question };
+            var parameters = new DialogParameters { ["Q"] = question
+            };
             var dialog = DialogService.Show<UserQuestionDetails>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
+
     }
 }
