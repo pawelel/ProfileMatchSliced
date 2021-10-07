@@ -30,9 +30,9 @@ namespace ProfileMatch.Components.Dialogs
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
         }
 
-        private async Task<bool> CanSelect(string userId, int optionId)
+        private bool CanSelect(string userId, int optionId)
         {
-            UserAnswer = await UserAnswerRepository.FindById(userId, optionId);
+            UserAnswer = UserAnswerRepository.FindById(userId, optionId);
             if (UserAnswer==null)
             {
                 return true;

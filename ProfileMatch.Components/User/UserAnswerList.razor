@@ -35,7 +35,7 @@ else
         <RowTemplate>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd DataLabel="Level">5</MudTd>
+            <MudTd DataLabel="Level">@ShowLevel(context)</MudTd>
             <MudTd DataLabel="Actions">
                 <MudButton OnClick="@(()=>QuestionDetailsDialog(context))">Edit Answer</MudButton>
             </MudTd>

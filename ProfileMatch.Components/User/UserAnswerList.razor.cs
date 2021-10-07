@@ -22,6 +22,8 @@ namespace ProfileMatch.Components.User
         private ICategoryRepository CategoryRepository { get; set; }
 
         [Inject]
+        IUserAnswerRepository UserAnswerRepository { get; set; }
+        [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
         private bool loading;
         [Parameter] public int Id { get; set; }
@@ -59,7 +61,7 @@ namespace ProfileMatch.Components.User
                 return true;
             return false;
         }
-
+       
         private List<Question> GetQuestions()
         {
             if (Options.Count == 0)
@@ -78,11 +80,15 @@ namespace ProfileMatch.Components.User
         private async Task QuestionDetailsDialog(Question question)
         {
             DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question
+            var parameters = new DialogParameters { ["Q"] = question,
+                ["UserId"]=UserId
             };
             var dialog = DialogService.Show<UserQuestionDetails>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
-
+        int ShowLevel(Question question)
+        {
+            return UserAnswerRepository.ShowLevel(question, UserId);
+        }
     }
 }

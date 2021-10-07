@@ -22,7 +22,9 @@ namespace ProfileMatch.Contracts
         Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId);
         Task<int> GetUserAnswerLevel(string userId, int optionId);
         Task<UserAnswer> FindById(UserAnswer userAnswer);
-        Task<UserAnswer> FindById(string userId, int optionId);
+        Task<UserAnswer> FindByIdAsync(string userId, int optionId);
+        UserAnswer FindById(string userId, int optionId);
         Task<UserAnswer> GetUserAnswer(string userId, int optionId);
+        int ShowLevel(Question question, string UserId);
     }
 }

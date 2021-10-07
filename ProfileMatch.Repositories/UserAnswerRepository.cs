@@ -100,10 +100,33 @@ namespace ProfileMatch.Repositories
             return data;
         }
 
-        public async Task<UserAnswer> FindById(string userId, int optionId)
+        public async Task<UserAnswer> FindByIdAsync(string userId, int optionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.UserAnswers.FindAsync(userId, optionId);
         }
+        public UserAnswer FindById(string userId, int optionId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return repositoryContext.UserAnswers.Find(userId, optionId);
+        }
+        public int ShowLevel(Question question, string UserId)
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var answers = repositoryContext.UserAnswers;
+            var options = repositoryContext.AnswerOptions;
+            var data = (from o in options
+                    where o.QuestionId == question.Id
+                    join a in answers
+                    on o.Id equals a.AnswerOptionId
+                    where a.ApplicationUserId == UserId
+                    select o.Level).FirstOrDefault();
+            if (data>0)
+            {
+                return data;
+            }
+            return 0;
+        }
+        
     }
 }

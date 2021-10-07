@@ -15,7 +15,8 @@ namespace ProfileMatch.Sites.User
         public AuthenticationStateProvider AuthStateProv { get; set; }
         [Inject]
         UserManager<ApplicationUser> UserManager { get; set; }
-        public string CurrentUserId { get; set; }
+      [CascadingParameter]  public string CurrentUserId { get; set; }
+        public ApplicationUser CurrentUser { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -27,8 +28,8 @@ namespace ProfileMatch.Sites.User
             var user = authState.User;
             if (user.Identity.IsAuthenticated)
             {
-                var currentUser = await UserManager.GetUserAsync(user);
-                CurrentUserId = currentUser.Id;
+                CurrentUser = await UserManager.GetUserAsync(user);
+                CurrentUserId = CurrentUser.Id;
             }
         }
     }
