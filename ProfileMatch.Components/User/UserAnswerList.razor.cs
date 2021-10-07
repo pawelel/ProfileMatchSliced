@@ -31,7 +31,6 @@ namespace ProfileMatch.Components.User
         private List<Question> questions=new();
         private List<Question> questions1;
         private List<Category> categories;
-        private int Level { get; set; }
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
 
         protected override async Task OnInitializedAsync()

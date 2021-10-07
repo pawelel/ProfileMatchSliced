@@ -17,9 +17,24 @@ namespace ProfileMatch.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //relations
+            builder.Entity<UserAnswer>(entity => {
+                entity.HasKey(x => new { x.ApplicationUserId, x.AnswerOptionId });
+                entity.HasOne(a => a.AnswerOption)
+                .WithMany(u => u.UserAnswers)
+                .HasForeignKey(a => a.AnswerOptionId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+                entity.HasOne(q => q.Question)
+                .WithMany(a => a.UserAnswers)
+                .HasForeignKey(q => q.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(u => u.ApplicationUser)
+                .WithMany(a => a.UserAnswers)
+                .HasForeignKey(u => u.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
             //composite keys
             builder.Entity<UserNeedCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
-            builder.Entity<UserAnswer>().HasKey(x => new { x.ApplicationUserId, x.AnswerOptionId });
             builder.Entity<UserNote>().HasKey(x => new { x.ApplicationUserId, x.NoteId });
             //seed roles
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });

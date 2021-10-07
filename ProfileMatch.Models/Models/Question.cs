@@ -11,5 +11,6 @@ namespace ProfileMatch.Models.Models
         public string Description { get; set; }
         public  Category Category { get; set; }
         public  List<AnswerOption> AnswerOptions { get; set; } = new();
+        public List<UserAnswer> UserAnswers { get; set; } = new();
     }
 }

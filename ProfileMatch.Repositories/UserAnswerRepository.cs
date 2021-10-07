@@ -93,11 +93,12 @@ namespace ProfileMatch.Repositories
             var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
                 return data.AnswerOption.Level;
         }
-        public async Task<UserAnswer> GetUserAnswer(string userId, int optionId)
-        {
+        public async Task<UserAnswer> GetUserAnswer(string userId, int questionId)
+        {//has user userAnswer this answerOption on this question
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
-            return data;
+            return await repositoryContext.UserAnswers
+                .Include(u => u.AnswerOption.QuestionId == questionId).Where(a => a.ApplicationUserId == userId).AsNoTracking().FirstOrDefaultAsync();
+            //return userAnswer where userId == userId and questionId == questionId
         }
 
         public async Task<UserAnswer> FindByIdAsync(string userId, int optionId)

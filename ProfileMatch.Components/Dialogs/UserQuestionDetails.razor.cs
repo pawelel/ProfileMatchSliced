@@ -30,13 +30,13 @@ namespace ProfileMatch.Components.Dialogs
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
         }
 
-        private bool CanSelect(string userId, int optionId)
-        {
-            UserAnswer = UserAnswerRepository.FindById(userId, optionId);
+        private bool CanSelect(AnswerOption answerOption)
+        {//has user userAnswer this answerOption on this question
+            UserAnswer = UserAnswerRepository.FindById(UserId, answerOption.QuestionId);
             if (UserAnswer==null)
             {
                 return true;
-            }else  if (UserAnswer.AnswerOptionId == optionId)
+            }else  if (UserAnswer.AnswerOptionId == answerOption.Id)
             {
                 return false;
             }

@@ -48,22 +48,22 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2d1dff24-8e71-4617-9d60-ed54b53e6119",
-                            ConcurrencyStamp = "62b94438-152b-470e-84b4-25e0a5f803d9",
+                            Id = "72cdc868-e2eb-42a4-8302-7a9dd24c082d",
+                            ConcurrencyStamp = "88c07ab3-a2c6-4017-92c2-fc3e304dec22",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "dc3781ac-1815-4ca6-bb44-2019ed905885",
-                            ConcurrencyStamp = "fa150426-e573-4a74-b855-be1206516194",
+                            Id = "b1b6953e-78cd-4a33-83fd-3637da52c767",
+                            ConcurrencyStamp = "9da234ab-b761-46ef-b3c3-1098fbaa1e9e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "68c8e6d5-aee0-4d22-8b78-e7206fd39628",
-                            ConcurrencyStamp = "644f4d3d-548c-42d3-9b79-5ca631701af0",
+                            Id = "cee4dad4-6726-4c35-af81-086a5494b9cc",
+                            ConcurrencyStamp = "4f577209-f5b2-4960-ac6d-6450e37806b0",
                             Name = "SuperUser",
                             NormalizedName = "SUPERUSER"
                         });
@@ -386,7 +386,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AnswerOptionId")
+                    b.Property<int?>("AnswerOptionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsConfirmed")
@@ -395,12 +395,17 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SupervisorId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApplicationUserId", "AnswerOptionId");
 
                     b.HasIndex("AnswerOptionId");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("UserAnswers");
                 });
@@ -530,7 +535,7 @@ namespace ProfileMatch.Data.Migrations
                     b.HasOne("ProfileMatch.Models.Models.AnswerOption", "AnswerOption")
                         .WithMany("UserAnswers")
                         .HasForeignKey("AnswerOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
@@ -539,9 +544,17 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProfileMatch.Models.Models.Question", "Question")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AnswerOption");
 
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserNeedCategory", b =>
@@ -612,6 +625,8 @@ namespace ProfileMatch.Data.Migrations
             modelBuilder.Entity("ProfileMatch.Models.Models.Question", b =>
                 {
                     b.Navigation("AnswerOptions");
+
+                    b.Navigation("UserAnswers");
                 });
 #pragma warning restore 612, 618
         }

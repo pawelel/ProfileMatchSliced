@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
@@ -56,7 +55,8 @@ namespace ProfileMatch.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,15 +111,14 @@ namespace ProfileMatch.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -310,7 +309,9 @@ namespace ProfileMatch.Data.Migrations
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AnswerOptionId = table.Column<int>(type: "int", nullable: false),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    SupervisorId = table.Column<int>(type: "int", nullable: false)
+                    SupervisorId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -320,11 +321,17 @@ namespace ProfileMatch.Data.Migrations
                         column: x => x.AnswerOptionId,
                         principalTable: "AnswerOptions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserAnswers_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAnswers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -334,9 +341,9 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "55ec6b51-8730-483e-8025-521ac981e13d", "d8ad3946-b94d-479d-a625-d70d924f03ec", "User", "USER" },
-                    { "5248499a-c5a9-4e2e-9506-eaae1f788254", "86c573df-5973-4e95-b323-5a710bef1e79", "Admin", "ADMIN" },
-                    { "33ca3f43-d1a5-4586-8d25-db30f795b427", "fc0d677a-f80b-409b-9a76-d634865b4069", "SuperUser", "SUPERUSER" }
+                    { "72cdc868-e2eb-42a4-8302-7a9dd24c082d", "88c07ab3-a2c6-4017-92c2-fc3e304dec22", "User", "USER" },
+                    { "b1b6953e-78cd-4a33-83fd-3637da52c767", "9da234ab-b761-46ef-b3c3-1098fbaa1e9e", "Admin", "ADMIN" },
+                    { "cee4dad4-6726-4c35-af81-086a5494b9cc", "4f577209-f5b2-4960-ac6d-6450e37806b0", "SuperUser", "SUPERUSER" }
                 });
 
             migrationBuilder.InsertData(
@@ -402,6 +409,11 @@ namespace ProfileMatch.Data.Migrations
                 name: "IX_UserAnswers_AnswerOptionId",
                 table: "UserAnswers",
                 column: "AnswerOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAnswers_QuestionId",
+                table: "UserAnswers",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserNeedCategories_CategoryId",
