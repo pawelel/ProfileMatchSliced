@@ -9,6 +9,6 @@ namespace ProfileMatch.Models.Models
         public int Level { get; set; }
         public  Question Question { get; set; }
         public string Description { get; set; }
-        public  List<UserAnswer> UserAnswers { get; set; }
+        public List<UserAnswer> UserAnswers { get; set; } = new();
     }
 }

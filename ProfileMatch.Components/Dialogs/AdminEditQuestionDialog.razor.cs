@@ -29,6 +29,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             TempName = Q.Name;
             TempDescription = Q.Description;
+            CanActivate(Q);
         }
 
         [Inject] public IQuestionRepository QuestionRepository { get; set; }
@@ -67,7 +68,11 @@ namespace ProfileMatch.Components.Dialogs
         
         private static bool CanActivate(Question question)
         {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
-            var q = question.AnswerOptions.Where(a => a.Description.Trim()==string.Empty).Any();
+            if (question.AnswerOptions!=null)
+            {
+                return !(question.AnswerOptions.Where(a => string.IsNullOrWhiteSpace(a.Description)).Any());
+            }
+            return false;
         }
 
         private async Task Save()
