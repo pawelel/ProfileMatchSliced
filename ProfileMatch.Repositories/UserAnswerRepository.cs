@@ -39,12 +39,7 @@ namespace ProfileMatch.Repositories
         public async Task<UserAnswer> FindById(UserAnswer userAnswer)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            if (userAnswer == null)
-            {
-            return new();
-            }
-
-            return await repositoryContext.UserAnswers.FindAsync(userAnswer.ApplicationUserId, userAnswer.AnswerOptionId);
+            return await repositoryContext.UserAnswers.FindAsync(userAnswer.QuestionId, userAnswer.ApplicationUserId);
         }
 
         public async Task<List<UserAnswer>> GetAll()
@@ -72,7 +67,7 @@ namespace ProfileMatch.Repositories
         public async Task<List<UserAnswer>> GetUserAnswersForQuestion(int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.UserAnswers.Include(u => u.AnswerOption.Question).Where(o => o.AnswerOption.QuestionId == questionId).AsNoTracking().ToListAsync();
+            return await repositoryContext.UserAnswers.Where(u=>u.QuestionId==questionId).ToListAsync();
         }
 
         public async Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId)
@@ -96,9 +91,7 @@ namespace ProfileMatch.Repositories
         public async Task<UserAnswer> GetUserAnswer(string userId, int questionId)
         {//has user userAnswer this answerOption on this question
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.UserAnswers
-                .Include(u => u.AnswerOption.QuestionId == questionId).Where(a => a.ApplicationUserId == userId).AsNoTracking().FirstOrDefaultAsync();
-            //return userAnswer where userId == userId and questionId == questionId
+            return await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId && u.QuestionId == questionId).FirstOrDefaultAsync();
         }
 
         public async Task<UserAnswer> FindByIdAsync(string userId, int optionId)
@@ -110,23 +103,6 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return repositoryContext.UserAnswers.Find(userId, optionId);
-        }
-        public int ShowLevel(Question question, string UserId)
-        {
-            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var answers = repositoryContext.UserAnswers;
-            var options = repositoryContext.AnswerOptions;
-            var data = (from o in options
-                    where o.QuestionId == question.Id
-                    join a in answers
-                    on o.Id equals a.AnswerOptionId
-                    where a.ApplicationUserId == UserId
-                    select o.Level).FirstOrDefault();
-            if (data>0)
-            {
-                return data;
-            }
-            return 0;
         }
         
     }

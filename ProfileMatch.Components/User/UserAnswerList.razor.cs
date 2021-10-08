@@ -20,9 +20,6 @@ namespace ProfileMatch.Components.User
         IDialogService DialogService { get; set; }
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
-
-        [Inject]
-        IUserAnswerRepository UserAnswerRepository { get; set; }
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
         private bool loading;
@@ -87,7 +84,13 @@ namespace ProfileMatch.Components.User
         }
         int ShowLevel(Question question)
         {
-            return UserAnswerRepository.ShowLevel(question, UserId);
+            //select answerOption.Level from question.AnswerOptions where answerOption.QuestionId == question.Id and userAnswer.UserId == UserId from question.UserAnswers
+           return (from a in question.UserAnswers
+            where a.QuestionId == question.Id && a.ApplicationUserId == UserId
+            from o in question.AnswerOptions
+            where o.QuestionId == question.Id
+            select o.Level).FirstOrDefault();
+            
         }
     }
 }

@@ -25,6 +25,5 @@ namespace ProfileMatch.Contracts
         Task<UserAnswer> FindByIdAsync(string userId, int optionId);
         UserAnswer FindById(string userId, int optionId);
         Task<UserAnswer> GetUserAnswer(string userId, int questionId);
-        int ShowLevel(Question question, string UserId);
     }
 }

@@ -42,7 +42,7 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions.Where(q => q.IsActive == true)
-                .Include(question => question.Category).Include(question => question.AnswerOptions).ThenInclude(u=>u.UserAnswers.Where(u=>u.ApplicationUserId== userId)).AsNoTracking().ToListAsync();
+                .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u=>u.UserAnswers).Select(a=>a.ApplicationUserId==userId)).AsNoTracking().ToListAsync();
         }
 
         public async Task<Question> Create(Question question)

@@ -19,7 +19,7 @@ namespace ProfileMatch.Data
         {
             //relations
             builder.Entity<UserAnswer>(entity => {
-                entity.HasKey(x => new { x.ApplicationUserId, x.AnswerOptionId });
+                entity.HasKey(x => new { x.ApplicationUserId, x.QuestionId });
                 entity.HasOne(a => a.AnswerOption)
                 .WithMany(u => u.UserAnswers)
                 .HasForeignKey(a => a.AnswerOptionId)
