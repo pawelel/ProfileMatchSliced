@@ -24,7 +24,7 @@ namespace ProfileMatch.Components.Dialogs
         public string TempName { get; set; }
         public string TempDescription { get; set; }
         public bool TempIsActive { get; set; }
-
+        public bool CanActivateState { get; set; } = false;
         protected override void OnInitialized()
         {
             TempName = Q.Name;
@@ -66,13 +66,8 @@ namespace ProfileMatch.Components.Dialogs
 
         
         private static bool CanActivate(Question question)
-        {
-            if (question.AnswerOptions == null || question.AnswerOptions.Any(x => x.Description == null ||
-                   x.Description.Trim() == string.Empty || question.AnswerOptions.Count == 0))
-            {
-                return false;
-            }
-            return true;
+        {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
+            var q = question.AnswerOptions.Where(a => a.Description.Trim()==string.Empty).Any();
         }
 
         private async Task Save()

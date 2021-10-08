@@ -41,8 +41,8 @@ namespace ProfileMatch.Repositories
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.Where(q => q.IsActive == true)
-                .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u=>u.UserAnswers).Select(a=>a.ApplicationUserId==userId)).AsNoTracking().ToListAsync();
+            return await repositoryContext.Questions.Where(q => q.IsActive)
+                .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u=>u.UserAnswers.Where(u=>u.ApplicationUserId==userId)).AsNoTracking().ToListAsync();
         }
 
         public async Task<Question> Create(Question question)
