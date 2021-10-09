@@ -10,8 +10,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211008054024_Changed primary key for user answer")]
-    partial class Changedprimarykeyforuseranswer
+    [Migration("20211009174951_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,22 +50,22 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7e005efd-24fc-45da-8097-fd35ce6d61e5",
-                            ConcurrencyStamp = "c9a84a65-f784-44c6-9f66-d3aafeeb2e93",
+                            Id = "2673f49c-fcf2-4e2d-abd4-d96ff970d5fa",
+                            ConcurrencyStamp = "310990f6-042e-4466-9b15-4b4d08ceb81a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fe9f31f1-b132-44b0-ac14-52bff4cab565",
-                            ConcurrencyStamp = "8ce0437d-77c8-41c9-a979-089820723df8",
+                            Id = "057c9d7b-0a72-46a3-b8a8-e901c97679eb",
+                            ConcurrencyStamp = "5293dccb-7991-42f2-a656-79cac6b7a691",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5c2d5cdc-bd2b-4d9e-984a-4ec059d782c4",
-                            ConcurrencyStamp = "45450e2e-04b6-4423-b247-4a7cbf8e66c7",
+                            Id = "5585c4b5-38d9-4d1d-8ec4-e96de0f025c3",
+                            ConcurrencyStamp = "d8dfe942-5067-4992-b6b7-c7b1fec32374",
                             Name = "SuperUser",
                             NormalizedName = "SUPERUSER"
                         });
@@ -217,7 +217,7 @@ namespace ProfileMatch.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DepartmentId")
@@ -397,7 +397,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastModified")
+                    b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SupervisorId")

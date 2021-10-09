@@ -113,7 +113,7 @@ namespace ProfileMatch.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -307,15 +307,15 @@ namespace ProfileMatch.Data.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AnswerOptionId = table.Column<int>(type: "int", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    AnswerOptionId = table.Column<int>(type: "int", nullable: true),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     SupervisorId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAnswers", x => new { x.ApplicationUserId, x.AnswerOptionId });
+                    table.PrimaryKey("PK_UserAnswers", x => new { x.ApplicationUserId, x.QuestionId });
                     table.ForeignKey(
                         name: "FK_UserAnswers_AnswerOptions_AnswerOptionId",
                         column: x => x.AnswerOptionId,
@@ -341,9 +341,9 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "72cdc868-e2eb-42a4-8302-7a9dd24c082d", "88c07ab3-a2c6-4017-92c2-fc3e304dec22", "User", "USER" },
-                    { "b1b6953e-78cd-4a33-83fd-3637da52c767", "9da234ab-b761-46ef-b3c3-1098fbaa1e9e", "Admin", "ADMIN" },
-                    { "cee4dad4-6726-4c35-af81-086a5494b9cc", "4f577209-f5b2-4960-ac6d-6450e37806b0", "SuperUser", "SUPERUSER" }
+                    { "2673f49c-fcf2-4e2d-abd4-d96ff970d5fa", "310990f6-042e-4466-9b15-4b4d08ceb81a", "User", "USER" },
+                    { "057c9d7b-0a72-46a3-b8a8-e901c97679eb", "5293dccb-7991-42f2-a656-79cac6b7a691", "Admin", "ADMIN" },
+                    { "5585c4b5-38d9-4d1d-8ec4-e96de0f025c3", "d8dfe942-5067-4992-b6b7-c7b1fec32374", "SuperUser", "SUPERUSER" }
                 });
 
             migrationBuilder.InsertData(
