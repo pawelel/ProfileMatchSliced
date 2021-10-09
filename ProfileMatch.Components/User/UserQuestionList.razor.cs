@@ -53,7 +53,6 @@ namespace ProfileMatch.Components.User
         private bool hover = true;
         private bool bordered = true;
         private bool striped = false;
-        private int Level;
         private string searchString1 = "";
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
@@ -84,8 +83,7 @@ namespace ProfileMatch.Components.User
             return questions1;
         }
         private async Task UserAnswerDialog(Question question)
-        {
-            
+        { 
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters
             {
@@ -95,22 +93,18 @@ namespace ProfileMatch.Components.User
             var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
            var data = (await dialog.Result).Data;
             var answer = (UserAnswer)data;
-            var query = question.AnswerOptions.Where(o => o.Id == answer.AnswerOptionId).FirstOrDefault();
-
-            Level = query.Level;
+            var a = question.UserAnswers.First(u => u.ApplicationUserId == UserId);
+            var index = question.UserAnswers.IndexOf(a);
+            if (index != -1)
+                question.UserAnswers[index] = answer;
         }
         int ShowLevel(Question question)
         {
-            if (Level!=0)
-            {
-                return Level;
-            }
             //find user answer
             // select level for answer option and user answer
             var query1 = question.UserAnswers.Where(a => a.ApplicationUserId == UserId).FirstOrDefault();
             var query2 = question.AnswerOptions.Where(o => o.Id == query1.AnswerOptionId).FirstOrDefault();
-            Level = query2.Level;
-            return Level;
+            return query2.Level;
         }
     }
 }
