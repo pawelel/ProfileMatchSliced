@@ -14,7 +14,7 @@ using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserAnswerList : ComponentBase
+    public partial class UserQuestionList : ComponentBase
     {
         [Inject]
         IDialogService DialogService { get; set; }
@@ -23,6 +23,7 @@ namespace ProfileMatch.Components.User
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
         private bool loading;
+        private Question Q = new();
         [Parameter] public int Id { get; set; }
         [Parameter] public string UserId { get; set; }
         private List<Question> questions = new();
@@ -33,9 +34,18 @@ namespace ProfileMatch.Components.User
         protected override async Task OnParametersSetAsync()
         {
             loading = true;
-            categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptionsForUser(UserId);
+
+            if (UserId is not null)
+            {
+            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
+            }
             questions1 = questions;
+            loading = false;
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            loading = true;
+            categories = await CategoryRepository.GetCategories();
             loading = false;
         }
 
@@ -43,6 +53,7 @@ namespace ProfileMatch.Components.User
         private bool hover = true;
         private bool bordered = true;
         private bool striped = false;
+        private int Level;
         private string searchString1 = "";
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
@@ -72,25 +83,34 @@ namespace ProfileMatch.Components.User
             }
             return questions1;
         }
-        private async Task QuestionDetailsDialog(Question question)
+        private async Task UserAnswerDialog(Question question)
         {
+            
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters
             {
                 ["Q"] = question,
                 ["UserId"] = UserId
             };
-            var dialog = DialogService.Show<UserQuestionDetails>($"{question.Name}", parameters, maxWidth);
-            await dialog.Result;
-        }
+            var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
+           var data = (await dialog.Result).Data;
+            var answer = (UserAnswer)data;
+            var query = question.AnswerOptions.Where(o => o.Id == answer.AnswerOptionId).FirstOrDefault();
 
-        static int ShowLevel(Question question)
+            Level = query.Level;
+        }
+        int ShowLevel(Question question)
         {
-            //select answerOption.Level from question.AnswerOptions where answerOption.QuestionId == question.Id and userAnswer.UserId == UserId from question.UserAnswers
-            var result = (from o in question.AnswerOptions
-                    join a in question.UserAnswers on o.QuestionId equals a.QuestionId
-                    select o.Level).FirstOrDefault();
-            return result;
+            if (Level!=0)
+            {
+                return Level;
+            }
+            //find user answer
+            // select level for answer option and user answer
+            var query1 = question.UserAnswers.Where(a => a.ApplicationUserId == UserId).FirstOrDefault();
+            var query2 = question.AnswerOptions.Where(o => o.Id == query1.AnswerOptionId).FirstOrDefault();
+            Level = query2.Level;
+            return Level;
         }
     }
 }

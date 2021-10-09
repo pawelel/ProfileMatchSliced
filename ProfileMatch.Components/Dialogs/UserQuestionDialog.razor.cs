@@ -15,10 +15,11 @@ using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class UserQuestionDetails : ComponentBase
+    public partial class UserQuestionDialog : ComponentBase
     {
         [Inject]
         IUserAnswerRepository UserAnswerRepository { get; set; }
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
@@ -42,7 +43,7 @@ namespace ProfileMatch.Components.Dialogs
             }
             return true;
         }
-       async Task<int> SelectLevelAsync(string UserId, int answerOptionId, int questionId)
+       async Task SelectLevelAsync(string UserId, int answerOptionId, int questionId)
         {var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, questionId);
             if (userAnswer == null)
             {
@@ -54,8 +55,8 @@ namespace ProfileMatch.Components.Dialogs
                     AnswerOptionId = answerOptionId,
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
-                    LastModified = DateTime.Now
-                };
+                    LastModified = DateTime.Now,
+            };
                await UserAnswerRepository.Create(userAnswer);
             }
             else
@@ -68,8 +69,7 @@ namespace ProfileMatch.Components.Dialogs
                 userAnswer.SupervisorId = null;
                 await UserAnswerRepository.Update(userAnswer);
             }
-            var answer = await AnswerOptionRepository.FindByUserIdAndQuestionId(userAnswer.ApplicationUserId, questionId);
-            return answer.Level;
+            MudDialog.Close(DialogResult.Ok(userAnswer));
         }
     }
 }

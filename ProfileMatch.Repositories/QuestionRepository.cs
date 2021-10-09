@@ -30,19 +30,31 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions
-                .Include(question => question.Category).Include(question => question.Category).AsNoTracking().ToListAsync();   
+                .Include(question => question.Category).Include(question => question.Category).AsNoTracking().ToListAsync();
         }
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptions()
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.Where(q=>q.IsActive==true)
-                .Include(question => question.Category).Include(question => question.AnswerOptions).AsNoTracking().ToListAsync();
+            var result = await repositoryContext.Questions
+              .Where(q => q.IsActive)
+               .Include(u => u.UserAnswers)
+               .Include(question => question.Category)
+               .Include(question => question.AnswerOptions)
+               .AsNoTracking()
+               .ToListAsync();
+            return result;
         }
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var result = await repositoryContext.Questions.Where(q => q.IsActive)
-                 .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u => u.UserAnswers.Where(u => u.ApplicationUserId == userId)).AsNoTracking().ToListAsync();
+
+            var result = await repositoryContext.Questions
+               .Where(q => q.IsActive)
+                .Include(u => u.UserAnswers)
+                .Include(question => question.Category)
+                .Include(question => question.AnswerOptions)
+                .AsNoTracking()
+                .ToListAsync();
             return result;
         }
         public async Task<Question> Create(Question question)
@@ -77,7 +89,7 @@ namespace ProfileMatch.Repositories
         public async Task<List<Question>> GetQuestionsForCategory(int categoryId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.Where(q=>q.CategoryId==categoryId).ToListAsync();
+            return await repositoryContext.Questions.Where(q => q.CategoryId == categoryId).ToListAsync();
         }
 
         public async Task<List<Question>> GetAll()
@@ -89,7 +101,7 @@ namespace ProfileMatch.Repositories
         public async Task Update(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-             repositoryContext.Questions.Update(question);
+            repositoryContext.Questions.Update(question);
             await repositoryContext.SaveChangesAsync();
         }
     }
