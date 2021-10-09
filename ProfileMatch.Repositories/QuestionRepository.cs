@@ -83,7 +83,7 @@ namespace ProfileMatch.Repositories
         public async Task<Question> FindById(int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.SingleOrDefaultAsync(q => q.Id == questionId);
+            return await repositoryContext.Questions.Include(q=>q.Category).Include(a=>a.AnswerOptions).SingleOrDefaultAsync(q => q.Id == questionId);
         }
 
         public async Task<List<Question>> GetQuestionsForCategory(int categoryId)

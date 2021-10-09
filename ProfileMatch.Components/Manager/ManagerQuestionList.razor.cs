@@ -10,33 +10,41 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Components.Manager
 {
     public partial class ManagerQuestionList : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
+
+        [Inject]
+        private IUserRepository UserRepository { get; set; }
 
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        private List<Question> questions=new();
-        private List<Question> questions1;
+        private List<QuestionUserLevelVM> questions = new();
+        private List<QuestionUserLevelVM> questions1;
         private List<Category> categories;
-        private HashSet<string> Cats { get; set; } = new () { };
+        private List<QuestionUserLevelVM> users;
+        private HashSet<string> Cats { get; set; } = new() { };
         private HashSet<string> Quests { get; set; } = new() { };
+        private HashSet<string> Ppl { get; set; } = new() { };
         public bool ShowDetails { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             loading = true;
+            users = await UserRepository.GetUsersWithQuestionAnswerLevel();
             categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetQuestionsWithCategoriesAndOptions();
+            questions = await UserRepository.GetUsersWithQuestionAnswerLevel();
             questions1 = questions;
             loading = false;
         }
@@ -46,21 +54,22 @@ namespace ProfileMatch.Components.Manager
         private bool bordered = true;
         private bool striped = false;
         private string searchString1 = "";
-        private Question selectedItem1 = null;
-        private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
+        private QuestionUserLevelVM selectedItem1 = null;
 
-        private static bool FilterFunc(Question question, string searchString)
+        private bool FilterFunc1(QuestionUserLevelVM question) => FilterFunc(question, searchString1);
+
+        private static bool FilterFunc(QuestionUserLevelVM question, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (question.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (question.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
 
-        private List<Question> GetQuestions()
+        private List<QuestionUserLevelVM> GetQuestions()
         {
             if (Cats.Count == 0)
             {
@@ -70,32 +79,36 @@ namespace ProfileMatch.Components.Manager
             {
                 questions1 = (from q in questions
                               from c in Cats
-                              where q.Category.Name == c
+                              where q.CategoryName == c
                               select q).ToList();
             }
-            if (Quests.Count!=0)
+            if (Quests.Count != 0)
             {
                 questions1 = (from q in questions1
-                             from a in Quests
-                             where q.Name == a
-                             select q).ToList();
+                              from a in Quests
+                              where q.QuestionName == a
+                              select q).ToList();
             }
 
             return questions1;
         }
-        private async Task QuestionDialog(Question question)
+
+        private async Task QuestionDisplay(int id)
         {
-            var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDialog>($"Edit Question {question.Name}", parameters);
-            await dialog.Result;
-            
+
+            var question1 = await QuestionRepository.FindById(id);
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
+            var parameters = new DialogParameters { ["Q"] = question1 };
+            var dialog = DialogService.Show<ManagerQuestionDisplay>($"{question1.Name}", parameters, maxWidth);
         }
-        private async Task QuestionDisplay(Question question)
+
+        private readonly TableGroupDefinition<QuestionUserLevelVM> _groupDefinition = new()
         {
-            DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDisplay>($"{question.Name}", parameters, maxWidth);
-            await dialog.Result;
-        }
+            GroupName = "Category",
+            Indentation = false,
+            Expandable = true,
+            IsInitiallyExpanded = false,
+            Selector = (e) => e.CategoryName
+        };
     }
 }

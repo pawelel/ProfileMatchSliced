@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using Microsoft.AspNetCore.Identity;
 
@@ -12,7 +13,8 @@ namespace ProfileMatch.Models.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}";
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         public Gender? Gender { get; set; }

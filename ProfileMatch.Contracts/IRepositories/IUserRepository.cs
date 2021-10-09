@@ -21,5 +21,6 @@ namespace ProfileMatch.Contracts
         Task<ApplicationUser> Update(ApplicationUser user);
 
         Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel(int questionId, int level);
+        Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel();
     }
 }

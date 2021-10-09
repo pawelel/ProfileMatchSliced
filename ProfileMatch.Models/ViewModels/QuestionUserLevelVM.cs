@@ -8,5 +8,8 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Level { get; set; }
+        public string FullName => $"{LastName}, {FirstName}";
+        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
     }
 }

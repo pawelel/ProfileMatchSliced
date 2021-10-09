@@ -63,6 +63,36 @@ namespace ProfileMatch.Repositories
             return await repositoryContext.Users.FirstOrDefaultAsync(u => u.Email.ToUpper().Equals(email.ToUpper()));
         }
 
+        public async Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel()
+        {
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var users = repositoryContext.Users;
+            var questions = repositoryContext.Questions;
+            var categories = repositoryContext.Categories;
+            var answers = repositoryContext.UserAnswers;
+            var options = repositoryContext.AnswerOptions;
+            return await (from u in users
+                          join a in answers
+                          on u.Id equals a.ApplicationUserId
+                          join o in options
+                          on a.AnswerOptionId equals o.Id
+                          join q in questions
+                          on o.QuestionId equals q.Id
+                          join c in categories
+                          on q.CategoryId equals c.Id
+                          select new QuestionUserLevelVM
+                          {
+                              QuestionId = q.Id,
+                              QuestionName = q.Name,
+                              UserId = u.Id,
+                              FirstName = u.FirstName,
+                              LastName = u.LastName,
+                              Level = o.Level,
+                              CategoryId = c.Id,
+                              CategoryName = c.Name
+                          }).ToListAsync();
+        }
+
         public async Task<List<QuestionUserLevelVM>> GetUsersWithQuestionAnswerLevel(int questionId, int level)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();

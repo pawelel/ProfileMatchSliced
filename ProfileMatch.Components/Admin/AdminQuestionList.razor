@@ -35,7 +35,7 @@ else
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">Category</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">Question</MudTableSortLabel></MudTh>
-            <MudTh>Cats</MudTh>
+            <MudTh>Actions</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
@@ -62,9 +62,9 @@ else
             <MudText Inline="true" Class="align-self-center">Selected1: @selectedItem1?.Name</MudText>
         </MudItem>
     </MudItem>
-}
-<style>
-    .mud-tabs-panels {
-        min-height: 200px !important;
     }
-</style>
+    <style>
+        .mud-tabs-panels {
+            min-height: 200px !important;
+        }
+    </style>
