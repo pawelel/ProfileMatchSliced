@@ -4,18 +4,21 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
+using MudBlazor;
+
+using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class PeopleList : ComponentBase
+    public partial class AdminPeopleList : ComponentBase
     {
-        [Inject]
-        public IUserRepository UserRepo { get; set; }
 
         [Inject]
-        private NavigationManager NavMan { get; set; }
+        IDialogService DialogService { get; set; }
+        [Inject]
+        public IUserRepository UserRepo { get; set; }
 
         public string SearchString { get; set; }
 
@@ -46,14 +49,12 @@ namespace ProfileMatch.Components.Admin
             Users = await UserRepo.GetAll();
         }
 
-        private void ShowProfile(string id)
+        private async Task EditProfile(ApplicationUser applicationUser)
         {
-            NavMan.NavigateTo($"/admin/users/{id}");
-        }
-
-        private void EditProfile(string id)
-        {
-            NavMan.NavigateTo($"/admin/edituser/{id}");
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
+            var parameters = new DialogParameters { ["EditedUser"] = applicationUser };
+            var dialog = DialogService.Show<AdminUserDialog>($"Edit User {applicationUser.FirstName}, {applicationUser.LastName} data", parameters, maxWidth);
+            await dialog.Result;
         }
     }
 }

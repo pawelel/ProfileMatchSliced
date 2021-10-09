@@ -12,7 +12,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class CategoriesList : ComponentBase
+    public partial class AdminCategoryList : ComponentBase
     {
         [Inject]
         public ISnackbar Snackbar { get; set; }
@@ -57,13 +57,13 @@ namespace ProfileMatch.Components.Admin
         private async Task CategoryUpdate(Category category)
         {
             var parameters = new DialogParameters { ["Cat"] = category };
-            var dialog = DialogService.Show<AdminEditCategoryDialog>("Update Category", parameters);
+            var dialog = DialogService.Show<AdminCategoryDialog>("Update Category", parameters);
             await dialog.Result;
         }
 
         private async Task CategoryCreate()
         {
-            var dialog = DialogService.Show<AdminEditCategoryDialog>("Create Category");
+            var dialog = DialogService.Show<AdminCategoryDialog>("Create Category");
             await dialog.Result;
             Categories = await GetCategoriesAsync();
         }
@@ -71,7 +71,7 @@ namespace ProfileMatch.Components.Admin
         private async Task QuestionCreate(Category category)
         {
             var parameters = new DialogParameters { ["CategoryId"] = category.Id };
-            var dialog = DialogService.Show<AdminEditQuestionDialog>($"Create Question for {category.Name}", parameters);
+            var dialog = DialogService.Show<AdminQuestionDialog>($"Create Question for {category.Name}", parameters);
              await dialog.Result;
             Categories = await GetCategoriesAsync();
         }

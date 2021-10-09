@@ -1,30 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using ProfileMatch.Contracts;
 
+using MudBlazor;
+
+using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminEditLevelDialog : ComponentBase
+    public partial class AdminDepartmentDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public AnswerOption O { get; set; } = new();
+        [Parameter] public Department Dep { get; set; } = new();
+        public string TempName { get; set; }
         public string TempDescription { get; set; }
 
         protected override void OnInitialized()
         {
-
-            TempDescription = O.Description;
+            TempName = Dep.Name;
+            TempDescription = Dep.Description;
         }
 
-        [Inject] public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+        [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
 
         private MudForm Form;
 
@@ -39,8 +39,8 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-         
-                O.Description = TempDescription;
+                Dep.Name = TempName;
+                Dep.Description = TempDescription;
                 try
                 {
                     await Save();
@@ -50,21 +50,21 @@ namespace ProfileMatch.Components.Dialogs
                     Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(O));
+                MudDialog.Close(DialogResult.Ok(Dep));
             }
         }
 
         private async Task Save()
         {
-            if (O.Id == 0)
+            if (Dep.Id == 0)
             {
-                var result = await AnswerOptionRepository.Create(O);
-                Snackbar.Add($"Answer Option created", Severity.Success);
+                var result = await DepartmentRepository.Create(Dep);
+                Snackbar.Add($"Department {result.Name} created", Severity.Success);
             }
             else
             {
-                await AnswerOptionRepository.Update(O);
-                Snackbar.Add($"Answer Option updated", Severity.Success);
+                var result = await DepartmentRepository.Update(Dep);
+                Snackbar.Add($"Department {result.Name} updated", Severity.Success);
             }
         }
     }

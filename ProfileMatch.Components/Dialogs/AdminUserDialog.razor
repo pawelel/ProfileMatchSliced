@@ -1,0 +1,52 @@
+﻿@if (EditedUser == null || Departments == null || currentUser == null)
+{
+    <p>loading</p>
+}
+else
+{
+    <p>Editor: <br />@currentUserName</p>
+    <MudDialog>
+        <DialogContent>
+            <MudForm @ref="Form">
+                <MudSelect @bind-Value="@EditedUser.DepartmentId"
+                           T="int"
+                           OffsetY="true"
+                           CloseIcon="@Icons.Material.Filled.LocationCity"
+                           HelperText="Select Department"
+                           AdornmentColor="Color.Tertiary">
+                    @foreach (var dept in Departments)
+                    {
+                        <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudSwitch @bind-Checked="@EditedUser.IsActive"
+                           T="bool"
+                           Label="Is Active?"
+                           Color="Color.Success" />
+                <MudTextField T="string" @bind-Value="@EditedUser.FirstName" Immediate="true" Label="First Name"
+                              Required="true" RequiredError="Person name is required!" />
+                <MudTextField T="string" @bind-Value="@EditedUser.LastName" Immediate="true" Label="Last Name" Required="true" RequiredError="Person name is required!" />
+                <MudTextField T="string" Label="Email" @bind-Value="@EditedUser.Email" Required="true" RequiredError="Email is required!" />
+
+                <MudSelect T="Gender?" Label="Select Gender" @bind-Value="@EditedUser.Gender"
+                           OffsetY="true"
+                           CloseIcon="@Icons.Material.Filled.LocationCity"
+                           HelperText="Select Gender"
+                           AdornmentColor="Color.Tertiary">
+                    @foreach (Gender? g in Enum.GetValues(typeof(Gender)))
+                    {
+                        <MudSelectItem Value="@g">@g</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudDatePicker @bind-Date="@_dob"
+                               Required="true"
+                               Rounded="true"
+                               Elevation="1"
+                               RequiredError="BirthDate is Required"
+                               Label="Select Date of Birth"
+                               Editable="false" />
+            </MudForm>
+            <MudButton OnClick="@HandleSave">Save</MudButton>
+        </DialogContent>
+    </MudDialog>
+}

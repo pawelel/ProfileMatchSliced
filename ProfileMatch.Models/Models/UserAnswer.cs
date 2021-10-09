@@ -10,7 +10,7 @@ namespace ProfileMatch.Models.Models
         public int? AnswerOptionId { get; set; }
         public bool IsConfirmed { get; set; }
         public string SupervisorId { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime? LastModified { get; set; }
         public int QuestionId { get; set; }
         public Question Question { get; set; }
     }

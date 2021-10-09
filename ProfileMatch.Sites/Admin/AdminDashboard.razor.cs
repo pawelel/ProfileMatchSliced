@@ -6,7 +6,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Pages.Admin.Pages
 {
-    public partial class AdminDashboardPage : ComponentBase
+    public partial class AdminDashboard : ComponentBase
     {
         [Parameter] public IEnumerable<ApplicationUser> Users { get; set; }
     }

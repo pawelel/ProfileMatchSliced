@@ -2,7 +2,7 @@
 
 namespace ProfileMatch.Components.User
 {
-    public partial class NeedList : ComponentBase
+    public partial class UserNeedList : ComponentBase
     {
     }
 }

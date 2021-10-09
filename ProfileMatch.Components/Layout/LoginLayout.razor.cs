@@ -22,13 +22,6 @@ namespace ProfileMatch.Components.Layout
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        private bool _drawerOpen = true;
-
-        private void DrawerToggle()
-        {
-            _drawerOpen = !_drawerOpen;
-        }
-
         private Preferences _preferences = new();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -52,6 +45,7 @@ namespace ProfileMatch.Components.Layout
         public void Dispose()
         {
             ThemeService.OnChange -= ThemeServiceOnChange;
+            GC.SuppressFinalize(this);
         }
 
         private readonly MudTheme defaultTheme = new GeneralTheme();

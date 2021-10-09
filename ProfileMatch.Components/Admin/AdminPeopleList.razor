@@ -31,10 +31,10 @@ else
             <MudTd DataLabel="Date Of Birth">@context.DateOfBirth</MudTd>
             <MudTd DataLabel="Is Active"><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
             <MudTd DataLabel="">
-                <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context.Id))" Disabled="@(!disabled)" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
+                <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context))" Disabled="@(!disabled)" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
             </MudTd>
             <MudTd DataLabel="">
-                <MudFab OnClick="@(()=> ShowProfile(context.Id))" Color="Color.Primary" Icon="@Icons.Material.Filled.Person" Size="Size.Small" IconSize="Size.Small" />
+                <MudFab  Color="Color.Primary" Icon="@Icons.Material.Filled.Person" Size="Size.Small" IconSize="Size.Small" />
             </MudTd>
         </RowTemplate>
         <PagerContent>

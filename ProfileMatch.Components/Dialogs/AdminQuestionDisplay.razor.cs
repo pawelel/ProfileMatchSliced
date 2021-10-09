@@ -15,7 +15,7 @@ using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminQuestionDetails : ComponentBase
+    public partial class AdminQuestionDisplay : ComponentBase
     {
         [Inject]
         IDialogService DialogService { get; set; }
@@ -36,23 +36,22 @@ namespace ProfileMatch.Components.Dialogs
                          Level = i
                      })
                 );
-
             }
         }
         private async Task EditLevelDialog(AnswerOption answerOption)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
-            var dialog = DialogService.Show<AdminEditLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
         protected override async Task OnInitializedAsync()
         {
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
 
-            if (Q.AnswerOptions.Count == 0||Q.AnswerOptions==null)
+            if (Q.AnswerOptions.Count == 0 || Q.AnswerOptions == null)
             {
-               await AddLevels(Q);
+                await AddLevels(Q);
             }
         }
         private async Task<bool> IsActive()
@@ -67,7 +66,7 @@ namespace ProfileMatch.Components.Dialogs
             if (question.AnswerOptions is not null)
             {
                 bool hasEmptyDescription = question.AnswerOptions.Any(ao => string.IsNullOrWhiteSpace(ao.Description));
-            return !hasEmptyDescription;
+                return !hasEmptyDescription;
             }
             return false;
         }

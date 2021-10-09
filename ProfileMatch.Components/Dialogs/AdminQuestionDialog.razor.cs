@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminEditQuestionDialog : ComponentBase
+    public partial class AdminQuestionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }

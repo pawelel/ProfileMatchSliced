@@ -12,7 +12,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class DepartmentList : ComponentBase
+    public partial class AdminDepartmentList : ComponentBase
     {
         [Inject]
         public ISnackbar Snackbar { get; set; }
@@ -57,13 +57,13 @@ namespace ProfileMatch.Components.Admin
         private async Task DepartmentUpdate(Department department)
         {
             var parameters = new DialogParameters { ["Dep"] = department };
-            var dialog = DialogService.Show<AdminEditDepartmentDialog>("Update Department", parameters);
+            var dialog = DialogService.Show<AdminDepartmentDialog>("Update Department", parameters);
             await dialog.Result;
         }
 
         private async Task DepartmentCreate()
         {
-            var dialog = DialogService.Show<AdminEditDepartmentDialog>("Create Department");
+            var dialog = DialogService.Show<AdminDepartmentDialog>("Create Department");
             await dialog.Result;
             Departments = await GetDepartmentsAsync();
         }

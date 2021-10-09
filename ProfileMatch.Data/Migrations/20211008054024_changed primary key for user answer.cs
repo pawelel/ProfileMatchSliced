@@ -2,7 +2,7 @@
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class changedprimarykeyforuseranswer : Migration
+    public partial class Changedprimarykeyforuseranswer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

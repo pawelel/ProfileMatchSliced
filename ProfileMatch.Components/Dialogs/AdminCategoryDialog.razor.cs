@@ -6,25 +6,26 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+
 using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminEditDepartmentDialog : ComponentBase
+    public partial class AdminCategoryDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Department Dep { get; set; } = new();
+        [Parameter] public Category Cat { get; set; } = new();
         public string TempName { get; set; }
         public string TempDescription { get; set; }
 
         protected override void OnInitialized()
         {
-            TempName = Dep.Name;
-            TempDescription = Dep.Description;
+            TempName = Cat.Name;
+            TempDescription = Cat.Description;
         }
 
-        [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
+        [Inject] public ICategoryRepository CategoryRepository { get; set; }
 
         private MudForm Form;
 
@@ -39,8 +40,8 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                Dep.Name = TempName;
-                Dep.Description = TempDescription;
+                Cat.Name = TempName;
+                Cat.Description = TempDescription;
                 try
                 {
                     await Save();
@@ -50,21 +51,21 @@ namespace ProfileMatch.Components.Dialogs
                     Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(Dep));
+                MudDialog.Close(DialogResult.Ok(Cat));
             }
         }
 
         private async Task Save()
         {
-            if (Dep.Id == 0)
+            if (Cat.Id == 0)
             {
-                var result = await DepartmentRepository.Create(Dep);
-                Snackbar.Add($"Department {result.Name} created", Severity.Success);
+                var result = await CategoryRepository.Create(Cat);
+                Snackbar.Add($"Category {result.Name} created", Severity.Success);
             }
             else
             {
-                var result = await DepartmentRepository.Update(Dep);
-                Snackbar.Add($"Department {result.Name} updated", Severity.Success);
+                var result = await CategoryRepository.Update(Cat);
+                Snackbar.Add($"Category {result.Name} updated", Severity.Success);
             }
         }
     }

@@ -23,7 +23,6 @@ namespace ProfileMatch.Components.User
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
         private bool loading;
-        private Question Q = new();
         [Parameter] public int Id { get; set; }
         [Parameter] public string UserId { get; set; }
         private List<Question> questions = new();
@@ -93,18 +92,46 @@ namespace ProfileMatch.Components.User
             var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
            var data = (await dialog.Result).Data;
             var answer = (UserAnswer)data;
-            var a = question.UserAnswers.First(u => u.ApplicationUserId == UserId);
+            var a = question.UserAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
             var index = question.UserAnswers.IndexOf(a);
             if (index != -1)
                 question.UserAnswers[index] = answer;
+            else
+            {
+                question.UserAnswers.Add(answer);
+            }
         }
         int ShowLevel(Question question)
         {
+            UserAnswer userAnswer=new();
             //find user answer
             // select level for answer option and user answer
             var query1 = question.UserAnswers.Where(a => a.ApplicationUserId == UserId).FirstOrDefault();
-            var query2 = question.AnswerOptions.Where(o => o.Id == query1.AnswerOptionId).FirstOrDefault();
-            return query2.Level;
+            if (query1==null)
+            {
+                userAnswer = new()
+                {
+                    QuestionId= question.Id,
+                    AnswerOptionId=null,
+                    SupervisorId = null,
+                    ApplicationUserId = UserId,
+                    IsConfirmed=false
+                };
+            }
+            else
+            {
+                userAnswer = query1;
+            }
+
+            var query2 = question.AnswerOptions.Where(o => o.Id == userAnswer.AnswerOptionId).FirstOrDefault();
+            if (query2==null)
+            {
+            return 0;
+            }
+            else
+            {
+                return query2.Level;
+            }
         }
     }
 }

@@ -52,6 +52,7 @@ namespace ProfileMatch.Components.Layout
         public void Dispose()
         {
             ThemeService.OnChange -= ThemeServiceOnChange;
+            GC.SuppressFinalize(this);
         }
 
         private readonly MudTheme defaultTheme = new GeneralTheme();

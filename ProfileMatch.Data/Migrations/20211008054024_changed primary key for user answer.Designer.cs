@@ -10,8 +10,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211008054024_changed primary key for user answer")]
-    partial class changedprimarykeyforuseranswer
+    [Migration("20211008054024_Changed primary key for user answer")]
+    partial class Changedprimarykeyforuseranswer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

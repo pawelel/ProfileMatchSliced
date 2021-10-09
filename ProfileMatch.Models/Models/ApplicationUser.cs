@@ -13,7 +13,7 @@ namespace ProfileMatch.Models.Models
 
         public string LastName { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         public Gender? Gender { get; set; }
 

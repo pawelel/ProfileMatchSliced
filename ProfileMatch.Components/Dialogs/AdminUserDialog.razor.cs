@@ -14,7 +14,7 @@ using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminEditUserDialog : ComponentBase
+    public partial class AdminUserDialog : ComponentBase
     {
         [Inject]
         private AuthenticationStateProvider AuthSP { get; set; }
@@ -34,10 +34,9 @@ namespace ProfileMatch.Components.Dialogs
         [Parameter] public string Id { get; set; }
         private ApplicationUser currentUser = new();
         protected MudForm Form { get; set; } // TODO add validations
-        private bool _success;
         private DateTime? _dob;
         private string currentUserName;
-        private ApplicationUser User { get; set; } = new();
+        [Parameter] public ApplicationUser EditedUser { get; set; } = new();
         private List<Department> Departments = new();
 
         private async Task GetUserDetails()
@@ -65,8 +64,14 @@ namespace ProfileMatch.Components.Dialogs
         private async Task LoadData()
         {
             Departments = await DepartmentRepository.GetAll();
-            User = await UserRepository.FindById(Id);
-            _dob = User.DateOfBirth;
+            if (EditedUser.DateOfBirth==null)
+            {   
+                _dob = DateTime.Now;
+            }
+            else
+            {
+            _dob = EditedUser.DateOfBirth;
+            }
             StateHasChanged();
         }
 
@@ -75,16 +80,16 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                User.DateOfBirth = (DateTime)_dob;
-                User.UserName = User.Email;
-                User.NormalizedEmail = User.Email.ToUpper();
-                if (await UserRepository.FindByEmail(User.Email) != null)
+                EditedUser.DateOfBirth = (DateTime)_dob;
+                EditedUser.UserName = EditedUser.Email;
+                EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
+                if (await UserRepository.FindByEmail(EditedUser.Email) != null)
                 {
-                    await UserRepository.Update(User);
+                    await UserRepository.Update(EditedUser);
                 }
                 else
                 {
-                    await UserRepository.Create(User);
+                    await UserRepository.Create(EditedUser);
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");

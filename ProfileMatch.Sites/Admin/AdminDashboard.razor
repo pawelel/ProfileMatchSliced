@@ -3,13 +3,13 @@
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Admin Dashboard</MudText>
 <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
     <MudTabPanel Text="Users">
-        <PeopleList />
+        <AdminPeopleList />
     </MudTabPanel>
     <MudTabPanel Text="Departments">
-        <DepartmentList />
+        <AdminDepartmentList />
     </MudTabPanel>
     <MudTabPanel Text="Statistics" Icon="@Icons.Material.Filled.Portrait">
     </MudTabPanel>
-    <MudTabPanel Text="Categories"><CategoriesList /></MudTabPanel>
-    <MudTabPanel Text="Questions"><QuestionsList /></MudTabPanel>
+    <MudTabPanel Text="Categories"><AdminCategoryList /></MudTabPanel>
+    <MudTabPanel Text="Questions"><AdminQuestionList /></MudTabPanel>
 </MudTabs>
