@@ -21,6 +21,8 @@ namespace ProfileMatch.Components.Dialogs
         IDialogService DialogService { get; set; }
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+        [Inject]
+        public IQuestionRepository QuestionRepository { get; set; }
         [Parameter] public Question Q { get; set; }
         private async Task AddLevels(Question question)
         {
@@ -36,8 +38,6 @@ namespace ProfileMatch.Components.Dialogs
                 );
 
             }
-
-
         }
         private async Task EditLevelDialog(AnswerOption answerOption)
         {
@@ -55,6 +55,21 @@ namespace ProfileMatch.Components.Dialogs
                await AddLevels(Q);
             }
         }
-
+        private async Task<bool> IsActive()
+        {
+            Q.IsActive = !Q.IsActive;
+            await QuestionRepository.Update(Q);
+            StateHasChanged();
+            return Q.IsActive;
+        }
+        private static bool CanActivate(Question question)
+        {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
+            if (question.AnswerOptions is not null)
+            {
+                bool hasEmptyDescription = question.AnswerOptions.Any(ao => string.IsNullOrWhiteSpace(ao.Description));
+            return !hasEmptyDescription;
+            }
+            return false;
+        }
     }
 }

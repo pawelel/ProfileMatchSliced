@@ -26,7 +26,10 @@
                         </MudTabPanel>
                     }
         </MudTabs>
-
+        @if (CanActivate(Q))
+        {
+            <MudCheckBox @bind-Checked="Q.IsActive" @onclick="@(()=>IsActive())">Activate question</MudCheckBox>
+        }
     </DialogContent>
 </MudDialog>
 

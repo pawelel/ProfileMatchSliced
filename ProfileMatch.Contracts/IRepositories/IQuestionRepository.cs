@@ -13,8 +13,6 @@ namespace ProfileMatch.Contracts
 
         Task<Question> Delete(Question question);
 
-        Task<Question> FindByName(string questionName);
-
         Task<Question> FindById(int questionId);
 
         Task<List<Question>> GetQuestionsForCategory(int categoryId);
@@ -26,5 +24,6 @@ namespace ProfileMatch.Contracts
         Task<List<Question>> GetQuestionsWithCategories();
         Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptions();
         Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId);
+        Task<bool> IsDuplicated(Question question);
     }
 }

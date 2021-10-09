@@ -51,7 +51,7 @@ namespace ProfileMatch.Repositories
         public async Task<UserAnswer> Update(UserAnswer answer)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            var existing = await repositoryContext.UserAnswers.FindAsync(answer.ApplicationUserId, answer.AnswerOptionId);
+            var existing = await repositoryContext.UserAnswers.FindAsync(answer.ApplicationUserId, answer.QuestionId);
             if (existing != null)
             {
                 repositoryContext.Entry(existing).CurrentValues.SetValues(answer);

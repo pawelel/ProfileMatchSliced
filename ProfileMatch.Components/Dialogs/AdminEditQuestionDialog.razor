@@ -3,10 +3,7 @@
         <MudForm @ref="Form">
             <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Question Name" Required="true" RequiredError="Question name is required!" />
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Question Description" Lines="5" />
-            @if (CanActivate(Q))
-            {
-           <MudCheckBox @bind-Checked="@TempIsActive">Active</MudCheckBox>
-            }        
+                 
         </MudForm>
     </DialogContent>
     <DialogActions>

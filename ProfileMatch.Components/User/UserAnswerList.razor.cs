@@ -24,20 +24,19 @@ namespace ProfileMatch.Components.User
         private IQuestionRepository QuestionRepository { get; set; }
         private bool loading;
         [Parameter] public int Id { get; set; }
-       [Parameter] public string UserId { get; set; }
-        private List<Question> questions=new();
+        [Parameter] public string UserId { get; set; }
+        private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
         private HashSet<string> Options { get; set; } = new HashSet<string>() { };
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             loading = true;
             categories = await CategoryRepository.GetCategories();
             questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptionsForUser(UserId);
             questions1 = questions;
             loading = false;
-            Console.WriteLine(UserId);
         }
 
         private bool dense = true;
@@ -57,7 +56,7 @@ namespace ProfileMatch.Components.User
                 return true;
             return false;
         }
-       
+
         private List<Question> GetQuestions()
         {
             if (Options.Count == 0)
@@ -68,29 +67,30 @@ namespace ProfileMatch.Components.User
             {
                 questions1 = (from q in questions
                               from o in Options
-                              where q.Category.Name == o 
+                              where q.Category.Name == o
                               select q).ToList();
             }
             return questions1;
         }
         private async Task QuestionDetailsDialog(Question question)
         {
-            DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question,
-                ["UserId"]=UserId
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
+            var parameters = new DialogParameters
+            {
+                ["Q"] = question,
+                ["UserId"] = UserId
             };
             var dialog = DialogService.Show<UserQuestionDetails>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
-        int ShowLevel(Question question)
+
+        static int ShowLevel(Question question)
         {
             //select answerOption.Level from question.AnswerOptions where answerOption.QuestionId == question.Id and userAnswer.UserId == UserId from question.UserAnswers
-           return (from a in question.UserAnswers
-            where a.QuestionId == question.Id && a.ApplicationUserId == UserId
-            from o in question.AnswerOptions
-            where o.QuestionId == question.Id
-            select o.Level).FirstOrDefault();
-            
+            var result = (from o in question.AnswerOptions
+                    join a in question.UserAnswers on o.QuestionId equals a.QuestionId
+                    select o.Level).FirstOrDefault();
+            return result;
         }
     }
 }

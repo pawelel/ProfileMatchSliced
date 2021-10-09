@@ -41,10 +41,10 @@ namespace ProfileMatch.Repositories
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.Where(q => q.IsActive)
-                .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u=>u.UserAnswers.Where(u=>u.ApplicationUserId==userId)).AsNoTracking().ToListAsync();
+            var result = await repositoryContext.Questions.Where(q => q.IsActive)
+                 .Include(question => question.Category).Include(question => question.AnswerOptions).Include(u => u.UserAnswers.Where(u => u.ApplicationUserId == userId)).AsNoTracking().ToListAsync();
+            return result;
         }
-
         public async Task<Question> Create(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -61,10 +61,11 @@ namespace ProfileMatch.Repositories
             return data;
         }
 
-        public async Task<Question> FindByName(string questionName)
+        //has any question the same name in the category?
+        public async Task<bool> IsDuplicated(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.SingleOrDefaultAsync(q => q.Name == questionName);
+            return await repositoryContext.Questions.Where(q => q.CategoryId == question.CategoryId).AnyAsync(q => q.Id != question.Id && q.Name.ToLower().Contains(question.Name.ToLower()));
         }
 
         public async Task<Question> FindById(int questionId)

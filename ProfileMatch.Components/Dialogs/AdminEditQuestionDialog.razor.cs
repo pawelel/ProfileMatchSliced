@@ -29,11 +29,9 @@ namespace ProfileMatch.Components.Dialogs
         {
             TempName = Q.Name;
             TempDescription = Q.Description;
-            CanActivate(Q);
         }
 
         [Inject] public IQuestionRepository QuestionRepository { get; set; }
-
         private MudForm Form;
 
         private void Cancel()
@@ -41,7 +39,7 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add("Operation cancelled", Severity.Warning);
         }
-        
+
 
         protected async Task HandleSave()
         {
@@ -65,27 +63,21 @@ namespace ProfileMatch.Components.Dialogs
             }
         }
 
-        
-        private static bool CanActivate(Question question)
-        {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
-            if (question.AnswerOptions!=null)
-            {
-                return !(question.AnswerOptions.Where(a => string.IsNullOrWhiteSpace(a.Description)).Any());
-            }
-            return false;
-        }
-
         private async Task Save()
-        {
-            if (Q.Id == 0)
+        {//has any other question the same name in the category?
+            if (Q.Id == 0 && !await QuestionRepository.IsDuplicated(Q))
             {
                 var result = await QuestionRepository.Create(Q);
                 Snackbar.Add($"Question {result.Name} created", Severity.Success);
             }
-            else
+            else if (!await QuestionRepository.IsDuplicated(Q))
             {
                 await QuestionRepository.Update(Q);
                 Snackbar.Add($"Question {Q.Name} updated", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add($"Question {Q.Name} for this category already exists.", Severity.Error);
             }
         }
     }

@@ -42,13 +42,14 @@ namespace ProfileMatch.Components.Dialogs
             }
             return true;
         }
-       async Task SelectLevelAsync(string UserId, int answerOptionId)
-        {var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, answerOptionId);
+       async Task<int> SelectLevelAsync(string UserId, int answerOptionId, int questionId)
+        {var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, questionId);
             if (userAnswer == null)
             {
 
                 userAnswer = new()
                 {
+                    QuestionId = questionId,
                     SupervisorId = null,
                     AnswerOptionId = answerOptionId,
                     ApplicationUserId = UserId,
@@ -59,6 +60,7 @@ namespace ProfileMatch.Components.Dialogs
             }
             else
             {
+                userAnswer.QuestionId = questionId;
                 userAnswer.ApplicationUserId = UserId;
                 userAnswer.AnswerOptionId = answerOptionId;
                 userAnswer.IsConfirmed = false;
@@ -66,6 +68,8 @@ namespace ProfileMatch.Components.Dialogs
                 userAnswer.SupervisorId = null;
                 await UserAnswerRepository.Update(userAnswer);
             }
+            var answer = await AnswerOptionRepository.FindByUserIdAndQuestionId(userAnswer.ApplicationUserId, questionId);
+            return answer.Level;
         }
     }
 }
