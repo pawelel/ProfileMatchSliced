@@ -14,7 +14,7 @@ namespace ProfileMatch.Models.Models
 
         public string LastName { get; set; }
         [NotMapped]
-        public string FullName => $"{FirstName} {LastName}";
+        public string FullName => $"{LastName}, {FirstName}";
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         public Gender? Gender { get; set; }

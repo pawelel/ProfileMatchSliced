@@ -1,29 +1,86 @@
-﻿<MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
-          Items="@Elements"
-          GroupBy="@_groupDefinition"
-          GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
-          GroupFooterClass="mb-4"
-          Dense="true"
-          MultiSelection="true">
-    <ColGroup>
-        <col style="width: 60%;" />
-        <col />
-        <col />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>Question</MudTh>
-        <MudTh>Level</MudTh>
-        <MudTh>Full Name</MudTh>
-    </HeaderContent>
-    <GroupHeaderTemplate>
-        <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.GroupName}: {context.Key}")</MudTh>
-    </GroupHeaderTemplate>
-    <RowTemplate>
-        <MudTd DataLabel="Question">@context.QuestionName</MudTd>
-        <MudTd DataLabel="Level">@context.Level</MudTd>
-        <MudTd DataLabel="Sign">@context.FullName</MudTd>
-    </RowTemplate>
-    <GroupFooterTemplate>
-        <MudTh Class="mud-table-cell-custom-group mud-table-cell-custom-group-footer" colspan="5">Total Points: @context.Items.Sum((e) => e.Level)</MudTh>
-    </GroupFooterTemplate>
-</MudTable>
+﻿@if (loading)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+
+
+    <MudItem xs="12" md="6">
+        <MudSelect T="string" Label="Select Users" MultiSelection="true" @bind-SelectedValues="Ppl">
+            @foreach (var p in users)
+            {
+                <MudSelectItem T="string" Value="@p.FullName" />
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="Cats">
+            @foreach (var cat in categories)
+            {
+                <MudSelectItem T="string" Value="@cat.Name" />
+            }
+        </MudSelect>
+    </MudItem>
+    <MudText Typo="Typo.body2">Selected Categories:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
+
+    <MudTable GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
+              Height="500px"
+              FixedHeader="true"
+              GroupFooterClass="mb-4"
+              GroupBy="@_groupDefinition"
+              Items="@GetCategoriesAndQuestions()"
+              SortLabel="Sort By"
+              Dense="@dense" Hover="@hover"
+              Bordered="@bordered"
+              Striped="@striped"
+              Breakpoint="Breakpoint.Sm"
+              Filter="new Func<QuestionUserLevelVM, bool>(FilterFunc1)">
+        <ColGroup>
+            <col />
+            <col style="width: 60%;" />
+            <col />
+            <col />
+        </ColGroup>
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Questions Table</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<QuestionUserLevelVM, object>(x=>x.QuestionName)">Question</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<QuestionUserLevelVM, object>(x=>x.Level)">Level</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<QuestionUserLevelVM, object>(x=>x.FullName)">Full Name</MudTableSortLabel></MudTh>
+            <MudTh>Is a need</MudTh>
+        </HeaderContent>
+        <GroupHeaderTemplate>
+            <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.GroupName}: {context.Key}")</MudTh>
+        </GroupHeaderTemplate>
+        <RowTemplate>
+            <MudTd DataLabel="Question"><MudButton OnClick="@(()=>QuestionDisplay(context.QuestionId))" Color="Color.Info" Variant="Variant.Outlined">@context.QuestionName</MudButton></MudTd>
+            <MudTd DataLabel="Level">@context.Level</MudTd>
+            <MudTd DataLabel="Full Name">@context.FullName</MudTd>
+            <MudTd DataLabel="Is a need">@context.CategoryId</MudTd>
+        </RowTemplate>
+        <GroupFooterTemplate>
+            <MudTh Style="font-weight: 500;">Total: @context.Items.Sum((e) => e.Level)</MudTh>
+        </GroupFooterTemplate>
+        <PagerContent>
+            <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
+                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString="Items per page"
+                           InfoFormat="{first_item}-{last_item} / {all_items}" />
+        </PagerContent>
+    </MudTable>
+
+    <MudItem class="d-flex flex-wrap mt-4">
+        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    </MudItem>
+}
+<style>
+    .mud-tabs-panels {
+        min-height: 200px !important;
+    }
+</style>
