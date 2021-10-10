@@ -32,6 +32,8 @@ namespace ProfileMatch.Components.Manager
         [Parameter] public int Id { get; set; }
         private List<QuestionUserLevelVM> questions = new();
         private List<QuestionUserLevelVM> questions1;
+        private List<Question> questions2;
+        private List<Question> questions2Filtered;
         private List<Category> categories;
         private List<QuestionUserLevelVM> users;
         private HashSet<string> Cats { get; set; } = new() { };
@@ -45,6 +47,7 @@ namespace ProfileMatch.Components.Manager
             users = await UserRepository.GetUsersWithQuestionAnswerLevel();
             categories = await CategoryRepository.GetCategories();
             questions = await UserRepository.GetUsersWithQuestionAnswerLevel();
+            questions2 = await QuestionRepository.GetQuestionsWithCategories();
             questions1 = questions;
             loading = false;
         }
@@ -54,7 +57,6 @@ namespace ProfileMatch.Components.Manager
         private bool bordered = true;
         private bool striped = false;
         private string searchString1 = "";
-        private QuestionUserLevelVM selectedItem1 = null;
 
         private bool FilterFunc1(QuestionUserLevelVM question) => FilterFunc(question, searchString1);
 
@@ -71,6 +73,14 @@ namespace ProfileMatch.Components.Manager
 
         private List<QuestionUserLevelVM> GetQuestions()
         {
+            if (Cats.Count==0)
+            {
+                questions2Filtered = questions2;
+            }
+            questions2Filtered = (from q in questions2
+                          from c in Cats
+                          where q.Category.Name == c
+                          select q).ToList();
             if (Cats.Count == 0)
             {
                 questions1 = questions;
@@ -87,6 +97,8 @@ namespace ProfileMatch.Components.Manager
                 questions1 = (from q in questions1
                               from a in Quests
                               where q.QuestionName == a
+                              from c in Cats
+                              where q.CategoryName == c
                               select q).ToList();
             }
 
@@ -108,7 +120,13 @@ namespace ProfileMatch.Components.Manager
             Indentation = false,
             Expandable = true,
             IsInitiallyExpanded = false,
-            Selector = (e) => e.CategoryName
+            Selector = (e) => e.CategoryName,
+            InnerGroup = new TableGroupDefinition<QuestionUserLevelVM>()
+            {
+                GroupName = "Person",
+                Expandable = true,
+                Selector = (e)=>e.FullName
+            }
         };
     }
 }

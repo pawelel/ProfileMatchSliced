@@ -36,7 +36,7 @@ namespace ProfileMatch.Components.User
 
             if (UserId is not null)
             {
-            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
+                questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
             }
             questions1 = questions;
             loading = false;
@@ -82,7 +82,7 @@ namespace ProfileMatch.Components.User
             return questions1;
         }
         private async Task UserAnswerDialog(Question question)
-        { 
+        {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters
             {
@@ -90,7 +90,7 @@ namespace ProfileMatch.Components.User
                 ["UserId"] = UserId
             };
             var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
-           var data = (await dialog.Result).Data;
+            var data = (await dialog.Result).Data;
             var answer = (UserAnswer)data;
             var a = question.UserAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
             var index = question.UserAnswers.IndexOf(a);
@@ -103,30 +103,29 @@ namespace ProfileMatch.Components.User
         }
         int ShowLevel(Question question)
         {
-            UserAnswer userAnswer=new();
             //find user answer
             // select level for answer option and user answer
-            var query1 = question.UserAnswers.Where(a => a.ApplicationUserId == UserId).FirstOrDefault();
-            if (query1==null)
+            UserAnswer userAnswer = new()
             {
-                userAnswer = new()
-                {
-                    QuestionId= question.Id,
-                    AnswerOptionId=null,
-                    SupervisorId = null,
-                    ApplicationUserId = UserId,
-                    IsConfirmed=false
-                };
-            }
-            else
+                QuestionId = question.Id,
+                AnswerOptionId = null,
+                SupervisorId = null,
+                ApplicationUserId = UserId,
+                IsConfirmed = false
+            };
+            var query1 = (from a in question.UserAnswers
+                          where a is not null
+                          where a.ApplicationUserId == UserId
+                          select a).Any();
+            if (query1)
             {
-                userAnswer = query1;
+                userAnswer = question.UserAnswers.Find(a => a.ApplicationUserId == UserId);
             }
 
-            var query2 = question.AnswerOptions.Where(o => o.Id == userAnswer.AnswerOptionId).FirstOrDefault();
-            if (query2==null)
+            var query2 = question.AnswerOptions.FirstOrDefault(o => o.Id == userAnswer.AnswerOptionId);
+            if (query2 == null)
             {
-            return 0;
+                return 0;
             }
             else
             {
