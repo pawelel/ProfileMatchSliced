@@ -17,7 +17,7 @@ namespace ProfileMatch.Components.Authentication
         private bool PasswordVisibility;
         private InputType PasswordInput = InputType.Password;
         private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-        private RegisterVM registerVM = new();
+
 
         private void TogglePasswordVisibility()
         {

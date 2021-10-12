@@ -27,5 +27,6 @@ namespace ProfileMatch.Models.Models
         public  List<UserNeedCategory> UserNeedCategories { get; set; }
         public  List<UserAnswer> UserAnswers { get; set; }
         public string JobTitle { get; set; }
+        
     }
 }

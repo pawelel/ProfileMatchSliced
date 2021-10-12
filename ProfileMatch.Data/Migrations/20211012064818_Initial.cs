@@ -341,9 +341,10 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2673f49c-fcf2-4e2d-abd4-d96ff970d5fa", "310990f6-042e-4466-9b15-4b4d08ceb81a", "User", "USER" },
-                    { "057c9d7b-0a72-46a3-b8a8-e901c97679eb", "5293dccb-7991-42f2-a656-79cac6b7a691", "Admin", "ADMIN" },
-                    { "5585c4b5-38d9-4d1d-8ec4-e96de0f025c3", "d8dfe942-5067-4992-b6b7-c7b1fec32374", "SuperUser", "SUPERUSER" }
+                    { "5787e6d4-5b2e-44f8-9343-0109d7c66e00", "fdf3deb0-3cc3-488d-ae5e-dc59c453346a", "User", "USER" },
+                    { "77c2f111-ef4e-42cc-bd50-7b526a881452", "763c42d3-ac9b-4a97-8cd7-853f32d71e70", "Admin", "ADMIN" },
+                    { "d5ba431d-bc44-40e4-84f3-b36b69228627", "39302ec2-cc50-49c2-9391-21b27419bdd8", "SuperUser", "SUPERUSER" },
+                    { "3d78d4c6-d06f-4c0a-bd8b-ae0a7220e604", "99174b0c-08a4-4576-9079-f6dd9119d3a1", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(

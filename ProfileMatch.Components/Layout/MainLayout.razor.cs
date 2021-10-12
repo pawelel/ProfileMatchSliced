@@ -57,6 +57,6 @@ namespace ProfileMatch.Components.Layout
 
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
-        private MudTheme darkTheme = new DarkTheme();
+        private readonly MudTheme darkTheme = new DarkTheme();
     }
 }
