@@ -48,29 +48,29 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ea2530a9-8bfe-4d38-8afa-c14c887df1eb",
-                            ConcurrencyStamp = "dc64bb3f-2c2c-49e5-b413-901feacd9ce4",
+                            Id = "5787e6d4-5b2e-44f8-9343-0109d7c66e00",
+                            ConcurrencyStamp = "fdf3deb0-3cc3-488d-ae5e-dc59c453346a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "eb2dd1fc-7e99-4e56-ab25-204b8d0180f6",
-                            ConcurrencyStamp = "500310bf-48b6-475d-8bf0-7a8ebd89ade2",
+                            Id = "77c2f111-ef4e-42cc-bd50-7b526a881452",
+                            ConcurrencyStamp = "763c42d3-ac9b-4a97-8cd7-853f32d71e70",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9e8b4fc0-5ffb-4263-aef2-eff60d3d854f",
-                            ConcurrencyStamp = "21c00991-ab36-4452-afa4-c9916b34f415",
+                            Id = "d5ba431d-bc44-40e4-84f3-b36b69228627",
+                            ConcurrencyStamp = "39302ec2-cc50-49c2-9391-21b27419bdd8",
                             Name = "SuperUser",
                             NormalizedName = "SUPERUSER"
                         },
                         new
                         {
-                            Id = "8afa00a5-ed10-4dbd-9a2e-86e0101f84bb",
-                            ConcurrencyStamp = "a229f1d5-38ba-46a2-94fd-d3e1a0cd0882",
+                            Id = "3d78d4c6-d06f-4c0a-bd8b-ae0a7220e604",
+                            ConcurrencyStamp = "99174b0c-08a4-4576-9079-f6dd9119d3a1",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });

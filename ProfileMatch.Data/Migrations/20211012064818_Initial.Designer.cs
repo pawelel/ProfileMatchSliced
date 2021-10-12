@@ -10,7 +10,7 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211009174951_Initial")]
+    [Migration("20211012064818_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,24 +50,31 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2673f49c-fcf2-4e2d-abd4-d96ff970d5fa",
-                            ConcurrencyStamp = "310990f6-042e-4466-9b15-4b4d08ceb81a",
+                            Id = "5787e6d4-5b2e-44f8-9343-0109d7c66e00",
+                            ConcurrencyStamp = "fdf3deb0-3cc3-488d-ae5e-dc59c453346a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "057c9d7b-0a72-46a3-b8a8-e901c97679eb",
-                            ConcurrencyStamp = "5293dccb-7991-42f2-a656-79cac6b7a691",
+                            Id = "77c2f111-ef4e-42cc-bd50-7b526a881452",
+                            ConcurrencyStamp = "763c42d3-ac9b-4a97-8cd7-853f32d71e70",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5585c4b5-38d9-4d1d-8ec4-e96de0f025c3",
-                            ConcurrencyStamp = "d8dfe942-5067-4992-b6b7-c7b1fec32374",
+                            Id = "d5ba431d-bc44-40e4-84f3-b36b69228627",
+                            ConcurrencyStamp = "39302ec2-cc50-49c2-9391-21b27419bdd8",
                             Name = "SuperUser",
                             NormalizedName = "SUPERUSER"
+                        },
+                        new
+                        {
+                            Id = "3d78d4c6-d06f-4c0a-bd8b-ae0a7220e604",
+                            ConcurrencyStamp = "99174b0c-08a4-4576-9079-f6dd9119d3a1",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
                         });
                 });
 
