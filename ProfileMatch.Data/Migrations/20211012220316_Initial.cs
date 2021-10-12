@@ -341,10 +341,10 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5787e6d4-5b2e-44f8-9343-0109d7c66e00", "fdf3deb0-3cc3-488d-ae5e-dc59c453346a", "User", "USER" },
-                    { "77c2f111-ef4e-42cc-bd50-7b526a881452", "763c42d3-ac9b-4a97-8cd7-853f32d71e70", "Admin", "ADMIN" },
-                    { "d5ba431d-bc44-40e4-84f3-b36b69228627", "39302ec2-cc50-49c2-9391-21b27419bdd8", "SuperUser", "SUPERUSER" },
-                    { "3d78d4c6-d06f-4c0a-bd8b-ae0a7220e604", "99174b0c-08a4-4576-9079-f6dd9119d3a1", "Manager", "MANAGER" }
+                    { "e0e6b18b-05bb-4fc0-9ca0-f076c6240c67", "cb719a7b-72ba-4bab-abbe-e746b6010ac8", "User", "USER" },
+                    { "dd313b3d-ba0f-4e63-83b0-6be303cc16e9", "3ddce45f-213d-4f9c-aca8-146dcf201d55", "Admin", "ADMIN" },
+                    { "071ec4cc-1e91-475a-b0a2-1ba079ca26d2", "723e4815-8972-40d3-8224-74a47141ba9d", "SuperUser", "SUPERUSER" },
+                    { "93128dde-d1c7-47c9-b94e-01d6ef3b6890", "a495e21c-1194-4695-b487-c7f6564cfe21", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
