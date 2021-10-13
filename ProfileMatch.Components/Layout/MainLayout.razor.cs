@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 using MudBlazor;
@@ -55,19 +56,17 @@ namespace ProfileMatch.Components.Layout
             ThemeService.OnChange -= ThemeServiceOnChange;
             GC.SuppressFinalize(this);
         }
-
+        private ApplicationUser currentUser = new();
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
-
         [Inject]
-        SignInManager<ApplicationUser> SignInManager { get; set; }
+        private UserManager<ApplicationUser> UserManager { get; set; }
+        [Inject]
+        private AuthenticationStateProvider AuthSP { get; set; }
         public async Task OnLogout()
         {
-            if (SignInManager.IsSignedIn(User))
-            {
-
-            }
+            
         }
         private async Task GetUserDetails()
         {
@@ -76,11 +75,10 @@ namespace ProfileMatch.Components.Layout
             if (user.Identity.IsAuthenticated)
             {
                 currentUser = await UserManager.GetUserAsync(user);
-                currentUserName = currentUser.FirstName + " " + currentUser.LastName;
             }
             else
             {
-                currentUserName = "Please log in.";
+               
             }
         }
     }
