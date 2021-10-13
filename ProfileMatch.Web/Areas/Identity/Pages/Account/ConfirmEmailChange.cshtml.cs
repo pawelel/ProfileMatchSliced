@@ -30,7 +30,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
         {
             if (userId == null || email == null || code == null)
             {
-                return RedirectToPage("/Index");
+                return Redirect("~/");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
