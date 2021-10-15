@@ -23,7 +23,6 @@ namespace ProfileMatch.Components.Admin
         public string SearchString { get; set; }
 
         private bool _dense = false;
-        public bool disabled = false;
 
         private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
 

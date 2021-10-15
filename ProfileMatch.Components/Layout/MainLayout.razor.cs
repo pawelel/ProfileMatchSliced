@@ -76,10 +76,7 @@ namespace ProfileMatch.Components.Layout
             {
                 currentUser = await UserManager.GetUserAsync(user);
             }
-            else
-            {
-               
-            }
+
         }
     }
 }

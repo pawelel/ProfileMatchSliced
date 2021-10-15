@@ -4,6 +4,7 @@
 }
 else
 {
+
     <p>Editor: <br />@currentUserName</p>
     <MudDialog>
         <DialogContent>
@@ -19,6 +20,9 @@ else
                         <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
                     }
                 </MudSelect>
+                <InputFile id="fileInput" OnChange="UploadFile" hidden accept="image/*" />
+               
+                <MudButton DisableElevation="true" HtmlTag="label" for="fileInput"> <MudAvatar Image="@EditedUser.PhotoPath" /></MudButton>
                 <MudSwitch @bind-Checked="@EditedUser.IsActive"
                            T="bool"
                            Label="Is Active?"

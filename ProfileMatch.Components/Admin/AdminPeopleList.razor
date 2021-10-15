@@ -18,9 +18,9 @@ else
             <MudTh>Photo</MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.FirstName)" SortLabel="First Name" T="ApplicationUser">First Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.LastName)" SortLabel="Last Name" T="ApplicationUser">Last Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.DateOfBirth)" SortLabel="Date Of Birth" T="ApplicationUser">Birth Date</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.DateOfBirth?.Date)" SortLabel="Date Of Birth" T="ApplicationUser">Birth Date</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.IsActive)" SortLabel="Is Active" T="ApplicationUser">Is Active</MudTableSortLabel></MudTh>
-            <MudTh><MudSwitch @bind-Checked="@disabled" Color="Color.Secondary">Edit</MudSwitch></MudTh>
+            <MudTh>Edit</MudTh>
             <MudTh>Profile</MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -31,7 +31,7 @@ else
             <MudTd DataLabel="Date Of Birth">@context.DateOfBirth</MudTd>
             <MudTd DataLabel="Is Active"><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
             <MudTd DataLabel="">
-                <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context))" Disabled="@(!disabled)" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
+                <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context))" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
             </MudTd>
             <MudTd DataLabel="">
                 <MudFab  Color="Color.Primary" Icon="@Icons.Material.Filled.Person" Size="Size.Small" IconSize="Size.Small" />

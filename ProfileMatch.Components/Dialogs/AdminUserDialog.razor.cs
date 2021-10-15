@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 
 using MudBlazor;
@@ -64,13 +66,13 @@ namespace ProfileMatch.Components.Dialogs
         private async Task LoadData()
         {
             Departments = await DepartmentRepository.GetAll();
-            if (EditedUser.DateOfBirth==null)
-            {   
+            if (EditedUser.DateOfBirth == null)
+            {
                 _dob = DateTime.Now;
             }
             else
             {
-            _dob = EditedUser.DateOfBirth;
+                _dob = EditedUser.DateOfBirth;
             }
             StateHasChanged();
         }
@@ -94,6 +96,15 @@ namespace ProfileMatch.Components.Dialogs
 
                 NavigationManager.NavigateTo("/admin/dashboard");
             }
+        }
+        private IBrowserFile file;
+        private async void UploadFile(InputFileChangeEventArgs e)
+        {
+            file = e.File;
+            var buffers = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffers);
+            EditedUser.PhotoPath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffers)}";
+            StateHasChanged();
         }
     }
 }
