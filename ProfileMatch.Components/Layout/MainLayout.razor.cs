@@ -51,12 +51,17 @@ namespace ProfileMatch.Components.Layout
             StateHasChanged();
         }
 
+        protected override async Task OnInitializedAsync()
+        {
+            await GetUserDetails();
+        }
+
         public void Dispose()
         {
             ThemeService.OnChange -= ThemeServiceOnChange;
             GC.SuppressFinalize(this);
         }
-        private ApplicationUser currentUser = new();
+        public ApplicationUser CurrentUser { get; set; }
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
@@ -64,19 +69,16 @@ namespace ProfileMatch.Components.Layout
         private UserManager<ApplicationUser> UserManager { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthSP { get; set; }
-        public async Task OnLogout()
-        {
-            
-        }
+       
         private async Task GetUserDetails()
         {
             var authState = await AuthSP.GetAuthenticationStateAsync();
             var user = authState.User;
             if (user.Identity.IsAuthenticated)
             {
-                currentUser = await UserManager.GetUserAsync(user);
+                CurrentUser = await UserManager.GetUserAsync(user);
             }
-
+           
         }
     }
 }

@@ -102,9 +102,10 @@ namespace ProfileMatch.Components.Dialogs
         {
             file = e.File;
             var buffers = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffers);
+            await file.OpenReadStream(maxFileSize).ReadAsync(buffers);
             EditedUser.PhotoPath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffers)}";
             StateHasChanged();
         }
+        private long maxFileSize = 1024*1024 * 15;
     }
 }

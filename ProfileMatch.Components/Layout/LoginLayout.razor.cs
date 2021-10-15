@@ -19,9 +19,6 @@ namespace ProfileMatch.Components.Layout
         [Inject]
         public IThemeService ThemeService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         private Preferences _preferences = new();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

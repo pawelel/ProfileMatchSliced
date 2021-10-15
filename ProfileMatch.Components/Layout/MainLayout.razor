@@ -20,21 +20,24 @@
             <MudText Typo="Typo.subtitle2">People Match</MudText>
         </MudHidden>
         <MudSpacer />
-        <LoginDisplay />
+        <LoginDisplay CurrentUser="@CurrentUser" />
         <CultureSelector />
         <ThemeToggle />
         <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
             <ActivatorContent>
-                <MudAvatar Image="https://randomuser.me/api/portraits/men/1.jpg" />
+                <MudAvatar Image="@CurrentUser?.PhotoPath" />
             </ActivatorContent>
             <ChildContent>
-                <UserCard Class="mt-n2" />
+                <UserCard Class="mt-n2" CurrentUser="CurrentUser" />
                 <MudDivider Class="mb-2" />
                 <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/user/dashboard" />
-                <MudForm action="Identity/Account/LogOut">
-                    <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login">
-                    </MudListItem>
-                </MudForm>
+                
+                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login">
+                    <form method="post" action="Identity/Account/LogOut">
+                        <button type="submit">Log out</button>
+                    </form>
+                </MudListItem>
+              
             </ChildContent>
         </MudMenu>
     </MudAppBar>
@@ -50,7 +53,3 @@
         @Body
     </MudMainContent>
 </MudLayout>
-
-@code{
-
-}
