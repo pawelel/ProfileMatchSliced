@@ -6,8 +6,8 @@
                 <MudAvatar Image="@CurrentUser?.PhotoPath" />
             </CardHeaderAvatar>
             <CardHeaderContent>
-                <MudText Typo="Typo.body2">FirstName LastName</MudText>
-                <MudText Typo="Typo.caption">IT Administrator</MudText>
+                <MudText Typo="Typo.body2">@CurrentUser?.FullName</MudText>
+                <MudText Typo="Typo.caption">@CurrentUser?.JobTitle</MudText>
             </CardHeaderContent>
         </MudCardHeader>
     </MudCard>

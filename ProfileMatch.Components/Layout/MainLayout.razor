@@ -7,9 +7,6 @@
 <MudThemeProvider Theme="currentTheme" />
 <MudLayout>
     <MudAppBar Elevation="4">
-        <MudHidden Breakpoint="Breakpoint.SmAndDown">
-            <MudAvatar />
-        </MudHidden>
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         </MudHidden>
@@ -42,7 +39,7 @@
         </MudMenu>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
-        <NavMenu />
+        <NavMenu CurrentUser="CurrentUser" />
     </MudDrawer>
     <MudMainContent>
         <MudHidden Breakpoint="Breakpoint.SmAndDown">

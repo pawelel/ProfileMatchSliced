@@ -8,7 +8,7 @@ namespace ProfileMatch.Components.User
     {
         [Parameter] public string Class { get; set; }
         [Parameter] public string Style { get; set; }
-        [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
+        [Parameter] public ApplicationUser CurrentUser { get; set; }
 
     }
 }

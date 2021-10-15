@@ -21,9 +21,6 @@ namespace ProfileMatch.Components.Layout
         [Inject]
         public IThemeService ThemeService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         private bool _drawerOpen = true;
 
         private void DrawerToggle()
@@ -65,15 +62,16 @@ namespace ProfileMatch.Components.Layout
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
+        
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthSP { get; set; }
         [Inject]
         private UserManager<ApplicationUser> UserManager { get; set; }
-        [Inject]
-        private AuthenticationStateProvider AuthSP { get; set; }
        
         private async Task GetUserDetails()
         {
-            var authState = await AuthSP.GetAuthenticationStateAsync();
-            var user = authState.User;
+            var user = (await AuthSP).User;
+            
             if (user.Identity.IsAuthenticated)
             {
                 CurrentUser = await UserManager.GetUserAsync(user);
