@@ -22,7 +22,6 @@ namespace ProfileMatch.Models.Models
         public int DepartmentId { get; set; } = 1; //NOTE had to initialize
         public  Department Department { get; set; }
         public string PhotoPath { get; set; }
-        public byte[] FileContent { get; set; }
         public string Bio { get; set; }
         public bool IsActive { get; set; }
         public  List<UserNeedCategory> UserNeedCategories { get; set; }
