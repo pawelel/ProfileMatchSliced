@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-using Microsoft.Extensions.Options;
-using MimeKit.Text;
-using MimeKit;
-using ProfileMatch.Models.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using MailKit.Net.Smtp;
+
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
+
+using MimeKit;
+using MimeKit.Text;
+
+using ProfileMatch.Models.Models;
 
 namespace ProfileMatch.Services
 {

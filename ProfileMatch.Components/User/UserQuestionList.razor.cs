@@ -10,18 +10,20 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.User
 {
     public partial class UserQuestionList : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
+
         [Inject]
         private IQuestionRepository QuestionRepository { get; set; }
+
         private bool loading;
         [Parameter] public int Id { get; set; }
         [Parameter] public string UserId { get; set; }
@@ -41,6 +43,7 @@ namespace ProfileMatch.Components.User
             questions1 = questions;
             loading = false;
         }
+
         protected override async Task OnInitializedAsync()
         {
             loading = true;
@@ -53,6 +56,7 @@ namespace ProfileMatch.Components.User
         private bool bordered = true;
         private bool striped = false;
         private string searchString1 = "";
+
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
         private static bool FilterFunc(Question question, string searchString)
@@ -81,6 +85,7 @@ namespace ProfileMatch.Components.User
             }
             return questions1;
         }
+
         private async Task UserAnswerDialog(Question question)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
@@ -101,7 +106,8 @@ namespace ProfileMatch.Components.User
                 question.UserAnswers.Add(answer);
             }
         }
-        int ShowLevel(Question question)
+
+        private int ShowLevel(Question question)
         {
             //find user answer
             // select level for answer option and user answer

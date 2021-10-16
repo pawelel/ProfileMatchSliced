@@ -1,30 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
 
-using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-
-using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.Dialogs
 {
     public partial class UserQuestionDialog : ComponentBase
     {
         [Inject]
-        IUserAnswerRepository UserAnswerRepository { get; set; }
+        private IUserAnswerRepository UserAnswerRepository { get; set; }
+
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+
         [Parameter] public Question Q { get; set; }
         [Parameter] public UserAnswer UserAnswer { get; set; } = new();
         [Parameter] public string UserId { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             UserAnswer = await UserAnswerRepository.FindById(UserAnswer);
@@ -34,20 +33,22 @@ namespace ProfileMatch.Components.Dialogs
         private bool CanSelect(AnswerOption answerOption)
         {//has user userAnswer this answerOption on this question
             UserAnswer = UserAnswerRepository.FindById(UserId, answerOption.QuestionId);
-            if (UserAnswer==null)
+            if (UserAnswer == null)
             {
                 return true;
-            }else  if (UserAnswer.AnswerOptionId == answerOption.Id)
+            }
+            else if (UserAnswer.AnswerOptionId == answerOption.Id)
             {
                 return false;
             }
             return true;
         }
-       async Task SelectLevelAsync(string UserId, int answerOptionId, int questionId)
-        {var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, questionId);
+
+        private async Task SelectLevelAsync(string UserId, int answerOptionId, int questionId)
+        {
+            var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, questionId);
             if (userAnswer == null)
             {
-
                 userAnswer = new()
                 {
                     QuestionId = questionId,
@@ -56,8 +57,8 @@ namespace ProfileMatch.Components.Dialogs
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
                     LastModified = DateTime.Now,
-            };
-               await UserAnswerRepository.Create(userAnswer);
+                };
+                await UserAnswerRepository.Create(userAnswer);
             }
             else
             {

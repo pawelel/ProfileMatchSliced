@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using ProfileMatch.Models.Models;
@@ -20,10 +18,15 @@ namespace ProfileMatch.Contracts
         Task<List<Question>> GetAll();
 
         Task Update(Question question);
+
         Task<List<Question>> GetQuestionsWithCategoriesAndOptions();
+
         Task<List<Question>> GetQuestionsWithCategories();
+
         Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptions();
+
         Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId);
+
         Task<bool> IsDuplicated(Question question);
     }
 }

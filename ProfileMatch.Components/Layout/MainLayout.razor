@@ -28,13 +28,12 @@
                 <UserCard Class="mt-n2" CurrentUser="CurrentUser" />
                 <MudDivider Class="mb-2" />
                 <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/user/dashboard" />
-                
+
                 <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login">
                     <form method="post" action="Identity/Account/LogOut">
                         <button type="submit">Log out</button>
                     </form>
                 </MudListItem>
-              
             </ChildContent>
         </MudMenu>
     </MudAppBar>

@@ -58,25 +58,26 @@ namespace ProfileMatch.Components.Layout
             ThemeService.OnChange -= ThemeServiceOnChange;
             GC.SuppressFinalize(this);
         }
+
         public ApplicationUser CurrentUser { get; set; }
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
-        
+
         [CascadingParameter]
         private Task<AuthenticationState> AuthSP { get; set; }
+
         [Inject]
         private UserManager<ApplicationUser> UserManager { get; set; }
-       
+
         private async Task GetUserDetails()
         {
             var user = (await AuthSP).User;
-            
+
             if (user.Identity.IsAuthenticated)
             {
                 CurrentUser = await UserManager.GetUserAsync(user);
             }
-           
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -26,12 +24,14 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions.Include(c => c.Category).AsNoTracking().ToListAsync();
         }
+
         public async Task<List<Question>> GetQuestionsWithCategoriesAndOptions()
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.Questions
                 .Include(question => question.Category).Include(question => question.Category).AsNoTracking().ToListAsync();
         }
+
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptions()
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -44,6 +44,7 @@ namespace ProfileMatch.Repositories
                .ToListAsync();
             return result;
         }
+
         public async Task<List<Question>> GetActiveQuestionsWithCategoriesAndOptionsForUser(string userId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -57,6 +58,7 @@ namespace ProfileMatch.Repositories
                 .ToListAsync();
             return result;
         }
+
         public async Task<Question> Create(Question question)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -83,7 +85,7 @@ namespace ProfileMatch.Repositories
         public async Task<Question> FindById(int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Questions.Include(q=>q.Category).Include(a=>a.AnswerOptions).SingleOrDefaultAsync(q => q.Id == questionId);
+            return await repositoryContext.Questions.Include(q => q.Category).Include(a => a.AnswerOptions).SingleOrDefaultAsync(q => q.Id == questionId);
         }
 
         public async Task<List<Question>> GetQuestionsForCategory(int categoryId)

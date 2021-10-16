@@ -5,25 +5,25 @@
 else
 {
 
-<MudItem Class="d-flex">
-    <MudItem xs="12" md="5">
-        <MudSelect T="string" Label="Select Users" MultiSelection="true" OffsetY="true" @bind-SelectedValues="Ppl">
-            @foreach (var p in users)
-            {
-                <MudSelectItem T="string" Value="@p.FullName" />
-            }
-        </MudSelect>
+    <MudItem Class="d-flex">
+        <MudItem xs="12" md="5">
+            <MudSelect T="string" Label="Select Users" MultiSelection="true" OffsetY="true" @bind-SelectedValues="Ppl">
+                @foreach (var p in users)
+                {
+                    <MudSelectItem T="string" Value="@p.FullName" />
+                }
+            </MudSelect>
+        </MudItem>
+        <MudSpacer />
+        <MudItem xs="12" md="5">
+            <MudSelect T="string" Label="Select Category" MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
+                @foreach (var cat in categories)
+                {
+                    <MudSelectItem T="string" Value="@cat.Name" />
+                }
+            </MudSelect>
+        </MudItem>
     </MudItem>
-    <MudSpacer/>
-    <MudItem xs="12" md="5">
-        <MudSelect T="string" Label="Select Category" MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-            @foreach (var cat in categories)
-            {
-                <MudSelectItem T="string" Value="@cat.Name" />
-            }
-        </MudSelect>
-    </MudItem>
-</MudItem>
     <MudText Typo="Typo.body2">Selected Categories:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
 
     <MudTable GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"

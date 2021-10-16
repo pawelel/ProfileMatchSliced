@@ -20,6 +20,7 @@ namespace ProfileMatch.Contracts
         Task<List<AnswerOption>> GetAll();
 
         Task Update(AnswerOption answerOption);
+
         Task<AnswerOption> FindByUserIdAndQuestionId(string userId, int questionId);
     }
 }

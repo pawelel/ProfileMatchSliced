@@ -46,17 +46,17 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.AnswerOptions.SingleOrDefaultAsync(o => o.Id == answerOptionId);
         }
+
         public async Task<AnswerOption> FindByUserIdAndQuestionId(string userId, int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.AnswerOptions.Include(a => a.UserAnswers.Where(u => u.ApplicationUserId == userId)).Where(o => o.QuestionId == questionId).FirstOrDefaultAsync();
         }
 
-
         public async Task<List<AnswerOption>> GetAnswerOptionsForQuestion(int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.AnswerOptions.Include(o=>o.Question).Where(o => o.QuestionId == questionId).AsNoTracking().ToListAsync();
+            return await repositoryContext.AnswerOptions.Include(o => o.Question).Where(o => o.QuestionId == questionId).AsNoTracking().ToListAsync();
         }
 
         public async Task<List<AnswerOption>> GetAll()

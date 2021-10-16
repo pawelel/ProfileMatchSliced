@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
-using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Repositories
 {
@@ -67,7 +66,7 @@ namespace ProfileMatch.Repositories
         public async Task<List<UserAnswer>> GetUserAnswersForQuestion(int questionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.UserAnswers.Where(u=>u.QuestionId==questionId).ToListAsync();
+            return await repositoryContext.UserAnswers.Where(u => u.QuestionId == questionId).ToListAsync();
         }
 
         public async Task<List<UserAnswer>> GetUserAnswersForLevelAndQuestion(int level, int questionId)
@@ -86,8 +85,9 @@ namespace ProfileMatch.Repositories
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             var data = await repositoryContext.UserAnswers.Where(u => u.ApplicationUserId == userId).Include(u => u.AnswerOption).Where(u => u.AnswerOptionId == optionId).SingleOrDefaultAsync();
-                return data.AnswerOption.Level;
+            return data.AnswerOption.Level;
         }
+
         public async Task<UserAnswer> GetUserAnswer(string userId, int questionId)
         {//has user userAnswer this answerOption on this question
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
@@ -99,11 +99,11 @@ namespace ProfileMatch.Repositories
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return await repositoryContext.UserAnswers.FindAsync(userId, optionId);
         }
+
         public UserAnswer FindById(string userId, int optionId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
             return repositoryContext.UserAnswers.Find(userId, optionId);
         }
-        
     }
 }

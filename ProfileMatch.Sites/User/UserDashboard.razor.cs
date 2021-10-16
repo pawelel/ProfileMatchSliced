@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 using ProfileMatch.Models.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Sites.User
 {
@@ -13,15 +12,18 @@ namespace ProfileMatch.Sites.User
     {
         [Inject]
         public AuthenticationStateProvider AuthStateProv { get; set; }
+
         [Inject]
-        UserManager<ApplicationUser> UserManager { get; set; }
-      [CascadingParameter]  public string CurrentUserId { get; set; }
+        private UserManager<ApplicationUser> UserManager { get; set; }
+
+        [CascadingParameter] public string CurrentUserId { get; set; }
         public ApplicationUser CurrentUser { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             await GetUserDetails();
         }
+
         private async Task GetUserDetails()
         {
             var authState = await AuthStateProv.GetAuthenticationStateAsync();

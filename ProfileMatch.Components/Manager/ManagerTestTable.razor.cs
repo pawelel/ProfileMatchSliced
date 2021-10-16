@@ -113,12 +113,10 @@ namespace ProfileMatch.Components.Manager
         {
             List<QuestionUserLevelVM> qs = new();
 
-            
-           
-                qs = (from q in questions
-                              from c in Cats
-                              where q.CategoryName == c
-                              select q).ToList();
+            qs = (from q in questions
+                  from c in Cats
+                  where q.CategoryName == c
+                  select q).ToList();
             qs = GetPpl(qs);
             return qs;
         }

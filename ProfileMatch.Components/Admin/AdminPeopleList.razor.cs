@@ -14,9 +14,9 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminPeopleList : ComponentBase
     {
-
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         public IUserRepository UserRepo { get; set; }
 

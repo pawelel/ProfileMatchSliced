@@ -36,7 +36,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
             {
                 return Redirect("");
             }
-            DisplayConfirmAccountLink = false; 
+            DisplayConfirmAccountLink = false;
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {

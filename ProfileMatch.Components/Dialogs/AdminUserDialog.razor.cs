@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
@@ -97,7 +96,9 @@ namespace ProfileMatch.Components.Dialogs
                 NavigationManager.NavigateTo("/admin/dashboard");
             }
         }
+
         private IBrowserFile file;
+
         private async void UploadFile(InputFileChangeEventArgs e)
         {
             file = e.File;
@@ -106,6 +107,7 @@ namespace ProfileMatch.Components.Dialogs
             EditedUser.PhotoPath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffers)}";
             StateHasChanged();
         }
-        private long maxFileSize = 1024*1024 * 15;
+
+        private readonly long maxFileSize = 1024 * 1024 * 15;
     }
 }

@@ -4,23 +4,22 @@
 }
 else
 {
- 
-        
-<MudItem xs="12" md="6">
-    <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="Cats">
-        @foreach (var cat in categories)
-        {
-            <MudSelectItem T="string" Value="@cat.Name" />
-        }
-    </MudSelect>
-    <MudSelect T="string" Label="Select Questions" MultiSelection="true" @bind-SelectedValues="Quests">
-        @foreach (var q in questions1)
-        {
-            <MudSelectItem T="string" Value="@q.Name" />
-        }
-    </MudSelect>
-    <MudText Typo="Typo.body2">Selected Categories:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
-</MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="Cats">
+            @foreach (var cat in categories)
+            {
+                <MudSelectItem T="string" Value="@cat.Name" />
+            }
+        </MudSelect>
+        <MudSelect T="string" Label="Select Questions" MultiSelection="true" @bind-SelectedValues="Quests">
+            @foreach (var q in questions1)
+            {
+                <MudSelectItem T="string" Value="@q.Name" />
+            }
+        </MudSelect>
+        <MudText Typo="Typo.body2">Selected Categories:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
+    </MudItem>
     <MudTable Items="@(GetQuestions())" SortLabel="Sort By" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ColGroup>
             <col />
@@ -62,9 +61,9 @@ else
             <MudText Inline="true" Class="align-self-center">Selected1: @selectedItem1?.Name</MudText>
         </MudItem>
     </MudItem>
+}
+<style>
+    .mud-tabs-panels {
+        min-height: 200px !important;
     }
-    <style>
-        .mud-tabs-panels {
-            min-height: 200px !important;
-        }
-    </style>
+</style>

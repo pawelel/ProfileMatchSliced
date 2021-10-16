@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
 
 using ProfileMatch.Models.Models;
 
@@ -15,17 +14,22 @@ namespace ProfileMatch.Sites.Admin
     {
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         [Inject]
         public RoleManager<IdentityRole> RoleManager { get; set; }
+
         [Inject]
         public UserManager<ApplicationUser> UserManager { get; set; }
+
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         readonly string ADMINISTRATION_ROLE = "Admin";
-        System.Security.Claims.ClaimsPrincipal CurrentUser;
+        private System.Security.Claims.ClaimsPrincipal CurrentUser;
+
         // Tracks the selected role for the currently selected user
-        string CurrentUserRole { get; set; } = "User";
+        private string CurrentUserRole { get; set; } = "User";
+
         protected override async Task OnInitializedAsync()
         {
             // ensure there is a ADMINISTRATION_ROLE
@@ -55,6 +59,7 @@ namespace ProfileMatch.Sites.Admin
             // Get the users
             GetUsers();
         }
+
         public void GetUsers()
         {
             // Collection to hold users
@@ -74,9 +79,8 @@ namespace ProfileMatch.Sites.Admin
                 ColUsers.Add(item);
             }
         }
+
         // Collection to display the existing users
-        List<ApplicationUser> ColUsers = new();
-
-
+        private List<ApplicationUser> ColUsers = new();
     }
 }

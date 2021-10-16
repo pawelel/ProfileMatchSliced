@@ -18,16 +18,14 @@
                         <MudText Typo="Typo.subtitle1">Level @answerOption.Level.ToString()</MudText>
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
-                        @if (CanSelect(answerOption))
-                        {
-                                <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.QuestionId))" Color="Color.Tertiary" Size="Size.Small">This is my Level</MudButton>
-                        }
+                                @if (CanSelect(answerOption))
+                                {
+                                    <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.QuestionId))" Color="Color.Tertiary" Size="Size.Small">This is my Level</MudButton>
+                                }
                             </MudItem>
-
                         </MudTabPanel>
                     }
         </MudTabs>
-
     </DialogContent>
 </MudDialog>
 

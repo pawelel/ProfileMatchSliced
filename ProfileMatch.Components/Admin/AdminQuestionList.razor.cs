@@ -16,7 +16,8 @@ namespace ProfileMatch.Components.Admin
     public partial class AdminQuestionList : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
 
@@ -25,10 +26,10 @@ namespace ProfileMatch.Components.Admin
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        private List<Question> questions=new();
+        private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
-        private HashSet<string> Cats { get; set; } = new () { };
+        private HashSet<string> Cats { get; set; } = new() { };
         private HashSet<string> Quests { get; set; } = new() { };
         public bool ShowDetails { get; set; }
 
@@ -47,6 +48,7 @@ namespace ProfileMatch.Components.Admin
         private bool striped = false;
         private string searchString1 = "";
         private Question selectedItem1 = null;
+
         private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
 
         private static bool FilterFunc(Question question, string searchString)
@@ -73,26 +75,27 @@ namespace ProfileMatch.Components.Admin
                               where q.Category.Name == c
                               select q).ToList();
             }
-            if (Quests.Count!=0)
+            if (Quests.Count != 0)
             {
                 questions1 = (from q in questions1
-                             from a in Quests
-                             where q.Name == a
-                             select q).ToList();
+                              from a in Quests
+                              where q.Name == a
+                              select q).ToList();
             }
 
             return questions1;
         }
+
         private async Task QuestionDialog(Question question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
             var dialog = DialogService.Show<AdminQuestionDialog>($"Edit Question {question.Name}", parameters);
             await dialog.Result;
-            
         }
+
         private async Task QuestionDisplay(Question question)
         {
-            DialogOptions maxWidth = new() { MaxWidth=MaxWidth.Large, FullWidth = true };
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };
             var dialog = DialogService.Show<AdminQuestionDisplay>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;

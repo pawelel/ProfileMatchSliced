@@ -18,7 +18,8 @@ namespace ProfileMatch.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //relations
-            builder.Entity<UserAnswer>(entity => {
+            builder.Entity<UserAnswer>(entity =>
+            {
                 entity.HasKey(x => new { x.ApplicationUserId, x.QuestionId });
                 entity.HasOne(a => a.AnswerOption)
                 .WithMany(u => u.UserAnswers)

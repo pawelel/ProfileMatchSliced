@@ -1,15 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
-using System;
 using Microsoft.AspNetCore.Components;
+
 using MudBlazor;
 
 using ProfileMatch.Contracts;
-
 using ProfileMatch.Models.Models;
-using ProfileMatch.Repositories;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -25,6 +22,7 @@ namespace ProfileMatch.Components.Dialogs
         public string TempDescription { get; set; }
         public bool TempIsActive { get; set; }
         public bool CanActivateState { get; set; } = false;
+
         protected override void OnInitialized()
         {
             TempName = Q.Name;
@@ -39,7 +37,6 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add("Operation cancelled", Severity.Warning);
         }
-
 
         protected async Task HandleSave()
         {

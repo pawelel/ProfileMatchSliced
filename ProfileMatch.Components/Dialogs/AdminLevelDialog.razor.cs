@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+
 using MudBlazor;
+
 using ProfileMatch.Contracts;
 
 using ProfileMatch.Models.Models;
@@ -20,7 +20,6 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override void OnInitialized()
         {
-
             TempDescription = O.Description;
         }
 
@@ -39,7 +38,6 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-         
                 O.Description = TempDescription;
                 try
                 {

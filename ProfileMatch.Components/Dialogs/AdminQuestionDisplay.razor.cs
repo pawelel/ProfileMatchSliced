@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
 
 using MudBlazor;
 
-using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
-
-using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminQuestionDisplay : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+
         [Inject]
         public IQuestionRepository QuestionRepository { get; set; }
+
         [Parameter] public Question Q { get; set; }
+
         private async Task AddLevels(Question question)
         {
             for (int i = 1; i < 6; i++)
@@ -38,6 +37,7 @@ namespace ProfileMatch.Components.Dialogs
                 );
             }
         }
+
         private async Task EditLevelDialog(AnswerOption answerOption)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
@@ -45,6 +45,7 @@ namespace ProfileMatch.Components.Dialogs
             var dialog = DialogService.Show<AdminLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
+
         protected override async Task OnInitializedAsync()
         {
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
@@ -54,6 +55,7 @@ namespace ProfileMatch.Components.Dialogs
                 await AddLevels(Q);
             }
         }
+
         private async Task<bool> IsActive()
         {
             Q.IsActive = !Q.IsActive;
@@ -61,6 +63,7 @@ namespace ProfileMatch.Components.Dialogs
             StateHasChanged();
             return Q.IsActive;
         }
+
         private static bool CanActivate(Question question)
         {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
             if (question.AnswerOptions is not null)

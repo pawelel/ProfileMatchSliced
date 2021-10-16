@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Identity;
 
 using MudBlazor;
-
-using ProfileMatch.Models.Models;
-using ProfileMatch.Models.ViewModels;
 
 namespace ProfileMatch.Components.Authentication
 {
@@ -17,7 +13,6 @@ namespace ProfileMatch.Components.Authentication
         private bool PasswordVisibility;
         private InputType PasswordInput = InputType.Password;
         private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-
 
         private void TogglePasswordVisibility()
         {
