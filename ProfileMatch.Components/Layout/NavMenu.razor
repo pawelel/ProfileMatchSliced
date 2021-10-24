@@ -1,13 +1,7 @@
-﻿<UserCard CurrentUser="CurrentUser" Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text);" />
+﻿<UserCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text);" />
 <MudDivider Class="mb-4" />
 <MudNavMenu>
     <MudNavLink Href="user/dashboard" Icon="@Icons.Material.Outlined.Dashboard">Dashboard</MudNavLink>
     <MudNavLink Href="manager/dashboard" Icon="@Icons.Material.Outlined.Dashboard">Manager</MudNavLink>
     <MudNavLink Href="admin/dashboard" Icon="@Icons.Material.Outlined.Dashboard">Administration</MudNavLink>
-    <MudNavLink Href="su/dashboard" Icon="@Icons.Filled.Dangerous">Super User</MudNavLink>
 </MudNavMenu>
-@code{
-    [Parameter] public ApplicationUser CurrentUser { get; set; }
-    [Inject]
-    IStringLocalizer<LanguageService> L { get; set; }
-}

@@ -25,7 +25,9 @@
                 <MudAvatar Image="@CurrentUser?.PhotoPath" />
             </ActivatorContent>
             <ChildContent>
-                <UserCard Class="mt-n2" CurrentUser="CurrentUser" />
+                <CascadingValue Value="CurrentUser">
+                <UserCard Class="mt-n2" />
+                </CascadingValue>
                 <MudDivider Class="mb-2" />
                 <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/user/dashboard" />
 
@@ -38,7 +40,9 @@
         </MudMenu>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
-        <NavMenu CurrentUser="CurrentUser" />
+        <CascadingValue Value="CurrentUser">
+        <NavMenu/>
+        </CascadingValue>
     </MudDrawer>
     <MudMainContent>
         <MudHidden Breakpoint="Breakpoint.SmAndDown">
@@ -46,6 +50,8 @@
                 <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
             </MudToolBar>
         </MudHidden>
+        <CascadingValue Value="CurrentUser">
         @Body
+        </CascadingValue>
     </MudMainContent>
 </MudLayout>
