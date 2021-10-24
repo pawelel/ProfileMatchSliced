@@ -12,9 +12,6 @@ namespace ProfileMatch.Sites.User
 {
     public partial class UserDashboard : ComponentBase
     {
-           
-      [CascadingParameter]  public ApplicationUser CurrentUser { get; set; }
-
         
         [Inject]
         IStringLocalizer<LanguageService> L { get; set; }

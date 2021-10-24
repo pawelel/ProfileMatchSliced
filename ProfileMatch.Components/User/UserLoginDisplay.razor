@@ -6,8 +6,10 @@
         </form>
     </Authorized>
     <NotAuthorized>
-        <MudFab />
-        <a href="Identity/Account/Register">Register</a>
-        <a href="Identity/Account/Login">Log in</a>
-    </NotAuthorized>
+        <MudItem Class="d-flex justify-space-between">
+            <MudButton Link="Identity/Account/Register" Color="Color.Primary" Variant="Variant.Outlined">Register</MudButton>
+            <MudText Typo="Typo.h5">Profile Match</MudText>
+            <MudButton Link="Identity/Account/Login" Color="Color.Success" Variant="Variant.Outlined">Log in</MudButton>
+        </MudItem>
+            </NotAuthorized>
 </AuthorizeView>

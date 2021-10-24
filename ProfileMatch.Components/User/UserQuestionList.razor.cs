@@ -21,6 +21,9 @@ namespace ProfileMatch.Components.User
         [CascadingParameter] Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         [Inject]
+        NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         private IDialogService DialogService { get; set; }
 
         [Inject]
@@ -50,10 +53,18 @@ namespace ProfileMatch.Components.User
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await AuthenticationStateTask;
-            UserId = authState.User.Claims.FirstOrDefault().Value;
             loading = true;
+            var authState = await AuthenticationStateTask;
+            if (authState.User.Identity.IsAuthenticated)
+            {
+            UserId = authState.User.Claims.FirstOrDefault().Value;
             categories = await CategoryRepository.GetCategories();
+            }
+            else
+            {
+                NavigationManager.NavigateTo("Identity/Account/Login", true);
+            }
+
             loading = false;
         }
 
