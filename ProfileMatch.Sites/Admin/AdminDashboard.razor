@@ -1,5 +1,5 @@
 ﻿@page "/admin/dashboard"
-<AuthorizeView>
+<AuthorizeView Roles="Admin">
     <Authorized>
             <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["admindashboard"]</MudText>
             <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
