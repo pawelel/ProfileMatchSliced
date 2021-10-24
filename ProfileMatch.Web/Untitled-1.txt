@@ -1,0 +1,1 @@
+=todate([IM Open Time @Systime];"yy-MM-dd") where ([IM Open Time @Systime]>"20-12-31")
