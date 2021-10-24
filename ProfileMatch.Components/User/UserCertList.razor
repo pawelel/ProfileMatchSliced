@@ -1,0 +1,64 @@
+﻿
+@using MudBlazor.Examples.Data.Models
+
+
+
+
+<MudText Typo="Typo.h6">Certificates</MudText>
+
+
+<MudTable Items="@Elements" MultiSelection="true" @bind-SelectedItems="selectedItems1" Hover="@hover">
+    <HeaderContent>
+        <MudTh>#</MudTh>
+        <MudTh>Employee</MudTh>
+        <MudTh>Cert name</MudTh>
+        <MudTh>Date of issue</MudTh>
+        <MudTh>File</MudTh>
+        <MudTh>Upload</MudTh> 
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="#">@context.Number</MudTd>
+        <MudTd DataLabel="Employee">@context.Sign</MudTd>
+        <MudTd DataLabel="Cert name">@context.Name</MudTd>
+        <MudTd DataLabel="Date of issue">@context.Position</MudTd>
+        <MudTd DataLabel="File">
+            @if (files != null)
+            {
+                <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                <MudList>
+                    @foreach (var file in files)
+                    {
+                        <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                            @file.Name <code>@file.Size bytes</code>
+                        </MudListItem>
+                    }
+                </MudList>
+            }
+        </MudTd>
+        <MudTd DataLabel="Edit">
+
+            <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
+            <MudFab HtmlTag="label"
+                    Color="Color.Primary"
+                    Icon="@Icons.Filled.AttachFile"
+                    for="fileInput" />
+
+
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+    <FooterContent>
+        <MudTd colspan="5">Select All</MudTd>
+    </FooterContent>
+</MudTable>
+
+<MudText Inline="true">Selected items: @(selectedItems1==null ? "" : string.Join(", ", selectedItems1.OrderBy(x=>x.Number).Select(x=>x.Number)))</MudText>
+<MudText Inline="true">Selected items: @(selectedItems2==null ? "" : string.Join(", ", selectedItems2.OrderBy(x=>x.Number).Select(x=>x.Number)))</MudText>
+
+<br />
+
+<MudButton @onclick="AddCert" Variant="Variant.Filled" Color="Color.Primary">Add Certificate</MudButton>
+<MudButton @onclick="DelCert" Variant="Variant.Filled" Color="Color.Primary">Delete</MudButton>
+

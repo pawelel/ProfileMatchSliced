@@ -1,0 +1,42 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                <MudNumericField @bind-Value="IntValue" Label="#" Variant="Variant.Text" Min="0" Max="100" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="20" md="4">
+                <MudTextField @bind-Value="TextValue" Label="Employee" Variant="Variant.Text"></MudTextField>
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="20" md="4">
+                <MudTextField @bind-Value="TextValue" Label="Certificate Name" Variant="Variant.Text"></MudTextField>
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="15" md="4">
+                <MudDatePicker Label="Date of issue" @bind-Date="date" DisableToolbar="true" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Add</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    public string TextValue { get; set; }
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+    public int IntValue { get; set; }
+    public double DoubleValue { get; set; }
+    public decimal DecimalValue { get; set; }
+
+
+    DateTime? date = DateTime.Today;
+
+}
