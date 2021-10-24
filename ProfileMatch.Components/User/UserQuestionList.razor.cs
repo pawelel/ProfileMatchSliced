@@ -28,7 +28,8 @@ namespace ProfileMatch.Components.User
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        [Parameter] public string UserId { get; set; }
+     [CascadingParameter]   public ApplicationUser CurrentUser { get; set; }
+        public string UserId { get; set; }
         private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
@@ -37,7 +38,7 @@ namespace ProfileMatch.Components.User
         protected override async Task OnParametersSetAsync()
         {
             loading = true;
-
+            UserId = CurrentUser.Id;
             if (UserId is not null)
             {
                 questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
