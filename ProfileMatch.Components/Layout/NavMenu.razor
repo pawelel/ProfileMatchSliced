@@ -8,4 +8,6 @@
 </MudNavMenu>
 @code{
     [Parameter] public ApplicationUser CurrentUser { get; set; }
+    [Inject]
+    IStringLocalizer<LanguageService> L { get; set; }
 }

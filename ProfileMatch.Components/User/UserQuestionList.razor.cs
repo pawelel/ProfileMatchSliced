@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.User
 {
@@ -138,5 +140,7 @@ namespace ProfileMatch.Components.User
                 return query2.Level;
             }
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

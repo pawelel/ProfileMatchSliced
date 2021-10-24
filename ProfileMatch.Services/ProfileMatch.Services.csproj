@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   
@@ -20,6 +21,21 @@
     <ProjectReference Include="..\ProfileMatch.Contracts\ProfileMatch.Contracts.csproj" />
     <ProjectReference Include="..\ProfileMatch.Models\ProfileMatch.Models.csproj" />
     <ProjectReference Include="..\ProfileMatch.Repositories\ProfileMatch.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LanguageService.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LanguageService.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LanguageService.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LanguageService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

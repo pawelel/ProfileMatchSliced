@@ -3,7 +3,7 @@
     <Authorized>
         @if (@context.User.IsInRole(ADMINISTRATION_ROLE))
         {
-            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Admin Dashboard</MudText>
+            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["admindashboard"]</MudText>
             <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
                 <MudTabPanel Text="Users">
                     <AdminPeopleList />

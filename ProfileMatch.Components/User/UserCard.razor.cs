@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.User
 {
@@ -9,5 +11,8 @@ namespace ProfileMatch.Components.User
         [Parameter] public string Class { get; set; }
         [Parameter] public string Style { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
+
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

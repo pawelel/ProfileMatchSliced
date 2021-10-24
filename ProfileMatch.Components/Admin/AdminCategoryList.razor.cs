@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -75,5 +77,7 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
             Categories = await GetCategoriesAsync();
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

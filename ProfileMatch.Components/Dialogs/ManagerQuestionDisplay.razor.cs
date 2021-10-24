@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -21,5 +23,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

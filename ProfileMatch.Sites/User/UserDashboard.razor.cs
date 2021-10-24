@@ -3,8 +3,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Sites.User
 {
@@ -34,5 +36,7 @@ namespace ProfileMatch.Sites.User
                 CurrentUserId = CurrentUser.Id;
             }
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

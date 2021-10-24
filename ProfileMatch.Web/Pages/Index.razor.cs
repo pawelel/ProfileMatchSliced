@@ -3,9 +3,14 @@ using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Services;
 
-namespace ProfileMatch.Components.User
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProfileMatch.Web.Pages
 {
-    public partial class UserNeedList : ComponentBase
+    public partial class Index : ComponentBase
     {
         [Inject]
         IStringLocalizer<LanguageService> L { get; set; }

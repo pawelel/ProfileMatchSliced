@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Admin
 {
@@ -100,5 +102,7 @@ namespace ProfileMatch.Components.Admin
             var dialog = DialogService.Show<AdminQuestionDisplay>($"{question.Name}", parameters, maxWidth);
             await dialog.Result;
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

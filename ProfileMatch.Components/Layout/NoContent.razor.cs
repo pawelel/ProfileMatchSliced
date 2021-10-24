@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
+
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Layout
 {
@@ -11,5 +14,7 @@ namespace ProfileMatch.Components.Layout
         {
             NavigationManager.NavigateTo("");
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }
