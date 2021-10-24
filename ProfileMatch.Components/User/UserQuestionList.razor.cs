@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -17,6 +18,8 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserQuestionList : ComponentBase
     {
+        [CascadingParameter] Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         [Inject]
         private IDialogService DialogService { get; set; }
 
@@ -28,8 +31,7 @@ namespace ProfileMatch.Components.User
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-     [CascadingParameter]   public ApplicationUser CurrentUser { get; set; }
-        public string UserId { get; set; }
+        private string UserId;
         private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
@@ -38,17 +40,18 @@ namespace ProfileMatch.Components.User
         protected override async Task OnParametersSetAsync()
         {
             loading = true;
-            UserId = CurrentUser.Id;
-            if (UserId is not null)
-            {
-                questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
-            }
+
+
+            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
+
             questions1 = questions;
             loading = false;
         }
 
         protected override async Task OnInitializedAsync()
         {
+            var authState = await AuthenticationStateTask;
+            UserId = authState.User.Claims.FirstOrDefault().Value;
             loading = true;
             categories = await CategoryRepository.GetCategories();
             loading = false;

@@ -1,8 +1,6 @@
 ﻿@page "/admin/dashboard"
 <AuthorizeView>
     <Authorized>
-        @if (@context.User.IsInRole(ADMINISTRATION_ROLE))
-        {
             <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["admindashboard"]</MudText>
             <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
                 <MudTabPanel Text="Users">
@@ -17,13 +15,8 @@
                 <MudTabPanel Text="Categories"><AdminCategoryList /></MudTabPanel>
                 <MudTabPanel Text="Questions"><AdminQuestionList /></MudTabPanel>
             </MudTabs>
-        }
-        else
-        {
-            <p>You're not signed in as a user in @ADMINISTRATION_ROLE role.</p>
-        }
     </Authorized>
     <NotAuthorized>
-        <p>You're not loggged in.</p>
+        <p>You're not loggged in as Admin.</p>
     </NotAuthorized>
 </AuthorizeView>

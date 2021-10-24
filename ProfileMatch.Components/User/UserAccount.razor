@@ -10,7 +10,7 @@
             </MudCardHeader>
             <MudCardContent>
                 <div class="d-flex justify-center mb-4">
-                    <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;">
+                    <MudAvatar Image="@CurrentUser?.PhotoPath" Style="height:100px; width:100px;">
                         @if (AvatarImageLink == null)
                         {
                             <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
@@ -18,8 +18,8 @@
                     </MudAvatar>
 
                 </div>
-                <MudText Align="Align.Center">@FirstName @LastName</MudText>
-                <MudText Align="Align.Center">@JobTitle</MudText>
+                <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
+                <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
             </MudCardContent>
             <MudCardActions Class="d-flex justify-center">
                 <MudButton OnClick="DeletePicture" Color="@AvatarButtonColor">@AvatarButtonText</MudButton>

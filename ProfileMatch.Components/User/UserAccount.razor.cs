@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
+using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
 using System;
@@ -28,13 +29,13 @@ namespace ProfileMatch.Components.User
         public string Email { get; set; } = "karol@test.com";
         public bool FriendSwitch { get; set; } = true;
 
-
+        [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
         void DeletePicture()
         {
-            if (!String.IsNullOrEmpty(AvatarImageLink))
+            if (!String.IsNullOrEmpty(CurrentUser.PhotoPath))
             {
-                AvatarImageLink = null;
+                CurrentUser.PhotoPath = null;
                 AvatarIcon = Icons.Material.Outlined.SentimentVeryDissatisfied;
                 AvatarButtonText = "Upload Picture";
                 AvatarButtonColor = Color.Primary;
