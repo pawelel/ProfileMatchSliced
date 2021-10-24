@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -109,5 +111,7 @@ namespace ProfileMatch.Components.Dialogs
         }
 
         private readonly long maxFileSize = 1024 * 1024 * 15;
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

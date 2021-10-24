@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Theme;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Layout
 {
@@ -48,5 +50,7 @@ namespace ProfileMatch.Components.Layout
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

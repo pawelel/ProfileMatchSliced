@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -73,5 +75,7 @@ namespace ProfileMatch.Components.Dialogs
             }
             return false;
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

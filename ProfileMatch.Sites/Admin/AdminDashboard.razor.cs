@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Sites.Admin
 {
@@ -82,5 +84,8 @@ namespace ProfileMatch.Sites.Admin
 
         // Collection to display the existing users
         private List<ApplicationUser> ColUsers = new();
+
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

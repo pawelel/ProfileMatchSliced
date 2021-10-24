@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
@@ -11,6 +12,7 @@ using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Manager
 {
@@ -120,5 +122,7 @@ namespace ProfileMatch.Components.Manager
             qs = GetPpl(qs);
             return qs;
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }

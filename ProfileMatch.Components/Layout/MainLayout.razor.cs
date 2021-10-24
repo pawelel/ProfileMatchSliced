@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Theme;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.Layout
 {
@@ -79,5 +81,7 @@ namespace ProfileMatch.Components.Layout
                 CurrentUser = await UserManager.GetUserAsync(user);
             }
         }
+        [Inject]
+        IStringLocalizer<LanguageService> L { get; set; }
     }
 }
