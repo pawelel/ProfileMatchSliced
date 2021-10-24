@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -19,6 +20,9 @@ namespace ProfileMatch.Components.Layout
     {
         [Parameter]
         public RenderFragment Body { get; set; }
+
+        [Inject]
+        NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public IThemeService ThemeService { get; set; }
@@ -79,6 +83,10 @@ namespace ProfileMatch.Components.Layout
             if (user.Identity.IsAuthenticated)
             {
                 CurrentUser = await UserManager.GetUserAsync(user);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
         }
         [Inject]
