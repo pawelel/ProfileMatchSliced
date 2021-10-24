@@ -14,7 +14,8 @@ namespace ProfileMatch.Components.Layout
         {
             NavigationManager.NavigateTo("");
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

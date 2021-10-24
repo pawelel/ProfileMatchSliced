@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
-
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminUserDialog : ComponentBase
     {
-        [Inject]
-        private AuthenticationStateProvider AuthSP { get; set; }
-
-        [Inject]
-        private UserManager<ApplicationUser> UserManager { get; set; }
-
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
@@ -35,33 +26,14 @@ namespace ProfileMatch.Components.Dialogs
         public IDepartmentRepository DepartmentRepository { get; set; }
 
         [Parameter] public string Id { get; set; }
-        private ApplicationUser currentUser = new();
         protected MudForm Form { get; set; } // TODO add validations
         private DateTime? _dob;
-        private string currentUserName;
         [Parameter] public ApplicationUser EditedUser { get; set; } = new();
         private List<Department> Departments = new();
-
-        private async Task GetUserDetails()
-        {
-            var authState = await AuthSP.GetAuthenticationStateAsync();
-            var user = authState.User;
-            if (user.Identity.IsAuthenticated)
-            {
-                currentUser = await UserManager.GetUserAsync(user);
-                currentUserName = currentUser.FirstName + " " + currentUser.LastName;
-            }
-            else
-            {
-                currentUserName = "Please log in.";
-            }
-        }
 
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-
-            await GetUserDetails();
         }
 
         private async Task LoadData()
@@ -111,7 +83,8 @@ namespace ProfileMatch.Components.Dialogs
         }
 
         private readonly long maxFileSize = 1024 * 1024 * 15;
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

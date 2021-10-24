@@ -1,15 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
-
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
+
+using System;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -67,7 +66,8 @@ namespace ProfileMatch.Components.Dialogs
                 Snackbar.Add($"Answer Option updated", Severity.Success);
             }
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

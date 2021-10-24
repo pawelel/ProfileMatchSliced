@@ -1,5 +1,3 @@
-using System;
-
 using Blazored.LocalStorage;
 
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +18,8 @@ using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
+
+using System;
 
 namespace ProfileMatch
 {
@@ -115,7 +115,6 @@ namespace ProfileMatch
                 .AddSupportedUICultures(supportedCultures);
 
             app.UseRequestLocalization(localizationOptions);
-
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -8,6 +8,6 @@ namespace ProfileMatch.Components.Dialogs
     public partial class AdminNoteDialog : ComponentBase
     {
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

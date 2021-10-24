@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ProfileMatch.Models.Models;
 
-using ProfileMatch.Models.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Contracts
 {

@@ -8,6 +8,6 @@ namespace ProfileMatch.Components.User
     public partial class EditUserNote : ComponentBase
     {
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

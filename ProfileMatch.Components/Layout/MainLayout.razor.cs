@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -14,6 +10,9 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
+using System;
+using System.Threading.Tasks;
+
 namespace ProfileMatch.Components.Layout
 {
     public partial class MainLayout : ComponentBase, IDisposable
@@ -22,7 +21,7 @@ namespace ProfileMatch.Components.Layout
         public RenderFragment Body { get; set; }
 
         [Inject]
-        NavigationManager NavigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public IThemeService ThemeService { get; set; }
@@ -89,7 +88,8 @@ namespace ProfileMatch.Components.Layout
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

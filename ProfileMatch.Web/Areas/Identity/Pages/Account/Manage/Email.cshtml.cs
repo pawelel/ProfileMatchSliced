@@ -1,9 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +6,19 @@ using Microsoft.AspNetCore.WebUtilities;
 
 using ProfileMatch.Models.Models;
 
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly SignInManager<ApplicationUser> _signInManager;
+#pragma warning restore IDE0052 // Remove unread private members
         private readonly IEmailSender _emailSender;
 
         public EmailModel(

@@ -1,11 +1,6 @@
-﻿
-@using MudBlazor.Examples.Data.Models
-
-
-
+﻿@using MudBlazor.Examples.Data.Models
 
 <MudText Typo="Typo.h6">Certificates</MudText>
-
 
 <MudTable Items="@Elements" MultiSelection="true" @bind-SelectedItems="selectedItems1" Hover="@hover">
     <HeaderContent>
@@ -14,7 +9,7 @@
         <MudTh>Cert name</MudTh>
         <MudTh>Date of issue</MudTh>
         <MudTh>File</MudTh>
-        <MudTh>Upload</MudTh> 
+        <MudTh>Upload</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="#">@context.Number</MudTd>
@@ -42,8 +37,6 @@
                     Color="Color.Primary"
                     Icon="@Icons.Filled.AttachFile"
                     for="fileInput" />
-
-
         </MudTd>
     </RowTemplate>
     <PagerContent>
@@ -61,4 +54,3 @@
 
 <MudButton @onclick="AddCert" Variant="Variant.Filled" Color="Color.Primary">Add Certificate</MudButton>
 <MudButton @onclick="DelCert" Variant="Variant.Filled" Color="Color.Primary">Delete</MudButton>
-

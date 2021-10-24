@@ -10,9 +10,9 @@ namespace MudBlazor.Examples.Data.Models
         public string Name { get; set; }
         public int Number { get; set; }
 
-
         [JsonPropertyName("small")]
         public string Sign { get; set; }
+
         public double Molar { get; set; }
         public IList<int> Electrons { get; set; }
 

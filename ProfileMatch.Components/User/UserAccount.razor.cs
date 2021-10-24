@@ -7,17 +7,13 @@ using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-   public partial class UserAccount :ComponentBase
+    public partial class UserAccount : ComponentBase
     {
         [Inject]
-        ISnackbar Snackbar { get; set; }
+        private ISnackbar Snackbar { get; set; }
 
         public string AvatarImageLink { get; set; } = "https://randomuser.me/api/portraits/men/1.jpg";
         public string AvatarIcon { get; set; }
@@ -31,7 +27,7 @@ namespace ProfileMatch.Components.User
 
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
-        void DeletePicture()
+        private void DeletePicture()
         {
             if (!String.IsNullOrEmpty(CurrentUser.PhotoPath))
             {
@@ -46,7 +42,7 @@ namespace ProfileMatch.Components.User
             }
         }
 
-        void SaveChanges(string message, Severity severity)
+        private void SaveChanges(string message, Severity severity)
         {
             Snackbar.Add(message, severity, config =>
             {
@@ -54,12 +50,7 @@ namespace ProfileMatch.Components.User
             });
         }
 
-        MudForm form;
-        MudTextField<string>
-        pwField1;
-
-
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

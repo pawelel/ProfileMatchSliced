@@ -5,18 +5,13 @@ using MudBlazor;
 
 using ProfileMatch.Services;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ProfileMatch.Components.User
 {
-   public partial class UserAbout : ComponentBase
+    public partial class UserAbout : ComponentBase
     {
         [Inject]
-        ISnackbar Snackbar { get; set; }
+        private ISnackbar Snackbar { get; set; }
+
         public string FirstName { get; set; } = "Łukasz";
         public string LastName { get; set; } = "Pietrzak";
         public string JobTitle { get; set; } = "IT";
@@ -31,17 +26,15 @@ namespace ProfileMatch.Components.User
         public bool NotificationChat_3 { get; set; } = true;
         public bool NotificationChat_4 { get; set; }
 
-
-
-
-        void SaveChanges(string message, Severity severity)
+        private void SaveChanges(string message, Severity severity)
         {
             Snackbar.Add(message, severity, config =>
             {
                 config.ShowCloseIcon = false;
             });
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

@@ -2,7 +2,7 @@
     <Authorized>
         <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
         <form method="post" action="Identity/Account/LogOut">
-            <button type="submit" >Log out</button>
+            <button type="submit">Log out</button>
         </form>
     </Authorized>
     <NotAuthorized>
@@ -11,5 +11,5 @@
             <MudText Typo="Typo.h5">Profile Match</MudText>
             <MudButton Link="Identity/Account/Login" Color="Color.Success" Variant="Variant.Outlined">Log in</MudButton>
         </MudItem>
-            </NotAuthorized>
+    </NotAuthorized>
 </AuthorizeView>

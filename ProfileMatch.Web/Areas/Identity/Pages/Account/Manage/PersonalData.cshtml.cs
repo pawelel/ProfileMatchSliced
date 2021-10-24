@@ -1,18 +1,20 @@
-﻿using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 using ProfileMatch.Models.Models;
 
+using System.Threading.Tasks;
+
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ILogger<PersonalDataModel> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public PersonalDataModel(
             UserManager<ApplicationUser> userManager,

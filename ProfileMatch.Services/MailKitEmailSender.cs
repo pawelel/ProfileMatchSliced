@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
@@ -9,6 +7,8 @@ using MimeKit;
 using MimeKit.Text;
 
 using ProfileMatch.Models.Models;
+
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Services
 {

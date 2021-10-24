@@ -8,6 +8,6 @@ namespace ProfileMatch.Sites.Manager
     public partial class ManagerDashboard : ComponentBase
     {
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

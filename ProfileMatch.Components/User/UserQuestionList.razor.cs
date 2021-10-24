@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 
@@ -14,14 +9,19 @@ using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace ProfileMatch.Components.User
 {
     public partial class UserQuestionList : ComponentBase
     {
-        [CascadingParameter] Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         [Inject]
-        NavigationManager NavigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
 
         [Inject]
         private IDialogService DialogService { get; set; }
@@ -44,7 +44,6 @@ namespace ProfileMatch.Components.User
         {
             loading = true;
 
-
             questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
 
             questions1 = questions;
@@ -57,8 +56,8 @@ namespace ProfileMatch.Components.User
             var authState = await AuthenticationStateTask;
             if (authState.User.Identity.IsAuthenticated)
             {
-            UserId = authState.User.Claims.FirstOrDefault().Value;
-            categories = await CategoryRepository.GetCategories();
+                UserId = authState.User.Claims.FirstOrDefault().Value;
+                categories = await CategoryRepository.GetCategories();
             }
             else
             {
@@ -155,7 +154,8 @@ namespace ProfileMatch.Components.User
                 return query2.Level;
             }
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

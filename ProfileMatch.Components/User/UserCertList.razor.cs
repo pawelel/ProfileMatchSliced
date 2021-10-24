@@ -8,26 +8,22 @@ using MudBlazor.Examples.Data.Models;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Services;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-   public partial class UserCertList :ComponentBase
+    public partial class UserCertList : ComponentBase
     {
         [Inject]
-        IDialogService DialogService { get; set; }
-        private bool hover = true;
+        private IDialogService DialogService { get; set; }
+
+        private readonly bool hover = true;
         private HashSet<Element> selectedItems1 = new();
-        private HashSet<Element> selectedItems2 = new();
+        private readonly HashSet<Element> selectedItems2 = new();
 
-        private IEnumerable<Element> Elements = new List<Element>();
+        private readonly IEnumerable<Element> Elements = new List<Element>();
+        private readonly IList<IBrowserFile> files = new List<IBrowserFile>();
 
-
-        IList<IBrowserFile> files = new List<IBrowserFile>();
         private void UploadFiles(InputFileChangeEventArgs e)
         {
             foreach (var file in e.GetMultipleFiles())
@@ -36,7 +32,6 @@ namespace ProfileMatch.Components.User
             }
             //TODO upload the files to the server
         }
-
 
         private void AddCert()
         {
@@ -49,6 +44,6 @@ namespace ProfileMatch.Components.User
         }
 
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

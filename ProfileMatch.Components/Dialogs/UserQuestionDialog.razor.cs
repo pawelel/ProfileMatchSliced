@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -9,6 +6,9 @@ using MudBlazor;
 using ProfileMatch.Contracts;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
+
+using System;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -74,7 +74,8 @@ namespace ProfileMatch.Components.Dialogs
             }
             MudDialog.Close(DialogResult.Ok(userAnswer));
         }
+
         [Inject]
-        IStringLocalizer<LanguageService> L { get; set; }
+        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

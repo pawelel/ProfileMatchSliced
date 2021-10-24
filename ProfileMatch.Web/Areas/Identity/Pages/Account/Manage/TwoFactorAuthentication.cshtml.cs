@@ -1,21 +1,25 @@
-﻿using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 using ProfileMatch.Models.Models;
 
+using System.Threading.Tasks;
+
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
 {
     public class TwoFactorAuthenticationModel : PageModel
     {
+#pragma warning disable IDE0051 // Remove unused private members
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
+#pragma warning restore IDE0051 // Remove unused private members
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ILogger<TwoFactorAuthenticationModel> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public TwoFactorAuthenticationModel(
             UserManager<ApplicationUser> userManager,
