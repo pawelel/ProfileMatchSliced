@@ -1,26 +1,26 @@
-﻿<MudButton OnClick="(()=>DepartmentCreate())" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
-<MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+﻿<MudButton OnClick="(()=>DepartmentCreate())" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
+<MudSwitch @bind-Checked="@hover" Color="Color.Primary">@L["Hover"]</MudSwitch>
+<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
+<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">@L["Striped"]</MudSwitch>
+<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">@L["Bordered"]</MudSwitch>
 <MudTable Items="@Departments" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Departments</MudText>
+        <MudText Typo="Typo.h6">@L["Departments"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>Name</MudTh>
-        <MudTh>Description</MudTh>
-        <MudTh>Members</MudTh>
-        <MudTh>Actions</MudTh>
+        <MudTh>@L["Name"]</MudTh>
+        <MudTh>@L["Description"]</MudTh>
+        <MudTh>@L["Members"]</MudTh>
+        <MudTh>@L["Actions"]</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Description">@context.Description</MudTd>
-        <MudTd DataLabel="Members">@context.ApplicationUsers.Count</MudTd>
-        <MudTd DataLabel="Edit">
-            <MudButton OnClick="((e)=>DepartmentUpdate(context))">Edit</MudButton>
+        <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
+        <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
+        <MudTd DataLabel=@L["Members"]>@context.ApplicationUsers.Count</MudTd>
+        <MudTd DataLabel=@L["Edit"]>
+            <MudButton OnClick="((e)=>DepartmentUpdate(context))">@L["Edit"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

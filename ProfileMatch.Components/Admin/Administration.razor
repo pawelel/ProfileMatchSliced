@@ -3,8 +3,9 @@
 @inject UserManager<ApplicationUser> _UserManager
 @inject RoleManager<IdentityRole> _RoleManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<LanguageService> L
 
-<h3>Administration</h3>
+<h3>@L["Administration"]</h3>
 <AuthorizeView>
     <Authorized>
         @if (@context.User.IsInRole(ADMINISTRATION_ROLE))

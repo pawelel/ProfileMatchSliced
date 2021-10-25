@@ -7,13 +7,13 @@
             <MudCardContent>
                 <MudGrid>
                     <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="FirstName" Label="First Name" Variant="Variant.Outlined" />
+                        <MudTextField @bind-Value="FirstName" Label=@L["First Name"] Variant="Variant.Outlined" />
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="LastName" Label="First Name" Variant="Variant.Outlined" />
+                        <MudTextField @bind-Value="LastName" Label=@L["Last Name"] Variant="Variant.Outlined" />
                     </MudItem>
                     <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="JobTitle" Label="Job Title" Variant="Variant.Outlined" />
+                        <MudTextField @bind-Value="JobTitle" Label=@L["Job Title"] Variant="Variant.Outlined" />
                     </MudItem>
                     <MudItem xs="12" md="6">
                         <MudTextField @bind-Value="Email" Label="Email" Variant="Variant.Outlined" InputType="InputType.Email" />
@@ -21,7 +21,7 @@
                 </MudGrid>
             </MudCardContent>
             <MudCardActions Class="pb-4 pl-4">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">@L["Save Changes"]</MudButton>
             </MudCardActions>
         </MudCard>
     </MudItem>
@@ -30,27 +30,27 @@
 <br>
 
 <MudExpansionPanels MultiExpansion="true">
-    <MudExpansionPanel Text="What is impotrant to me at work">
+    <MudExpansionPanel Text=@L["What is impotrant to me at work"]>
         <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
     </MudExpansionPanel>
-    <MudExpansionPanel Text="What is important for me?">
+    <MudExpansionPanel Text=@L["What is important for me"]>
         <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
     </MudExpansionPanel>
-    <MudExpansionPanel Text="What are my goals">
+    <MudExpansionPanel Text=@L["What are my goals"]>
         <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
     </MudExpansionPanel>
-    <MudExpansionPanel Text="My other skills">
+    <MudExpansionPanel Text=@L["My other skills"]>
         <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
     </MudExpansionPanel>
-    <MudExpansionPanel Text="My hobbies">
+    <MudExpansionPanel Text=@L["My hobbies"]>
         <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
         <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />

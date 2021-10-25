@@ -123,4 +123,112 @@
   <data name="hello" xml:space="preserve">
     <value>Welcome in Profile Match!</value>
   </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Job Title" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="What is impotrant to me at work" xml:space="preserve">
+    <value>What is impotrant to me at work</value>
+  </data>
+  <data name="What is important for me" xml:space="preserve">
+    <value>What is important for me</value>
+  </data>
+  <data name="What are my goals" xml:space="preserve">
+    <value>What are my goals</value>
+  </data>
+  <data name="My other skills" xml:space="preserve">
+    <value>My other skills</value>
+  </data>
+  <data name="My hobbies" xml:space="preserve">
+    <value>My hobbies</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="Add New" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Edit Category" xml:space="preserve">
+    <value>Edit Category</value>
+  </data>
+  <data name="Add Question" xml:space="preserve">
+    <value>Add Question</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Hover" xml:space="preserve">
+    <value>Hover</value>
+  </data>
+  <data name="Dense" xml:space="preserve">
+    <value>Dense</value>
+  </data>
+  <data name="Striped" xml:space="preserve">
+    <value>Striped</value>
+  </data>
+  <data name="Bordered" xml:space="preserve">
+    <value>Bordered</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Departments</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="People Administration" xml:space="preserve">
+    <value>People Administration</value>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Date Of Birth" xml:space="preserve">
+    <value>Date Of Birth</value>
+  </data>
+  <data name="Birth Date" xml:space="preserve">
+    <value>Birth Date</value>
+  </data>
+  <data name="Is Active" xml:space="preserve">
+    <value>Is Active</value>
+  </data>
+  <data name="Rows per page" xml:space="preserve">
+    <value>Rows per page</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Next people" xml:space="preserve">
+    <value>Next people</value>
+  </data>
 </root>
