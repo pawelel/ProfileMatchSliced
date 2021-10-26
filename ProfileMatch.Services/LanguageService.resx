@@ -231,4 +231,166 @@
   <data name="Next people" xml:space="preserve">
     <value>Next people</value>
   </data>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="You're not signed in as a user in @ADMINISTRATION_ROLE role." xml:space="preserve">
+    <value>You're not signed in as a user in Administration role.</value>
+  </data>
+  <data name="You're not loggged in." xml:space="preserve">
+    <value>You're not loggged in.</value>
+  </data>
+  <data name="Edit User" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="Add User" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="Select Category" xml:space="preserve">
+    <value>Select Category</value>
+  </data>
+  <data name="Select Questions" xml:space="preserve">
+    <value>Select Questions</value>
+  </data>
+  <data name="Selected Categories" xml:space="preserve">
+    <value>Selected Categories</value>
+  </data>
+  <data name="Questions Table" xml:space="preserve">
+    <value>Questions Table</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Display</value>
+  </data>
+  <data name="Selected1" xml:space="preserve">
+    <value>Selected1</value>
+  </data>
+  <data name="Forgot Password?" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="Enter the email address linked to your account and you will recieve an email containing a link to reset your password." xml:space="preserve">
+    <value>Enter the email address linked to your account and you will recieve an email containing a link to reset your password.</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Sign Up" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Set new password" xml:space="preserve">
+    <value>Set new password</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="Category Name" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="Category name is required!" xml:space="preserve">
+    <value>Category name is required!</value>
+  </data>
+  <data name="Category Description" xml:space="preserve">
+    <value>Category Description</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Project Name" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="Project name is required!" xml:space="preserve">
+    <value>Project name is required!</value>
+  </data>
+  <data name="Project Description" xml:space="preserve">
+    <value>Project Description</value>
+  </data>
+  <data name="Level Description" xml:space="preserve">
+    <value>Level Description</value>
+  </data>
+  <data name="Level Description is required!" xml:space="preserve">
+    <value>Level Description is required!</value>
+  </data>
+  <data name="Question Name" xml:space="preserve">
+    <value>Question Name</value>
+  </data>
+  <data name="Question Description" xml:space="preserve">
+    <value>Question Description</value>
+  </data>
+  <data name="Question name is required!" xml:space="preserve">
+    <value>Question name is required!</value>
+  </data>
+  <data name="Edit Level" xml:space="preserve">
+    <value>Edit Level</value>
+  </data>
+  <data name="Activate question" xml:space="preserve">
+    <value>Activate question</value>
+  </data>
+  <data name="Select Department" xml:space="preserve">
+    <value>Select Department</value>
+  </data>
+  <data name="Is Active?" xml:space="preserve">
+    <value>Is Active?</value>
+  </data>
+  <data name="Person name is required!" xml:space="preserve">
+    <value>Person name is required!</value>
+  </data>
+  <data name="Email is required!" xml:space="preserve">
+    <value>Email is required!</value>
+  </data>
+  <data name="Select Gender" xml:space="preserve">
+    <value>Select Gender</value>
+  </data>
+  <data name="BirthDate is Required" xml:space="preserve">
+    <value>BirthDate is Required</value>
+  </data>
+  <data name="Select Date of Birth" xml:space="preserve">
+    <value>Select Date of Birth</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>loading</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="Certificate Name" xml:space="preserve">
+    <value>Certificate Name</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Date of issue" xml:space="preserve">
+    <value>Date of issue</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="This is my Level" xml:space="preserve">
+    <value>This is my Level</value>
+  </data>
 </root>

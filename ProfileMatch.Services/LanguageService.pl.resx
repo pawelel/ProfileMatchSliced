@@ -190,7 +190,7 @@
     <value>Obramowanie</value>
   </data>
   <data name="Striped" xml:space="preserve">
-    <value>Paski???</value>
+    <value>Paski</value>
   </data>
   <data name="Departments" xml:space="preserve">
     <value>Działy</value>
@@ -230,5 +230,167 @@
   </data>
   <data name="Next people" xml:space="preserve">
     <value>Następne osoby</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>Nazwa Użytkownika</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Nazwa Użytkownika</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="You're not signed in as a user in @ADMINISTRATION_ROLE role." xml:space="preserve">
+    <value>Nie jesteś zalogowany jako użytkownik w roli administratora.</value>
+  </data>
+  <data name="You're not loggged in." xml:space="preserve">
+    <value>Nie jesteś zalogowany.</value>
+  </data>
+  <data name="Edit User" xml:space="preserve">
+    <value>Edytuj Użytkownika</value>
+  </data>
+  <data name="Add User" xml:space="preserve">
+    <value>Dodaj Użytkownika</value>
+  </data>
+  <data name="Select Category" xml:space="preserve">
+    <value>Wybierz Kategorię</value>
+  </data>
+  <data name="Select Questions" xml:space="preserve">
+    <value>Wybierz Pytanie</value>
+  </data>
+  <data name="Selected Categories" xml:space="preserve">
+    <value>Wybrane Kategorie</value>
+  </data>
+  <data name="Questions Table" xml:space="preserve">
+    <value>Tabela Pytań</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Kategoria</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Pytanie</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Wyświetl</value>
+  </data>
+  <data name="Selected1" xml:space="preserve">
+    <value>Wybrane1</value>
+  </data>
+  <data name="Forgot Password?" xml:space="preserve">
+    <value>Zapomniałeś hasła?</value>
+  </data>
+  <data name="Enter the email address linked to your account and you will recieve an email containing a link to reset your password." xml:space="preserve">
+    <value>Wpisz adres e-mail powiązany z Twoim kontem, a otrzymasz wiadomość e-mail zawierającą link do zresetowania hasła.</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Zresetuj Hasło</value>
+  </data>
+  <data name="Sign Up" xml:space="preserve">
+    <value>Zarejestruj Się</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Zarejestruj</value>
+  </data>
+  <data name="Set new password" xml:space="preserve">
+    <value>Ustaw nowe hasło</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>Nowe Hasło</value>
+  </data>
+  <data name="Category Name" xml:space="preserve">
+    <value>Nazwa Kategorii</value>
+  </data>
+  <data name="Category name is required!" xml:space="preserve">
+    <value>Nazwa kategorii jest wymagana!</value>
+  </data>
+  <data name="Category Description" xml:space="preserve">
+    <value>Opis Kategorii</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Project Name" xml:space="preserve">
+    <value>Nazwa Projektu</value>
+  </data>
+  <data name="Project name is required!" xml:space="preserve">
+    <value>Nazwa projektu jest wymagana!</value>
+  </data>
+  <data name="Project Description" xml:space="preserve">
+    <value>Opis Projektu</value>
+  </data>
+  <data name="Level Description" xml:space="preserve">
+    <value>Opis Poziomu</value>
+  </data>
+  <data name="Level Description is required!" xml:space="preserve">
+    <value>Opis Poziomu jest wymagany!</value>
+  </data>
+  <data name="Question Name" xml:space="preserve">
+    <value>Nazwa pytania</value>
+  </data>
+  <data name="Question Description" xml:space="preserve">
+    <value>Opis pytania</value>
+  </data>
+  <data name="Question name is required!" xml:space="preserve">
+    <value>Nazwa pytania jest wymagana!</value>
+  </data>
+  <data name="Edit Level" xml:space="preserve">
+    <value>Edytuj poziom</value>
+  </data>
+  <data name="Activate question" xml:space="preserve">
+    <value>Aktywuj pytanie</value>
+  </data>
+  <data name="Select Department" xml:space="preserve">
+    <value>Wybierz dział</value>
+  </data>
+  <data name="Is Active?" xml:space="preserve">
+    <value>Jest aktywny?</value>
+  </data>
+  <data name="Person name is required!" xml:space="preserve">
+    <value>Imię osoby jest wymagane!</value>
+  </data>
+  <data name="Email is required!" xml:space="preserve">
+    <value>Email jest wymagany!</value>
+  </data>
+  <data name="Select Gender" xml:space="preserve">
+    <value>Wybierz płeć</value>
+  </data>
+  <data name="BirthDate is Required" xml:space="preserve">
+    <value>Data urodzenia jest wymagana</value>
+  </data>
+  <data name="Select Date of Birth" xml:space="preserve">
+    <value>Wybierz datę urodzenia</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>Ładowanie</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Pracownik</value>
+  </data>
+  <data name="Certificate Name" xml:space="preserve">
+    <value>Nazwa Certyfikatu</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Date of issue" xml:space="preserve">
+    <value>Data wydania</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Poziom</value>
+  </data>
+  <data name="This is my Level" xml:space="preserve">
+    <value>To jest mój Poziom</value>
   </data>
 </root>

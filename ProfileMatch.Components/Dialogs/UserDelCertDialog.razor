@@ -1,8 +1,10 @@
-﻿a<MudDialog>
+﻿@inject IStringLocalizer<LanguageService> L
+
+a<MudDialog>
 
     <DialogActions>
-        <MudButton OnClick="Cancel">No</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Yes</MudButton>
+        <MudButton OnClick="Cancel">@L["No"]</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@L["Yes"]</MudButton>
     </DialogActions>
 </MudDialog>
 @code {

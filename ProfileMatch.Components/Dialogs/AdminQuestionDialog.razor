@@ -1,12 +1,12 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Question Name" Required="true" RequiredError="Question name is required!" />
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Question Description" Lines="5" />
+            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name"] Required="true" RequiredError=@L["Question name is required!"] />
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description"] Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Error" OnClick="HandleSave">Save</MudButton>
+        <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
+        <MudButton Color="Color.Error" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>
 </MudDialog>

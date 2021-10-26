@@ -1,12 +1,14 @@
-﻿<MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
+﻿@inject IStringLocalizer<LanguageService> L
 
-<MudTextField T="string" Label="Username" Variant="Variant.Outlined" Class="my-4"></MudTextField>
+<MudText Typo="Typo.h4" GutterBottom="true">@L["Sign Up"]</MudText>
+
+<MudTextField T="string" Label=@L["Username"] Variant="Variant.Outlined" Class="my-4"></MudTextField>
 
 <MudTextField T="string" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
 
-<MudTextField @bind-Value="@Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" Class="mt-4" />
+<MudTextField @bind-Value="@Password" Label=@L["Password"] Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" Class="mt-4" />
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Link="/pages/authentication/login" Size="Size.Large" FullWidth="true">Register</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" Link="/pages/authentication/login" Size="Size.Large" FullWidth="true">@L["Register"]</MudButton>
 
     }
 }
