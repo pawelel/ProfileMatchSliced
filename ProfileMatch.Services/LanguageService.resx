@@ -393,4 +393,64 @@
   <data name="This is my Level" xml:space="preserve">
     <value>This is my Level</value>
   </data>
+  <data name="People Match" xml:space="preserve">
+    <value>People Match</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="Sorry, there's nothing at this address." xml:space="preserve">
+    <value>Sorry, there's nothing at this address.</value>
+  </data>
+  <data name="Back to main site" xml:space="preserve">
+    <value>Back to main site</value>
+  </data>
+  <data name="Select Users" xml:space="preserve">
+    <value>Select Users</value>
+  </data>
+  <data name="Full Name" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="Is a need" xml:space="preserve">
+    <value>Is a need</value>
+  </data>
+  <data name="Items per page" xml:space="preserve">
+    <value>Items per page</value>
+  </data>
+  <data name="Certificates" xml:space="preserve">
+    <value>Certificates</value>
+  </data>
+  <data name="Cert name" xml:space="preserve">
+    <value>Cert name</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="You're not loggged in as Admin." xml:space="preserve">
+    <value>You're not loggged in as Admin.</value>
+  </data>
 </root>
