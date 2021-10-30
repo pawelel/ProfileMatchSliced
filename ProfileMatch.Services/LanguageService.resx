@@ -231,4 +231,31 @@
   <data name="Next people" xml:space="preserve">
     <value>Next people</value>
   </data>
+  <data name="Selection Page" xml:space="preserve">
+    <value>Selection Page</value>
+  </data>
+  <data name="Question 1" xml:space="preserve">
+    <value>Question 1</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Question 2" xml:space="preserve">
+    <value>Question 2</value>
+  </data>
+  <data name="Question 3" xml:space="preserve">
+    <value>Question 3</value>
+  </data>
+  <data name="Question 4" xml:space="preserve">
+    <value>Question 4</value>
+  </data>
+  <data name="Question 5" xml:space="preserve">
+    <value>Question 5</value>
+  </data>
+  <data name="Choose the question you want to answer" xml:space="preserve">
+    <value>Choose the question you want to answer</value>
+  </data>
+  <data name="Max 150 characters" xml:space="preserve">
+    <value>Max 150 characters</value>
+  </data>
 </root>
