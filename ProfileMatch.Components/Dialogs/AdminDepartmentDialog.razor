@@ -1,14 +1,14 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label="Project Name"
-                          Required="true" RequiredError="Project name is required!" />
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label="Project Description"
+            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Project Name"]
+                          Required="true" RequiredError=@L["Project name is required!"] />
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Project Description"]
                           Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Error" OnClick="HandleSave">Save</MudButton>
+        <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
+        <MudButton Color="Color.Error" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>
 </MudDialog>

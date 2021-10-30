@@ -1,15 +1,15 @@
 ﻿@using MudBlazor.Examples.Data.Models
 
-<MudText Typo="Typo.h6">Certificates</MudText>
+<MudText Typo="Typo.h6">@L["Certificates"]</MudText>
 
 <MudTable Items="@Elements" MultiSelection="true" @bind-SelectedItems="selectedItems1" Hover="@hover">
     <HeaderContent>
         <MudTh>#</MudTh>
-        <MudTh>Employee</MudTh>
-        <MudTh>Cert name</MudTh>
-        <MudTh>Date of issue</MudTh>
-        <MudTh>File</MudTh>
-        <MudTh>Upload</MudTh>
+        <MudTh>@L["Employee"]</MudTh>
+        <MudTh>@L["Cert name"]</MudTh>
+        <MudTh>@L["Date of issue"]</MudTh>
+        <MudTh>@L["File"]</MudTh>
+        <MudTh>@L["Upload"]</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="#">@context.Number</MudTd>

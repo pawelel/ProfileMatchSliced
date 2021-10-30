@@ -14,7 +14,7 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>User Name</th>
+                        <th>@L["User Name"]</th>
                         <th>Email</th>
                     </tr>
                 </thead>
@@ -29,7 +29,7 @@
                                 <!-- Edit the current forecast -->
                                 <button class="btn btn-primary"
                                         @onclick="(() => EditUser(user))">
-                                    Edit
+                                    @L["Edit"]
                                 </button>
                             </td>
                         </tr>
@@ -43,7 +43,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3 class="modal-title">Edit User</h3>
+                                <h3 class="modal-title">@L["Edit User"]</h3>
                                 <!-- Button to close the popup -->
                                 <button type="button" class="close"
                                         @onclick="ClosePopup">
@@ -65,14 +65,14 @@
                                 else
                                 {
                                     <input class="form-control" type="text"
-                                           placeholder="UserName"
+                                           placeholder=@L["UserName"]
                                            @bind="objUser.UserName" />
                                 }
                                 <input class="form-control" type="text"
                                        placeholder="Email"
                                        @bind="objUser.Email" />
                                 <input class="form-control" type="password"
-                                       placeholder="Password"
+                                       placeholder=@L["Password"]
                                        @bind="objUser.PasswordHash" />
                                 <select class="form-control"
                                         @bind="@CurrentUserRole">
@@ -87,7 +87,7 @@
                                 <!-- Button to save the user -->
                                 <button class="btn btn-primary"
                                         @onclick="SaveUser">
-                                    Save
+                                    @L["Save"]
                                 </button>
                                 <!-- Only show delete button if not a new record -->
                                 @if (objUser.Id != "")
@@ -95,7 +95,7 @@
                                     <!-- Button to delete the forecast -->
                                     <button class="btn btn-danger"
                                             @onclick="DeleteUser">
-                                        Delete
+                                        @L["Delete"]
                                     </button>
                                 }
                                 <br />
@@ -105,15 +105,15 @@
                     </div>
                 </div>
             }
-            <button class="btn btn-success" @onclick="AddNewUser">Add User</button>
+            <button class="btn btn-success" @onclick="AddNewUser">@L["Add User"]</button>
         }
         else
         {
-            <p>You're not signed in as a user in @ADMINISTRATION_ROLE role.</p>
+            <p>@L["You're not signed in as a user in @ADMINISTRATION_ROLE role."]</p>
         }
     </Authorized>
     <NotAuthorized>
-        <p>You're not loggged in.</p>
+        <p>@L["You're not loggged in."]</p>
     </NotAuthorized>
 </AuthorizeView>
 @code {

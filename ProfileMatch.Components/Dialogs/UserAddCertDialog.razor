@@ -1,4 +1,6 @@
-﻿<MudDialog>
+﻿@inject IStringLocalizer<LanguageService> L
+
+<MudDialog>
     <DialogContent>
         <MudGrid>
             <MudItem xs="12" sm="6" md="4">
@@ -7,23 +9,23 @@
         </MudGrid>
         <MudGrid>
             <MudItem xs="12" sm="20" md="4">
-                <MudTextField @bind-Value="TextValue" Label="Employee" Variant="Variant.Text"></MudTextField>
+                <MudTextField @bind-Value="TextValue" Label=@L["Employee"] Variant="Variant.Text"></MudTextField>
             </MudItem>
         </MudGrid>
         <MudGrid>
             <MudItem xs="12" sm="20" md="4">
-                <MudTextField @bind-Value="TextValue" Label="Certificate Name" Variant="Variant.Text"></MudTextField>
+                <MudTextField @bind-Value="TextValue" Label=@L["Certificate Name"] Variant="Variant.Text"></MudTextField>
             </MudItem>
         </MudGrid>
         <MudGrid>
             <MudItem xs="12" sm="15" md="4">
-                <MudDatePicker Label="Date of issue" @bind-Date="date" DisableToolbar="true" />
+                <MudDatePicker Label=@L["Date of issue"] @bind-Date="date" DisableToolbar="true" />
             </MudItem>
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Add</MudButton>
+        <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@L["Add"]</MudButton>
     </DialogActions>
 </MudDialog>
 @code {

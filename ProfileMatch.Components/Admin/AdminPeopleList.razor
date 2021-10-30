@@ -1,5 +1,5 @@
 ﻿<MudSwitch @bind-Checked="@_dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
-<MudButton Link="/admin/edituser" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
+<MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
 @if (Users == null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />

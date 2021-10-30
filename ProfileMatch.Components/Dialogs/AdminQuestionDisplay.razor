@@ -15,18 +15,18 @@
                 <MudTabPanel Text="@level.Level.ToString()">
 
                     <MudItem>
-                        <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
+                        <MudText Typo="Typo.subtitle1">@L["Level"] @level.Level.ToString()</MudText>
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@level.Description">@level.Description</MudText>
 
-                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small" OnClick="@(() => EditLevelDialog(level))">Edit Level</MudButton>
+                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small" OnClick="@(() => EditLevelDialog(level))">@L["Edit Level"]</MudButton>
                             </MudItem>
                         </MudTabPanel>
                     }
         </MudTabs>
         @if (CanActivate(Q))
         {
-            <MudCheckBox @bind-Checked="Q.IsActive" @onclick="@(()=>IsActive())">Activate question</MudCheckBox>
+            <MudCheckBox @bind-Checked="Q.IsActive" @onclick="@(()=>IsActive())">@L["Activate question"]</MudCheckBox>
         }
     </DialogContent>
 </MudDialog>
