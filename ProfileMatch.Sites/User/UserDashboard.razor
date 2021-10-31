@@ -1,12 +1,12 @@
 ﻿@page "/user/dashboard"
     <AuthorizeView>
         <Authorized>
-            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">User Dashboard</MudText>
+            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["User Dashboard"]</MudText>
             <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
-                <MudTabPanel Text="Surveys" Icon="@Icons.Filled.FactCheck"><UserQuestionList /></MudTabPanel>
-                <MudTabPanel Text="Account" Icon="@Icons.Filled.PersonOutline"><UserAccount /></MudTabPanel>
-                <MudTabPanel Text="About" Icon="@Icons.Filled.PersonOutline"><UserAbout /></MudTabPanel>
-                <MudTabPanel Text="Certificates" Icon="@Icons.Filled.TableChart"><UserCertList /></MudTabPanel>
+                <MudTabPanel Text=@L["Surveys"] Icon="@Icons.Filled.FactCheck"><UserQuestionList /></MudTabPanel>
+                <MudTabPanel Text=@L["Account"] Icon="@Icons.Filled.PersonOutline"><UserAccount /></MudTabPanel>
+                <MudTabPanel Text=@L["About"] Icon="@Icons.Filled.PersonOutline"><UserAbout /></MudTabPanel>
+                <MudTabPanel Text=@L["Certificates"] Icon="@Icons.Filled.TableChart"><UserCertList /></MudTabPanel>
             </MudTabs>
         </Authorized>
     </AuthorizeView>

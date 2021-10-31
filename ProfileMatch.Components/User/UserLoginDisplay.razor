@@ -1,15 +1,18 @@
-﻿<AuthorizeView>
+﻿@inject IStringLocalizer<LanguageService> L
+
+
+<AuthorizeView>
     <Authorized>
-        <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
+        <a href="Identity/Account/Manage">@L["Hell"], @context.User.Identity.Name</a>
         <form method="post" action="Identity/Account/LogOut">
-            <button type="submit">Log out</button>
+            <button type="submit">! @L["Log out"]</button>
         </form>
     </Authorized>
     <NotAuthorized>
         <MudItem Class="d-flex justify-space-between">
-            <MudButton Link="Identity/Account/Register" Color="Color.Primary" Variant="Variant.Outlined">Register</MudButton>
-            <MudText Typo="Typo.h5">Profile Match</MudText>
-            <MudButton Link="Identity/Account/Login" Color="Color.Success" Variant="Variant.Outlined">Log in</MudButton>
+            <MudButton Link="Identity/Account/Register" Color="Color.Primary" Variant="Variant.Outlined">@L["Register"]</MudButton>
+            <MudText Typo="Typo.h5">@L["Profile Match"]</MudText>
+            <MudButton Link="Identity/Account/Login" Color="Color.Success" Variant="Variant.Outlined">@L["Log in"]</MudButton>
         </MudItem>
     </NotAuthorized>
 </AuthorizeView>

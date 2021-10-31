@@ -1,13 +1,13 @@
 ﻿@page "/manager/dashboard"
     <AuthorizeView Roles="Manager, Admin">
         <Authorized>
-            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Manager Dashboard</MudText>
+            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["Manager Dashboard"]</MudText>
             <MudTabs Elevation="1" Rounded="true" PanelClass="mt-6">
-                <MudTabPanel Text="Projects"></MudTabPanel>
-                <MudTabPanel Text="Compare"><ManagerTestTable /></MudTabPanel>
+                <MudTabPanel Text=@L["Projects"]></MudTabPanel>
+                <MudTabPanel Text=@L["Compare"]><ManagerTestTable /></MudTabPanel>
             </MudTabs>
         </Authorized>
         <NotAuthorized>
-            <p>Sorry, this content is restricted.</p>
+            <p>@L["Sorry, this content is restricted."]</p>
         </NotAuthorized>
     </AuthorizeView>

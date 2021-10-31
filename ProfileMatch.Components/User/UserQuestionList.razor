@@ -5,16 +5,16 @@
 else
 {
 
-    <MudSelect T="string" Label="Select Category" MultiSelection="true" @bind-SelectedValues="Options">
+    <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" @bind-SelectedValues="Options">
         @foreach (var cat in categories)
         {
             <MudSelectItem T="string" Value="@cat.Name" />
         }
     </MudSelect>
     <MudItem xs="12" md="6">
-        <MudText Typo="Typo.body2">SelectedValues:  @(string.Join(", ", Options.Select(x=>$"\"{x}\""))) </MudText>
+        <MudText Typo="Typo.body2">@L["Selected Values"]:  @(string.Join(", ", Options.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
-    <MudTable Items="@(GetQuestions())" SortLabel="Sort By" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)">
+    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)">
         <ColGroup>
             <col />
             <col style="width: 60%;" />
@@ -22,36 +22,36 @@ else
             <col />
         </ColGroup>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Questions Table</MudText>
+            <MudText Typo="Typo.h6">@L["Questions Table"]</MudText>
             <MudSpacer />
-            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">Category</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">Question</MudTableSortLabel></MudTh>
-            <MudTh>Level</MudTh>
-            <MudTh>Actions</MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
+            <MudTh>@L["Level"]</MudTh>
+            <MudTh>@L["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Category">@context.Category.Name</MudTd>
-            <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd DataLabel="Level">@(ShowLevel(context))</MudTd>
-            <MudTd DataLabel="Actions">
-                <MudButton OnClick="@(()=>UserAnswerDialog(context))">Edit Answer</MudButton>
+            <MudTd DataLabel=@L["Category"]>@context.Category.Name</MudTd>
+            <MudTd DataLabel=@L["Question"]>@context.Name</MudTd>
+            <MudTd DataLabel=@L["Level"]>@(ShowLevel(context))</MudTd>
+            <MudTd DataLabel=@L["Actions"]>
+                <MudButton OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
-                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString="My Row My Table"
+                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
                            InfoFormat="{first_item}-{last_item} / {all_items}" />
         </PagerContent>
     </MudTable>
 
     <MudItem class="d-flex flex-wrap mt-4">
-        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">@L["Hover"]</MudSwitch>
+        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
+        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">@L["Striped"]</MudSwitch>
+        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">@L["Bordered"]</MudSwitch>
     </MudItem>
 }
 <style>
