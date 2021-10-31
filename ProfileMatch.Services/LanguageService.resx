@@ -453,4 +453,82 @@
   <data name="You're not loggged in as Admin." xml:space="preserve">
     <value>You're not loggged in as Admin.</value>
   </data>
+  <data name=" Log out" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="label" xml:space="preserve">
+    <value>label</value>
+  </data>
+  <data name="Select All" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Selected items" xml:space="preserve">
+    <value>Selected items</value>
+  </data>
+  <data name="Add Certificate" xml:space="preserve">
+    <value>Add Certificate</value>
+  </data>
+  <data name="Hell" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="Profile Match" xml:space="preserve">
+    <value>Profile Match</value>
+  </data>
+  <data name="Edit Answer" xml:space="preserve">
+    <value>Edit Answer</value>
+  </data>
+  <data name="Selected Values" xml:space="preserve">
+    <value>Selected Values</value>
+  </data>
+  <data name="Manager Dashboard" xml:space="preserve">
+    <value>Manager Dashboard</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Compare" xml:space="preserve">
+    <value>Compare</value>
+  </data>
+  <data name="Sorry, this content is restricted." xml:space="preserve">
+    <value>Sorry, this content is restricted.</value>
+  </data>
+  <data name="User Dashboard" xml:space="preserve">
+    <value>User Dashboard</value>
+  </data>
+  <data name="Surveys" xml:space="preserve">
+    <value>Surveys</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Cards" xml:space="preserve">
+    <value>Cards</value>
+  </data>
+  <data name="Selection Page" xml:space="preserve">
+    <value>Selection Page</value>
+  </data>
+  <data name="Question 1" xml:space="preserve">
+    <value>Question 1</value>
+  </data>
+  <data name="Question 2" xml:space="preserve">
+    <value>Question 2</value>
+  </data>
+  <data name="Question 3" xml:space="preserve">
+    <value>Question 3</value>
+  </data>
+  <data name="Question 4" xml:space="preserve">
+    <value>Question 4</value>
+  </data>
+  <data name="Question 5" xml:space="preserve">
+    <value>Question 5</value>
+  </data>
+  <data name="Choose the question you want to answer" xml:space="preserve">
+    <value>Choose the question you want to answer</value>
+  </data>
+  <data name="Max 150 characters" xml:space="preserve">
+    <value>Max 150 characters</value>
+  </data>
 </root>
