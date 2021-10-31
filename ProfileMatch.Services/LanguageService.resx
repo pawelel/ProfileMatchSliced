@@ -132,8 +132,8 @@
   <data name="Job Title" xml:space="preserve">
     <value>Job Title</value>
   </data>
-  <data name="What is impotrant to me at work" xml:space="preserve">
-    <value>What is impotrant to me at work</value>
+  <data name="What is important to me at work" xml:space="preserve">
+    <value>What is important to me at work</value>
   </data>
   <data name="What is important for me" xml:space="preserve">
     <value>What is important for me</value>
@@ -530,5 +530,8 @@
   </data>
   <data name="Max 150 characters" xml:space="preserve">
     <value>Max 150 characters</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
   </data>
 </root>

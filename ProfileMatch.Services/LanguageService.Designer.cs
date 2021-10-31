@@ -1115,6 +1115,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Send.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Set new password.
         /// </summary>
         public static string Set_new_password {
@@ -1259,11 +1268,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu What is impotrant to me at work.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu What is important to me at work.
         /// </summary>
-        public static string What_is_impotrant_to_me_at_work {
+        public static string What_is_important_to_me_at_work {
             get {
-                return ResourceManager.GetString("What is impotrant to me at work", resourceCulture);
+                return ResourceManager.GetString("What is important to me at work", resourceCulture);
             }
         }
         
