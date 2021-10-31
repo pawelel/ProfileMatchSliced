@@ -402,7 +402,7 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
-  <data name=" Log out" xml:space="preserve">
+  <data name="Log out" xml:space="preserve">
     <value>Log out</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
@@ -452,56 +452,5 @@
   </data>
   <data name="You're not loggged in as Admin." xml:space="preserve">
     <value>You're not loggged in as Admin.</value>
-  </data>
-  <data name="label" xml:space="preserve">
-    <value>label</value>
-  </data>
-  <data name="Select All" xml:space="preserve">
-    <value>Select All</value>
-  </data>
-  <data name="Selected items" xml:space="preserve">
-    <value>Selected items</value>
-  </data>
-  <data name="Add Certificate" xml:space="preserve">
-    <value>Add Certificate</value>
-  </data>
-  <data name="Hell" xml:space="preserve">
-    <value>Hello</value>
-  </data>
-  <data name="Log in" xml:space="preserve">
-    <value>Log in</value>
-  </data>
-  <data name="Log out" xml:space="preserve">
-    <value>Log out</value>
-  </data>
-  <data name="Profile Match" xml:space="preserve">
-    <value>Profile Match</value>
-  </data>
-  <data name="Edit Answer" xml:space="preserve">
-    <value>Edit Answer</value>
-  </data>
-  <data name="Selected Values" xml:space="preserve">
-    <value>Selected Values</value>
-  </data>
-  <data name="Manager Dashboard" xml:space="preserve">
-    <value>Manager Dashboard</value>
-  </data>
-  <data name="Projects" xml:space="preserve">
-    <value>Projects</value>
-  </data>
-  <data name="Compare" xml:space="preserve">
-    <value>Compare</value>
-  </data>
-  <data name="Sorry, this content is restricted." xml:space="preserve">
-    <value>Sorry, this content is restricted.</value>
-  </data>
-  <data name="User Dashboard" xml:space="preserve">
-    <value>User Dashboard</value>
-  </data>
-  <data name="Surveys" xml:space="preserve">
-    <value>Surveys</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
   </data>
 </root>

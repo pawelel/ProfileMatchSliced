@@ -286,15 +286,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Compare.
-        /// </summary>
-        public static string Compare {
-            get {
-                return ResourceManager.GetString("Compare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -620,15 +611,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Log in.
-        /// </summary>
-        public static string Log_in {
-            get {
-                return ResourceManager.GetString("Log in", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Log out.
         /// </summary>
         public static string Log_out {
@@ -652,15 +634,6 @@ namespace ProfileMatch.Services {
         public static string Manager {
             get {
                 return ResourceManager.GetString("Manager", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Manager Dashboard.
-        /// </summary>
-        public static string Manager_Dashboard {
-            get {
-                return ResourceManager.GetString("Manager Dashboard", resourceCulture);
             }
         }
         
@@ -782,15 +755,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Profile Match.
-        /// </summary>
-        public static string Profile_Match {
-            get {
-                return ResourceManager.GetString("Profile Match", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Project Description.
         /// </summary>
         public static string Project_Description {
@@ -814,15 +778,6 @@ namespace ProfileMatch.Services {
         public static string Project_name_is_required_ {
             get {
                 return ResourceManager.GetString("Project name is required!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Projects.
-        /// </summary>
-        public static string Projects {
-            get {
-                return ResourceManager.GetString("Projects", resourceCulture);
             }
         }
         
@@ -935,15 +890,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Select All.
-        /// </summary>
-        public static string Select_All {
-            get {
-                return ResourceManager.GetString("Select All", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Select Category.
         /// </summary>
         public static string Select_Category {
@@ -1007,24 +953,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Selected items.
-        /// </summary>
-        public static string Selected_items {
-            get {
-                return ResourceManager.GetString("Selected items", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Selected Values.
-        /// </summary>
-        public static string Selected_Values {
-            get {
-                return ResourceManager.GetString("Selected Values", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Selected1.
         /// </summary>
         public static string Selected1 {
@@ -1057,15 +985,6 @@ namespace ProfileMatch.Services {
         public static string Sorry__there_s_nothing_at_this_address_ {
             get {
                 return ResourceManager.GetString("Sorry, there\'s nothing at this address.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Sorry, this content is restricted..
-        /// </summary>
-        public static string Sorry__this_content_is_restricted_ {
-            get {
-                return ResourceManager.GetString("Sorry, this content is restricted.", resourceCulture);
             }
         }
         

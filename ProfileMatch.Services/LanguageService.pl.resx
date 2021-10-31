@@ -394,7 +394,7 @@
     <value>To jest mój Poziom</value>
   </data>
   <data name="People Match" xml:space="preserve">
-    <value>People Match</value>
+    <value>People Match???</value>
   </data>
   <data name="Account" xml:space="preserve">
     <value>Konto</value>
@@ -402,11 +402,11 @@
   <data name="Logout" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
-  <data name=" Log out" xml:space="preserve">
+  <data name="Log out" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Panel</value>
+    <value>Pulpit</value>
   </data>
   <data name="Manager" xml:space="preserve">
     <value>Menadżer</value>
@@ -452,56 +452,5 @@
   </data>
   <data name="You're not loggged in as Admin." xml:space="preserve">
     <value>Nie jesteś zalogowany jako Administrator.</value>
-  </data>
-  <data name="label" xml:space="preserve">
-    <value>etykieta</value>
-  </data>
-  <data name="Select All" xml:space="preserve">
-    <value>Zaznacz Wszystko</value>
-  </data>
-  <data name="Selected items" xml:space="preserve">
-    <value>Wybrane przedmioty</value>
-  </data>
-  <data name="Add Certificate" xml:space="preserve">
-    <value>Dodaj Certyfikat</value>
-  </data>
-  <data name="Hell" xml:space="preserve">
-    <value>Witaj</value>
-  </data>
-  <data name="Log in" xml:space="preserve">
-    <value>Zaloguj</value>
-  </data>
-  <data name="Log out" xml:space="preserve">
-    <value>Wyloguj</value>
-  </data>
-  <data name="Profile Match" xml:space="preserve">
-    <value>Dopasowanie profilu</value>
-  </data>
-  <data name="Edit Answer" xml:space="preserve">
-    <value>Edytuj Pytanie</value>
-  </data>
-  <data name="Selected Values" xml:space="preserve">
-    <value>Wybrane Wartości</value>
-  </data>
-  <data name="Manager Dashboard" xml:space="preserve">
-    <value>Panel Menadżera</value>
-  </data>
-  <data name="Projects" xml:space="preserve">
-    <value>Projekty</value>
-  </data>
-  <data name="Compare" xml:space="preserve">
-    <value>Porównaj</value>
-  </data>
-  <data name="Sorry, this content is restricted." xml:space="preserve">
-    <value>Przepraszamy, ta zawartość jest ograniczona.</value>
-  </data>
-  <data name="User Dashboard" xml:space="preserve">
-    <value>Panel Użytkownika</value>
-  </data>
-  <data name="Surveys" xml:space="preserve">
-    <value>Ankiety</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>O mnie</value>
   </data>
 </root>
