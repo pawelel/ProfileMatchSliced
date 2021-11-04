@@ -1,6 +1,53 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-@L["hello"]
-<br />
-Welcome to your new app.
+
+<MudText Typo="Typo.h4" Align="Align.Center">Welcome to the employee portal, select the tab you want to enter </MudText>
+
+<br/>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="user/dashboard" StartIcon="@Icons.Filled.FactCheck">Surveys</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto;" StartIcon="@Icons.Filled.PersonOutline" Link="user/dashboard">Account</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " StartIcon="@Icons.Filled.PersonOutline" Link="user/dashboard">About</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " StartIcon="@Icons.Filled.TableChart" Link="user/dashboard">Certificates</MudButton>
+    </MudItem>
+</MudGrid>
+
+
+<MudGrid Justify="Justify.Center">
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.People">Users</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.Build">Administration</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.MeetingRoom">Departments</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.QueryStats">Statistics</MudButton>
+    </MudItem>
+</MudGrid>
+
+
+<MudGrid Justify="Justify.Center">
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.Category">Categories</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.EventNote">Questions</MudButton>
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 150px; height: 150px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" StartIcon="@Icons.Filled.Create">Cards</MudButton>
+    </MudItem>
+   
+</MudGrid>
+
+
