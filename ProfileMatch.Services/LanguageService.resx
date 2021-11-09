@@ -534,4 +534,7 @@
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="Welcome to the employee portal, select the tab you want to enter" xml:space="preserve">
+    <value>Welcome to the employee portal, select the tab you want to enter</value>
+  </data>
 </root>

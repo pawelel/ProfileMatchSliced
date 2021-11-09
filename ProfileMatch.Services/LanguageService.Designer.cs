@@ -1250,6 +1250,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Welcome to the employee portal, select the tab you want to enter.
+        /// </summary>
+        public static string Welcome_to_the_employee_portal__select_the_tab_you_want_to_enter {
+            get {
+                return ResourceManager.GetString("Welcome to the employee portal, select the tab you want to enter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu What are my goals.
         /// </summary>
         public static string What_are_my_goals {

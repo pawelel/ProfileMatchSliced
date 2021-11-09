@@ -1,38 +1,38 @@
 ﻿@page "/"
 
 
-<MudText Typo="Typo.h4" Align="Align.Center">Welcome to the employee portal, select the tab you want to enter </MudText>
+<MudText Typo="Typo.h4" Align="Align.Center">@L["Welcome to the employee portal, select the tab you want to enter"] </MudText>
 
 <br/>
 
 <MudGrid Justify="Justify.Center">
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="user/dashboard" ><MudIcon Icon="@Icons.Filled.FactCheck" Style="font-size: 4rem;" />Surveys</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="user/dashboard" ><MudIcon Icon="@Icons.Filled.FactCheck" Style="font-size: 4rem;" />@L["Surveys"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto;"  Link="user/dashboard"><MudIcon Icon="@Icons.Filled.PersonOutline" Style="font-size: 4rem;" />Account</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto;"  Link="user/dashboard"><MudIcon Icon="@Icons.Filled.PersonOutline" Style="font-size: 4rem;" />@L["Account"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; "  Link="user/dashboard"><MudIcon Icon="@Icons.Filled.PersonOutline" Style="font-size: 4rem;" />About</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; "  Link="user/dashboard"><MudIcon Icon="@Icons.Filled.PersonOutline" Style="font-size: 4rem;" />@L["About"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="user/dashboard"><MudIcon Icon="@Icons.Filled.TableChart" Style="font-size: 4rem;" />Certificates</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="user/dashboard"><MudIcon Icon="@Icons.Filled.TableChart" Style="font-size: 4rem;" />@L["Certificates"]</MudButton>
     </MudItem>
 </MudGrid>
 
 
 <MudGrid Justify="Justify.Center">
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.People" Style="font-size: 4rem;" />Users</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.People" Style="font-size: 4rem;" />@L["Users"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.Build" Style="font-size: 4rem;" />Administration</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.Build" Style="font-size: 4rem;" />@L["Administration"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" ><MudIcon Icon="@Icons.Filled.MeetingRoom" Style="font-size: 4rem;" />Departments</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" ><MudIcon Icon="@Icons.Filled.MeetingRoom" Style="font-size: 4rem;" />@L["Departments"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.QueryStats" Style="font-size: 4rem;" />Statistics</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.QueryStats" Style="font-size: 4rem;" />@L["Statistics"]</MudButton>
     </MudItem>
 </MudGrid>
 
@@ -42,10 +42,10 @@
         <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.Category" Style="font-size: 4rem;" />Categories</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" ><MudIcon Icon="@Icons.Filled.EventNote" Style="font-size: 4rem;" />Questions</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard" ><MudIcon Icon="@Icons.Filled.EventNote" Style="font-size: 4rem;" />@L["Questions"]</MudButton>
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.Create" Style="font-size: 4rem;" />Cards</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="width: 190px; height: 190px; margin-left: auto; margin-right: auto; " Link="admin/dashboard"><MudIcon Icon="@Icons.Filled.Create" Style="font-size: 4rem;" />@L["Cards"]</MudButton>
     </MudItem>
 
    
