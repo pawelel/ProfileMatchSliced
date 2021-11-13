@@ -5,6 +5,7 @@ using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Repositories
@@ -18,34 +19,54 @@ namespace ProfileMatch.Repositories
             this.contextFactory = contextFactory;
         }
 
-        public Task<UserNote> Create(UserNote note)
+        public async Task<UserNote> Create(UserNote unote)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = await repositoryContext.UserNotes.AddAsync(unote);
+            await repositoryContext.SaveChangesAsync();
+            return data.Entity;
         }
 
-        public Task<UserNote> Delete(UserNote note)
+        public async Task<UserNote> Delete(UserNote unote)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var data = repositoryContext.UserNotes.Remove(unote).Entity;
+            await repositoryContext.SaveChangesAsync();
+            return data;
         }
 
-        public Task<UserNote> FindByName(string name)
+        public async Task<UserNote> FindByName(string unname)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserNotes.FirstOrDefaultAsync(u=>u.Note.Name == unname);
         }
 
-        public Task<UserNote> FindById(string userId, int categoryId)
+        public async Task<UserNote> FindById(string userId, int noteId)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserNotes.FindAsync(userId, noteId);
         }
 
-        public Task<List<UserNote>> GetAll()
+        public async Task<List<UserNote>> GetAll()
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            return await repositoryContext.UserNotes.AsNoTracking().ToListAsync();
         }
 
-        public Task<UserNote> Update(UserNote note)
+        public async Task<UserNote> Update(UserNote unote)
         {
-            throw new System.NotImplementedException();
+            using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
+            var existing = await repositoryContext.UserNotes.FindAsync(unote.ApplicationUserId, unote.NoteId);
+            if (existing != null)
+            {
+                repositoryContext.Entry(existing).CurrentValues.SetValues(unote);
+                await repositoryContext.SaveChangesAsync();
+                return existing;
+            }
+            else
+            {
+                return unote;
+            }
         }
     }
 }

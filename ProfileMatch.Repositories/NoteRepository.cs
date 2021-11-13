@@ -5,7 +5,6 @@ using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 
 using System.Collections.Generic;
-using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Repositories
@@ -44,7 +43,7 @@ namespace ProfileMatch.Repositories
         public async Task<Note> FindById(int noteId)
         {
             using ApplicationDbContext repositoryContext = contextFactory.CreateDbContext();
-            return await repositoryContext.Notes.FirstOrDefaultAsync(n=>n.Id==noteId);
+            return await repositoryContext.Notes.FirstOrDefaultAsync(n => n.Id == noteId);
         }
 
         public async Task<List<Note>> GetAll()

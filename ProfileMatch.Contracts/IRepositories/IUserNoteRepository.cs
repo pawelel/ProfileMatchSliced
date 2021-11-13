@@ -7,16 +7,16 @@ namespace ProfileMatch.Contracts
 {
     public interface IUserNoteRepository
     {
-        Task<UserNote> Create(UserNote note);
+        Task<UserNote> Create(UserNote unote);
 
-        Task<UserNote> Delete(UserNote note);
+        Task<UserNote> Delete(UserNote unote);
 
-        Task<UserNote> FindByName(string name);
+        Task<UserNote> FindByName(string unname);
 
-        Task<UserNote> FindById(string userId, int categoryId);
+        Task<UserNote> FindById(string userId, int noteId);
 
         Task<List<UserNote>> GetAll();
 
-        Task<UserNote> Update(UserNote note);
+        Task<UserNote> Update(UserNote unote);
     }
 }
