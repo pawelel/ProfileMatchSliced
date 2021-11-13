@@ -16,7 +16,9 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly IEmailSender _sender;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender sender)
         {
