@@ -32,7 +32,7 @@ namespace ProfileMatch.Components.User
             }
             //TODO upload the files to the server
         }
-
+        string employee = "Employee";
         private void AddCert()
         {
             DialogService.Show<UserAddCertDialog>("fill in the fields");
