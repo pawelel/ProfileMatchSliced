@@ -12,7 +12,5 @@ namespace ProfileMatch.Components.User
         [Parameter] public string Style { get; set; }
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

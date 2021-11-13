@@ -31,8 +31,8 @@ namespace ProfileMatch.Components.Admin
         private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
-        private HashSet<string> Cats { get; set; } = new() { };
-        private HashSet<string> Quests { get; set; } = new() { };
+        private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
+        private IEnumerable<string> Quests { get; set; } = new HashSet<string>() { };
         public bool ShowDetails { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -66,7 +66,7 @@ namespace ProfileMatch.Components.Admin
 
         private List<Question> GetQuestions()
         {
-            if (Cats.Count == 0)
+            if (!Cats.Any())
             {
                 questions1 = questions;
             }
@@ -77,7 +77,7 @@ namespace ProfileMatch.Components.Admin
                               where q.Category.Name == c
                               select q).ToList();
             }
-            if (Quests.Count != 0)
+            if (Quests.Any())
             {
                 questions1 = (from q in questions1
                               from a in Quests

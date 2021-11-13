@@ -38,7 +38,7 @@ namespace ProfileMatch.Components.User
         private List<Question> questions = new();
         private List<Question> questions1;
         private List<Category> categories;
-        private HashSet<string> Options { get; set; } = new HashSet<string>() { };
+        private IEnumerable<string> Options { get; set; } = new HashSet<string>() { };
 
         protected override async Task OnParametersSetAsync()
         {
@@ -88,7 +88,7 @@ namespace ProfileMatch.Components.User
 
         private List<Question> GetQuestions()
         {
-            if (Options.Count == 0)
+            if (!Options.Any())
             {
                 questions1 = questions;
             }

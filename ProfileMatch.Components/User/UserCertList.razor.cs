@@ -18,8 +18,8 @@ namespace ProfileMatch.Components.User
         private IDialogService DialogService { get; set; }
 
         private readonly bool hover = true;
-        private HashSet<Element> selectedItems1 = new();
-        private readonly HashSet<Element> selectedItems2 = new();
+        private HashSet<Element> selectedItems1 = new() { };
+        private readonly IEnumerable<Element> selectedItems2 = new HashSet<Element>() { };
 
         private readonly IEnumerable<Element> Elements = new List<Element>();
         private readonly IList<IBrowserFile> files = new List<IBrowserFile>();

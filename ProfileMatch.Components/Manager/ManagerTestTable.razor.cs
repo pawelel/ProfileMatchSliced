@@ -35,8 +35,8 @@ namespace ProfileMatch.Components.Manager
         private List<QuestionUserLevelVM> questions = new();
         private List<Category> categories;
         private List<ApplicationUser> users;
-        private HashSet<string> Cats { get; set; } = new() { };
-        private HashSet<string> Ppl { get; set; } = new() { };
+        private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
+        private IEnumerable<string> Ppl { get; set; } = new HashSet<string>() { };
 
         protected override async Task OnInitializedAsync()
         {
@@ -97,7 +97,7 @@ namespace ProfileMatch.Components.Manager
         private List<QuestionUserLevelVM> GetPpl(List<QuestionUserLevelVM> questions)
         {
             List<QuestionUserLevelVM> ppl = new();
-            if (Ppl.Count != 0)
+            if (Ppl.Any())
             {
                 ppl = (from q in questions
                        from p in Ppl
