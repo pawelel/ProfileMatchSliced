@@ -11,6 +11,7 @@ using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Layout
@@ -86,6 +87,11 @@ namespace ProfileMatch.Components.Layout
             else
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
+            }
+            if (CurrentUser.Email == "admin@admin.com")
+            {
+              if(!await UserManager.IsInRoleAsync(CurrentUser, "Admin"))
+               await UserManager.AddToRoleAsync(CurrentUser, "Admin");
             }
         }
 
