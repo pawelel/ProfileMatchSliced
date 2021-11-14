@@ -1,10 +1,10 @@
-﻿@*
+﻿
     @inject IUserRepository personRepository
     @inject ICategoryRepository categoryRepository
-    @inject INeedRepository needRepository
+    @inject IUserCategoryRepository needRepository
         <MudButton Link="/admin/edituserneedcategories" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">Add New</MudButton>
 
-    @if (person == null || categories == null)
+    @if (categories == null)
     {
         <p>loading</p>
     }
@@ -14,23 +14,28 @@
             <HeaderContent>
                 <MudTh>Category Name</MudTh>
                 <MudTh>Need</MudTh>
-                <MudTh>First Name</MudTh>
-                <MudTh>Last Name</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Category Name">@context.CategoryName</MudTd>
+                <MudTd DataLabel="Category Name">@context.Category.Name</MudTd>
                 <MudTd DataLabel="Need">@context.Want</MudTd>
-                <MudTd DataLabel="First Name">@context.FirstName</MudTd>
-                <MudTd DataLabel="Last Name">@context.LastName</MudTd>
             </RowTemplate>
         </MudTable>
     }
+    <MudTable Items=@categories>
+        <HeaderContent>
+                <MudTh>Category Name</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                             <MudTd DataLabel="Category Name">@context.Name</MudTd>
+                             <MudTd DataLabel="Category Name">@context.Name</MudTd>
+                </RowTemplate>
+    </MudTable>
 
-    @code {
-        IEnumerable<Category> categories;
-        EditUser person;
-        IEnumerable<UserNeedCategory> needs;
-        IEnumerable<EditUser> people;
+@code {
+    IEnumerable<Category> categories;
+    [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
+    IEnumerable<UserCategory> needs;
+        IEnumerable<ApplicationUser> people;
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
@@ -38,26 +43,21 @@
 
         }
 
-        public async Task<IEnumerable<UserNeedCategory>> GetNeeds()
+        public async Task<IEnumerable<UserCategory>> GetNeeds()
         {
-            return await needRepository.GetNeeds();
+            return await needRepository.GetAll();
         }
 
-        public async Task<EditUser> GetPerson()
+        
+        protected async Task<IEnumerable<ApplicationUser>> GetPeople()
         {
-            return await personRepository.GetPerson(1);
-
-        }
-        protected async Task<IEnumerable<EditUser>> GetPeople()
-        {
-            return await personRepository.GetPeople();
+            return await personRepository.GetAll();
         }
 
         protected async override Task OnInitializedAsync()
         {
-            person = await GetPerson();
             categories = await GetCategories();
             needs = await GetNeeds();
             people = await GetPeople();
         }
-    }*@
+    }

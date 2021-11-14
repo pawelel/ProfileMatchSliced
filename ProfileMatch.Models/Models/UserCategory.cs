@@ -1,6 +1,6 @@
 ﻿namespace ProfileMatch.Models.Models
 {
-    public class UserNeedCategory
+    public class UserCategory
     {
         public bool Want { get; set; }
         public string ApplicationUserId { get; set; }

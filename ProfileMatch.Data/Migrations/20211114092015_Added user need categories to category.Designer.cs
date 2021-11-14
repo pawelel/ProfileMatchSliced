@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
@@ -11,9 +12,10 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211114092015_Added user need categories to category")]
+    partial class Addeduserneedcategoriestocategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,22 +53,22 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e6882e6d-60f4-495a-8c39-d663d94287cc",
-                            ConcurrencyStamp = "a69117ab-08f6-4c7c-b54b-7b0465485ddf",
+                            Id = "ce6b4d07-b0e7-4a51-aca5-59469213eb21",
+                            ConcurrencyStamp = "3b558fdb-1ee8-40a4-b468-307c4eec7fcf",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "61ed755b-e70e-4061-9285-73271cfa28b1",
-                            ConcurrencyStamp = "28576f75-f79c-4200-a1f5-989b723481ef",
+                            Id = "9e465283-0778-454d-a65a-aeba4de6457f",
+                            ConcurrencyStamp = "7b812d10-3fb0-4de2-84e8-4b97cc8a9ec6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "675f0f72-05b7-4972-96fe-47a8a324658a",
-                            ConcurrencyStamp = "e1d30d2c-39e6-4683-bd4c-6e9aa96a94b7",
+                            Id = "56e4fd39-8115-478c-803d-f69476a0ce3c",
+                            ConcurrencyStamp = "cbfb0132-e6f5-4ffd-83d4-c25458fe6710",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -420,7 +422,7 @@ namespace ProfileMatch.Data.Migrations
                     b.ToTable("UserAnswers");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserNeedCategory", b =>
                 {
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -566,7 +568,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserNeedCategory", b =>
                 {
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserNeedCategories")

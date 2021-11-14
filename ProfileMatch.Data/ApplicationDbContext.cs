@@ -35,7 +35,7 @@ namespace ProfileMatch.Data
                 .OnDelete(DeleteBehavior.Cascade);
             });
             //composite keys
-            builder.Entity<UserNeedCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
+            builder.Entity<UserCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
             builder.Entity<UserNote>().HasKey(x => new { x.ApplicationUserId, x.NoteId });
             //seed roles
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
@@ -51,7 +51,7 @@ namespace ProfileMatch.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<UserAnswer> UserAnswers { get; set; }
-        public DbSet<UserNeedCategory> UserNeedCategories { get; set; }
+        public DbSet<UserCategory> UserNeedCategories { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<UserNote> UserNotes { get; set; }
     }

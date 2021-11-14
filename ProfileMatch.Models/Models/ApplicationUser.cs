@@ -26,7 +26,7 @@ namespace ProfileMatch.Models.Models
         public string PhotoPath { get; set; }
         public string Bio { get; set; }
         public bool IsActive { get; set; }
-        public List<UserNeedCategory> UserNeedCategories { get; set; }
+        public List<UserCategory> UserNeedCategories { get; set; }
         public List<UserAnswer> UserAnswers { get; set; }
         public string JobTitle { get; set; }
     }

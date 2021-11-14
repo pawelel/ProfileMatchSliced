@@ -18,38 +18,34 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserQuestionList : ComponentBase
     {
+        private bool bordered = true;
+        private List<Category> categories;
+        private bool dense = true;
+        private bool hover = true;
+        private bool loading;
+        private List<Question> questions = new();
+        private List<Question> questions1;
+        private string searchString1 = "";
+        private bool striped = false;
+        private string UserId;
+        [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
-
-        [Inject]
-        private IDialogService DialogService { get; set; }
 
         [Inject]
         private ICategoryRepository CategoryRepository { get; set; }
 
         [Inject]
-        private IQuestionRepository QuestionRepository { get; set; }
+        private IDialogService DialogService { get; set; }
 
-        private bool loading;
-        [Parameter] public int Id { get; set; }
-        private string UserId;
-        private List<Question> questions = new();
-        private List<Question> questions1;
-        private List<Category> categories;
+        [Inject]
+        private IStringLocalizer<LanguageService> L { get; set; }
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private IEnumerable<string> Options { get; set; } = new HashSet<string>() { };
 
-        protected override async Task OnParametersSetAsync()
-        {
-            loading = true;
-
-            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
-
-            questions1 = questions;
-            loading = false;
-        }
-
+        [Inject]
+        private IQuestionRepository QuestionRepository { get; set; }
         protected override async Task OnInitializedAsync()
         {
             loading = true;
@@ -67,14 +63,15 @@ namespace ProfileMatch.Components.User
             loading = false;
         }
 
-        private bool dense = true;
-        private bool hover = true;
-        private bool bordered = true;
-        private bool striped = false;
-        private string searchString1 = "";
+        protected override async Task OnParametersSetAsync()
+        {
+            loading = true;
 
-        private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
+            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
 
+            questions1 = questions;
+            loading = false;
+        }
         private static bool FilterFunc(Question question, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
@@ -86,6 +83,7 @@ namespace ProfileMatch.Components.User
             return false;
         }
 
+        private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
         private List<Question> GetQuestions()
         {
             if (!Options.Any())
@@ -100,27 +98,6 @@ namespace ProfileMatch.Components.User
                               select q).ToList();
             }
             return questions1;
-        }
-
-        private async Task UserAnswerDialog(Question question)
-        {
-            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters
-            {
-                ["Q"] = question,
-                ["UserId"] = UserId
-            };
-            var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
-            var data = (await dialog.Result).Data;
-            var answer = (UserAnswer)data;
-            var a = question.UserAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
-            var index = question.UserAnswers.IndexOf(a);
-            if (index != -1)
-                question.UserAnswers[index] = answer;
-            else
-            {
-                question.UserAnswers.Add(answer);
-            }
         }
 
         private int ShowLevel(Question question)
@@ -155,7 +132,25 @@ namespace ProfileMatch.Components.User
             }
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        private async Task UserAnswerDialog(Question question)
+        {
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
+            var parameters = new DialogParameters
+            {
+                ["Q"] = question,
+                ["UserId"] = UserId
+            };
+            var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
+            var data = (await dialog.Result).Data;
+            var answer = (UserAnswer)data;
+            var a = question.UserAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
+            var index = question.UserAnswers.IndexOf(a);
+            if (index != -1)
+                question.UserAnswers[index] = answer;
+            else
+            {
+                question.UserAnswers.Add(answer);
+            }
+        }
     }
 }

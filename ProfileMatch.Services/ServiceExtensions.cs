@@ -15,7 +15,7 @@ namespace ProfileMatch.Services
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IUserAnswerRepository, UserAnswerRepository>();
             services.AddScoped<INoteRepository, NoteRepository>();
-            services.AddScoped<IUserNeedCategoryRepository, UserNeedCategoryRepository>();
+            services.AddScoped<IUserCategoryRepository, UserNeedRepository>();
             services.AddScoped<IUserNoteRepository, UserNoteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
