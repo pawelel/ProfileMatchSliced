@@ -3,7 +3,7 @@ using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Services;
 
-namespace ProfileMatch.Sites.Manager
+namespace ProfileMatch.Sites
 {
     public partial class ManagerDashboard : ComponentBase
     {

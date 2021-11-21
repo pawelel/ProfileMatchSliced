@@ -1,4 +1,4 @@
-<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true" AdditionalAssemblies="new[] { typeof(ProfileMatch.Sites.Admin.AdminDashboard).Assembly }">
+<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true" AdditionalAssemblies="new[] { typeof(ProfileMatch.Sites.AdminDashboard).Assembly }">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>

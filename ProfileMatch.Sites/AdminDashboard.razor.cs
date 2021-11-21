@@ -3,7 +3,7 @@ using Microsoft.Extensions.Localization;
 
 using ProfileMatch.Services;
 
-namespace ProfileMatch.Sites.Admin
+namespace ProfileMatch.Sites
 {
     public partial class AdminDashboard : ComponentBase
     {
