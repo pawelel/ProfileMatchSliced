@@ -10,11 +10,10 @@ namespace ProfileMatch.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlite(@"Data Source=PM.db;");
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //relations
