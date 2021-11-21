@@ -67,7 +67,7 @@ namespace ProfileMatch.Components.Layout
 
         public ApplicationUser CurrentUser { get; set; } = new();
         private readonly MudTheme defaultTheme = new GeneralTheme();
-        private MudTheme currentTheme;
+        private MudTheme currentTheme = new DarkTheme();
         private readonly MudTheme darkTheme = new DarkTheme();
 
         [CascadingParameter]
