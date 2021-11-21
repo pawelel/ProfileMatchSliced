@@ -65,7 +65,7 @@ namespace ProfileMatch.Components.Layout
             GC.SuppressFinalize(this);
         }
 
-        public ApplicationUser CurrentUser { get; set; }
+        public ApplicationUser CurrentUser { get; set; } = new();
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme;
         private readonly MudTheme darkTheme = new DarkTheme();
@@ -88,10 +88,10 @@ namespace ProfileMatch.Components.Layout
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
-            if (CurrentUser.Email == "admin@admin.com")
+            if (CurrentUser!=null && CurrentUser.Email == "admin@admin.com")
             {
-              if(!await UserManager.IsInRoleAsync(CurrentUser, "Admin"))
-               await UserManager.AddToRoleAsync(CurrentUser, "Admin");
+                if (!await UserManager.IsInRoleAsync(CurrentUser, "Admin"))
+                    await UserManager.AddToRoleAsync(CurrentUser, "Admin");
             }
         }
 
