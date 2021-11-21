@@ -12,7 +12,7 @@ namespace ProfileMatch.Tests
         public void Test1()
         {
             var cut = RenderComponent<UserDashboard>();
-            cut.Find()
+            cut.Find("");
         }
     }
 }
