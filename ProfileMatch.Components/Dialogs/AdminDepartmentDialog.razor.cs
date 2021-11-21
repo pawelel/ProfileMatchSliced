@@ -4,7 +4,9 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -26,7 +28,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = Dep.Description;
         }
 
-        [Inject] public IDepartmentRepository DepartmentRepository { get; set; }
+        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
         private MudForm Form;
 
@@ -60,7 +62,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             if (Dep.Id == 0)
             {
-                var result = await DepartmentRepository.Create(Dep);
+                var result = await DepartmentRepository.Insert(Dep);
                 Snackbar.Add($"Department {result.Name} created", Severity.Success);
             }
             else

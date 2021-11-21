@@ -4,7 +4,9 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -26,7 +28,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = Cat.Description;
         }
 
-        [Inject] public ICategoryRepository CategoryRepository { get; set; }
+        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
         private MudForm Form;
 
@@ -60,7 +62,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             if (Cat.Id == 0)
             {
-                var result = await CategoryRepository.Create(Cat);
+                var result = await CategoryRepository.Insert(Cat);
                 Snackbar.Add($"Category {result.Name} created", Severity.Success);
             }
             else

@@ -4,7 +4,9 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System.Linq;
@@ -17,11 +19,9 @@ namespace ProfileMatch.Components.Dialogs
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        [Inject]
-        public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
-        [Inject]
-        public IQuestionRepository QuestionRepository { get; set; }
+        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
 
         [Parameter] public Question Q { get; set; }
 
@@ -30,7 +30,7 @@ namespace ProfileMatch.Components.Dialogs
             for (int i = 1; i < 6; i++)
             {
                 question.AnswerOptions.Add(
-                     await AnswerOptionRepository.Create(new AnswerOption()
+                     await AnswerOptionRepository.Insert(new AnswerOption()
                      {
                          QuestionId = question.Id,
                          Description = string.Empty,
@@ -50,7 +50,7 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-            Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
+            Q.AnswerOptions = await AnswerOptionRepository.Get(q => q.QuestionId == Q.Id);
 
             if (Q.AnswerOptions.Count == 0 || Q.AnswerOptions == null)
             {

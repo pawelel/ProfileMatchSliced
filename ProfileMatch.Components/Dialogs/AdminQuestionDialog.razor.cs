@@ -4,10 +4,13 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -31,7 +34,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = Q.Description;
         }
 
-        [Inject] public IQuestionRepository QuestionRepository { get; set; }
+        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
         private MudForm Form;
 
         private void Cancel()
@@ -64,19 +67,20 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task Save()
         {//has any other question the same name in the category?
-            if (Q.Id == 0 && !await QuestionRepository.IsDuplicated(Q))
+            var exists = (await QuestionRepository.Get(q => q.Name.Contains(Q.Name))).Any();
+            if (Q.Id == 0 && !exists)
             {
-                var result = await QuestionRepository.Create(Q);
+                var result = await QuestionRepository.Insert(Q);
                 Snackbar.Add($"Question {result.Name} created", Severity.Success);
             }
-            else if (!await QuestionRepository.IsDuplicated(Q))
+            else if (!exists)
             {
                 await QuestionRepository.Update(Q);
                 Snackbar.Add($"Question {Q.Name} updated", Severity.Success);
             }
             else
             {
-                Snackbar.Add($"Question {Q.Name} for this category already exists.", Severity.Error);
+                Snackbar.Add($"Question {Q.Name} already exists.", Severity.Error);
             }
         }
 

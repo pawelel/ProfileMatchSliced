@@ -52,7 +52,7 @@ namespace ProfileMatch.Repositories
             await Task.Delay(1);
             return dbSet.ToList();
         }
-        public virtual async Task<TEntity> GetByID(params object[] ids)
+        public virtual async Task<TEntity> GetById(params object[] ids)
         {
             
             return await dbSet.FindAsync(ids);

@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProfileMatch.Components\ProfileMatch.Components.csproj" />
-    <ProjectReference Include="..\ProfileMatch.Contracts\ProfileMatch.Contracts.csproj" />
     <ProjectReference Include="..\ProfileMatch.Models\ProfileMatch.Models.csproj" />
     <ProjectReference Include="..\ProfileMatch.Repositories\ProfileMatch.Repositories.csproj" />
     <ProjectReference Include="..\ProfileMatch.Services\ProfileMatch.Services.csproj" />

@@ -5,7 +5,9 @@ using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -19,8 +21,7 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        [Inject]
-        public IUserRepository UserRepo { get; set; }
+        [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
 
         public string SearchString { get; set; }
 
@@ -47,7 +48,7 @@ namespace ProfileMatch.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await UserRepo.GetAll();
+            Users = await UserRepository.GetAll();
         }
 
         private async Task EditProfile(ApplicationUser applicationUser)

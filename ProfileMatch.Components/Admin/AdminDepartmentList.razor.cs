@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -22,14 +25,13 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        [Inject]
-        public IDepartmentRepository DepartmentRepository { get; set; }
+        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
+      
 
         private async Task<IEnumerable<Department>> GetDepartmentsAsync()
         {
-            return await DepartmentRepository.GetDepartmentsWithPeople();
+            return await DepartmentRepository.Get(include:src=>src.Include(d=>d.ApplicationUsers));
         }
-
         protected override async Task OnInitializedAsync()
         {
             Departments = await GetDepartmentsAsync();

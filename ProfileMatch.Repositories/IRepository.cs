@@ -18,7 +18,7 @@ namespace ProfileMatch.Repositories
 
         Task<List<TEntity>> GetAll();
 
-        Task<TEntity> GetByID(params object[] ids);
+        Task<TEntity> GetById(params object[] ids);
 
         Task<TEntity> Insert(TEntity entity);
 
