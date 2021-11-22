@@ -51,7 +51,7 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             user = (await AuthSP).User;
-            Users = await UserRepository.GetAll();
+            Users = await UserRepository.Get();
         }
 
         private async Task EditProfile(ApplicationUser applicationUser)
@@ -60,6 +60,7 @@ namespace ProfileMatch.Components.Admin
             var parameters = new DialogParameters { ["EditedUser"] = applicationUser };
             var dialog = DialogService.Show<AdminUserDialog>($"Edit User {applicationUser.FirstName}, {applicationUser.LastName} data", parameters, maxWidth);
             await dialog.Result;
+            Users = await UserRepository.Get();
         }
 
         [Inject]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -16,6 +17,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -23,11 +25,10 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminUserDialog : ComponentBase
     {
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
+        [Inject]private NavigationManager NavigationManager { get; set; }
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [Inject] RoleManager<IdentityRole> RoleManager { get; set; }
-  
+        [Inject] ISnackbar Snackbar { get; set; }
         List<UserRolesVM> UserRoles = new();
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
@@ -39,9 +40,11 @@ namespace ProfileMatch.Components.Dialogs
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-
+            EditedUser.PasswordHash = "*****";
         }
-
+        bool isShow;
+        InputType PasswordInput = InputType.Password;
+        string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         private async Task LoadData()
         {
             foreach (var role in RoleManager.Roles)
@@ -73,6 +76,21 @@ namespace ProfileMatch.Components.Dialogs
                 _dob = EditedUser.DateOfBirth;
             }
         }
+        void ButtonTestclick()
+        {
+            if(isShow)
+        {
+                isShow = false;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                PasswordInput = InputType.Password;
+            }
+        else
+            {
+                isShow = true;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+                PasswordInput = InputType.Text;
+            }
+        }
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -86,6 +104,32 @@ namespace ProfileMatch.Components.Dialogs
                 {
                     // Update the user
                     await UserManager.UpdateAsync(EditedUser);
+                    if (EditedUser.PasswordHash != "*****")
+                    {
+                        var resetToken =
+                          await UserManager.GeneratePasswordResetTokenAsync(EditedUser);
+
+                        var passworduser =
+                            await UserManager.ResetPasswordAsync(
+                                EditedUser,
+                                resetToken,
+                                EditedUser.PasswordHash);
+
+                        if (!passworduser.Succeeded)
+                        {
+                            if (passworduser.Errors.FirstOrDefault() != null)
+                            {
+                                Snackbar.Add(passworduser
+                                    .Errors
+                                    .FirstOrDefault()
+                                    .Description);
+                            }
+                            else
+                            {
+                                Snackbar.Add("Pasword error");
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -93,13 +137,13 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 foreach (var role in UserRoles)
                 {
-                    if (role.IsSelected&&!await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
+                    if (role.IsSelected && !await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
                     {
                         await UserManager.AddToRoleAsync(EditedUser, role.RoleName);
                     }
                     if (!role.IsSelected && await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
                     {
-                        await UserManager.RemoveFromRoleAsync(EditedUser,role.RoleName);
+                        await UserManager.RemoveFromRoleAsync(EditedUser, role.RoleName);
                     }
                 }
 

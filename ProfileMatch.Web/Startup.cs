@@ -49,7 +49,7 @@ namespace ProfileMatch
                 options.Password.RequiredLength = 8;
                 options.Password.RequireDigit = true;
                 options.Password.RequireUppercase = true;
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false; //TODO disabled for testing purposes
             });
 
             //MailKit service
