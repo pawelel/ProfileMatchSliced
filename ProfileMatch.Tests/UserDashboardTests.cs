@@ -21,7 +21,8 @@ namespace ProfileMatch.Tests
         string textValue = "!localized!";
         public UserDashboardTests()
         {
-            ctx.AddTestAuthorization();
+            var authContext = ctx.AddTestAuthorization();
+            authContext.SetAuthorized("TEST USER");
             _stringLocalizerMock = new Mock<IStringLocalizer<LanguageService>>();
             _stringLocalizerMock.Setup(l => l[It.IsAny<string>()]).Returns(new LocalizedString("name", textValue));
             ctx.Services.AddSingleton(_stringLocalizerMock.Object);
@@ -29,13 +30,13 @@ namespace ProfileMatch.Tests
         }
         [Fact]
         public void Renders_UserDashboard()
-        {         
+        {
             // Act
             var cut = ctx.RenderComponent<UserDashboard>();
-
+            var cards = cut.FindComponents<UserAccount>();
 
             // Assert
-            
+           
         }
     }
 }
