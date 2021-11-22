@@ -184,7 +184,7 @@
     <value>Rozszerz</value>
   </data>
   <data name="Dense" xml:space="preserve">
-    <value>Skup</value>
+    <value>Wąskie wiersze</value>
   </data>
   <data name="Bordered" xml:space="preserve">
     <value>Obramowanie</value>
@@ -202,7 +202,7 @@
     <value>Administracja</value>
   </data>
   <data name="People Administration" xml:space="preserve">
-    <value>Administracja Ludźmi</value>
+    <value>Administracja Zasobami Ludzkimi</value>
   </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sortuj Według</value>

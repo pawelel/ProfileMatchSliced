@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -12,6 +13,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin
@@ -20,13 +22,13 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject]
         private IDialogService DialogService { get; set; }
-
+        ClaimsPrincipal user; 
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
 
         public string SearchString { get; set; }
 
         private bool _dense = false;
-
+        [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
         private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
 
         private static bool FilterFunc(ApplicationUser person, string searchString)
@@ -48,6 +50,7 @@ namespace ProfileMatch.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
+            user = (await AuthSP).User;
             Users = await UserRepository.GetAll();
         }
 

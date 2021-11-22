@@ -35,9 +35,11 @@ else
                               Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" @bind-Value="@EditedUser.LastName" Immediate="true" Label=@L["Last Name"] Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" Label="Email" @bind-Value="@EditedUser.Email" Required="true" RequiredError=@L["Email is required!"] />
-
-                <MudSelect T="Gender?" Label=@L["Select Gender"] @bind-Value="@EditedUser.Gender"
-                           OffsetY="true"
+               
+                    <MudTextField T="string" Label="Password" @bind-Value="@EditedUser.PasswordHash" Required="true" RequiredError=@L["Password is required!"] />
+                
+                <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@EditedUser.Gender"
+                           OffsetY="true" RequiredError=@L["Gender is required!"]
                            CloseIcon="@Icons.Material.Filled.LocationCity"
                            HelperText=@L["Select Gender"]
                            AdornmentColor="Color.Tertiary">
@@ -53,6 +55,17 @@ else
                                RequiredError=@L["BirthDate is Required"]
                                Label=@L["Select Date of Birth"]
                                Editable="false" />
+                               <MudTable Items="@UserRoles">
+                                    <HeaderContent>
+                                   <MudTh>Role Name</MudTh>
+                                   <MudTh>Assigned</MudTh>
+                                   </HeaderContent>
+                                   <RowTemplate>
+                                         <MudTd DataLabel="Role Name">@context.RoleName</MudTd>
+                                         <MudTd DataLabel="Assigned">
+                                             <MudCheckBox @bind-Checked="@context.IsSelected"/></MudTd>
+                                   </RowTemplate>
+                               </MudTable>
             </MudForm>
             <MudButton OnClick="@HandleSave">@L["Save"]</MudButton>
         </DialogContent>

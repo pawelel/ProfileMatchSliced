@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -7,11 +10,13 @@ using MudBlazor;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -20,9 +25,10 @@ namespace ProfileMatch.Components.Dialogs
     {
         [Inject]
         private NavigationManager NavigationManager { get; set; }
-
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
-
+        [Inject] UserManager<ApplicationUser> UserManager { get; set; }
+        [Inject] RoleManager<IdentityRole> RoleManager { get; set; }
+  
+        List<UserRolesVM> UserRoles = new();
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
         [Parameter] public string Id { get; set; }
@@ -30,15 +36,34 @@ namespace ProfileMatch.Components.Dialogs
         private DateTime? _dob;
         [Parameter] public ApplicationUser EditedUser { get; set; } = new();
         private List<Department> Departments = new();
-
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
+
         }
 
         private async Task LoadData()
         {
-            Departments = await DepartmentRepository.GetAll();
+            foreach (var role in RoleManager.Roles)
+            {
+                var userRolesVM = new UserRolesVM
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    UserId = EditedUser.Id
+                };
+                if (await UserManager.IsInRoleAsync(EditedUser, role.Name))
+                {
+                    userRolesVM.IsSelected = true;
+                }
+                else
+                {
+                    userRolesVM.IsSelected = false;
+                }
+                UserRoles.Add(userRolesVM);
+            }
+            Departments = await DepartmentRepository.Get();
+
             if (EditedUser.DateOfBirth == null)
             {
                 _dob = DateTime.Now;
@@ -47,9 +72,7 @@ namespace ProfileMatch.Components.Dialogs
             {
                 _dob = EditedUser.DateOfBirth;
             }
-            StateHasChanged();
         }
-
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -58,15 +81,29 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser.DateOfBirth = (DateTime)_dob;
                 EditedUser.UserName = EditedUser.Email;
                 EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
-                if (await UserRepository.Get(u=>u.Email.ToUpper()==EditedUser.Email) != null)
+                var exists = await UserManager.FindByEmailAsync(EditedUser.Email);
+                if (exists is not null)
                 {
-                    await UserRepository.Update(EditedUser);
+                    // Update the user
+                    await UserManager.UpdateAsync(EditedUser);
                 }
                 else
                 {
-                    await UserRepository.Insert(EditedUser);
+                    await UserManager.CreateAsync(EditedUser, EditedUser.PasswordHash);
+                }
+                foreach (var role in UserRoles)
+                {
+                    if (role.IsSelected&&!await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
+                    {
+                        await UserManager.AddToRoleAsync(EditedUser, role.RoleName);
+                    }
+                    if (!role.IsSelected && await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
+                    {
+                        await UserManager.RemoveFromRoleAsync(EditedUser,role.RoleName);
+                    }
                 }
 
+                StateHasChanged();
                 NavigationManager.NavigateTo("/admin/dashboard");
             }
         }

@@ -33,6 +33,7 @@ namespace ProfileMatch.Data
                 .HasForeignKey(u => u.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
+
             //composite keys
             builder.Entity<UserCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
             builder.Entity<UserNote>().HasKey(x => new { x.ApplicationUserId, x.NoteId });
