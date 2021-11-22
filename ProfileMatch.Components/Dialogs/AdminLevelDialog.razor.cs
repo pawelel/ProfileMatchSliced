@@ -4,7 +4,9 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -24,7 +26,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = O.Description;
         }
 
-        [Inject] public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
         private MudForm Form;
 
@@ -57,7 +59,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             if (O.Id == 0)
             {
-                var result = await AnswerOptionRepository.Create(O);
+                var result = await AnswerOptionRepository.Insert(O);
                 Snackbar.Add($"Answer Option created", Severity.Success);
             }
             else

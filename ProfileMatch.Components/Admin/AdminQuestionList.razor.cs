@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -20,11 +23,10 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        [Inject]
-        private ICategoryRepository CategoryRepository { get; set; }
+        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
-        [Inject]
-        private IQuestionRepository QuestionRepository { get; set; }
+        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
+      
 
         private bool loading;
         [Parameter] public int Id { get; set; }
@@ -38,8 +40,8 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             loading = true;
-            categories = await CategoryRepository.GetCategories();
-            questions = await QuestionRepository.GetQuestionsWithCategoriesAndOptions();
+            categories = await CategoryRepository.Get();
+            questions = await QuestionRepository.Get(include: src => src.Include(q=>q.Category).Include(q=>q.AnswerOptions));
             questions1 = questions;
             loading = false;
         }

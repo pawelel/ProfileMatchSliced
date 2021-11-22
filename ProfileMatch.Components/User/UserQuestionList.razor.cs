@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -31,8 +34,7 @@ namespace ProfileMatch.Components.User
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        [Inject]
-        private ICategoryRepository CategoryRepository { get; set; }
+        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
         [Inject]
         private IDialogService DialogService { get; set; }
@@ -44,8 +46,7 @@ namespace ProfileMatch.Components.User
         private NavigationManager NavigationManager { get; set; }
         private IEnumerable<string> Options { get; set; } = new HashSet<string>() { };
 
-        [Inject]
-        private IQuestionRepository QuestionRepository { get; set; }
+        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
         protected override async Task OnInitializedAsync()
         {
             loading = true;
@@ -53,7 +54,7 @@ namespace ProfileMatch.Components.User
             if (authState.User.Identity.IsAuthenticated)
             {
                 UserId = authState.User.Claims.FirstOrDefault().Value;
-                categories = await CategoryRepository.GetCategories();
+                categories = await CategoryRepository.Get();
             }
             else
             {
@@ -67,8 +68,7 @@ namespace ProfileMatch.Components.User
         {
             loading = true;
 
-            questions = await QuestionRepository.GetActiveQuestionsWithCategoriesAndOptions();
-
+            questions = await QuestionRepository.Get(q=>q.IsActive==true, include:src=>src.Include(q=>q.AnswerOptions).Include(q=>q.Category));
             questions1 = questions;
             loading = false;
         }

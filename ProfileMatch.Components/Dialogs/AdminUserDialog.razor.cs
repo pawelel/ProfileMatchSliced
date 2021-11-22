@@ -5,7 +5,9 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -19,11 +21,9 @@ namespace ProfileMatch.Components.Dialogs
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
-        [Inject]
-        public IUserRepository UserRepository { get; set; }
+        [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
 
-        [Inject]
-        public IDepartmentRepository DepartmentRepository { get; set; }
+        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
         [Parameter] public string Id { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
@@ -58,13 +58,13 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser.DateOfBirth = (DateTime)_dob;
                 EditedUser.UserName = EditedUser.Email;
                 EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
-                if (await UserRepository.FindByEmail(EditedUser.Email) != null)
+                if (await UserRepository.Get(u=>u.Email.ToUpper()==EditedUser.Email) != null)
                 {
                     await UserRepository.Update(EditedUser);
                 }
                 else
                 {
-                    await UserRepository.Create(EditedUser);
+                    await UserRepository.Insert(EditedUser);
                 }
 
                 NavigationManager.NavigateTo("/admin/dashboard");

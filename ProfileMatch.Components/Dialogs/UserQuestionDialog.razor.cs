@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
@@ -14,13 +17,10 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class UserQuestionDialog : ComponentBase
     {
-        [Inject]
-        private IUserAnswerRepository UserAnswerRepository { get; set; }
-
+        [Inject] DataManager<UserAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
-        [Inject]
-        public IAnswerOptionRepository AnswerOptionRepository { get; set; }
+        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
         [Parameter] public Question Q { get; set; }
         [Parameter] public UserAnswer UserAnswer { get; set; } = new();
@@ -28,13 +28,13 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-            UserAnswer = await UserAnswerRepository.FindById(UserAnswer);
-            Q.AnswerOptions = await AnswerOptionRepository.GetAnswerOptionsForQuestion(Q.Id);
+            UserAnswer = await UserAnswerRepository.GetById(UserAnswer.ApplicationUserId, UserAnswer.QuestionId);
+            //FindById(UserAnswer);
+            Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.QuestionId==Q.Id);
         }
 
         private bool CanSelect(AnswerOption answerOption)
-        {//has user userAnswer this answerOption on this question
-            UserAnswer = UserAnswerRepository.FindById(UserId, answerOption.QuestionId);
+        {
             if (UserAnswer == null)
             {
                 return true;
@@ -48,7 +48,7 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task SelectLevelAsync(string UserId, int answerOptionId, int questionId)
         {
-            var userAnswer = await UserAnswerRepository.GetUserAnswer(UserId, questionId);
+            var userAnswer = await UserAnswerRepository.GetById(UserId, questionId);
             if (userAnswer == null)
             {
                 userAnswer = new()
@@ -60,7 +60,7 @@ namespace ProfileMatch.Components.Dialogs
                     IsConfirmed = false,
                     LastModified = DateTime.Now,
                 };
-                await UserAnswerRepository.Create(userAnswer);
+                await UserAnswerRepository.Insert(userAnswer);
             }
             else
             {
