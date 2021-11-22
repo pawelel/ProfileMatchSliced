@@ -29,7 +29,8 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [Inject] RoleManager<IdentityRole> RoleManager { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
-        List<UserRolesVM> UserRoles = new();
+
+        readonly List<UserRoleVM> UserRoles = new();
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
         [Parameter] public string Id { get; set; }
@@ -49,7 +50,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             foreach (var role in RoleManager.Roles)
             {
-                var userRolesVM = new UserRolesVM
+                var userRolesVM = new UserRoleVM
                 {
                     RoleId = role.Id,
                     RoleName = role.Name,

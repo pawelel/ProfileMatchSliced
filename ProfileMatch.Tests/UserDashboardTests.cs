@@ -16,9 +16,9 @@ namespace ProfileMatch.Tests
 {
     public class UserDashboardTests
     {
-        TestContext ctx = new();
+        readonly TestContext ctx = new();
         private readonly Mock<IStringLocalizer<LanguageService>> _stringLocalizerMock;
-        string textValue = "!localized!";
+        readonly string textValue = "!localized!";
         public UserDashboardTests()
         {
             var authContext = ctx.AddTestAuthorization();
@@ -33,10 +33,10 @@ namespace ProfileMatch.Tests
         {
             // Act
             var cut = ctx.RenderComponent<UserDashboard>();
-            var cards = cut.FindComponents<UserAccount>();
+      
 
             // Assert
-           
+           Assert.NotNull(cut);
         }
     }
 }
