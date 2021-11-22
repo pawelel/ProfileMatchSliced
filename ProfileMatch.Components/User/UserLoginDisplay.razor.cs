@@ -6,13 +6,10 @@ using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserUserLoginDisplay : ComponentBase
+    public partial class UserLoginDisplay : ComponentBase
     {
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
-        [Inject]
-#pragma warning disable IDE0051 // Remove unused private members
-        private IStringLocalizer<LanguageService> L { get; set; }
-#pragma warning restore IDE0051 // Remove unused private members
+        [Inject] IStringLocalizer<LanguageService> L { get; set; }
     }
 }

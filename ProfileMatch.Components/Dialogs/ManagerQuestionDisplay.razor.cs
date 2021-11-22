@@ -19,6 +19,5 @@ namespace ProfileMatch.Components.Dialogs
         {
             Q.AnswerOptions = await AnswerOptionRepository.Get(a => a.QuestionId == Q.Id);
         }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }
