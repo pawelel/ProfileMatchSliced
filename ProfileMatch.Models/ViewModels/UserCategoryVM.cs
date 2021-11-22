@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Models.ViewModels
 {
-    public class UserRolesVM
+    public class UserCategoryVM
     {
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
         public string UserId { get; set; }
         public bool IsSelected { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }
