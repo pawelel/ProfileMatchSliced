@@ -36,14 +36,11 @@ namespace ProfileMatch.Components.User
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        [Inject] private IDialogService DialogService { get; set; }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
         private IEnumerable<string> Options { get; set; } = new HashSet<string>() { };
 
         [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
@@ -68,7 +65,7 @@ namespace ProfileMatch.Components.User
         {
             loading = true;
 
-            questions = await QuestionRepository.Get(q=>q.IsActive==true, include:src=>src.Include(q=>q.AnswerOptions).Include(q=>q.Category));
+            questions = await QuestionRepository.Get(q => q.IsActive == true, include: src => src.Include(q => q.AnswerOptions).Include(q => q.Category));
             questions1 = questions;
             loading = false;
         }
