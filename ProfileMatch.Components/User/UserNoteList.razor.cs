@@ -57,10 +57,21 @@ namespace ProfileMatch.Components.User
 
             foreach (var note in Notes)
             {
-                var userNote = UserNotes.FirstOrDefault(un=>un.NoteId == note.Id);
-                if (!string.IsNullOrEmpty(userNote.Description))
+                UserNoteVM userNoteVM;
+                UserNote userNote;
+                try
                 {
-                    var userNoteVM = new UserNoteVM
+                    userNote = UserNotes.FirstOrDefault(un => un.NoteId == note.Id);
+                }
+                catch (Exception ex)
+                {
+
+                    userNote = new();
+                }
+                
+                if (userNote!=null)
+                {
+                     userNoteVM = new UserNoteVM
                     {
                         UserId = UserId,
                         UserDescription = userNote.Description,
@@ -72,7 +83,7 @@ namespace ProfileMatch.Components.User
                 }
                 else
                 {
-                    var userNoteVM = new UserNoteVM
+                     userNoteVM = new UserNoteVM
                     {
                         UserId = UserId,
                         UserDescription = String.Empty,
@@ -82,8 +93,7 @@ namespace ProfileMatch.Components.User
                         NoteDescription = note.Description
                     };
                 }
-
-                
+                UserNotesVM.Add(userNoteVM);
             }
         }
 
