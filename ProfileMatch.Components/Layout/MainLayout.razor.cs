@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
@@ -7,22 +8,28 @@ using MudBlazor;
 
 using ProfileMatch.Components.Theme;
 using ProfileMatch.Contracts;
+using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
 using System.Data;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Layout
 {
     public partial class MainLayout : ComponentBase, IDisposable
     {
-        [Parameter]public RenderFragment Body { get; set; }
-
-        [Inject]private NavigationManager NavigationManager { get; set; }
-
-        [Inject]public IThemeService ThemeService { get; set; }
+        [Parameter] public RenderFragment Body { get; set; }
+        [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserManager { get; set; }
+        string UserId;
+        ApplicationUser CurrentUser = new();
+        [Inject] public IThemeService ThemeService { get; set; }
 
         private bool _drawerOpen = true;
 
@@ -53,7 +60,7 @@ namespace ProfileMatch.Components.Layout
 
         protected override async Task OnInitializedAsync()
         {
-            await GetUserDetails();
+            await RedirectToLogin();
         }
 
         public void Dispose()
@@ -62,31 +69,21 @@ namespace ProfileMatch.Components.Layout
             GC.SuppressFinalize(this);
         }
 
-        public ApplicationUser CurrentUser { get; set; } = new();
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme = new DarkTheme();
         private readonly MudTheme darkTheme = new DarkTheme();
 
-        [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
-
-        [Inject]private UserManager<ApplicationUser> UserManager { get; set; }
-
-        private async Task GetUserDetails()
+        private async Task RedirectToLogin()
         {
             var user = (await AuthSP).User;
-            
-            if (user.Identity.IsAuthenticated)
-            {
-                CurrentUser = await UserManager.GetUserAsync(user);
-            }
-            else
+            if (!user.Identity.IsAuthenticated)
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
-            if (CurrentUser!=null && CurrentUser.Email == "admin@admin.com")
+            else
             {
-                if (!await UserManager.IsInRoleAsync(CurrentUser, "Admin"))
-                    await UserManager.AddToRoleAsync(CurrentUser, "Admin");
+                UserId = user.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value;
+                CurrentUser = await ApplicationUserManager.GetById(UserId);
             }
         }
 
