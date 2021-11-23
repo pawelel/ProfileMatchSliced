@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
@@ -19,8 +20,8 @@ namespace ProfileMatch.Services
             services.AddTransient<DataManager<Note, ApplicationDbContext>>();
             services.AddTransient<DataManager<UserNote, ApplicationDbContext>>();
             services.AddTransient<DataManager<ApplicationUser, ApplicationDbContext>>();
-            services.AddHttpContextAccessor();
-            services.AddScoped<AccessGuard>();
+            services.AddTransient<DataManager<IdentityUserRole<string>, ApplicationDbContext>>();
+            services.AddTransient<DataManager<IdentityRole, ApplicationDbContext>>();
         }
     }
 }

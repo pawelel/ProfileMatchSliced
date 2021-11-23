@@ -13,7 +13,7 @@ namespace ProfileMatch.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=PM.db;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=aspnet-ProfileMatchNewest;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,7 +49,12 @@ namespace ProfileMatch.Data
             //a hasher to hash the password before seeding the user to the db
             var hasher = new PasswordHasher<ApplicationUser>();
 
-
+            builder.Entity<ApplicationUser>()
+        .HasMany(e => e.UserRoles)
+        .WithOne()
+        .HasForeignKey(e => e.UserId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
             //Seeding the User to AspNetUsers table
             builder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
@@ -66,7 +71,6 @@ namespace ProfileMatch.Data
                     LastName = "Kent"
                 }
             );
-
 
             //Seeding the relation between our user and role to AspNetUserRoles table
             builder.Entity<IdentityUserRole<string>>().HasData(

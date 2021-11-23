@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
@@ -11,9 +12,10 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123211648_Identity user roles")]
+    partial class Identityuserroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,8 +309,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d433e5ae-25b8-4f3f-89b0-3bb7cab25eae",
-                            DateOfBirth = new DateTime(2021, 11, 23, 22, 22, 4, 204, DateTimeKind.Local).AddTicks(2677),
+                            ConcurrencyStamp = "7df59c27-21f9-4412-a79f-ed6a3176fc20",
+                            DateOfBirth = new DateTime(2021, 11, 23, 22, 16, 48, 126, DateTimeKind.Local).AddTicks(511),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -318,9 +320,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGUM+xHpEWu2GsYT/Zal0gx5vtyEBuxQJHnQm+qy/GVbFZLgjZ2kPLCqpsLR+gcFMw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJSWGZw7+AKyEqHY3Q2vjF9kDqwucsPVsBYp+Vp+wxSZRSzxkpXLDWa8iA5Wz2gdtg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "06c54256-3aa7-4095-b35f-d9a166ea9847",
+                            SecurityStamp = "fad8ec47-8dd9-474c-aa8a-e5c069b9f010",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -553,7 +555,7 @@ namespace ProfileMatch.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", null)
-                        .WithMany("UserRoles")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -672,11 +674,11 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Roles");
+
                     b.Navigation("UserAnswers");
 
                     b.Navigation("UserNeedCategories");
-
-                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Category", b =>

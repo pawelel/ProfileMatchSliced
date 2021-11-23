@@ -17,6 +17,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -25,14 +26,17 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminUserDialog : ComponentBase
     {
-        [Inject]private NavigationManager NavigationManager { get; set; }
-        [Inject] UserManager<ApplicationUser> UserManager { get; set; }
-        [Inject] RoleManager<IdentityRole> RoleManager { get; set; }
-        [Inject] ISnackbar Snackbar { get; set; }
-
+        [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserManager { get; set; }
+        [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleManager { get; set; }
+        [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleManager { get; set; }
+#pragma warning disable IDE0051 // Remove unused private members
+        [Inject] ISnackbar Snackbar { get; set; } //todo add notifications to dialog
+#pragma warning restore IDE0051 // Remove unused private members
+        List<IdentityRole> Roles;
         readonly List<UserRoleVM> UserRoles = new();
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
-
+        List<IdentityUserRole<string>> UserIdentityRoles;
         [Parameter] public string Id { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
         private DateTime? _dob;
@@ -41,31 +45,33 @@ namespace ProfileMatch.Components.Dialogs
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-            EditedUser.PasswordHash = "*****";
         }
         bool isShow;
         InputType PasswordInput = InputType.Password;
+        string EditedUserPassword;
+        readonly PasswordHasher<ApplicationUser> hasher = new();
         string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         private async Task LoadData()
         {
-            
-            foreach (var role in RoleManager.Roles)
+            Roles = await IdentityRoleManager.Get();
+            UserIdentityRoles = await IdentityUserRoleManager.Get(u=>u.UserId==EditedUser.Id);
+            foreach (var role in Roles)
             {
-                var userRolesVM = new UserRoleVM
+                var userRoleVM = new UserRoleVM
                 {
                     RoleId = role.Id,
                     RoleName = role.Name,
                     UserId = EditedUser.Id
                 };
-                if (await UserManager.IsInRoleAsync(EditedUser, role.Name))
+                if (UserIdentityRoles.Any(r=>r.RoleId==role.Id ))
                 {
-                    userRolesVM.IsSelected = true;
+                    userRoleVM.IsSelected = true;
                 }
                 else
                 {
-                    userRolesVM.IsSelected = false;
+                    userRoleVM.IsSelected = false;
                 }
-                UserRoles.Add(userRolesVM);
+                UserRoles.Add(userRoleVM);
             }
             Departments = await DepartmentRepository.Get();
 
@@ -80,13 +86,13 @@ namespace ProfileMatch.Components.Dialogs
         }
         void ButtonTestclick()
         {
-            if(isShow)
-        {
+            if (isShow)
+            {
                 isShow = false;
                 PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
                 PasswordInput = InputType.Password;
             }
-        else
+            else
             {
                 isShow = true;
                 PasswordInputIcon = Icons.Material.Filled.Visibility;
@@ -101,71 +107,49 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser.DateOfBirth = (DateTime)_dob;
                 EditedUser.UserName = EditedUser.Email;
                 EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
-                var exists = await UserManager.FindByEmailAsync(EditedUser.Email);
-                if (exists is not null)
+                EditedUser.PhotoPath = ImageUrl;
+                var exists = await ApplicationUserManager.ExistById(EditedUser.Id);
+                if (exists)
                 {
                     // Update the user
-                    await UserManager.UpdateAsync(EditedUser);
-                    if (EditedUser.PasswordHash != "*****")
-                    {
-                        var resetToken =
-                          await UserManager.GeneratePasswordResetTokenAsync(EditedUser);
-
-                        var passworduser =
-                            await UserManager.ResetPasswordAsync(
-                                EditedUser,
-                                resetToken,
-                                EditedUser.PasswordHash);
-
-                        if (!passworduser.Succeeded)
-                        {
-                            if (passworduser.Errors.FirstOrDefault() != null)
-                            {
-                                Snackbar.Add(passworduser
-                                    .Errors
-                                    .FirstOrDefault()
-                                    .Description);
-                            }
-                            else
-                            {
-                                Snackbar.Add("Pasword error");
-                            }
-                        }
-                    }
+                    await ApplicationUserManager.Update(EditedUser);
                 }
                 else
                 {
-                    await UserManager.CreateAsync(EditedUser, EditedUser.PasswordHash);
+                    EditedUser.PasswordHash = hasher.HashPassword(EditedUser, EditedUserPassword);
+                    await ApplicationUserManager.Insert(EditedUser);
                 }
                 foreach (var role in UserRoles)
                 {
-                    if (role.IsSelected && !await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
-                    {
-                        await UserManager.AddToRoleAsync(EditedUser, role.RoleName);
+                    if (role.IsSelected && !await IdentityUserRoleManager.ExistById(EditedUser.Id, role.RoleId))
+                    {IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
+                        await IdentityUserRoleManager.Insert(roleToInsert);
                     }
-                    if (!role.IsSelected && await UserManager.IsInRoleAsync(EditedUser, role.RoleName))
+                    if (!role.IsSelected && await IdentityUserRoleManager.ExistById(EditedUser.Id, role.RoleId))
                     {
-                        await UserManager.RemoveFromRoleAsync(EditedUser, role.RoleName);
+                        IdentityUserRole<string> roleToRemove = new() { UserId = EditedUser.Id, RoleId = role.RoleId };
+                        await IdentityUserRoleManager.Delete(roleToRemove);
                     }
                 }
-
                 StateHasChanged();
                 NavigationManager.NavigateTo("/admin/dashboard");
             }
         }
 
-        private IBrowserFile file;
+        string ImageUrl;
 
         private async void UploadFile(InputFileChangeEventArgs e)
         {
-            file = e.File;
-            var buffers = new byte[file.Size];
-            await file.OpenReadStream(maxFileSize).ReadAsync(buffers);
-            EditedUser.PhotoPath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffers)}";
-            StateHasChanged();
+            var format = "image/png";
+            var resizedImageFile = await e.File.RequestImageFileAsync(format, 400, 400);
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+            var path = $"{Environment.CurrentDirectory}\\wwwroot\\files\\{EditedUser.Id}.png";
+            await File.WriteAllBytesAsync(path, buffer);
+            ImageUrl = $"files/{EditedUser.Id}.png";
         }
 
-        private readonly long maxFileSize = 1024 * 1024 * 15;
+
 
         [Inject]
         private IStringLocalizer<LanguageService> L { get; set; }

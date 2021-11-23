@@ -29,5 +29,6 @@ namespace ProfileMatch.Models.Models
         public List<UserCategory> UserNeedCategories { get; set; }
         public List<UserAnswer> UserAnswers { get; set; }
         public string JobTitle { get; set; }
+        public virtual ICollection<IdentityUserRole<string>> UserRoles { get; } = new List<IdentityUserRole<string>>();
     }
 }

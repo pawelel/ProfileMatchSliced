@@ -22,11 +22,11 @@
 <body>
     @{
         this.HttpContext.Response.Cookies.Append(
-            CookieRequestCultureProvider.DefaultCookieName,
-            CookieRequestCultureProvider.MakeCookieValue(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(
                 new RequestCulture(
-                    CultureInfo.CurrentCulture,
-                    CultureInfo.CurrentUICulture)));
+                CultureInfo.CurrentCulture,
+                CultureInfo.CurrentUICulture)));
     }
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
