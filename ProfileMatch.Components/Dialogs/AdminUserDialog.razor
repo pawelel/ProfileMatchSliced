@@ -35,7 +35,7 @@ else
                               Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" @bind-Value="@EditedUser.LastName" Immediate="true" Label=@L["Last Name"] Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" Label="Email" @bind-Value="@EditedUser.Email" Required="true" RequiredError=@L["Email is required!"] />
-               
+
                     <MudTextField Label="Password" Variant="Variant.Text" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" @bind-Value="@EditedUserPassword" Required="true" RequiredError=@L["Password is required!"] />
                 
                 <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@EditedUser.Gender"
