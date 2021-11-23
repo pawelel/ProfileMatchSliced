@@ -48,6 +48,7 @@ namespace ProfileMatch.Components.Dialogs
         string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         private async Task LoadData()
         {
+            
             foreach (var role in RoleManager.Roles)
             {
                 var userRolesVM = new UserRoleVM

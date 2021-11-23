@@ -18,14 +18,11 @@ namespace ProfileMatch.Components.Layout
 {
     public partial class MainLayout : ComponentBase, IDisposable
     {
-        [Parameter]
-        public RenderFragment Body { get; set; }
+        [Parameter]public RenderFragment Body { get; set; }
 
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
+        [Inject]private NavigationManager NavigationManager { get; set; }
 
-        [Inject]
-        public IThemeService ThemeService { get; set; }
+        [Inject]public IThemeService ThemeService { get; set; }
 
         private bool _drawerOpen = true;
 
@@ -70,16 +67,14 @@ namespace ProfileMatch.Components.Layout
         private MudTheme currentTheme = new DarkTheme();
         private readonly MudTheme darkTheme = new DarkTheme();
 
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthSP { get; set; }
+        [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
 
-        [Inject]
-        private UserManager<ApplicationUser> UserManager { get; set; }
+        [Inject]private UserManager<ApplicationUser> UserManager { get; set; }
 
         private async Task GetUserDetails()
         {
             var user = (await AuthSP).User;
-
+            
             if (user.Identity.IsAuthenticated)
             {
                 CurrentUser = await UserManager.GetUserAsync(user);

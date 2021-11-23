@@ -63,7 +63,7 @@ namespace ProfileMatch.Components.User
                 {
                     userNote = UserNotes.FirstOrDefault(un => un.NoteId == note.Id);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     userNote = new();

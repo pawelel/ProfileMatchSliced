@@ -45,22 +45,22 @@ namespace ProfileMatch.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c45ce426-5734-46eb-9ea8-63d74bb9a2b3",
-                            ConcurrencyStamp = "e14e96cd-7ce7-4f96-9b6e-7f23801fb0e4",
+                            Id = "93877c5b-c988-4c83-b152-d0b17858f7c6",
+                            ConcurrencyStamp = "dd434162-84c9-4f3f-acd0-aa028df9b1f4",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "de139a33-7763-47d3-81c1-d3e0c03c5222",
-                            ConcurrencyStamp = "e9fc1e52-de85-43bd-9b8d-abfc72247139",
+                            Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a",
+                            ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "83956e58-0f7e-4110-a08e-c42083738b2c",
-                            ConcurrencyStamp = "aeb5035f-abd4-4c68-a408-be8f4c688cd0",
+                            Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415",
+                            ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -147,6 +147,13 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            RoleId = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -281,6 +288,29 @@ namespace ProfileMatch.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "93103a95-aee2-4f27-86b4-ecd24e4dbfa5",
+                            DateOfBirth = new DateTime(2021, 11, 23, 10, 18, 49, 773, DateTimeKind.Local).AddTicks(386),
+                            DepartmentId = 1,
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            FirstName = "Klark",
+                            IsActive = false,
+                            LastName = "Kent",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHeaO2Cf3+LY9u/6RSN4iuDtqSaQi64dwiaMRimDUomQVLJO743zMIBlglK075ZnYg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "37bb70af-f2b9-4e0b-9972-ce39aa496036",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Category", b =>
@@ -339,6 +369,38 @@ namespace ProfileMatch.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Co jest dla mnie ważne w pracy?"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Co jest ważne dla mnie osobiście?"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Moje hobby"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Moje inne umiejętności"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Moje zainteresowania"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Jakie są moje cele?"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Question", b =>

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
@@ -20,6 +19,8 @@ namespace ProfileMatch.Services
             services.AddTransient<DataManager<Note, ApplicationDbContext>>();
             services.AddTransient<DataManager<UserNote, ApplicationDbContext>>();
             services.AddTransient<DataManager<ApplicationUser, ApplicationDbContext>>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<AccessGuard>();
         }
     }
 }
