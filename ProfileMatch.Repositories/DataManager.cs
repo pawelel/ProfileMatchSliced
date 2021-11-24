@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
+using ProfileMatch.Data;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,18 +23,22 @@ namespace ProfileMatch.Repositories
         where TEntity : class
         where TDataContext : DbContext
     {
-        protected readonly TDataContext context;
+            private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
+        
+        
         internal DbSet<TEntity> dbSet;
 
-        public DataManager(TDataContext dataContext)
+        public DataManager( IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            context = dataContext;
-            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            dbSet = context.Set<TEntity>();
+            
+            this.contextFactory = contextFactory;
         }
 
         public virtual async Task<bool> Delete(TEntity entityToDelete)
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
@@ -43,27 +49,42 @@ namespace ProfileMatch.Repositories
 
         public virtual async Task<bool> Delete(object id)
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             TEntity entityToDelete = await dbSet.FindAsync(id);
             return await Delete(entityToDelete);
         }
 
         public virtual async Task<List<TEntity>> GetAll()
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             await Task.Delay(1);
             return dbSet.ToList();
         }
         public virtual async Task<TEntity> GetById(params object[] ids)
         {
-            
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
+
             return await dbSet.FindAsync(ids);
         }
         public virtual async Task<bool> ExistById(params object[] ids)
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             var data = await dbSet.FindAsync(ids);
             return data != null;
         }
         public virtual async Task<TEntity> Insert(TEntity entity)
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             await dbSet.AddAsync(entity);
             await context.SaveChangesAsync();
             return entity;
@@ -71,7 +92,9 @@ namespace ProfileMatch.Repositories
 
         public virtual async Task<TEntity> Update(TEntity entityToUpdate)
         {
-            var dbSet = context.Set<TEntity>();
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
             await context.SaveChangesAsync();
@@ -90,6 +113,9 @@ namespace ProfileMatch.Repositories
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
             try
             {
                 // Get the dbSet from the Entity passed in
