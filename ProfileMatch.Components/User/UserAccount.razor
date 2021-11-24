@@ -63,3 +63,135 @@
     </MudExpansionPanel>
 </MudExpansionPanels>
 </MudItem>
+<h3>Upload photo</h3>
+@if (ImageUrl != "")
+{
+    <img src="@ImageUrl" />
+    <br />
+    <br />
+}
+<div class="dropArea @dropClass">
+    Drag and drop photo, or click to select a local file.
+    <InputFile disabled="@Uploading"
+               OnChange="OnInputFileChange"
+               @ondragenter="HandleDragEnter"
+               @ondragleave="HandleDragLeave" />
+</div>
+<br />
+<h3>Files</h3>
+<ul>
+    @foreach (var url in FileUrls)
+    {
+        <li><a href="@url">@url</a><br /></li>
+    }
+</ul>
+@code
+{
+
+    string ImageUrl = "";
+    bool Uploading = false;
+    List<string> FileUrls = new List<string>();
+
+    // support for drag/drop
+    string dropClass = string.Empty;
+    void HandleDragEnter()
+    {
+        dropClass = "dropAreaDrug";
+    }
+    void HandleDragLeave()
+    {
+        dropClass = string.Empty;
+    }
+
+    async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        dropClass = string.Empty;
+
+        try
+        {
+            // disable the upload pane
+            Uploading = true;
+            await InvokeAsync(StateHasChanged);
+
+            // Resize to no more than 400x400
+            var format = "image/png";
+            var resizedImageFile = await e.File.RequestImageFileAsync(format, 400, 400);
+
+            // read resized png data into a buffer
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+
+            // get new filename with a bit of entropy
+            string justFileName = Path.GetFileNameWithoutExtension(e.File.Name);
+            string newFileNameWithoutPath = $"{justFileName}-{DateTime.Now.Ticks.ToString()}.png";
+            string filename = $"{Environment.CurrentDirectory}\\wwwroot\\files\\{newFileNameWithoutPath}";
+
+            // write the file
+            File.WriteAllBytes(filename, buffer);
+
+            ImageUrl = $"files/{newFileNameWithoutPath}";
+
+            await ListFiles();
+
+            Uploading = false;
+
+        }
+        catch (Exception ex)
+        {
+            Uploading = false;
+            await InvokeAsync(StateHasChanged);
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    async Task ListFiles()
+    {
+        FileUrls.Clear();
+        var files = Directory.GetFiles(Environment.CurrentDirectory + "\\wwwroot\\Files", "*.*");
+        foreach (var filename in files)
+        {
+            var file = Path.GetFileName(filename);
+            string url = $"files/{file}";
+            FileUrls.Add(url);
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ListFiles();
+    }
+
+}
+<style>
+    .dropArea {
+    border: 2px dashed gray;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    min-height: 150px;
+}
+
+    .dropArea:hover {
+        background-color: antiquewhite;
+        color: #333;
+    }
+
+    .dropArea input[type=file] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+.dropAreaDrug {
+    background-color: darkgray;
+}
+</style>

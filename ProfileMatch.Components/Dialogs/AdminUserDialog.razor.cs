@@ -74,7 +74,10 @@ namespace ProfileMatch.Components.Dialogs
                 UserRoles.Add(userRoleVM);
             }
             Departments = await DepartmentRepository.Get();
-
+            if (string.IsNullOrEmpty(EditedUser.PhotoPath))
+            {
+                EditedUser.PhotoPath = "files/blank-profile.png";
+            }
             if (EditedUser.DateOfBirth == null)
             {
                 _dob = DateTime.Now;
@@ -107,7 +110,6 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser.DateOfBirth = (DateTime)_dob;
                 EditedUser.UserName = EditedUser.Email;
                 EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
-                EditedUser.PhotoPath = ImageUrl;
                 var exists = await ApplicationUserManager.ExistById(EditedUser.Id);
                 if (exists)
                 {
@@ -136,18 +138,9 @@ namespace ProfileMatch.Components.Dialogs
             }
         }
 
-        string ImageUrl;
+        
 
-        private async void UploadFile(InputFileChangeEventArgs e)
-        {
-            var format = "image/png";
-            var resizedImageFile = await e.File.RequestImageFileAsync(format, 400, 400);
-            var buffer = new byte[resizedImageFile.Size];
-            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
-            var path = $"{Environment.CurrentDirectory}\\wwwroot\\files\\{EditedUser.Id}.png";
-            await File.WriteAllBytesAsync(path, buffer);
-            ImageUrl = $"files/{EditedUser.Id}.png";
-        }
+
 
 
 

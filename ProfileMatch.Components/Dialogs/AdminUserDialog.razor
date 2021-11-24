@@ -5,13 +5,6 @@
 else
 {
 
-    <MudItem Class="d=inline">
-        <p>
-            <InputFile id="fileInput" OnChange="UploadFile" hidden accept="image/*" />
-            Avatar:
-            <MudButton DisableElevation="true" HtmlTag="label" for="fileInput"> <MudAvatar Image="@EditedUser.PhotoPath" /></MudButton>
-        </p>
-    </MudItem>
     <MudDialog>
         <DialogContent>
             <MudForm @ref="Form">

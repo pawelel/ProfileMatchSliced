@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 using MudBlazor;
@@ -20,6 +21,7 @@ using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
 
 using System;
+using System.IO;
 
 namespace ProfileMatch
 {
@@ -117,7 +119,12 @@ namespace ProfileMatch
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files")),
+                RequestPath = "/Files"
+            });
             app.UseRouting();
 
             app.UseAuthentication();
