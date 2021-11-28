@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
@@ -19,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -54,7 +50,7 @@ namespace ProfileMatch.Components.Dialogs
         private async Task LoadData()
         {
             Roles = await IdentityRoleManager.Get();
-            UserIdentityRoles = await IdentityUserRoleManager.Get(u=>u.UserId==EditedUser.Id);
+            UserIdentityRoles = await IdentityUserRoleManager.Get(u => u.UserId == EditedUser.Id);
             foreach (var role in Roles)
             {
                 var userRoleVM = new UserRoleVM
@@ -63,7 +59,7 @@ namespace ProfileMatch.Components.Dialogs
                     RoleName = role.Name,
                     UserId = EditedUser.Id
                 };
-                if (UserIdentityRoles.Any(r=>r.RoleId==role.Id ))
+                if (UserIdentityRoles.Any(r => r.RoleId == role.Id))
                 {
                     userRoleVM.IsSelected = true;
                 }
@@ -124,7 +120,8 @@ namespace ProfileMatch.Components.Dialogs
                 foreach (var role in UserRoles)
                 {
                     if (role.IsSelected && !await IdentityUserRoleManager.ExistById(EditedUser.Id, role.RoleId))
-                    {IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
+                    {
+                        IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
                         await IdentityUserRoleManager.Insert(roleToInsert);
                     }
                     if (!role.IsSelected && await IdentityUserRoleManager.ExistById(EditedUser.Id, role.RoleId))
@@ -138,10 +135,32 @@ namespace ProfileMatch.Components.Dialogs
             }
         }
 
-        
-
-
-
+        async Task OnChange(InputFileChangeEventArgs e)
+        {
+            var file = e.File;
+            string imageType = file.ContentType;
+            if (imageType != "image/jpeg")
+            {
+                Snackbar.Clear();
+                Snackbar.Add("Wrong file format. Allowed file formats are: .jpg, .jpeg, .png.", Severity.Error);
+                return;
+            }
+            if (file.Size> 5200000)
+            {
+                Snackbar.Clear();
+                Snackbar.Add("Max allowed size is 5MB", Severity.Error);
+                return;
+            }
+            if (imageType == "image/jpeg")
+            {
+                var resizedImage = await file.RequestImageFileAsync(imageType, 400, 400);
+                var buffer = new byte[resizedImage.Size];
+                await resizedImage.OpenReadStream().ReadAsync(buffer);
+                
+                EditedUser.PhotoPath = $"data:{imageType};base64,{Convert.ToBase64String(buffer)}";
+                StateHasChanged();
+            }
+        }
 
 
         [Inject]

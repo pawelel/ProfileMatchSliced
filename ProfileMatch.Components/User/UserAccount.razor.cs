@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -7,6 +8,8 @@ using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
@@ -23,7 +26,6 @@ namespace ProfileMatch.Components.User
         public string Email { get; set; } = "karol@test.com";
 
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
-
         
 
         private void SaveChanges(string message, Severity severity)
@@ -34,7 +36,6 @@ namespace ProfileMatch.Components.User
             });
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

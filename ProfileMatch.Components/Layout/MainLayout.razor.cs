@@ -24,11 +24,7 @@ namespace ProfileMatch.Components.Layout
     public partial class MainLayout : ComponentBase, IDisposable
     {
         [Parameter] public RenderFragment Body { get; set; }
-        [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
-        [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] IRedirection Redirection { get; set; }
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserManager { get; set; }
-        string UserId;
         ApplicationUser CurrentUser = new();
         [Inject] public IThemeService ThemeService { get; set; }
 
@@ -73,20 +69,6 @@ namespace ProfileMatch.Components.Layout
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme = new DarkTheme();
         private readonly MudTheme darkTheme = new DarkTheme();
-
-        //private async Task RedirectToLogin()
-        //{
-        //    var user = (await AuthSP).User;
-        //    if (!user.Identity.IsAuthenticated)
-        //    {
-        //        NavigationManager.NavigateTo("Identity/Account/Login", true);
-        //    }
-        //    else
-        //    {
-        //        UserId = user.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value;
-        //        CurrentUser = await ApplicationUserManager.GetById(UserId);
-        //    }
-        //}
 
         [Inject]
         private IStringLocalizer<LanguageService> L { get; set; }

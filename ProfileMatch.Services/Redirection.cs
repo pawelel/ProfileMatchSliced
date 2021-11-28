@@ -17,7 +17,7 @@ namespace ProfileMatch.Services
     public class Redirection : IRedirection
     {
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        NavigationManager nav;
+        readonly NavigationManager nav;
         public Redirection(AuthenticationStateProvider authenticationStateProvider, NavigationManager nav)
         {
             _authenticationStateProvider = authenticationStateProvider;

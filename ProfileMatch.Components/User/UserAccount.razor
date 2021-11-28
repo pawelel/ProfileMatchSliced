@@ -1,6 +1,7 @@
 ﻿@page "/user/account/{UserId}"
+
 <MudItem Class="d-flex justify-space-between">
-    <MudItem xs="12" sm="4" md="3" >
+    <MudItem xs="12" sm="4" md="3">
         <MudCard>
             <MudCardContent>
                 <div class="d-flex justify-center mb-4">
@@ -24,174 +25,42 @@
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>
-                
+
             </MudCardContent>
             <MudCardActions Class="pb-4 pl-4">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
             </MudCardActions>
         </MudCard>
     </MudItem>
-    </MudItem>
-    <UserCategoryList/>
-
-    <MudItem Class="d-flex">
-<MudExpansionPanels MultiExpansion="true">
-    <MudExpansionPanel Text=@L["What is important to me at work"]>
-        <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-    </MudExpansionPanel>
-    <MudExpansionPanel Text=@L["What is important for me"]>
-        <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-    </MudExpansionPanel>
-    <MudExpansionPanel Text=@L["What are my goals"]>
-        <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-    </MudExpansionPanel>
-    <MudExpansionPanel Text=@L["My other skills"]>
-        <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-    </MudExpansionPanel>
-    <MudExpansionPanel Text=@L["My hobbies"]>
-        <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-        <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-    </MudExpansionPanel>
-</MudExpansionPanels>
 </MudItem>
-<h3>Upload photo</h3>
-@if (ImageUrl != "")
-{
-    <img src="@ImageUrl" />
-    <br />
-    <br />
-}
-<div class="dropArea @dropClass">
-    Drag and drop photo, or click to select a local file.
-    <InputFile disabled="@Uploading"
-               OnChange="OnInputFileChange"
-               @ondragenter="HandleDragEnter"
-               @ondragleave="HandleDragLeave" />
-</div>
-<br />
-<h3>Files</h3>
-<ul>
-    @foreach (var url in FileUrls)
-    {
-        <li><a href="@url">@url</a><br /></li>
-    }
-</ul>
-@code
-{
+<UserCategoryList />
 
-    string ImageUrl = "";
-    bool Uploading = false;
-    List<string> FileUrls = new List<string>();
-
-    // support for drag/drop
-    string dropClass = string.Empty;
-    void HandleDragEnter()
-    {
-        dropClass = "dropAreaDrug";
-    }
-    void HandleDragLeave()
-    {
-        dropClass = string.Empty;
-    }
-
-    async Task OnInputFileChange(InputFileChangeEventArgs e)
-    {
-        dropClass = string.Empty;
-
-        try
-        {
-            // disable the upload pane
-            Uploading = true;
-            await InvokeAsync(StateHasChanged);
-
-            // Resize to no more than 400x400
-            var format = "image/png";
-            var resizedImageFile = await e.File.RequestImageFileAsync(format, 400, 400);
-
-            // read resized png data into a buffer
-            var buffer = new byte[resizedImageFile.Size];
-            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
-
-            // get new filename with a bit of entropy
-            string justFileName = Path.GetFileNameWithoutExtension(e.File.Name);
-            string newFileNameWithoutPath = $"{justFileName}-{DateTime.Now.Ticks.ToString()}.png";
-            string filename = $"{Environment.CurrentDirectory}\\wwwroot\\files\\{newFileNameWithoutPath}";
-
-            // write the file
-            File.WriteAllBytes(filename, buffer);
-
-            ImageUrl = $"files/{newFileNameWithoutPath}";
-
-            await ListFiles();
-
-            Uploading = false;
-
-        }
-        catch (Exception ex)
-        {
-            Uploading = false;
-            await InvokeAsync(StateHasChanged);
-            System.Diagnostics.Debug.WriteLine(ex.Message);
-            throw;
-        }
-    }
-
-    async Task ListFiles()
-    {
-        FileUrls.Clear();
-        var files = Directory.GetFiles(Environment.CurrentDirectory + "\\wwwroot\\Files", "*.*");
-        foreach (var filename in files)
-        {
-            var file = Path.GetFileName(filename);
-            string url = $"files/{file}";
-            FileUrls.Add(url);
-        }
-        await InvokeAsync(StateHasChanged);
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ListFiles();
-    }
-
-}
-<style>
-    .dropArea {
-    border: 2px dashed gray;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: lightgray;
-    font-size: 1.5rem;
-    cursor: pointer;
-    position: relative;
-    min-height: 150px;
-}
-
-    .dropArea:hover {
-        background-color: antiquewhite;
-        color: #333;
-    }
-
-    .dropArea input[type=file] {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
-    }
-
-.dropAreaDrug {
-    background-color: darkgray;
-}
-</style>
+<MudItem Class="d-flex">
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanel Text=@L["What is important to me at work"]>
+            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+        </MudExpansionPanel>
+        <MudExpansionPanel Text=@L["What is important for me"]>
+            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+        </MudExpansionPanel>
+        <MudExpansionPanel Text=@L["What are my goals"]>
+            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+        </MudExpansionPanel>
+        <MudExpansionPanel Text=@L["My other skills"]>
+            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+        </MudExpansionPanel>
+        <MudExpansionPanel Text=@L["My hobbies"]>
+            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
+            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+</MudItem>

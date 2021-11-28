@@ -8,6 +8,9 @@ else
     <MudDialog>
         <DialogContent>
             <MudForm @ref="Form">
+                <MudAvatar Image="@EditedUser?.PhotoPath">
+                    </MudAvatar>
+                <InputFile OnChange="@OnChange" @ref="inputFile" accept=".jpg, .jpeg, .png" />
                 <MudSelect @bind-Value="@EditedUser.DepartmentId"
                            T="int"
                            OffsetY="true"
@@ -63,4 +66,7 @@ else
             <MudButton OnClick="@HandleSave">@L["Save"]</MudButton>
         </DialogContent>
     </MudDialog>
+}
+@code{
+    private InputFile inputFile;
 }
