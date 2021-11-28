@@ -40,7 +40,7 @@ namespace ProfileMatch
         {
             services.AddDbContextFactory<ApplicationDbContext>();
 
-            services.AddScoped<ApplicationDbContext>(p =>
+            services.AddScoped(p =>
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
 
             services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
@@ -52,6 +52,7 @@ namespace ProfileMatch
                 options.Password.RequireDigit = true;
                 options.Password.RequireUppercase = true;
                 options.SignIn.RequireConfirmedAccount = false; //TODO disabled for testing purposes
+                options.ClaimsIdentity.UserIdClaimType = "UserId";
             });
 
             //MailKit service

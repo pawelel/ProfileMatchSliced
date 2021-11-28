@@ -6,8 +6,6 @@ namespace ProfileMatch.Services
 {
     public interface IRedirection
     {
-        ApplicationUser AppUser { get; set; }
-
         Task<ApplicationUser> GetUser();
     }
 }

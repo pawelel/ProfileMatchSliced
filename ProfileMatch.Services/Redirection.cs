@@ -11,17 +11,20 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProfileMatch.Services
 {
     public class Redirection : IRedirection
     {
         private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private readonly UserManager<ApplicationUser> userManager;
         readonly NavigationManager nav;
-        public Redirection(AuthenticationStateProvider authenticationStateProvider, NavigationManager nav)
+        public Redirection(AuthenticationStateProvider authenticationStateProvider, NavigationManager nav, UserManager<ApplicationUser> userManager)
         {
             _authenticationStateProvider = authenticationStateProvider;
             this.nav = nav;
+            this.userManager = userManager;
         }
         public ApplicationUser AppUser { get; set; } = new();
 
@@ -29,8 +32,6 @@ namespace ProfileMatch.Services
         {
             var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
-            AppUser = new();
-            string UserId = "";
 
             if (authState?.User?.Identity is null || !authState.User.Identity.IsAuthenticated)
             {
@@ -44,8 +45,8 @@ namespace ProfileMatch.Services
             }
             else
             {
-                UserId = user.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value;
-                return AppUser;
+
+                return await userManager.GetUserAsync(user);
             }
         }
     }

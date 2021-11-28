@@ -26,9 +26,8 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserManager { get; set; }
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleManager { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleManager { get; set; }
-#pragma warning disable IDE0051 // Remove unused private members
         [Inject] ISnackbar Snackbar { get; set; } //todo add notifications to dialog
-#pragma warning restore IDE0051 // Remove unused private members
+
         List<IdentityRole> Roles;
         readonly List<UserRoleVM> UserRoles = new();
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
