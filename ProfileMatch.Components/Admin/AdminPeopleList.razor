@@ -31,9 +31,9 @@ else
             <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth</MudTd>
             <MudTd DataLabel=@L["Is Active"]><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
             <MudTd DataLabel="">
-                @if(user.Identity.Name!=context.Email){
+             @*   @if(user.Identity.Name!=context.Email){*@
                 <MudFab Color="Color.Primary" OnClick="@(()=> EditProfile(context))" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
-                }
+                @*}*@
             </MudTd>
             <MudTd DataLabel="">
                 <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Person" Size="Size.Small" IconSize="Size.Small" />

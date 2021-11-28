@@ -23,7 +23,9 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IDialogService DialogService { get; set; }
 
+#pragma warning disable IDE0052 // Remove unread private members
         private ClaimsPrincipal user; //todo alternative blockade of self-edit
+#pragma warning restore IDE0052 // Remove unread private members
 
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
 
