@@ -62,7 +62,7 @@ namespace ProfileMatch.Components.Admin
 
         private async Task NoteUpdate(Note Note)
         {
-            var parameters = new DialogParameters { ["Cat"] = Note };
+            var parameters = new DialogParameters { ["EditedNote"] = Note };
             var dialog = DialogService.Show<AdminNoteDialog>("Update Note", parameters);
             await dialog.Result;
         }

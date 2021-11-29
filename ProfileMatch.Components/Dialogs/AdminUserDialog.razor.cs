@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
@@ -11,12 +15,6 @@ using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -138,7 +136,8 @@ namespace ProfileMatch.Components.Dialogs
         {
             var file = e.File;
             string imageType = file.ContentType;
-            if (imageType != "image/jpeg")
+            string[] imageTypes = { "image/jpeg", "image/jpeg", "image/png" };
+            if (!imageTypes.Any(i=>i.Contains(imageType)))
             {
                 Snackbar.Clear();
                 Snackbar.Add("Wrong file format. Allowed file formats are: .jpg, .jpeg, .png.", Severity.Error);
@@ -150,7 +149,8 @@ namespace ProfileMatch.Components.Dialogs
                 Snackbar.Add("Max allowed size is 5MB", Severity.Error);
                 return;
             }
-            if (imageType == "image/jpeg")
+
+            if (imageTypes.Any(i => i.Contains(imageType)))
             {
                 var resizedImage = await file.RequestImageFileAsync(imageType, 400, 400);
                 var buffer = new byte[resizedImage.Size];

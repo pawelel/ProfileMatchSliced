@@ -44,6 +44,7 @@ namespace ProfileMatch.Data
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
 
             builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned" });
+            builder.Entity<Department>().HasData(new Department { Id = 2, Name = "IT" });
             base.OnModelCreating(builder);
 
             //a hasher to hash the password before seeding the user to the db
@@ -114,6 +115,44 @@ namespace ProfileMatch.Data
                         Name = "Jakie są moje cele?"
                     }
                 );
+            builder.Entity<Category>().HasData(
+                new Category()
+                {
+                    Id=1,
+                    Name = "Pieluchowanie"
+                },
+                new Category()
+                {
+                    Name ="",
+                    Id=2
+                }
+                
+                );
+            builder.Entity<Question>().HasData(
+                new Question()
+                {
+                    Id=1,
+                    Name = "Wymiana pieluchy",
+                    CategoryId=1,
+                    IsActive=true,
+                    Description="czy potrafisz otworzyć pieluchę?"
+                });
+            builder.Entity<AnswerOption>().HasData(
+                new AnswerOption()
+                {
+                    Id=1,
+                    QuestionId=1,
+                    Level=1,
+                    Description="Hello world"
+                }
+                );
+            builder.Entity<UserAnswer>().HasData(
+                new UserAnswer()
+                {
+                    AnswerOptionId = 1,
+                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647"
+                }
+                ) ;
         }
 
         public DbSet<Department> Departments { get; set; }
