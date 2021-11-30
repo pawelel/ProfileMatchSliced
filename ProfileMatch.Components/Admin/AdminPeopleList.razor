@@ -28,7 +28,7 @@ else
             <MudTd DataLabel=@L["Photo"]><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
             <MudTd DataLabel=@L["First Name"]>@context.FirstName</MudTd>
             <MudTd DataLabel=@L["Last Name"]>@context.LastName</MudTd>
-            <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth</MudTd>
+            <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth?.ToShortDateString()</MudTd>
             <MudTd DataLabel=@L["Is Active"]><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
             <MudTd DataLabel="">
              @*   @if(user.Identity.Name!=context.Email){*@

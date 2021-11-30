@@ -54,6 +54,7 @@ namespace ProfileMatch.Components.Manager
             userAnswers = await UserAnswerRepository.Get();
             users = await UserRepository.Get();
             questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.QuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Level = ao.Level, QuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();
+            loading = false;
         }
 
         private bool dense = true;

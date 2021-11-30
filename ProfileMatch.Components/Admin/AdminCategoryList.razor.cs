@@ -19,6 +19,7 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminCategoryList : ComponentBase
     {
+        
         [Inject]
         public ISnackbar Snackbar { get; set; }
 

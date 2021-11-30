@@ -1,5 +1,6 @@
-﻿@page "/user/account/{UserId}"
-
+﻿@page "/user/{UserId}"
+@if(CurrentUser is not null)
+{
 <MudItem Class="d-flex justify-space-between">
     <MudItem xs="12" sm="4" md="3">
         <MudCard>
@@ -28,7 +29,6 @@
 
             </MudCardContent>
             <MudCardActions Class="pb-4 pl-4">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
             </MudCardActions>
         </MudCard>
     </MudItem>
@@ -64,3 +64,7 @@
         </MudExpansionPanel>
     </MudExpansionPanels>
 </MudItem>
+}
+else{
+    <p>wait</p>
+}
