@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
@@ -11,9 +12,10 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130214925_Seed5")]
+    partial class Seed5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,72 +249,9 @@ namespace ProfileMatch.Data.Migrations
                         new
                         {
                             Id = 6,
-                            Description = "Nie znasz podstaw tego języka programowania",
+                            Description = "Znasz podstawowe informacje na temat routera",
                             Level = 1,
                             QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C++",
-                            Level = 2,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "Nie znasz podstaw tego języka programowania",
-                            Level = 1,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie",
-                            Level = 2,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 3
                         });
                 });
 
@@ -414,8 +353,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b38e6726-7782-4db8-9528-20aaecc6f269",
-                            DateOfBirth = new DateTime(2021, 11, 30, 23, 14, 3, 699, DateTimeKind.Local).AddTicks(1668),
+                            ConcurrencyStamp = "be43918c-191e-47f3-8f0e-9aa39ad282a6",
+                            DateOfBirth = new DateTime(2021, 11, 30, 22, 49, 24, 631, DateTimeKind.Local).AddTicks(4736),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -425,9 +364,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBx7wgjO8h27hM5ua9ujgbhvP1I78KnzZuF9IEjlM9kpmwdnRtcFRovuhZ60WFEoTA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJbIVpTjOsZ21zDAwq7OurO4qbd48IJC0wKkVad2W0YXk8s0wR03ENvdV3wU4UYHqA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1b5fb9a0-ede8-45dc-a8e1-22912a742909",
+                            SecurityStamp = "d2934390-1854-457a-9970-5b9268b456de",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -624,14 +563,6 @@ namespace ProfileMatch.Data.Migrations
                             Description = "Jaka jest Twoja znajomość sieci komputerowych?",
                             IsActive = true,
                             Name = "Konfiguracja routera"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            Description = "Jaka jest Twoja znajomość usługi Active Directory?",
-                            IsActive = true,
-                            Name = "Usługa Active Directory"
                         });
                 });
 
@@ -675,14 +606,7 @@ namespace ProfileMatch.Data.Migrations
                         {
                             ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             QuestionId = 2,
-                            AnswerOptionId = 4,
-                            IsConfirmed = false
-                        },
-                        new
-                        {
-                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                            QuestionId = 3,
-                            AnswerOptionId = 3,
+                            AnswerOptionId = 1,
                             IsConfirmed = false
                         });
                 });

@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211123211648_Identity user roles")]
-    partial class Identityuserroles
+    [Migration("20211130201331_Seed2")]
+    partial class Seed2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,6 +209,15 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("AnswerOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Hello world",
+                            Level = 1,
+                            QuestionId = 1
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
@@ -309,8 +318,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7df59c27-21f9-4412-a79f-ed6a3176fc20",
-                            DateOfBirth = new DateTime(2021, 11, 23, 22, 16, 48, 126, DateTimeKind.Local).AddTicks(511),
+                            ConcurrencyStamp = "9e62fc78-9502-49ed-b313-688407884e75",
+                            DateOfBirth = new DateTime(2021, 11, 30, 21, 13, 31, 332, DateTimeKind.Local).AddTicks(8759),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -320,9 +329,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJSWGZw7+AKyEqHY3Q2vjF9kDqwucsPVsBYp+Vp+wxSZRSzxkpXLDWa8iA5Wz2gdtg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ7F97duVHIqHp1bvmGw28k0xYlsWK58ihqKVdteYwkMA7lj7km497wmWWxE5joEJQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fad8ec47-8dd9-474c-aa8a-e5c069b9f010",
+                            SecurityStamp = "dc6ef2ee-d5b1-41ff-8753-ce5ccaf649a7",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -345,6 +354,18 @@ namespace ProfileMatch.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pieluchowanie"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = ""
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
@@ -370,6 +391,16 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 1,
                             Name = "unassigned"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "IT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "HR"
                         });
                 });
 
@@ -449,6 +480,16 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "czy potrafisz otworzyć pieluchę?",
+                            IsActive = true,
+                            Name = "Wymiana pieluchy"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserAnswer", b =>
@@ -478,6 +519,15 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("UserAnswers");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 1,
+                            AnswerOptionId = 1,
+                            IsConfirmed = false
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>
@@ -555,7 +605,7 @@ namespace ProfileMatch.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", null)
-                        .WithMany("Roles")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -674,11 +724,11 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Roles");
-
                     b.Navigation("UserAnswers");
 
                     b.Navigation("UserNeedCategories");
+
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Category", b =>

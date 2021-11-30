@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Seed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -349,9 +349,22 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, "Pieluchowanie" },
+                    { 2, null, "" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "Description", "Name" },
-                values: new object[] { 1, null, "unassigned" });
+                values: new object[,]
+                {
+                    { 1, null, "unassigned" },
+                    { 2, null, "IT" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Notes",
@@ -369,12 +382,27 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "00e8fd7b-3aac-494a-b896-c7d574e1f578", new DateTime(2021, 11, 23, 20, 35, 49, 473, DateTimeKind.Local).AddTicks(8589), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFpkufzfQgH+zaTFGfwnxnObo6W9KLW9GqTrbjdWQCtkdFYYO6mBhgDrfEaSkBSNlw==", null, false, null, "c840569b-5bc3-4897-8bec-f14e607e946d", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "f8744f75-de29-4386-a8fa-8b944d6379fc", new DateTime(2021, 11, 30, 20, 53, 58, 664, DateTimeKind.Local).AddTicks(966), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEO2DSzZ+pSymfUIAzSxQleRijLZjl7U9vhMnn5hdjjvktjObMIljOSAGM4LFGPPzmw==", null, false, null, "b9aa8506-1114-443c-bb6b-c6e4dfce1343", false, "admin@admin.com" });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "CategoryId", "Description", "IsActive", "Name" },
+                values: new object[] { 1, 1, "czy potrafisz otworzyć pieluchę?", true, "Wymiana pieluchy" });
+
+            migrationBuilder.InsertData(
+                table: "AnswerOptions",
+                columns: new[] { "Id", "Description", "Level", "QuestionId" },
+                values: new object[] { 1, "Hello world", 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", "a96d7c75-47f4-409b-a4d1-03f93c105647" });
+
+            migrationBuilder.InsertData(
+                table: "UserAnswers",
+                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified", "SupervisorId" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 1, 1, false, null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnswerOptions_QuestionId",

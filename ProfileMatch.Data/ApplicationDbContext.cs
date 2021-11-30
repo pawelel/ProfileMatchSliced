@@ -6,6 +6,7 @@ using ProfileMatch.Models.Models;
 
 using System;
 using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace ProfileMatch.Data
 {
@@ -45,6 +46,7 @@ namespace ProfileMatch.Data
 
             builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned" });
             builder.Entity<Department>().HasData(new Department { Id = 2, Name = "IT" });
+            builder.Entity<Department>().HasData(new Department { Id = 3, Name = "HR" });
             base.OnModelCreating(builder);
 
             //a hasher to hash the password before seeding the user to the db
@@ -85,10 +87,10 @@ namespace ProfileMatch.Data
             //Seeding first set of questions
             builder.Entity<Note>().HasData(
                new Note()
-                    {
-                        Id = 1,
-                        Name = "Co jest dla mnie ważne w pracy?"
-                    },
+               {
+                   Id = 1,
+                   Name = "Co jest dla mnie ważne w pracy?"
+               },
                     new Note()
                     {
                         Id = 2,
@@ -118,41 +120,215 @@ namespace ProfileMatch.Data
             builder.Entity<Category>().HasData(
                 new Category()
                 {
-                    Id=1,
-                    Name = "Pieluchowanie"
+                    Id = 1,
+                    Name = "Programowanie"
                 },
                 new Category()
                 {
-                    Name ="",
-                    Id=2
-                }
-                
+                    Name = "Sieci komputerowe",
+                    Id = 2
+                },
+                new Category()
+                {
+                    Name = "Obsługa komputera",
+                    Id = 3
+                },
+                new Category()
+                {
+                    Name = "Handel",
+                    Id = 4
+                },
+                 new Category()
+                 {
+                     Name = "Lingwistyka",
+                     Id = 5
+                 }
+
                 );
             builder.Entity<Question>().HasData(
                 new Question()
                 {
-                    Id=1,
-                    Name = "Wymiana pieluchy",
-                    CategoryId=1,
-                    IsActive=true,
-                    Description="czy potrafisz otworzyć pieluchę?"
+                    Id = 1,
+                    Name = "C#",
+                    CategoryId = 1,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość programowania w C#?"
+
+                },
+                new Question()
+                {
+                    Id = 2,
+                    Name = "C++",
+                    CategoryId = 1,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość programowania w C++?"
+
+                },
+                new Question()
+                {
+                    Id = 3,
+                    Name = "Python",
+                    CategoryId = 1,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość programowania w Pythonie?"
+
+                },
+                new Question()
+                {
+                    Id = 4,
+                    Name = "Konfiguracja routera",
+                    CategoryId = 2,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość sieci komputerowych?"
+                },
+                new Question()
+                {
+                Id = 5,
+                    Name = "Usługa Active Directory",
+                    CategoryId = 2,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość usługi Active Directory?"
                 });
             builder.Entity<AnswerOption>().HasData(
                 new AnswerOption()
                 {
-                    Id=1,
-                    QuestionId=1,
-                    Level=1,
-                    Description="Hello world"
-                }
+                    Id = 1,
+                    QuestionId = 1,
+                    Level = 1,
+                    Description = "Nie znasz podstaw tego języka programowania"
+                },
+                new AnswerOption()
+                {
+                    Id = 2,
+                    QuestionId = 1,
+                    Level = 2,
+                    Description = "Znasz podstawowe rzeczy związane z programowaniem w C#"
+                },
+                new AnswerOption()
+                {
+                    Id = 3,
+                    QuestionId = 1,
+                    Level = 3,
+                    Description = "Potrafisz pisać proste kody w języku"
+
+                },
+                 new AnswerOption()
+                 {
+                     Id = 4,
+                     QuestionId = 1,
+                     Level = 4,
+                     Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+
+                 },
+                  new AnswerOption()
+                  {
+                      Id = 5,
+                      QuestionId = 1,
+                      Level = 5,
+                      Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+
+                  },
+                new AnswerOption()
+                {
+                    Id = 6,
+                    QuestionId = 2,
+                    Level = 1,
+                    Description = "Nie znasz podstaw tego języka programowania"
+                },
+                 new AnswerOption()
+                 {
+                     Id = 7,
+                     QuestionId = 2,
+                     Level = 2,
+                     Description = "Znasz podstawowe rzeczy związane z programowaniem w C++"
+                 },
+                new AnswerOption()
+                {
+                    Id = 8,
+                    QuestionId = 2,
+                    Level = 3,
+                    Description = "Potrafisz pisać proste kody w języku"
+                },
+                new AnswerOption()
+                {
+                    Id = 9,
+                    QuestionId = 2,
+                    Level = 4,
+                    Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+
+                },
+                 new AnswerOption()
+                 {
+                     Id = 10,
+                     QuestionId = 2,
+                     Level = 5,
+                     Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 11,
+                     QuestionId = 3,
+                     Level = 1,
+                     Description = "Nie znasz podstaw tego języka programowania"
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 12,
+                     QuestionId = 3,
+                     Level = 2,
+                     Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie"
+                 },
+                new AnswerOption()
+                {
+                    Id = 13,
+                    QuestionId = 3,
+                    Level = 3,
+                    Description = "Potrafisz pisać proste kody w języku"
+                },
+                new AnswerOption()
+                {
+                    Id = 14,
+                    QuestionId = 3,
+                    Level = 4,
+                    Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+
+                },
+                 new AnswerOption()
+                 {
+                     Id = 15,
+                     QuestionId = 3,
+                     Level = 5,
+                     Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+
+                 }
                 );
             builder.Entity<UserAnswer>().HasData(
                 new UserAnswer()
                 {
-                    AnswerOptionId = 1,
-                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647"
+
+                    QuestionId = 1,
+                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                    AnswerOptionId = 2
+
+                },
+                new UserAnswer()
+                {
+
+                    QuestionId = 2,
+                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                    AnswerOptionId = 4
+
+                },
+                new UserAnswer()
+                {
+
+                    QuestionId = 3,
+                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                    AnswerOptionId = 3
+
                 }
-                ) ;
+                );
         }
 
         public DbSet<Department> Departments { get; set; }

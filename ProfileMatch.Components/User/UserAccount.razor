@@ -1,70 +1,92 @@
 ﻿@page "/user/{UserId}"
-@if(CurrentUser is not null)
+@if (CurrentUser is not null)
 {
-<MudItem Class="d-flex justify-space-between">
-    <MudItem xs="12" sm="4" md="3">
-        <MudCard>
-            <MudCardContent>
-                <div class="d-flex justify-center mb-4">
-                    <MudAvatar Image="@CurrentUser?.PhotoPath" Style="height:100px; width:100px;">
-                        @if (AvatarImageLink == null)
-                        {
-                            <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
-                        }
-                    </MudAvatar>
-                </div>
-                <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
-                <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
-            </MudCardContent>
-        </MudCard>
-    </MudItem>
-    <MudItem xs="12" sm="8" md="8">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText>Profile Details</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
+    <MudGrid Spacing="0">
+            <MudItem Class="pa-2" xs="12" sm="4" md="3">
+                <MudCard>
+                    <MudCardContent>
+                        <div class="d-flex justify-center mb-4">
+                            <MudAvatar Image="@CurrentUser?.PhotoPath" Style="height:100px; width:100px;">
+                                @if (AvatarImageLink == null)
+                                {
+                                    <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
+                                }
+                            </MudAvatar>
+                        </div>
+                        <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
+                        <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
 
-            </MudCardContent>
-            <MudCardActions Class="pb-4 pl-4">
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
-</MudItem>
-<UserCategoryList />
+            <MudItem xs="0" sm="8" md="9">
 
-<MudItem Class="d-flex">
-    <MudExpansionPanels MultiExpansion="true">
-        <MudExpansionPanel Text=@L["What is important to me at work"]>
-            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-        </MudExpansionPanel>
-        <MudExpansionPanel Text=@L["What is important for me"]>
-            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-        </MudExpansionPanel>
-        <MudExpansionPanel Text=@L["What are my goals"]>
-            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-        </MudExpansionPanel>
-        <MudExpansionPanel Text=@L["My other skills"]>
-            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-        </MudExpansionPanel>
-        <MudExpansionPanel Text=@L["My hobbies"]>
-            <MudListItem Text="This day everything happend. The quick, brown fox jumps over a lazy dog." IconColor="Color.Primary" Icon="@Icons.Filled.Bookmark" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Success" />
-            <MudListItem Text="Single List Item" Icon="@Icons.Filled.Bookmark" IconColor="Color.Secondary" />
-        </MudExpansionPanel>
-    </MudExpansionPanels>
-</MudItem>
+            </MudItem>
+
+
+        
+            
+            <MudItem Class="pa-2" sm="6" xs="12" md="6" >
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <textfield Typo="Typo.h6">Co jest dla mnie ważne w pracy?</textfield>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <MudItem Class="pa-2" sm="6" xs="12" md="6">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <textfield Typo="Typo.h6">Co jest ważne dla mnie osobiście?</textfield>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+
+
+            <MudItem Class="pa-2" sm="6" xs="12" md="6">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <textfield Typo="Typo.h6">Moje hobby</textfield>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <MudItem Class="pa-2" sm="6" xs="12" md="6">
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <textfield Typo="Typo.h6">Moje inne umiejętności</textfield>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+     </MudGrid>
+
+
+    <UserCategoryList />
+
+
 }
-else{
+else
+{
     <p>wait</p>
 }

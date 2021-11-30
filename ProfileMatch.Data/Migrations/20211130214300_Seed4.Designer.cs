@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211123193549_Initial")]
-    partial class Initial
+    [Migration("20211130214300_Seed4")]
+    partial class Seed4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,6 +209,50 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("AnswerOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Nie znasz podstaw tego języka programowania",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C#",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Potrafisz pisać proste kody w języku",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Znasz podstawowe informacje na temat routera",
+                            Level = 1,
+                            QuestionId = 2
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
@@ -309,8 +353,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00e8fd7b-3aac-494a-b896-c7d574e1f578",
-                            DateOfBirth = new DateTime(2021, 11, 23, 20, 35, 49, 473, DateTimeKind.Local).AddTicks(8589),
+                            ConcurrencyStamp = "07ecc66f-e0ee-4e97-bc9f-aa2b84b83c84",
+                            DateOfBirth = new DateTime(2021, 11, 30, 22, 43, 0, 331, DateTimeKind.Local).AddTicks(4895),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -320,9 +364,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFpkufzfQgH+zaTFGfwnxnObo6W9KLW9GqTrbjdWQCtkdFYYO6mBhgDrfEaSkBSNlw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBJlMvCzhusf4+9ci4YPJlooaCmbxSMqg1oa80l8/NunlW/AFDxLXakkC7GvCOfrmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c840569b-5bc3-4897-8bec-f14e607e946d",
+                            SecurityStamp = "91192a38-246c-477a-8acc-7a22974d240e",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -345,6 +389,33 @@ namespace ProfileMatch.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Programowanie"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sieci komputerowe"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Obsługa komputera"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Handel"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Lingwistyka"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
@@ -370,6 +441,16 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 1,
                             Name = "unassigned"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "IT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "HR"
                         });
                 });
 
@@ -449,6 +530,40 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w C#?",
+                            IsActive = true,
+                            Name = "C#"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w C++?",
+                            IsActive = true,
+                            Name = "C++"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w Pythonie?",
+                            IsActive = true,
+                            Name = "Python"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            Description = "Jaka jest Twoja znajomość sieci komputerowych?",
+                            IsActive = true,
+                            Name = "Konfiguracja routera"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserAnswer", b =>
@@ -478,6 +593,22 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("UserAnswers");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 1,
+                            AnswerOptionId = 2,
+                            IsConfirmed = false
+                        },
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 2,
+                            AnswerOptionId = 1,
+                            IsConfirmed = false
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>
@@ -555,7 +686,7 @@ namespace ProfileMatch.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", null)
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -677,6 +808,8 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("UserAnswers");
 
                     b.Navigation("UserNeedCategories");
+
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Category", b =>

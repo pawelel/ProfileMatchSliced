@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211123212204_Renamed user roles")]
-    partial class Renameduserroles
+    [Migration("20211130220318_Seed6")]
+    partial class Seed6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,6 +209,113 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("AnswerOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Nie znasz podstaw tego języka programowania",
+                            Level = 1,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C#",
+                            Level = 2,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Potrafisz pisać proste kody w języku",
+                            Level = 3,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
+                            Level = 4,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
+                            Level = 5,
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Znasz podstawowe informacje na temat routera",
+                            Level = 1,
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
+                            Level = 2,
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
+                            Level = 3,
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
+                            Level = 4,
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
+                            Level = 5,
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "Nie konfigurowałeś żadnej usługi Active Directory",
+                            Level = 1,
+                            QuestionId = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś",
+                            Level = 2,
+                            QuestionId = 3
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje",
+                            Level = 3,
+                            QuestionId = 3
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
+                            Level = 4,
+                            QuestionId = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
+                            Level = 5,
+                            QuestionId = 3
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
@@ -309,8 +416,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d433e5ae-25b8-4f3f-89b0-3bb7cab25eae",
-                            DateOfBirth = new DateTime(2021, 11, 23, 22, 22, 4, 204, DateTimeKind.Local).AddTicks(2677),
+                            ConcurrencyStamp = "72604d7e-00cf-46db-924e-21222358c120",
+                            DateOfBirth = new DateTime(2021, 11, 30, 23, 3, 18, 455, DateTimeKind.Local).AddTicks(7367),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -320,9 +427,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGUM+xHpEWu2GsYT/Zal0gx5vtyEBuxQJHnQm+qy/GVbFZLgjZ2kPLCqpsLR+gcFMw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP+inWIMM7ouvTQH3/HSV7nciZ6AtAPOdoEbo2q5JBhCaj8VTEQbKFIByKgPfs9aMA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "06c54256-3aa7-4095-b35f-d9a166ea9847",
+                            SecurityStamp = "59683dcf-32cc-4147-9516-6e720d12b6da",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -345,6 +452,33 @@ namespace ProfileMatch.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Programowanie"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sieci komputerowe"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Obsługa komputera"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Handel"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Lingwistyka"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
@@ -370,6 +504,16 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 1,
                             Name = "unassigned"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "IT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "HR"
                         });
                 });
 
@@ -449,6 +593,48 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w C#?",
+                            IsActive = true,
+                            Name = "C#"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w C++?",
+                            IsActive = true,
+                            Name = "C++"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            Description = "Jaka jest Twoja znajomość programowania w Pythonie?",
+                            IsActive = true,
+                            Name = "Python"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            Description = "Jaka jest Twoja znajomość sieci komputerowych?",
+                            IsActive = true,
+                            Name = "Konfiguracja routera"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            Description = "Jaka jest Twoja znajomość usługi Active Directory?",
+                            IsActive = true,
+                            Name = "Usługa Active Directory"
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserAnswer", b =>
@@ -478,6 +664,29 @@ namespace ProfileMatch.Data.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("UserAnswers");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 1,
+                            AnswerOptionId = 2,
+                            IsConfirmed = false
+                        },
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 2,
+                            AnswerOptionId = 4,
+                            IsConfirmed = false
+                        },
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            QuestionId = 3,
+                            AnswerOptionId = 3,
+                            IsConfirmed = false
+                        });
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>

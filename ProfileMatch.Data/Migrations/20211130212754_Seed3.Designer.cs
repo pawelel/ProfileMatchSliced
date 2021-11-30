@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
@@ -11,9 +12,10 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130212754_Seed3")]
+    partial class Seed3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,100 +221,9 @@ namespace ProfileMatch.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C#",
-                            Level = 2,
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Nie znasz podstaw tego języka programowania",
+                            Description = "Znasz podstawowe informacje na temat routera",
                             Level = 1,
                             QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C++",
-                            Level = 2,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "Nie znasz podstaw tego języka programowania",
-                            Level = 1,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie",
-                            Level = 2,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 3
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 3
                         });
                 });
 
@@ -414,8 +325,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b38e6726-7782-4db8-9528-20aaecc6f269",
-                            DateOfBirth = new DateTime(2021, 11, 30, 23, 14, 3, 699, DateTimeKind.Local).AddTicks(1668),
+                            ConcurrencyStamp = "9aaafb31-c9bf-4198-b415-af2ea197433d",
+                            DateOfBirth = new DateTime(2021, 11, 30, 22, 27, 53, 858, DateTimeKind.Local).AddTicks(2270),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -425,9 +336,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBx7wgjO8h27hM5ua9ujgbhvP1I78KnzZuF9IEjlM9kpmwdnRtcFRovuhZ60WFEoTA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC4WXkA2qVZ/DNaxF5MmUd/DJlsfWn81X9mEz6tJoXo8+fejOFE1sBcy7/Ec8cAVSA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1b5fb9a0-ede8-45dc-a8e1-22912a742909",
+                            SecurityStamp = "87ac5ddf-1efe-411b-bcf9-9f7f0f825395",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -471,11 +382,6 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 4,
                             Name = "Handel"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Lingwistyka"
                         });
                 });
 
@@ -597,41 +503,17 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "Jaka jest Twoja znajomość programowania w C#?",
+                            Description = "Jaka jest Twoja znajomość programowania?",
                             IsActive = true,
                             Name = "C#"
                         },
                         new
                         {
                             Id = 2,
-                            CategoryId = 1,
-                            Description = "Jaka jest Twoja znajomość programowania w C++?",
-                            IsActive = true,
-                            Name = "C++"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            Description = "Jaka jest Twoja znajomość programowania w Pythonie?",
-                            IsActive = true,
-                            Name = "Python"
-                        },
-                        new
-                        {
-                            Id = 4,
                             CategoryId = 2,
                             Description = "Jaka jest Twoja znajomość sieci komputerowych?",
                             IsActive = true,
                             Name = "Konfiguracja routera"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            Description = "Jaka jest Twoja znajomość usługi Active Directory?",
-                            IsActive = true,
-                            Name = "Usługa Active Directory"
                         });
                 });
 
@@ -668,21 +550,14 @@ namespace ProfileMatch.Data.Migrations
                         {
                             ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             QuestionId = 1,
-                            AnswerOptionId = 2,
+                            AnswerOptionId = 1,
                             IsConfirmed = false
                         },
                         new
                         {
                             ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             QuestionId = 2,
-                            AnswerOptionId = 4,
-                            IsConfirmed = false
-                        },
-                        new
-                        {
-                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                            QuestionId = 3,
-                            AnswerOptionId = 3,
+                            AnswerOptionId = 1,
                             IsConfirmed = false
                         });
                 });
