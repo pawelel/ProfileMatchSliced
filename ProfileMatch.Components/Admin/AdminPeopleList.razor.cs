@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -55,7 +56,7 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             user = (await AuthSP).User;
-            Users = await UserRepository.Get();
+            Users = await UserRepository.Get(include: src=>src.Include(u=>u.Department));
         }
 
         private async Task EditProfile(ApplicationUser applicationUser)

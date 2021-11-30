@@ -50,7 +50,7 @@ namespace ProfileMatch.Components.Manager
             loading = true;
             categories = await CategoryRepository.Get();
             answerOptions = await AnswerOptionRepository.Get();
-            questions = await QuestionRepository.Get();
+            questions = await QuestionRepository.Get(include: src=>src.Include(q=>q.Category));
             userAnswers = await UserAnswerRepository.Get();
             users = await UserRepository.Get();
             questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.QuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Level = ao.Level, QuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();

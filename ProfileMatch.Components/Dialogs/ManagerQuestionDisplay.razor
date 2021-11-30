@@ -1,31 +1,37 @@
-﻿<MudDialog>
-    <DialogContent>
-        <MudItem Class="pt-8"></MudItem>
-        <MudText Typo="Typo.h6">@Q.Category.Name:</MudText>
-        <MudText Typo="Typo.h6">@Q.Name</MudText>
+﻿@if (Q is not null && Q.Category is not null)
+{
+    <MudDialog>
+        <DialogContent>
+            <MudItem Class="pt-8"></MudItem>
+            <MudText Typo="Typo.h6">@Q.Category.Name:</MudText>
+            <MudText Typo="Typo.h6">@Q.Name</MudText>
 
-        <MudTabs Outlined="true"
+            <MudTabs Outlined="true"
                  Position="Position.Top"
                  Rounded="true"
                  Border="true"
                  ApplyEffectsToContainer="true"
                  PanelClass="pa-6 d-block">
-            @foreach (var level in Q.AnswerOptions)
-            {
-                <MudTabPanel Text="@level.Level.ToString()">
+                @foreach (var level in Q.AnswerOptions)
+                {
+                    <MudTabPanel Text="@level.Level.ToString()">
 
-                    <MudItem>
-                        <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
-                        <MudText Typo="Typo.subtitle2"
+                        <MudItem>
+                            <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
+                            <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@level.Description">@level.Description</MudText>
-                            </MudItem>
-                        </MudTabPanel>
-                    }
-        </MudTabs>
-    </DialogContent>
-</MudDialog>
-
-<style>
+                        </MudItem>
+                    </MudTabPanel>
+                }
+            </MudTabs>
+        </DialogContent>
+    </MudDialog>
+    }
+else
+    {
+        <p>wait</p>
+    }
+    <style>
     .mud-tab {
         min-width: 50px !important;
     }
