@@ -68,7 +68,11 @@ namespace ProfileMatch.Components.Admin
             Users = await UserRepository.Get();
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject]        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
+        void ShowProfile(ApplicationUser applicationUser)
+        {
+            NavigationManager.NavigateTo($"user/{applicationUser.Id}");
+        }
     }
 }
