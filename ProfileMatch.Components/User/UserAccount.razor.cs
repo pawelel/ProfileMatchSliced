@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -27,6 +31,8 @@ namespace ProfileMatch.Components.User
         public string LastName { get; set; } = "Pluciński";
         public string JobTitle { get; set; } = "IT Consultant";
         public string Email { get; set; } = "karol@test.com";
+        private List<UserNoteVM> UserNotesVM;
+        [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
         [Parameter] public string UserId { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         ApplicationUser CurrentUser;
@@ -36,6 +42,7 @@ namespace ProfileMatch.Components.User
             if (!string.IsNullOrEmpty(UserId))
             {
                 CurrentUser = await AppUserManager.GetById(UserId);
+                
             }
             else
             {
@@ -45,8 +52,28 @@ namespace ProfileMatch.Components.User
                     UserId = principal.FindFirst("UserId").Value;
                 CurrentUser = await AppUserManager.GetById(UserId);
             }
+            UserNotesVM = await GetUserNotesVMAsync();
         }
-
+        private async Task<List<UserNoteVM>> GetUserNotesVMAsync()
+        {
+            var notes = await UserNoteRepository.Get(u => u.ApplicationUserId == UserId, include: src => src.Include(n => n.Note));
+            notes = (from n in notes where n.IsDisplayed==true select n).ToList();
+            List<UserNoteVM> userNoteVMs = new();
+            foreach (var note in notes)
+            {
+                    var noteVM = new UserNoteVM()
+                    {
+                        IsDisplayed = note.IsDisplayed,
+                        NoteDescription = note.Note.Description,
+                        NoteId = note.NoteId,
+                        NoteName = note.Note.Name,
+                        UserDescription = note.Description,
+                        UserId = note.ApplicationUserId
+                    };
+                    userNoteVMs.Add(noteVM);
+            }
+            return userNoteVMs;
+        }
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }

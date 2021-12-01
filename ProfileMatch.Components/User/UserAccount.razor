@@ -25,60 +25,20 @@
 
 
         
-            
+            @foreach(var un in UserNotesVM){
             <MudItem Class="pa-2" sm="6" xs="12" md="6" >
                 <MudCard>
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <textfield Typo="Typo.h6">Co jest dla mnie ważne w pracy?</textfield>
+                            <textfield Typo="Typo.h6">@un.NoteName</textfield>
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>
-                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
+                        <MudText Typo="Typo.body2">@un.UserDescription</MudText>
                     </MudCardContent>
                 </MudCard>
             </MudItem>
-
-            <MudItem Class="pa-2" sm="6" xs="12" md="6">
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <textfield Typo="Typo.h6">Co jest ważne dla mnie osobiście?</textfield>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-
-
-
-            <MudItem Class="pa-2" sm="6" xs="12" md="6">
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <textfield Typo="Typo.h6">Moje hobby</textfield>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-
-            <MudItem Class="pa-2" sm="6" xs="12" md="6">
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <textfield Typo="Typo.h6">Moje inne umiejętności</textfield>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
+            }
      </MudGrid>
 
 

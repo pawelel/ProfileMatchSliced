@@ -38,7 +38,7 @@ namespace ProfileMatch.Components.User
         }
         private async Task<List<UserNote>> GetUserNotesAsync()
         {
-            return await UserNoteRepository.Get(u=>u.ApplicationUserId==UserId);
+            return await UserNoteRepository.Get(u => u.ApplicationUserId == UserId);
         }
 
         protected override async Task OnInitializedAsync()
@@ -68,14 +68,14 @@ namespace ProfileMatch.Components.User
 
                     userNote = new();
                 }
-                
-                if (userNote!=null)
+
+                if (userNote != null)
                 {
-                     userNoteVM = new UserNoteVM
+                    userNoteVM = new UserNoteVM
                     {
                         UserId = UserId,
                         UserDescription = userNote.Description,
-                        IsDisplayed = false,
+                        IsDisplayed = userNote.IsDisplayed,
                         NoteId = note.Id,
                         NoteName = note.Name,
                         NoteDescription = note.Description
@@ -83,7 +83,7 @@ namespace ProfileMatch.Components.User
                 }
                 else
                 {
-                     userNoteVM = new UserNoteVM
+                    userNoteVM = new UserNoteVM
                     {
                         UserId = UserId,
                         UserDescription = String.Empty,
@@ -122,14 +122,13 @@ namespace ProfileMatch.Components.User
 
         private async Task UserNoteUpdate(UserNoteVM UserNoteVM)
         {
-            var parameters = new DialogParameters { ["EditUserNote"] = UserNoteVM };
+            var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
             var dialog = DialogService.Show<UserNoteDialog>("Update Note", parameters);
             await dialog.Result;
         }
 
 
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }
