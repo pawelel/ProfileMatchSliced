@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211130220318_Seed6")]
-    partial class Seed6
+    [Migration("20211201185545_Seed")]
+    partial class Seed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -249,72 +249,142 @@ namespace ProfileMatch.Data.Migrations
                         new
                         {
                             Id = 6,
-                            Description = "Znasz podstawowe informacje na temat routera",
+                            Description = "Nie znasz podstaw tego języka programowania",
                             Level = 1,
                             QuestionId = 2
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
+                            Description = "Znasz podstawowe rzeczy związane z programowaniem w C++",
                             Level = 2,
                             QuestionId = 2
                         },
                         new
                         {
                             Id = 8,
-                            Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
+                            Description = "Potrafisz pisać proste kody w języku",
                             Level = 3,
                             QuestionId = 2
                         },
                         new
                         {
                             Id = 9,
-                            Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
+                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
                             Level = 4,
                             QuestionId = 2
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
+                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
                             Level = 5,
                             QuestionId = 2
                         },
                         new
                         {
                             Id = 11,
-                            Description = "Nie konfigurowałeś żadnej usługi Active Directory",
+                            Description = "Nie znasz podstaw tego języka programowania",
                             Level = 1,
                             QuestionId = 3
                         },
                         new
                         {
                             Id = 12,
-                            Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś",
+                            Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie",
                             Level = 2,
                             QuestionId = 3
                         },
                         new
                         {
                             Id = 13,
-                            Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje",
+                            Description = "Potrafisz pisać proste kody w języku",
                             Level = 3,
                             QuestionId = 3
                         },
                         new
                         {
                             Id = 14,
-                            Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
+                            Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
                             Level = 4,
                             QuestionId = 3
                         },
                         new
                         {
                             Id = 15,
-                            Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
+                            Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
                             Level = 5,
                             QuestionId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "Znasz podstawowe informacje na temat routera",
+                            Level = 1,
+                            QuestionId = 4
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
+                            Level = 2,
+                            QuestionId = 4
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
+                            Level = 3,
+                            QuestionId = 4
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
+                            Level = 4,
+                            QuestionId = 4
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
+                            Level = 5,
+                            QuestionId = 4
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Description = "Nie konfigurowałeś żadnej usługi Active Directory",
+                            Level = 1,
+                            QuestionId = 5
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś",
+                            Level = 2,
+                            QuestionId = 5
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje",
+                            Level = 3,
+                            QuestionId = 5
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
+                            Level = 4,
+                            QuestionId = 5
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
+                            Level = 5,
+                            QuestionId = 5
                         });
                 });
 
@@ -416,8 +486,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "72604d7e-00cf-46db-924e-21222358c120",
-                            DateOfBirth = new DateTime(2021, 11, 30, 23, 3, 18, 455, DateTimeKind.Local).AddTicks(7367),
+                            ConcurrencyStamp = "442df9fb-2752-417e-a8ca-b28cffc17c14",
+                            DateOfBirth = new DateTime(2021, 12, 1, 19, 55, 45, 117, DateTimeKind.Local).AddTicks(9250),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -427,9 +497,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP+inWIMM7ouvTQH3/HSV7nciZ6AtAPOdoEbo2q5JBhCaj8VTEQbKFIByKgPfs9aMA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAwPrFRx8AkUHRuwkUCI3H5hTjLVXh+P0w5SHa5xa2aKvtG6oGQ3N5dniCQKfUAYqg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59683dcf-32cc-4147-9516-6e720d12b6da",
+                            SecurityStamp = "004abe04-cf49-4a53-acab-e2cea64421b2",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -634,6 +704,30 @@ namespace ProfileMatch.Data.Migrations
                             Description = "Jaka jest Twoja znajomość usługi Active Directory?",
                             IsActive = true,
                             Name = "Usługa Active Directory"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Description = "Jaka jest Twoja znajomość Hardware komputera?",
+                            IsActive = true,
+                            Name = "Hardware"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?",
+                            IsActive = true,
+                            Name = "Instalacja systemu Windows"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 4,
+                            Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?",
+                            IsActive = true,
+                            Name = "Obsługa programu magazynowego"
                         });
                 });
 

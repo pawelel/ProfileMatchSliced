@@ -353,8 +353,11 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, null, "Pieluchowanie" },
-                    { 2, null, "" }
+                    { 1, null, "Programowanie" },
+                    { 2, null, "Sieci komputerowe" },
+                    { 3, null, "Obsługa komputera" },
+                    { 4, null, "Handel" },
+                    { 5, null, "Lingwistyka" }
                 });
 
             migrationBuilder.InsertData(
@@ -363,7 +366,8 @@ namespace ProfileMatch.Data.Migrations
                 values: new object[,]
                 {
                     { 1, null, "unassigned" },
-                    { 2, null, "IT" }
+                    { 2, null, "IT" },
+                    { 3, null, "HR" }
                 });
 
             migrationBuilder.InsertData(
@@ -382,17 +386,54 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "f8744f75-de29-4386-a8fa-8b944d6379fc", new DateTime(2021, 11, 30, 20, 53, 58, 664, DateTimeKind.Local).AddTicks(966), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEO2DSzZ+pSymfUIAzSxQleRijLZjl7U9vhMnn5hdjjvktjObMIljOSAGM4LFGPPzmw==", null, false, null, "b9aa8506-1114-443c-bb6b-c6e4dfce1343", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "442df9fb-2752-417e-a8ca-b28cffc17c14", new DateTime(2021, 12, 1, 19, 55, 45, 117, DateTimeKind.Local).AddTicks(9250), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAwPrFRx8AkUHRuwkUCI3H5hTjLVXh+P0w5SHa5xa2aKvtG6oGQ3N5dniCQKfUAYqg==", null, false, null, "004abe04-cf49-4a53-acab-e2cea64421b2", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
                 columns: new[] { "Id", "CategoryId", "Description", "IsActive", "Name" },
-                values: new object[] { 1, 1, "czy potrafisz otworzyć pieluchę?", true, "Wymiana pieluchy" });
+                values: new object[,]
+                {
+                    { 1, 1, "Jaka jest Twoja znajomość programowania w C#?", true, "C#" },
+                    { 2, 1, "Jaka jest Twoja znajomość programowania w C++?", true, "C++" },
+                    { 3, 1, "Jaka jest Twoja znajomość programowania w Pythonie?", true, "Python" },
+                    { 4, 2, "Jaka jest Twoja znajomość sieci komputerowych?", true, "Konfiguracja routera" },
+                    { 5, 2, "Jaka jest Twoja znajomość usługi Active Directory?", true, "Usługa Active Directory" },
+                    { 6, 3, "Jaka jest Twoja znajomość Hardware komputera?", true, "Hardware" },
+                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", true, "Instalacja systemu Windows" },
+                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", true, "Obsługa programu magazynowego" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AnswerOptions",
                 columns: new[] { "Id", "Description", "Level", "QuestionId" },
-                values: new object[] { 1, "Hello world", 1, 1 });
+                values: new object[,]
+                {
+                    { 1, "Nie znasz podstaw tego języka programowania", 1, 1 },
+                    { 2, "Znasz podstawowe rzeczy związane z programowaniem w C#", 2, 1 },
+                    { 3, "Potrafisz pisać proste kody w języku", 3, 1 },
+                    { 4, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 1 },
+                    { 5, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 1 },
+                    { 6, "Nie znasz podstaw tego języka programowania", 1, 2 },
+                    { 7, "Znasz podstawowe rzeczy związane z programowaniem w C++", 2, 2 },
+                    { 8, "Potrafisz pisać proste kody w języku", 3, 2 },
+                    { 9, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 2 },
+                    { 10, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 2 },
+                    { 11, "Nie znasz podstaw tego języka programowania", 1, 3 },
+                    { 12, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", 2, 3 },
+                    { 13, "Potrafisz pisać proste kody w języku", 3, 3 },
+                    { 14, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 3 },
+                    { 15, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 3 },
+                    { 16, "Znasz podstawowe informacje na temat routera", 1, 4 },
+                    { 17, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", 2, 4 },
+                    { 18, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", 3, 4 },
+                    { 19, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", 4, 4 },
+                    { 20, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", 5, 4 },
+                    { 21, "Nie konfigurowałeś żadnej usługi Active Directory", 1, 5 },
+                    { 22, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2, 5 },
+                    { 23, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", 3, 5 },
+                    { 24, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4, 5 },
+                    { 25, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5, 5 }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -402,7 +443,17 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "UserAnswers",
                 columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified", "SupervisorId" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 1, 1, false, null, null });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 1, 2, false, null, null });
+
+            migrationBuilder.InsertData(
+                table: "UserAnswers",
+                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified", "SupervisorId" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 2, 4, false, null, null });
+
+            migrationBuilder.InsertData(
+                table: "UserAnswers",
+                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified", "SupervisorId" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 3, 3, false, null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnswerOptions_QuestionId",

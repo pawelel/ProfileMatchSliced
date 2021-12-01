@@ -188,7 +188,32 @@ namespace ProfileMatch.Data
                     CategoryId = 2,
                     IsActive = true,
                     Description = "Jaka jest Twoja znajomość usługi Active Directory?"
-                });
+                },
+                new Question()
+                {
+                    Id = 6,
+                    Name = "Hardware",
+                    CategoryId = 3,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość Hardware komputera?"
+                },
+                new Question()
+                {
+                    Id = 7,
+                    Name = "Instalacja systemu Windows",
+                    CategoryId = 3,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?"
+                },
+                new Question()
+                {
+                    Id = 8,
+                    Name = "Obsługa programu magazynowego",
+                    CategoryId = 4,
+                    IsActive = true,
+                    Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?"
+                }
+                );
             builder.Entity<AnswerOption>().HasData(
                 new AnswerOption()
                 {
@@ -300,6 +325,86 @@ namespace ProfileMatch.Data
                      QuestionId = 3,
                      Level = 5,
                      Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 16,
+                     QuestionId = 4,
+                     Level = 1,
+                     Description = "Znasz podstawowe informacje na temat routera"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 17,
+                     QuestionId = 4,
+                     Level = 2,
+                     Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 18,
+                     QuestionId = 4,
+                     Level = 3,
+                     Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 19,
+                     QuestionId = 4,
+                     Level = 4,
+                     Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 20,
+                     QuestionId = 4,
+                     Level = 5,
+                     Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 21,
+                     QuestionId = 5,
+                     Level = 1,
+                     Description = "Nie konfigurowałeś żadnej usługi Active Directory"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 22,
+                     QuestionId = 5,
+                     Level = 2,
+                     Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 23,
+                     QuestionId = 5,
+                     Level = 3,
+                     Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 24,
+                     QuestionId = 5,
+                     Level = 4,
+                     Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup"
+
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 25,
+                     QuestionId = 5,
+                     Level = 5,
+                     Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów"
 
                  }
                 );
