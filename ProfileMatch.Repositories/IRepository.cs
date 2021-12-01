@@ -19,7 +19,7 @@ namespace ProfileMatch.Repositories
         Task<List<TEntity>> GetAll();
 
         Task<TEntity> GetById(params object[] ids);
-
+        Task<TEntity> GetOne(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
         Task<TEntity> Insert(TEntity entity);
 
         Task<TEntity> Update(TEntity entityToUpdate);

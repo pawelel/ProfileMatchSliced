@@ -149,5 +149,36 @@ namespace ProfileMatch.Repositories
                 return null;
             }
         }
+        public virtual async Task<TEntity> GetOne(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            using ApplicationDbContext context = contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            dbSet = context.Set<TEntity>();
+            try
+            {
+                // Get the dbSet from the Entity passed in
+                IQueryable<TEntity> query = dbSet;
+
+                // Apply the filter
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                // Include the specified properties
+                if (include != null)
+                {
+                    query = include(query);
+                }
+                return await query.FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+                return null;
+            }
+        }
     }
 }

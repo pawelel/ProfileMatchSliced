@@ -1,4 +1,8 @@
-﻿@if (Q is not null && Q.Category is not null)
+﻿  @if (Q.Category is null || Q is null || Q.AnswerOptions is null)
+{
+    <p>wait</p>
+}
+else
 {
     <MudDialog>
         <DialogContent>
@@ -12,7 +16,7 @@
                  Border="true"
                  ApplyEffectsToContainer="true"
                  PanelClass="pa-6 d-block">
-                @foreach (var level in Q.AnswerOptions)
+                @foreach (var level in QAnswerOptions)
                 {
                     <MudTabPanel Text="@level.Level.ToString()">
 
@@ -26,10 +30,6 @@
             </MudTabs>
         </DialogContent>
     </MudDialog>
-    }
-else
-    {
-        <p>wait</p>
     }
     <style>
     .mud-tab {
