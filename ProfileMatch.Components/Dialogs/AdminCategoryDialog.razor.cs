@@ -10,6 +10,7 @@ using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -27,7 +28,11 @@ namespace ProfileMatch.Components.Dialogs
             TempName = Cat.Name;
             TempDescription = Cat.Description;
         }
-
+        private static IEnumerable<string> MaxCharacters(string ch)
+        {
+            if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
+                yield return "Max 20 characters";
+        }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
         private MudForm Form;

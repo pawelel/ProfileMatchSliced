@@ -19,7 +19,7 @@ namespace ProfileMatch.Components.Dialogs
     {
         [Inject] DataManager<UserAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-
+        [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
         [Parameter] public Question Q { get; set; }
@@ -54,7 +54,6 @@ namespace ProfileMatch.Components.Dialogs
                 userAnswer = new()
                 {
                     QuestionId = questionId,
-                    SupervisorId = null,
                     AnswerOptionId = answerOptionId,
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
@@ -69,7 +68,6 @@ namespace ProfileMatch.Components.Dialogs
                 userAnswer.AnswerOptionId = answerOptionId;
                 userAnswer.IsConfirmed = false;
                 userAnswer.LastModified = DateTime.Now;
-                userAnswer.SupervisorId = null;
                 await UserAnswerRepository.Update(userAnswer);
             }
             MudDialog.Close(DialogResult.Ok(userAnswer));

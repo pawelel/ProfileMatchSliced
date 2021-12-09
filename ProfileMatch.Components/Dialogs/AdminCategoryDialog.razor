@@ -1,7 +1,7 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Category Name"] Required="true" RequiredError=@L["Category name is required!"] />
+            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Category Name"] Required="true" RequiredError=@L["Category name is required!"] Counter="20" MaxLength="20" HelperText="Max length" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Category Description"] Lines="5" />
         </MudForm>
     </DialogContent>

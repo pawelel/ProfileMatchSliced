@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -14,9 +13,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
@@ -27,10 +24,6 @@ namespace ProfileMatch.Components.User
         private ISnackbar Snackbar { get; set; }
         public string AvatarImageLink { get; set; }
         public string AvatarIcon { get; set; }
-        public string FirstName { get; set; } = "Karol";
-        public string LastName { get; set; } = "Pluciński";
-        public string JobTitle { get; set; } = "IT Consultant";
-        public string Email { get; set; } = "karol@test.com";
         private List<UserNoteVM> UserNotesVM;
         [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
         [Parameter] public string UserId { get; set; }

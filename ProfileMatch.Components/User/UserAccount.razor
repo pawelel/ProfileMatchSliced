@@ -1,50 +1,44 @@
 ﻿@page "/user/{UserId}"
 @if (CurrentUser is not null)
 {
-    <MudGrid Spacing="0">
-            <MudItem Class="pa-2" xs="12" sm="4" md="3">
-                <MudCard>
-                    <MudCardContent>
-                        <div class="d-flex justify-center mb-4">
-                            <MudAvatar Image="@CurrentUser?.PhotoPath" Style="height:100px; width:100px;">
-                                @if (AvatarImageLink == null)
-                                {
-                                    <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
-                                }
-                            </MudAvatar>
-                        </div>
-                        <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
-                        <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
+<MudGrid Spacing="0">
+    <MudItem Class="pa-2" xs="12" sm="4" md="3">
+        <MudCard>
+            <MudCardContent>
+                <div class="d-flex justify-center mb-4">
+                    <MudAvatar Image="@CurrentUser?.PhotoPath" Style="height:100px; width:100px;">
+                        @if (AvatarImageLink == null)
+                        {
+                            <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
+                        }
+                    </MudAvatar>
+                </div>
+                <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
+                <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-            <MudItem xs="0" sm="8" md="9">
-
-            </MudItem>
-
-
-        
-            @foreach(var un in UserNotesVM){
-            <MudItem Class="pa-2" sm="6" xs="12" md="6" >
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <textfield Typo="Typo.h6">@un.NoteName</textfield>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">@un.UserDescription</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-            }
-     </MudGrid>
+    <MudSpacer/>
+    <UserCategoryList CurrentUser="CurrentUser" />
 
 
-    <UserCategoryList />
-
-
+    @foreach (var un in UserNotesVM)
+    {
+        <MudItem Class="pa-2" sm="6" xs="12" md="6">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <textfield Typo="Typo.h6">@un.NoteName</textfield>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">@un.UserDescription</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
 }
 else
 {

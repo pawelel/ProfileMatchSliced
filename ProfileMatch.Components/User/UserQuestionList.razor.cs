@@ -105,7 +105,6 @@ namespace ProfileMatch.Components.User
             {
                 QuestionId = question.Id,
                 AnswerOptionId = null,
-                SupervisorId = null,
                 ApplicationUserId = UserId,
                 IsConfirmed = false
             };

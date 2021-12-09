@@ -1,1 +1,28 @@
-﻿
+﻿@if (UserCategoryVMs.Count == 0)
+{
+    <MudItem xs="0" sm="8" md="9">
+
+    </MudItem>
+}
+else
+{
+
+
+<MudItem Class="pa-2" sm="12" xs="12" md="6">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <textfield Typo="Typo.h6">My Categories</textfield>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+
+            @foreach (var uc in UserCategoryVMs)
+            {
+                <MudChip Text="@uc.CategoryName"></MudChip>
+            }
+
+        </MudCardContent>
+    </MudCard>
+</MudItem>
+}
