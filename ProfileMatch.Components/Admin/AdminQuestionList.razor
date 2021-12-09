@@ -13,7 +13,7 @@ else
         </MudSelect>
         <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
-    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ColGroup>
             <col />
             <col style="width: 60%;" />
@@ -45,11 +45,6 @@ else
     </MudTable>
 
     <MudItem class="d-flex flex-wrap mt-4">
-        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">@L["Hover"]</MudSwitch>
-        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
-        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">@L["Striped"]</MudSwitch>
-        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">@L["Bordered"]</MudSwitch>
-        <MudSpacer />
         <MudItem style="min-width:200px;">
             <MudText Inline="true" Class="align-self-center">@L["Selected1"]: @selectedItem1?.Name</MudText>
         </MudItem>

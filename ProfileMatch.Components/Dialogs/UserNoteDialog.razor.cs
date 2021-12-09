@@ -30,7 +30,7 @@ namespace ProfileMatch.Components.Dialogs
         }
         [Inject] private ISnackbar Snackbar { get; set; }
         UserNote EditUserNote;
-        [Parameter] public UserNoteVM UserNoteVM { get; set; } 
+        [Parameter] public UserNoteVM UserNoteVM { get; set; }
         string TempDescription;
         bool IsDisplayed;
         bool exists;
@@ -44,7 +44,8 @@ namespace ProfileMatch.Components.Dialogs
             else
             {
                 EditUserNote = new()
-                {IsDisplayed = UserNoteVM.IsDisplayed,
+                {
+                    IsDisplayed = UserNoteVM.IsDisplayed,
                     NoteId = UserNoteVM.NoteId,
                     ApplicationUserId = UserNoteVM.UserId
                 };

@@ -1,8 +1,4 @@
-﻿<MudSwitch @bind-Checked="@hover" Color="Color.Primary">@L["Hover"]</MudSwitch>
-<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
-<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">@L["Striped"]</MudSwitch>
-<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">@L["Bordered"]</MudSwitch>
-<MudTable Items="@UserNotesVM" T="UserNoteVM" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<UserNoteVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+﻿<MudTable Items="@UserNotesVM" T="UserNoteVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserNoteVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@L["Notes"]</MudText>
         <MudSpacer />

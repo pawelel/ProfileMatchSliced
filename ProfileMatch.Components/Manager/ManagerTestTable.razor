@@ -33,9 +33,7 @@ else
               GroupBy="@_groupDefinition"
               Items="@GetCategoriesAndQuestions()"
               SortLabel=@L["Sort By"]
-              Dense="@dense" Hover="@hover"
-              Bordered="@bordered"
-              Striped="@striped"
+              Dense="true" Hover="true" Bordered="false" Striped="false"
               Breakpoint="Breakpoint.Sm"
               Filter="new Func<QuestionUserLevelVM, bool>(FilterFunc1)">
         <ColGroup>
@@ -73,13 +71,6 @@ else
                            InfoFormat="{first_item}-{last_item} / {all_items}" />
         </PagerContent>
     </MudTable>
-
-    <MudItem class="d-flex flex-wrap mt-4">
-        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">@L["Hover"]</MudSwitch>
-        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
-        <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">@L["Striped"]</MudSwitch>
-        <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">@L["Bordered"]</MudSwitch>
-    </MudItem>
 }
 <style>
     .mud-tabs-panels {

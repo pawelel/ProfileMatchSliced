@@ -1,12 +1,11 @@
-﻿<MudSwitch @bind-Checked="@_dense" Color="Color.Secondary">@L["Dense"]</MudSwitch>
-<MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
+﻿<MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
 @if (Users == null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 }
 else
 {
-    <MudTable Items="@Users" Dense="@_dense" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
+    <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
         <ToolBarContent>
             <MudText Typo="Typo.h6">@L["People Administration"]</MudText>
             <MudSpacer />

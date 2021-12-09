@@ -137,7 +137,7 @@ namespace ProfileMatch.Components.User
                 ["Q"] = question,
                 ["UserId"] = UserId
             };
-            var dialog = DialogService.Show<UserQuestionDialog>($"{question.Name}", parameters, maxWidth);
+            var dialog = DialogService.Show<UserQuestionDialog>($"{question.Category.Name}: {question.Name}", parameters, maxWidth);
             var data = (await dialog.Result).Data;
             var answer = (UserAnswer)data;
             var a = question.UserAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
