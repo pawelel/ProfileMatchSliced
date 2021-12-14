@@ -14,7 +14,7 @@ namespace ProfileMatch.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=aspnet-ProfileMatchNewest;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(@"Server=tcp:profilematchsql.database.windows.net,1433;Initial Catalog=profilematchSQL;Persist Security Info=False;User ID=wsbstudent;Password=PMMaslo123$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
