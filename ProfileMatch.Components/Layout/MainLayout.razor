@@ -50,6 +50,11 @@
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudToolBar DisableGutters="true">
                             <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                            <MudSpacer />
+                            @if (NavigationManager.Uri.Contains("/user/")&&!NavigationManager.Uri.Contains("/user/dashboard"))
+                            {
+                                <MudFab Icon="@Icons.Filled.ArrowBackIosNew" OnClick="GoBack" />
+                            }
                         </MudToolBar>
                     </MudHidden>
                     <CascadingValue Value="CurrentUser">

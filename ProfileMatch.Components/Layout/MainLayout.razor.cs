@@ -27,7 +27,7 @@ namespace ProfileMatch.Components.Layout
         [Inject] IRedirection Redirection { get; set; }
         ApplicationUser CurrentUser = new();
         [Inject] public IThemeService ThemeService { get; set; }
-
+        [Inject] NavigationManager NavigationManager { get; set; }
         private bool _drawerOpen = true;
 
         private void DrawerToggle()
@@ -69,8 +69,10 @@ namespace ProfileMatch.Components.Layout
         private readonly MudTheme defaultTheme = new GeneralTheme();
         private MudTheme currentTheme = new DarkTheme();
         private readonly MudTheme darkTheme = new DarkTheme();
-
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        void GoBack()
+        {
+            NavigationManager.NavigateTo("admin/dashboard");
+        }
+        [Inject]        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

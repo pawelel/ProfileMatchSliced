@@ -20,9 +20,9 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserAccount : ComponentBase
     {
-        [Inject]
-        private ISnackbar Snackbar { get; set; }
+        [Inject]        private ISnackbar Snackbar { get; set; }
         public string AvatarImageLink { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         public string AvatarIcon { get; set; }
         private List<UserNoteVM> UserNotesVM;
         [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
@@ -67,7 +67,6 @@ namespace ProfileMatch.Components.User
             }
             return userNoteVMs;
         }
-
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }
