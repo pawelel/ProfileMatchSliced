@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Localization;
 
@@ -17,23 +18,23 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
+
 namespace ProfileMatch.Components.Dialogs
 {
     public partial class UserNoteDialog
     {
+       [Inject]  private  IStringLocalizer<LanguageService> L { get; set; }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        private static IEnumerable<string> MaxCharacters(string ch)
-        {
-            if (!string.IsNullOrEmpty(ch) && 199 < ch?.Length)
-                yield return "Max 200 characters";
-        }
+       
         [Inject] private ISnackbar Snackbar { get; set; }
         UserNote EditUserNote;
         [Parameter] public UserNoteVM UserNoteVM { get; set; }
         string TempDescription;
         bool IsDisplayed;
         bool exists;
+        private MudTextField<string> multilineReference;
+        private MudTextField<string> singleLineReference;
         protected override async Task OnInitializedAsync()
         {
             exists = await UserNoteRepository.ExistById(UserNoteVM.UserId, UserNoteVM.NoteId);
@@ -61,7 +62,7 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(@L["Operation cancelled"], Severity.Warning);
         }
 
         protected async Task HandleSave()
@@ -77,7 +78,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                    Snackbar.Add(@L[$"There was an error: {ex.Message}"], Severity.Error);
                 }
                 UserNoteVM.IsDisplayed = IsDisplayed;
                 UserNoteVM.UserDescription = TempDescription;
@@ -90,15 +91,21 @@ namespace ProfileMatch.Components.Dialogs
             if (!exists)
             {
                 var result = await UserNoteRepository.Insert(EditUserNote);
-                Snackbar.Add($"Answer added", Severity.Success);
+                Snackbar.Add(@L["Answer added"], Severity.Success);
             }
             else
             {
                 var result = await UserNoteRepository.Update(EditUserNote);
-                Snackbar.Add($"Answer updated", Severity.Success);
+                Snackbar.Add(@L["Answer updated"], Severity.Success);
             }
         }
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
+        private IEnumerable<string> MaxCharacters(string ch)
+        {
+
+            if (!string.IsNullOrEmpty(ch) && 199 < ch?.Length)
+                yield return @L["Max 200 characters"];
+            
+        }
     }
 }

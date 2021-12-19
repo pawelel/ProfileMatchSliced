@@ -528,13 +528,31 @@
   <data name="Choose the question you want to answer" xml:space="preserve">
     <value>Wybierz pytanie, na które chcesz odpowiedzieć</value>
   </data>
-  <data name="Max 150 characters" xml:space="preserve">
-    <value>Maksymalnie 150 znaków</value>
+  <data name="Max 200 characters" xml:space="preserve">
+    <value>Maksymalnie 200 znaków</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Wyślij</value>
   </data>
   <data name="Welcome to the employee portal, select the tab you want to enter" xml:space="preserve">
     <value>Witamy w portalu pracowniczym, wybierz zakładkę, w którą chcesz wejść</value>
+  </data>
+  <data name="Answer added" xml:space="preserve">
+    <value>Odpowiedź została dodana</value>
+  </data>
+  <data name="Answer updated" xml:space="preserve">
+    <value>Odpowiedź została zaktualizowana</value>
+  </data>
+  <data name="Operation cancelled" xml:space="preserve">
+    <value>Operacja anulowana</value>
+  </data>
+  <data name="There was an error" xml:space="preserve">
+    <value>Wystąpił problem</value>
+  </data>
+  <data name="Select all text" xml:space="preserve">
+    <value>Zaznacz cały tekst</value>
+  </data>
+  <data name="Edit note" xml:space="preserve">
+    <value>Edytuj odpowiedź</value>
   </data>
 </root>

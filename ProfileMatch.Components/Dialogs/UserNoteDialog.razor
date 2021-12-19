@@ -1,11 +1,15 @@
-﻿<MudDialog>
+﻿
+
+<MudDialog>
     <DialogContent>
         <MudGrid>
-            <MudItem xs="12" md="6">
+            <MudItem xs="12" md="12" sm="12">
                 <MudForm @ref="Form">
-                    <MudTextField T="string" @bind-Value="@TempDescription" Counter="200" MaxLength="200" HelperText="Max length" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
-                        <MudCheckBox @bind-Checked="IsDisplayed" Label="Display"/>
+                    <MudTextField @ref="multilineReference" T="string" @bind-Value="@TempDescription" Counter="200" MaxLength="200" HelperText="Max length" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
+                        <MudCheckBox @bind-Checked="IsDisplayed" Label=@L["Display"]/>
+                        
                 </MudForm>
+                <MudButton Variant="@Variant.Filled" Color="Color.Primary" @onclick="() => multilineReference.SelectAsync()">@L["Select all text"]</MudButton>
             </MudItem>
         </MudGrid>
     </DialogContent>
