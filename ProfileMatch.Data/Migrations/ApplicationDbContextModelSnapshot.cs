@@ -17,7 +17,7 @@ namespace ProfileMatch.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -125,10 +125,12 @@ namespace ProfileMatch.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -172,10 +174,12 @@ namespace ProfileMatch.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -484,8 +488,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "442df9fb-2752-417e-a8ca-b28cffc17c14",
-                            DateOfBirth = new DateTime(2021, 12, 1, 19, 55, 45, 117, DateTimeKind.Local).AddTicks(9250),
+                            ConcurrencyStamp = "479c7fc7-416d-44bf-a65f-adafa4e759df",
+                            DateOfBirth = new DateTime(2021, 12, 20, 22, 24, 42, 90, DateTimeKind.Local).AddTicks(1801),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -495,9 +499,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAwPrFRx8AkUHRuwkUCI3H5hTjLVXh+P0w5SHa5xa2aKvtG6oGQ3N5dniCQKfUAYqg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELw+nG1GWh/99wZ+5Kt0IRQh6md92FKlKS6p8bKAR2o7K38hqW/T9x50BEWY0bHYVA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "004abe04-cf49-4a53-acab-e2cea64421b2",
+                            SecurityStamp = "8e7f2b32-a25d-474c-b7cf-12da9cf061b8",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -745,9 +749,6 @@ namespace ProfileMatch.Data.Migrations
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("SupervisorId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApplicationUserId", "QuestionId");
 

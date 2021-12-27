@@ -46,10 +46,10 @@ namespace ProfileMatch.Components.Admin
             loading = false;
         }
 
-        private bool dense = true;
-        private bool hover = true;
-        private bool bordered = true;
-        private bool striped = false;
+        
+        
+        
+        
         private string searchString1 = "";
         private Question selectedItem1 = null;
 

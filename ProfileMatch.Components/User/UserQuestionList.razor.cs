@@ -21,15 +21,15 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserQuestionList : ComponentBase
     {
-        private bool bordered = true;
+        
         private List<Category> categories;
-        private bool dense = true;
-        private bool hover = true;
+        
+        
         private bool loading;
         private List<Question> questions = new();
         private List<Question> questions1;
         private string searchString1 = "";
-        private bool striped = false;
+        
         private string UserId;
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }

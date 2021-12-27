@@ -97,10 +97,10 @@ namespace ProfileMatch.Components.User
             }
         }
 
-        private bool dense = false;
-        private bool hover = true;
-        private bool striped = false;
-        private bool bordered = false;
+        
+        
+        
+        
         private string searchString1 = "";
         private UserNoteVM selectedItem1 = null;
         private readonly List<UserNoteVM> UserNotesVM = new();

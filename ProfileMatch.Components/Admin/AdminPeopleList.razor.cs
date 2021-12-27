@@ -32,7 +32,7 @@ namespace ProfileMatch.Components.Admin
 
         public string SearchString { get; set; }
 
-        private bool _dense = false;
+        
         [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
         private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
 

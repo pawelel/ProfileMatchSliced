@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,6 @@ using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
 
 using System;
-using System.IO;
 
 namespace ProfileMatch
 {
@@ -38,7 +38,13 @@ namespace ProfileMatch
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<ApplicationDbContext>();
+            services.AddDbContextFactory<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            }
+                );
+
+        
 
             services.AddScoped(p =>
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
@@ -115,17 +121,14 @@ namespace ProfileMatch
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseRequestLocalization(localizationOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files")),
-                RequestPath = "/Files"
-            });
             app.UseRouting();
 
             app.UseAuthentication();

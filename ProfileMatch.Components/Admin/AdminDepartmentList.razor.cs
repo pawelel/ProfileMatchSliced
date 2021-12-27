@@ -37,10 +37,10 @@ namespace ProfileMatch.Components.Admin
             Departments = await GetDepartmentsAsync();
         }
 
-        private bool dense = false;
-        private bool hover = true;
-        private bool striped = false;
-        private bool bordered = false;
+        
+        
+        
+        
         private string searchString1 = "";
         private Department selectedItem1 = null;
         private IEnumerable<Department> Departments = new List<Department>();

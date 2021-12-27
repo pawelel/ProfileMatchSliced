@@ -38,10 +38,6 @@ namespace ProfileMatch.Components.Admin
             Categories = await GetCategoriesAsync();
         }
 
-        private bool dense = false;
-        private bool hover = true;
-        private bool striped = false;
-        private bool bordered = false;
         private string searchString1 = "";
         private Category selectedItem1 = null;
         private List<Category> Categories = new();

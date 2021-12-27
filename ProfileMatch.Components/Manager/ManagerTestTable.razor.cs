@@ -57,10 +57,10 @@ namespace ProfileMatch.Components.Manager
             loading = false;
         }
 
-        private bool dense = true;
-        private bool hover = true;
-        private bool bordered = true;
-        private bool striped = false;
+        
+        
+        
+        
         private string searchString1 = "";
 
         //private bool FilterFunc2(QuestionUserLevelVM question) => FilterFunc(question, searchString1);

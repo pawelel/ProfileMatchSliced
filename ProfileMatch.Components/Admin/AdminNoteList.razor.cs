@@ -39,10 +39,10 @@ namespace ProfileMatch.Components.Admin
             Notes = await GetNotesAsync();
         }
 
-        private bool dense = false;
-        private bool hover = true;
-        private bool striped = false;
-        private bool bordered = false;
+        
+        
+        
+        
         private string searchString1 = "";
         private Note selectedItem1 = null;
         private List<Note> Notes = new();
