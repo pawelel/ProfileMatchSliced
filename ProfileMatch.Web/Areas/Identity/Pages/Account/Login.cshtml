@@ -50,9 +50,32 @@ body {
   border-top-right-radius: 0;
 }
 
+.dark-mode {
+  background-color: #32333d;
+  color: white;
+}
 </style>
 </head>
 <body class="text-center" >
+
+    <div class="container d-flex p-3 mx-auto w-100 flex-column">
+    <header class="mb-auto">
+    
+      <nav class="nav justify-content-center float-md-end">
+
+        <div class="nav-link">
+
+          <div class="form-check form-switch" onclick="myFunction()">
+            <input type="checkbox" class="form-check-input" id="darkSwitch">
+            <label class="custom-control-label" for="darkSwitch" onclick="myFunction()">Dark Mode</label>
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+ </div> 
   <form class="form-signin" id="account" method="post">
     <h1 class="h3 mb-3">Please sign in</h1>
     
@@ -69,8 +92,15 @@ body {
     </div>
     <p class="mt-5 mb-3 text-muted">&copy; Karol Pluciński, Łukasz Pietrzak, Paweł Przytuła</p>
   </form>
+
+   <script>
+    function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+} 
+</script>
 </body>
 
 
-<
+
 
