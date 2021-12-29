@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Localization;
 
 using MudBlazor;
 using MudBlazor.Services;
@@ -22,6 +24,9 @@ using ProfileMatch.Web.Areas.Identity;
 
 using System;
 using System.IO;
+using System.Globalization;
+
+
 
 namespace ProfileMatch
 {
@@ -71,6 +76,18 @@ namespace ProfileMatch
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var culturesSupported = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("pl"),
+                    new CultureInfo("en-US"),
+                };
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedCultures = culturesSupported;
+                options.SupportedUICultures = culturesSupported;
+            });
 
             //Repositories
             services.ConfigureRepositoryWrapper();
@@ -110,14 +127,7 @@ namespace ProfileMatch
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            var supportedCultures = new[] { "en-US", "pl-PL" };
-            var localizationOptions = new RequestLocalizationOptions()
-                .SetDefaultCulture(supportedCultures[0])
-                .AddSupportedCultures(supportedCultures)
-                .AddSupportedUICultures(supportedCultures);
-
-            app.UseRequestLocalization(localizationOptions);
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
@@ -127,6 +137,8 @@ namespace ProfileMatch
                 RequestPath = "/Files"
             });
             app.UseRouting();
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseAuthentication();
             app.UseAuthorization();

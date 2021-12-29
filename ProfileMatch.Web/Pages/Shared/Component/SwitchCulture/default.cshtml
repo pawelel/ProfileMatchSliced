@@ -1,0 +1,19 @@
+﻿@model ProfileMatch.Models.Models.SwitchCultureModel
+<div>
+    <form id="switch-culture">
+        <select name="culture" id="culture-options">
+            <option></option>
+            @foreach (var culture in Model.SupportedCultures)
+            {
+                <option value ="@culture.Name" selected="@(Model.CurrentUICulture.Name == culture.Name)">@culture.DisplayName</option>
+            }
+        </select>
+    </form>
+</div>
+
+<script>
+    document.getElementyById("culture-options").addEventListener("change", ()=>
+    {
+        document.getElementyById("switch-culture").submit();
+    });
+</script>
