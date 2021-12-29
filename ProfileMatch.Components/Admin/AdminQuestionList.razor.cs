@@ -101,7 +101,7 @@ namespace ProfileMatch.Components.Admin
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDisplay>($"{question.Name}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminQuestionDisplay>($"Display Question", parameters, maxWidth);
             await dialog.Result;
         }
 
