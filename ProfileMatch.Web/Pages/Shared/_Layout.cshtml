@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProfileMatch</title>
+    <title>@ViewData["Title"] - Profile Match</title>
     <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/Identity/css/site.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -36,13 +36,13 @@
                             $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
                     }
                 </div>
-                <vc:switch-culture/>
             </div>
         </nav>
     </header>
 
     <div class="container">
         <main role="main" class="pb-3">
+            @await Component.InvokeAsync("CultureSwitch")
             @RenderBody()
         </main>
     </div>
