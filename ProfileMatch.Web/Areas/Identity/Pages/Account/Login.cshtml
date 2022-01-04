@@ -1,5 +1,14 @@
 ﻿@page
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Localization
+@using ProfileMatch.Services
 @model LoginModel
+@inject IStringLocalizer<LanguageService> L
+@{
+    
+    var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>();
+    var RequestCulture = requestCultureFeature.RequestCulture;
+}
 
 
  <head>
@@ -64,7 +73,7 @@ body {
       <nav class="nav justify-content-center float-md-end">
 
         <div class="nav-link">
-
+           @await Component.InvokeAsync("CultureSwitch")
           <div class="form-check form-switch" onclick="myFunction()">
             <input type="checkbox" class="form-check-input" id="darkSwitch">
             <label class="custom-control-label" for="darkSwitch" onclick="myFunction()">Dark Mode</label>
@@ -80,19 +89,19 @@ body {
        <img src="https://i.ibb.co/Gk1cvZK/logo.png" alt="logo" border="0">
        <br/>
        <br/>
-    <h1 class="h3 mb-3">Proszę się zalogować</h1>
+    <h1 class="h3 mb-3">@L["Proszę się zalogować"]</h1>
    
     <input type="email" id="Input.Email" class="form-control" placeholder="Email"  asp-for="Input.Email" required autofocus>   
-    <input type="password" id="Input.Password" class="form-control" placeholder="Hasło" asp-for="Input.Password" required>   
+    <input type="password" id="Input.Password" class="form-control" placeholder=@L["Hasło"] asp-for="Input.Password" required>   
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Zapamiętaj
+        <input type="checkbox" value="remember-me"> @L["Zapamiętaj"]
       </label>
     </div>
     <div class="form-group">
     <div class="d-grid gap-3">
-  <button class="btn btn-primary btn-lg" type="submit">Zaloguj</button>
+  <button class="btn btn-primary btn-lg" type="submit">@L["Zaloguj"]</button>
     </div>
     </div>
    </form>

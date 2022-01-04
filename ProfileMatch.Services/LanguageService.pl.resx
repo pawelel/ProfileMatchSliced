@@ -567,4 +567,16 @@
   <data name="Answer" xml:space="preserve">
     <value>Odpowiedź</value>
   </data>
+  <data name="Proszę się zalogować" xml:space="preserve">
+    <value>Proszę się zalogować</value>
+  </data>
+  <data name="Hasło" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="Zapamiętaj" xml:space="preserve">
+    <value>Zapamiętaj</value>
+  </data>
+  <data name="Zaloguj" xml:space="preserve">
+    <value>Zaloguj</value>
+  </data>
 </root>
