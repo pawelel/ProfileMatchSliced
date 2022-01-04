@@ -34,7 +34,7 @@ namespace ProfileMatch.Components.Dialogs
         bool IsDisplayed;
         bool exists;
         private MudTextField<string> multilineReference;
-        private MudTextField<string> singleLineReference;
+
         protected override async Task OnInitializedAsync()
         {
             exists = await UserNoteRepository.ExistById(UserNoteVM.UserId, UserNoteVM.NoteId);

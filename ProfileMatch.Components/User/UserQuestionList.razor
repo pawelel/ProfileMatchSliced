@@ -4,51 +4,35 @@
 }
 else
 {
-
-    <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" @bind-SelectedValues="Options">
-        @foreach (var cat in categories)
-        {
-            <MudSelectItem T="string" Value="@cat.Name" />
-        }
-    </MudSelect>
-    <MudItem xs="12" md="6">
-        <MudText Typo="Typo.body2">@L["Selected Values"]:  @(string.Join(", ", Options.Select(x=>$"\"{x}\""))) </MudText>
-    </MudItem>
-    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)">
-        <ColGroup>
-            <col />
-            <col style="width: 60%;" />
-            <col />
-            <col />
-        </ColGroup>
+    <MudDataGrid MultiSelection="true" T="QuestionUserLevelVM" ReadOnly="true" Items="@QuestionUserLevelVMs()" Sortable="true" Filterable="true" QuickFilter=@FilterFunc>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["Questions Table"]</MudText>
+            <MudText Typo="Typo.h6">Periodic Elements</MudText>
             <MudSpacer />
-            <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
-        <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
-            <MudTh>@L["Level"]</MudTh>
-            <MudTh>@L["Actions"]</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel=@L["Category"]>@context.Category.Name</MudTd>
-            <MudTd DataLabel=@L["Question"]>@context.Name</MudTd>
-            <MudTd DataLabel=@L["Level"]>@(ShowLevel(context))</MudTd>
-            <MudTd DataLabel=@L["Actions"]>
-                <MudButton OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
-            </MudTd>
-        </RowTemplate>
+        <Columns>
+
+            <Column T="QuestionUserLevelVM" Field="CategoryName" Title="Category" />
+            <Column T="QuestionUserLevelVM" Field="QuestionName" Title="Question" />
+            <Column T="QuestionUserLevelVM" Field="Description" />
+            <Column T="QuestionUserLevelVM" Field="Level">
+            </Column>
+
+        </Columns>
         <PagerContent>
-            <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
-                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
-                           InfoFormat="{first_item}-{last_item} / {all_items}" />
+            <MudDataGridPager T="QuestionUserLevelVM" Class="pl-2 pr-2" PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"] InfoFormat="{first_item}-{last_item} / {all_items}"/>
+           
         </PagerContent>
-    </MudTable>
+
+    </MudDataGrid>
 }
 <style>
     .mud-tabs-panels {
         min-height: 200px !important;
+    }
+
+    .selected {
+        background-color: #1E88E5 !important;
     }
 </style>

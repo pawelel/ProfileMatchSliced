@@ -555,4 +555,16 @@
   <data name="Edit note" xml:space="preserve">
     <value>Edytuj odpowiedź</value>
   </data>
+  <data name="Open questions" xml:space="preserve">
+    <value>Pytania otwarte</value>
+  </data>
+  <data name="Closed questions" xml:space="preserve">
+    <value>Pytania zamknięte</value>
+  </data>
+  <data name="My Categories" xml:space="preserve">
+    <value>Moje Kategorie</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Odpowiedź</value>
+  </data>
 </root>

@@ -43,8 +43,7 @@ namespace ProfileMatch.Components.Manager
         List<AnswerOption> answerOptions;
         List<Question> questions;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
-        private IEnumerable<string> Ppl { get; set; } = new HashSet<string>() { };
-
+        string searchString;
         protected override async Task OnInitializedAsync()
         {
             loading = true;
@@ -53,20 +52,10 @@ namespace ProfileMatch.Components.Manager
             questions = await QuestionRepository.Get(include: src => src.Include(q => q.Category));
             userAnswers = await UserAnswerRepository.Get();
             users = await UserRepository.Get();
-            questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.QuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Level = ao.Level, QuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();
+            questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.QuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Description=q.Description, Level = ao.Level, QuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();
             loading = false;
         }
-
-        
-        
-        
-        
-        private string searchString1 = "";
-
-        //private bool FilterFunc2(QuestionUserLevelVM question) => FilterFunc(question, searchString1);
-        private bool FilterFunc1(QuestionUserLevelVM question) => FilterFunc(question, searchString1);
-
-        private static bool FilterFunc(QuestionUserLevelVM question, string searchString)
+        private Func<QuestionUserLevelVM, bool> quickFilter => question =>
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -79,57 +68,21 @@ namespace ProfileMatch.Components.Manager
             if (question.Level.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
-        }
-
-        private async Task QuestionDisplay(int id)
-        {
-            var question1 = await QuestionRepository.GetById(id);
-            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question1 };
-            DialogService.Show<ManagerQuestionDisplay>($"{question1.Name}", parameters, maxWidth);
-        }
-
-        private readonly TableGroupDefinition<QuestionUserLevelVM> _groupDefinition = new()
-        {
-            GroupName = "Category",
-            Indentation = true,
-            Expandable = true,
-            IsInitiallyExpanded = true,
-            Selector = (e) => e.CategoryName,
-            InnerGroup = new TableGroupDefinition<QuestionUserLevelVM>()
-            {
-                GroupName = "Question",
-                Expandable = true,
-                Selector = (e) => e.QuestionName
-            }
         };
-
-        private List<QuestionUserLevelVM> GetPpl(List<QuestionUserLevelVM> questions)
-        {
-            List<QuestionUserLevelVM> ppl = new();
-            if (Ppl.Any())
-            {
-                ppl = (from q in questions
-                       from p in Ppl
-                       where q.FullName == p
-                       select q).ToList();
-            }
-            else
-            {
-                ppl = questions;
-            }
-            return ppl;
-        }
+        
 
         private List<QuestionUserLevelVM> GetCategoriesAndQuestions()
         {
+            if (!Cats.Any())
+            {
+                return questionUserLevels;
+            }
             List<QuestionUserLevelVM> qs = new();
 
             qs = (from q in questionUserLevels
                   from c in Cats
                   where q.CategoryName == c
                   select q).ToList();
-            qs = GetPpl(qs);
             return qs;
         }
 

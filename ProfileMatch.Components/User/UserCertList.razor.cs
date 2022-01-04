@@ -17,7 +17,6 @@ namespace ProfileMatch.Components.User
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        private readonly bool hover = true;
         private HashSet<Element> selectedItems1 = new() { };
         private readonly IEnumerable<Element> selectedItems2 = new HashSet<Element>() { };
 

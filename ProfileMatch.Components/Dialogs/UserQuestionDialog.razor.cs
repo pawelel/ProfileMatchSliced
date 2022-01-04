@@ -71,6 +71,7 @@ namespace ProfileMatch.Components.Dialogs
                 await UserAnswerRepository.Update(userAnswer);
             }
             MudDialog.Close(DialogResult.Ok(userAnswer));
+            Snackbar.Add("Answer updated");
         }
 
         [Inject]

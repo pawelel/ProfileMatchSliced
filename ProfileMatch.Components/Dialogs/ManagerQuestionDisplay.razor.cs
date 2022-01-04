@@ -19,7 +19,6 @@ namespace ProfileMatch.Components.Dialogs
         List<AnswerOption> QAnswerOptions;
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
         [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set;}
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
         [Parameter] public Question Q { get; set; }
         protected override async Task OnInitializedAsync()
         {

@@ -13,4 +13,5 @@ namespace ProfileMatch.Models.Models
         public int QuestionId { get; set; }
         public Question Question { get; set; }
     }
+
 }
