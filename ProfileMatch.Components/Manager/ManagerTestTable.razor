@@ -4,19 +4,10 @@
 }
 else
 {
-
+     <MudText Typo="Typo.h6">@L["Questions Table"]</MudText>
     <MudItem Class="d-flex">
-        <MudItem xs="12" md="5">
-            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-                @foreach (var cat in categories)
-                {
-                    <MudSelectItem T="string" Value="@cat.Name" />
-                }
-            </MudSelect>
-        </MudItem>
+        
     </MudItem>
-    <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
-
     <MudDataGrid
               Height="500px"
               FixedHeader="true"
@@ -31,7 +22,15 @@ else
               Breakpoint="Breakpoint.Sm">
         
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["Questions Table"]</MudText>
+           
+            <MudItem xs="12" md="5">
+            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
+                @foreach (var cat in categories)
+                {
+                    <MudSelectItem T="string" Value="@cat.Name" />
+                }
+            </MudSelect>
+        </MudItem>
             <MudSpacer />
             <MudTextField
             @bind-Value="searchString"
