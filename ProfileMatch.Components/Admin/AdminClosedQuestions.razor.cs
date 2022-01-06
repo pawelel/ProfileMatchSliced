@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class AdminQuestionList : ComponentBase
+    public partial class AdminClosedQuestions : ComponentBase
     {
         [Inject]
         private IDialogService DialogService { get; set; }

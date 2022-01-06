@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin
 {
-    public partial class AdminNoteList
+    public partial class AdminOpenQuestions : ComponentBase
     {
         [Inject]
         public ISnackbar Snackbar { get; set; }

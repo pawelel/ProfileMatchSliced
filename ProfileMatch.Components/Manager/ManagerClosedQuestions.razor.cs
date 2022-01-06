@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Manager
 {
-    public partial class ManagerTestTable : ComponentBase
+    public partial class ManagerClosedQuestions : ComponentBase
     {
         [Inject]
         private IDialogService DialogService { get; set; }
@@ -55,7 +55,7 @@ namespace ProfileMatch.Components.Manager
             questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.QuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Description=q.Description, Level = ao.Level, QuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();
             loading = false;
         }
-        private Func<QuestionUserLevelVM, bool> quickFilter => question =>
+        private Func<QuestionUserLevelVM, bool> QuickFilter => question =>
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;

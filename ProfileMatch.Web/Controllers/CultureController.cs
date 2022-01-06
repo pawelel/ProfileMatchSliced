@@ -9,7 +9,7 @@ namespace ProfileMatch.Web.Controllers
     [Route("[controller]/[action]")]
     public class CultureController : Controller
     {
-        public IActionResult Set(string culture, string redirectUri)
+        public IActionResult Set(string culture)
         {
             Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
