@@ -25,8 +25,8 @@ using ProfileMatch.Web.Areas.Identity;
 using System;
 using System.IO;
 using System.Globalization;
-
-
+using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace ProfileMatch
 {
@@ -74,8 +74,20 @@ namespace ProfileMatch
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton<ShareResource>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddMvc()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    {
+                        var assemblyName = new AssemblyName(typeof(LanguageService).GetTypeInfo().Assembly.FullName);
+                        return factory.Create("LanguageService", assemblyName.Name);
+                    };
+                });
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var culturesSupported = new[]
@@ -83,9 +95,10 @@ namespace ProfileMatch
                     new CultureInfo("pl"),
                     new CultureInfo("en"),
                 };
-                options.DefaultRequestCulture = new RequestCulture("pl");
+                options.DefaultRequestCulture = new RequestCulture("pl", "pl");
                 options.SupportedCultures = culturesSupported;
                 options.SupportedUICultures = culturesSupported;
+                options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
             });
 
             //Repositories

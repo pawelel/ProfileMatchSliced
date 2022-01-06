@@ -1,0 +1,15 @@
+﻿
+@inject IOptions<RequestLocalizationOptions> locOptions
+@inject IStringLocalizer<LanguageService> L
+
+    @{
+
+        var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture;
+        var cultureList = locOptions.Value.SupportedUICultures.Select(x=> new SelectListItem {Value=x.Name, Text = x.Name }).ToList();
+    }
+    <form asp-action="Set" asp-controller="Culture" method="post">
+
+<select name="culture" asp-for="@culture" asp-items="cultureList"
+onchange="this.form.submit();"></select>
+
+    </form>

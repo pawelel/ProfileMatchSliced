@@ -74,6 +74,7 @@ namespace ProfileMatch.Components.User
        {
            if (string.IsNullOrWhiteSpace(searchString))
                return true;
+
            if (x.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                return true;
            if (x.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))

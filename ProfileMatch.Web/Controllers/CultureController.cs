@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
+using System;
+
 namespace ProfileMatch.Web.Controllers
 {
     [Route("[controller]/[action]")]
@@ -9,15 +11,11 @@ namespace ProfileMatch.Web.Controllers
     {
         public IActionResult Set(string culture, string redirectUri)
         {
-            if (culture != null)
-            {
-                HttpContext.Response.Cookies.Append(
-                    CookieRequestCultureProvider.DefaultCookieName,
-                    CookieRequestCultureProvider.MakeCookieValue(
-                        new RequestCulture(culture, culture)));
-            }
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions() { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
-            return LocalRedirect(redirectUri);
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }
