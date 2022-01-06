@@ -7,10 +7,12 @@ using MudBlazor;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -21,28 +23,27 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-
+        [Parameter] public string CategoryName { get; set; }
         [Parameter] public Question Q { get; set; }
-        [Parameter] public UserAnswer UserAnswer { get; set; } = new();
+        [Parameter] public UserAnswer UserAnswer { get; set; }
         [Parameter] public string UserId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            UserAnswer = await UserAnswerRepository.GetById(UserAnswer.ApplicationUserId, UserAnswer.QuestionId);
-            //FindById(UserAnswer);
-            Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.QuestionId==Q.Id);
+        Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.QuestionId==Q.Id);            
         }
 
         private bool CanSelect(AnswerOption answerOption)
         {
+            if (UserAnswer.AnswerOptionId == answerOption.Id)
+            {
+                return false;
+            }
             if (UserAnswer == null)
             {
                 return true;
             }
-            else if (UserAnswer.AnswerOptionId == answerOption.Id)
-            {
-                return false;
-            }
+            
             return true;
         }
 
@@ -70,7 +71,8 @@ namespace ProfileMatch.Components.Dialogs
                 userAnswer.LastModified = DateTime.Now;
                 await UserAnswerRepository.Update(userAnswer);
             }
-            MudDialog.Close(DialogResult.Ok(userAnswer));
+
+            MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Answer updated");
         }
 

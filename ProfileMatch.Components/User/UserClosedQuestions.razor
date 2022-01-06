@@ -4,6 +4,39 @@
 }
 else
 {
+<MudTable Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="@FilterFunc" >
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@L["Open questions"]</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col style="width: 60%;" />
+        <col />
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>@L["Name"]</MudTh>
+        <MudTh>@L["Description"]</MudTh>
+        <MudTh>@L["Answer"]</MudTh>
+        <MudTh>@L["Actions"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel=@L["Name"]>@context.CategoryName</MudTd>
+        <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
+        <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
+        <MudTd DataLabel=@L["Edit"]>
+            <MudButton OnClick="@(()=>UserAnswerDialog(context))" Color="Color.Tertiary">@L["Edit note"]</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager RowsPerPageString=@L["Rows per page"] />
+    </PagerContent>
+</MudTable>
+
+
+
     <MudDataGrid MultiSelection="true" T="QuestionUserLevelVM" ReadOnly="true" Items="@QuestionUserLevelVMs()" Sortable="true" Filterable="true" QuickFilter=@FilterFunc>
         <ToolBarContent>
             <MudText Typo="Typo.h6">Periodic Elements</MudText>
