@@ -47,11 +47,19 @@ body {
         border-top-right-radius: 0;
     }
 
-.dark-mode {
+
+
+.dark-mode  {
     background-color: #32333d;
     color: white;
 }
-
+ .dark-mode .modal-content {
+     background-color: #32333d;
+     color: white;
+    }
+    .dark-mode .form-control-plaintext {
+        color: white;
+    }
 .logo {
     margin-bottom: 10px;
 }
