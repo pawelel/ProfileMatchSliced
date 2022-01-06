@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserQuestionList : ComponentBase
+    public partial class UserClosedQuestions : ComponentBase
     {
 
 

@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserNoteList
+    public partial class UserOpenQuestions
     {
         [Inject] public ISnackbar Snackbar { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
