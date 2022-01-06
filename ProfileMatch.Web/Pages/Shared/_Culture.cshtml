@@ -9,7 +9,7 @@
     }
     <form asp-action="Set" asp-controller="Culture" method="post">
 
-<select name="culture" asp-for="@culture" asp-items="cultureList"
+<select class="form-select" name="culture" asp-for="@culture" asp-items="cultureList"
 onchange="this.form.submit();"></select>
 
     </form>
