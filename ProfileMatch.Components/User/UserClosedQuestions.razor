@@ -34,31 +34,6 @@ else
         <MudTablePager RowsPerPageString=@L["Rows per page"] />
     </PagerContent>
 </MudTable>
-
-
-
-    <MudDataGrid MultiSelection="true" T="QuestionUserLevelVM" ReadOnly="true" Items="@QuestionUserLevelVMs()" Sortable="true" Filterable="true" QuickFilter=@FilterFunc>
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Periodic Elements</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
-        <Columns>
-
-            <Column T="QuestionUserLevelVM" Field="CategoryName" Title="Category" />
-            <Column T="QuestionUserLevelVM" Field="QuestionName" Title="Question" />
-            <Column T="QuestionUserLevelVM" Field="Description" />
-            <Column T="QuestionUserLevelVM" Field="Level">
-            </Column>
-
-        </Columns>
-        <PagerContent>
-            <MudDataGridPager T="QuestionUserLevelVM" Class="pl-2 pr-2" PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"] InfoFormat="{first_item}-{last_item} / {all_items}"/>
-           
-        </PagerContent>
-
-    </MudDataGrid>
 }
 <style>
     .mud-tabs-panels {
