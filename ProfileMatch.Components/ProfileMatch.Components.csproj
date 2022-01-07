@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExcelMapper" Version="5.2.352" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

@@ -31,8 +31,6 @@ namespace ProfileMatch.Components.User
         private List<AnswerOption> answerOptions;
         private List<UserAnswer> userAnswers;
 
-        private List<Question> questions1;
-
         private string UserId;
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -47,7 +45,6 @@ namespace ProfileMatch.Components.User
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
-        private IEnumerable<string> Options { get; set; } = new HashSet<string>() { };
 
         protected override async Task OnInitializedAsync()
         {
@@ -88,21 +85,6 @@ namespace ProfileMatch.Components.User
                return true;
            return false;
        };
-        private List<Question> GetQuestions()
-        {
-            if (!Options.Any())
-            {
-                questions1 = questions;
-            }
-            else
-            {
-                questions1 = (from q in questions
-                              from o in Options
-                              where q.Category.Name == o
-                              select q).ToList();
-            }
-            return questions1;
-        }
 
         private List<QuestionUserLevelVM> QuestionUserLevelVMs()
         {

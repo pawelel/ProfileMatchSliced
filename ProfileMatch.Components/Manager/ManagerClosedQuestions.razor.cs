@@ -21,9 +21,6 @@ namespace ProfileMatch.Components.Manager
 {
     public partial class ManagerClosedQuestions : ComponentBase
     {
-        [Inject]
-        private IDialogService DialogService { get; set; }
-
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }

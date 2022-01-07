@@ -20,7 +20,7 @@ namespace ProfileMatch.Services
             _localizer = factory.Create("LanguageService", assemblyName.Name);
         }
 
-        public LocalizedString Getkey(string key)
+        public LocalizedString GetKey(string key)
         {
             return _localizer[key];
         }

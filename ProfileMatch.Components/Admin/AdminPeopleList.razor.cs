@@ -32,7 +32,7 @@ namespace ProfileMatch.Components.Admin
 
         public string SearchString { get; set; }
 
-        
+
         [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
         private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
 
@@ -56,19 +56,19 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             user = (await AuthSP).User;
-            Users = await UserRepository.Get(include: src=>src.Include(u=>u.Department));
+            Users = await UserRepository.Get(include: src => src.Include(u => u.Department));
         }
 
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         private async Task EditProfile(ApplicationUser applicationUser)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["EditedUser"] = applicationUser };
-            var dialog = DialogService.Show<AdminUserDialog>($"Konto: {applicationUser.FirstName} {applicationUser.LastName}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminUserDialog>(L.GetString("Account") + $": {applicationUser.FirstName} {applicationUser.LastName}", parameters, maxWidth);
             await dialog.Result;
             Users = await UserRepository.Get();
         }
 
-        [Inject]        private IStringLocalizer<LanguageService> L { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         void ShowProfile(ApplicationUser applicationUser)
         {
