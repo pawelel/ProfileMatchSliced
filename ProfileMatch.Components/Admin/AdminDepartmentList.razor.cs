@@ -61,13 +61,13 @@ namespace ProfileMatch.Components.Admin
         private async Task DepartmentUpdate(Department department)
         {
             var parameters = new DialogParameters { ["Dep"] = department };
-            var dialog = DialogService.Show<AdminDepartmentDialog>("Update Department", parameters);
+            var dialog = DialogService.Show<AdminDepartmentDialog>("Edytuj dział", parameters);
             await dialog.Result;
         }
 
         private async Task DepartmentCreate()
         {
-            var dialog = DialogService.Show<AdminDepartmentDialog>("Create Department");
+            var dialog = DialogService.Show<AdminDepartmentDialog>("Stwórz dział");
             await dialog.Result;
             Departments = await GetDepartmentsAsync();
         }

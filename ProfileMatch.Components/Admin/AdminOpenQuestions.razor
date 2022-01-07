@@ -1,7 +1,7 @@
 ﻿<MudButton OnClick="(()=>NoteCreate())" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
 <MudTable Items="@Notes" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<Note,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">@L["Notes"]</MudText>
+        <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -20,7 +20,7 @@
         <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>NoteUpdate(context))" Color="Color.Tertiary">@L["Edit Note"]</MudButton>
+            <MudButton OnClick="((e)=>NoteUpdate(context))" Color="Color.Tertiary">@L["Edit Question"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

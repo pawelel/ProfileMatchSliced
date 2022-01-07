@@ -56,10 +56,7 @@ namespace ProfileMatch.Components.User
             if (authState.User.Identity.IsAuthenticated)
             {
                 UserId = authState.User.Claims.FirstOrDefault().Value;
-                categories = await CategoryRepository.Get();
-                userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == UserId);
-                answerOptions = await AnswOptionRepository.Get();
-                questions = await QuestionRepository.Get(q => q.IsActive == true);
+                await LoadData();
             }
             else
             {
@@ -68,6 +65,16 @@ namespace ProfileMatch.Components.User
 
             loading = false;
         }
+
+        private async Task LoadData()
+        {
+            categories = await CategoryRepository.Get();
+            userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == UserId);
+            questions = await QuestionRepository.Get(q => q.IsActive == true);
+            answerOptions = await AnswOptionRepository.Get();// need to filter by active question
+            answerOptions = (from q in questions join o in answerOptions on q.Id equals o.QuestionId select o).ToList();
+        }
+
         private string searchString;
 
         private Func<QuestionUserLevelVM, bool> FilterFunc => x =>
@@ -81,12 +88,8 @@ namespace ProfileMatch.Components.User
                return true;
            return false;
        };
-
-
         private List<Question> GetQuestions()
         {
-
-
             if (!Options.Any())
             {
                 questions1 = questions;
@@ -103,12 +106,25 @@ namespace ProfileMatch.Components.User
 
         private List<QuestionUserLevelVM> QuestionUserLevelVMs()
         {
+            foreach (Question q in questions)
+            {
+                if (!userAnswers.Any(a => a.QuestionId == q.Id))
+                {
+                    var answer = new UserAnswer()
+                    {
+                        AnswerOptionId = answerOptions.Find(o => o.QuestionId == q.Id && o.Level == 1).Id,
+                        QuestionId = q.Id,
+                        ApplicationUserId = UserId,
+                        LastModified = DateTime.Now
+                    };
+                    userAnswers.Add(answer);
+                }
+            }
             var data = (from u in userAnswers
                         where u.ApplicationUserId == UserId
                         join q in questions on u.QuestionId equals q.Id
                         join c in categories on q.CategoryId equals c.Id
                         join a in answerOptions on u.AnswerOptionId equals a.Id
-
                         select new QuestionUserLevelVM()
                         {
                             QuestionId = q.Id,
@@ -119,63 +135,24 @@ namespace ProfileMatch.Components.User
                             Level = a.Level,
                             UserId = UserId
                         }
-
               ).ToList();
             return data;
         }
-
-        private int ShowLevel(Question question)
-        {
-            //find user answer
-            // select level for answer option and user answer
-            UserAnswer userAnswer = new()
-            {
-                QuestionId = question.Id,
-                AnswerOptionId = null,
-                ApplicationUserId = UserId,
-                IsConfirmed = false
-            };
-            var answer = (from a in question.UserAnswers
-                          where a is not null
-                          where a.ApplicationUserId == UserId
-                          select a);
-
-            if (!answer.Any())
-                return 0;
-
-            userAnswer = question.UserAnswers.Find(a => a.ApplicationUserId == UserId);
-            var answerOption = question.AnswerOptions.FirstOrDefault(o => o.Id == userAnswer.AnswerOptionId);
-            if (answerOption == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return answerOption.Level;
-            }
-        }
-
         private async Task UserAnswerDialog(QuestionUserLevelVM vM)
         {
+           var UserAnswer = userAnswers.Find(q => q.QuestionId== vM.QuestionId);
             Question question = questions.FirstOrDefault(q => q.Id == vM.QuestionId);
             Category category = categories.FirstOrDefault(c => c.Name == vM.CategoryName);
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters
             {
                 ["Q"] = question,
-                ["UserId"] = UserId
+                ["UserId"] = UserId,
+                ["UserAnswer"]= UserAnswer
             };
             var dialog = DialogService.Show<UserQuestionDialog>($"{vM.CategoryName}: {vM.QuestionName}", parameters, maxWidth);
             var data = (await dialog.Result).Data;
-            var answer = (UserAnswer)data;
-            var a = userAnswers.FirstOrDefault(u => u.ApplicationUserId == UserId);
-            var index = userAnswers.IndexOf(a);
-            if (index != -1)
-                question.UserAnswers[index] = answer;
-            else
-            {
-                userAnswers.Add(answer);
-            }
+           await LoadData();
         }
     }
 }

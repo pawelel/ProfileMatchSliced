@@ -123,7 +123,7 @@ namespace ProfileMatch.Components.User
         private async Task UserNoteUpdate(UserNoteVM UserNoteVM)
         {
             var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
-            var dialog = DialogService.Show<UserNoteDialog>("Update Note", parameters);
+            var dialog = DialogService.Show<UserNoteDialog>("Edytuj pytanie", parameters);
             await dialog.Result;
         }
 
