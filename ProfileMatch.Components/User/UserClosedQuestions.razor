@@ -6,7 +6,7 @@ else
 {
 <MudTable Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="@FilterFunc" >
     <ToolBarContent>
-        <MudText Typo="Typo.h6">@L["Open questions"]</MudText>
+        <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -27,7 +27,7 @@ else
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="@(()=>UserAnswerDialog(context))" Color="Color.Tertiary">@L["Edit note"]</MudButton>
+            <MudButton OnClick="@(()=>UserAnswerDialog(context))" Color="Color.Tertiary">@L["Edit Question"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

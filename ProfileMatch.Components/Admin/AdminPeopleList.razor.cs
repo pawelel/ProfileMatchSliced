@@ -63,7 +63,7 @@ namespace ProfileMatch.Components.Admin
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["EditedUser"] = applicationUser };
-            var dialog = DialogService.Show<AdminUserDialog>($"Edit User {applicationUser.FirstName}, {applicationUser.LastName} data", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminUserDialog>($"Konto: {applicationUser.FirstName} {applicationUser.LastName}", parameters, maxWidth);
             await dialog.Result;
             Users = await UserRepository.Get();
         }

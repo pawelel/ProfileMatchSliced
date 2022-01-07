@@ -63,13 +63,13 @@ namespace ProfileMatch.Components.Admin
         private async Task NoteUpdate(Note Note)
         {
             var parameters = new DialogParameters { ["EditedNote"] = Note };
-            var dialog = DialogService.Show<AdminNoteDialog>("Update Note", parameters);
+            var dialog = DialogService.Show<AdminNoteDialog>("Edytuj pytanie", parameters);
             await dialog.Result;
         }
 
         private async Task NoteCreate()
         {
-            var dialog = DialogService.Show<AdminNoteDialog>("Create Note");
+            var dialog = DialogService.Show<AdminNoteDialog>("Stwórz pytanie");
             await dialog.Result;
             Notes = await GetNotesAsync();
         }
