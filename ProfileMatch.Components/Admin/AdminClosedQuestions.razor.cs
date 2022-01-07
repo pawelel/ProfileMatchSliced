@@ -20,13 +20,12 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminClosedQuestions : ComponentBase
     {
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        [Inject] private IDialogService DialogService { get; set; }
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
         [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
-      
+
 
         private bool loading;
         [Parameter] public int Id { get; set; }
@@ -41,15 +40,15 @@ namespace ProfileMatch.Components.Admin
         {
             loading = true;
             categories = await CategoryRepository.Get();
-            questions = await QuestionRepository.Get(include: src => src.Include(q=>q.Category).Include(q=>q.AnswerOptions));
+            questions = await QuestionRepository.Get(include: src => src.Include(q => q.Category).Include(q => q.AnswerOptions));
             questions1 = questions;
             loading = false;
         }
 
-        
-        
-        
-        
+
+
+
+
         private string searchString1 = "";
         private Question selectedItem1 = null;
 

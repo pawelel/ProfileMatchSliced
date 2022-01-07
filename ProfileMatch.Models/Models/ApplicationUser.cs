@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Ganss.Excel;
+
+using Microsoft.AspNetCore.Identity;
 
 using ProfileMatch.Models.Enumerations;
 
@@ -15,6 +17,7 @@ namespace ProfileMatch.Models.Models
         public string LastName { get; set; }
 
         [NotMapped]
+        [Ignore]
         public string FullName => $"{LastName}, {FirstName}";
 
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
@@ -22,13 +25,17 @@ namespace ProfileMatch.Models.Models
         public Gender? Gender { get; set; }
 
         public int DepartmentId { get; set; } = 1; //NOTE had to initialize
+        [Ignore]
         public Department Department { get; set; }
         public string PhotoPath { get; set; }
         public string Bio { get; set; }
         public bool IsActive { get; set; }
+        [Ignore]
         public List<UserCategory> UserNeedCategories { get; set; }
+        [Ignore]
         public List<UserAnswer> UserAnswers { get; set; }
         public string JobTitle { get; set; }
+        [Ignore]
         public virtual ICollection<IdentityUserRole<string>> UserRoles { get; } = new List<IdentityUserRole<string>>();
     }
 }
