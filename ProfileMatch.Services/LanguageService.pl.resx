@@ -169,10 +169,10 @@
     <value>Edytuj</value>
   </data>
   <data name="Edit Category" xml:space="preserve">
-    <value>Edytuj Kategorie</value>
+    <value>Edytuj kategorie</value>
   </data>
   <data name="Add Question" xml:space="preserve">
-    <value>Dodaj Pytanie</value>
+    <value>Dodaj pytanie</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>Działania</value>
@@ -202,10 +202,10 @@
     <value>Administracja</value>
   </data>
   <data name="People Administration" xml:space="preserve">
-    <value>Administracja Zasobami Ludzkimi</value>
+    <value>Administracja zasobami ludzkimi</value>
   </data>
   <data name="Sort By" xml:space="preserve">
-    <value>Sortuj Według</value>
+    <value>Sortuj według</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Dział</value>
@@ -214,13 +214,13 @@
     <value>Zdjęcie</value>
   </data>
   <data name="Date Of Birth" xml:space="preserve">
-    <value>Data Urodzenia</value>
+    <value>Data urodzenia</value>
   </data>
   <data name="Birth Date" xml:space="preserve">
-    <value>Data Urodzenia</value>
+    <value>Data urodzenia</value>
   </data>
   <data name="Is Active" xml:space="preserve">
-    <value>Jest Aktywny</value>
+    <value>Jest aktywny</value>
   </data>
   <data name="Rows per page" xml:space="preserve">
     <value>Pozycji na stronę</value>
@@ -232,7 +232,7 @@
     <value>Następne osoby</value>
   </data>
   <data name="User Name" xml:space="preserve">
-    <value>Nazwa Użytkownika</value>
+    <value>Nazwa użytkownika</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Zapisz</value>
@@ -241,7 +241,7 @@
     <value>Usuń</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>Nazwa Użytkownika</value>
+    <value>Nazwa użytkownika</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Hasło</value>
@@ -253,22 +253,22 @@
     <value>Nie jesteś zalogowany.</value>
   </data>
   <data name="Edit User" xml:space="preserve">
-    <value>Edytuj Użytkownika</value>
+    <value>Edytuj użytkownika</value>
   </data>
   <data name="Add User" xml:space="preserve">
-    <value>Dodaj Użytkownika</value>
+    <value>Dodaj użytkownika</value>
   </data>
   <data name="Select Category" xml:space="preserve">
-    <value>Wybierz Kategorię</value>
+    <value>Wybierz kategorię</value>
   </data>
   <data name="Select Questions" xml:space="preserve">
-    <value>Wybierz Pytanie</value>
+    <value>Wybierz pytanie</value>
   </data>
   <data name="Selected Categories" xml:space="preserve">
-    <value>Wybrane Kategorie</value>
+    <value>Wybrane kategorie</value>
   </data>
   <data name="Questions Table" xml:space="preserve">
-    <value>Tabela Pytań</value>
+    <value>Tabela pytań</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Kategoria</value>
@@ -289,10 +289,10 @@
     <value>Wpisz adres e-mail powiązany z Twoim kontem, a otrzymasz wiadomość e-mail zawierającą link do zresetowania hasła.</value>
   </data>
   <data name="Reset Password" xml:space="preserve">
-    <value>Zresetuj Hasło</value>
+    <value>Zresetuj hasło</value>
   </data>
   <data name="Sign Up" xml:space="preserve">
-    <value>Zarejestruj Się</value>
+    <value>Zarejestruj się</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Zarejestruj</value>
@@ -301,34 +301,34 @@
     <value>Ustaw nowe hasło</value>
   </data>
   <data name="New Password" xml:space="preserve">
-    <value>Nowe Hasło</value>
+    <value>Nowe hasło</value>
   </data>
   <data name="Category Name" xml:space="preserve">
-    <value>Nazwa Kategorii</value>
+    <value>Nazwa kategorii</value>
   </data>
   <data name="Category name is required!" xml:space="preserve">
     <value>Nazwa kategorii jest wymagana!</value>
   </data>
   <data name="Category Description" xml:space="preserve">
-    <value>Opis Kategorii</value>
+    <value>Opis kategorii</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
   <data name="Project Name" xml:space="preserve">
-    <value>Nazwa Projektu</value>
+    <value>Nazwa projektu</value>
   </data>
   <data name="Project name is required!" xml:space="preserve">
     <value>Nazwa projektu jest wymagana!</value>
   </data>
   <data name="Project Description" xml:space="preserve">
-    <value>Opis Projektu</value>
+    <value>Opis projektu</value>
   </data>
   <data name="Level Description" xml:space="preserve">
-    <value>Opis Poziomu</value>
+    <value>Opis poziomu</value>
   </data>
   <data name="Level Description is required!" xml:space="preserve">
-    <value>Opis Poziomu jest wymagany!</value>
+    <value>Opis poziomu jest wymagany!</value>
   </data>
   <data name="Question Name" xml:space="preserve">
     <value>Nazwa pytania</value>
@@ -355,7 +355,7 @@
     <value>Imię osoby jest wymagane!</value>
   </data>
   <data name="Email is required!" xml:space="preserve">
-    <value>Email jest wymagany!</value>
+    <value>E-mail jest wymagany!</value>
   </data>
   <data name="Select Gender" xml:space="preserve">
     <value>Wybierz płeć</value>
@@ -373,7 +373,7 @@
     <value>Pracownik</value>
   </data>
   <data name="Certificate Name" xml:space="preserve">
-    <value>Nazwa Certyfikatu</value>
+    <value>Nazwa certyfikatu</value>
   </data>
   <data name="date" xml:space="preserve">
     <value>Data</value>
@@ -385,13 +385,13 @@
     <value>Nie</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Tak</value>
   </data>
   <data name="Level" xml:space="preserve">
     <value>Poziom</value>
   </data>
   <data name="This is my Level" xml:space="preserve">
-    <value>To jest mój Poziom</value>
+    <value>To jest mój poziom</value>
   </data>
   <data name="People Match" xml:space="preserve">
     <value>People Match</value>
@@ -418,7 +418,7 @@
     <value>Powrót do strony głównej</value>
   </data>
   <data name="Select Users" xml:space="preserve">
-    <value>Wybierz Użytkowników</value>
+    <value>Wybierz użytkowników</value>
   </data>
   <data name="Full Name" xml:space="preserve">
     <value>Imię i nazwisko</value>
@@ -451,7 +451,7 @@
     <value>Statystyki</value>
   </data>
   <data name="You're not loggged in as Admin." xml:space="preserve">
-    <value>Nie jesteś zalogowany jako Administrator.</value>
+    <value>Nie jesteś zalogowany jako administrator.</value>
   </data>
   <data name=" Log out" xml:space="preserve">
     <value>Wyloguj</value>
@@ -460,13 +460,13 @@
     <value>etykieta</value>
   </data>
   <data name="Select All" xml:space="preserve">
-    <value>Zaznacz Wszystko</value>
+    <value>Zaznacz wszystko</value>
   </data>
   <data name="Selected items" xml:space="preserve">
     <value>Wybrane przedmioty</value>
   </data>
   <data name="Add Certificate" xml:space="preserve">
-    <value>Dodaj Certyfikat</value>
+    <value>Dodaj certyfikat</value>
   </data>
   <data name="Hell" xml:space="preserve">
     <value>Witaj</value>
@@ -478,10 +478,10 @@
     <value>Dopasowanie profilu</value>
   </data>
   <data name="Edit Answer" xml:space="preserve">
-    <value>Edytuj Pytanie</value>
+    <value>Edytuj pytanie</value>
   </data>
   <data name="Selected Values" xml:space="preserve">
-    <value>Wybrane Wartości</value>
+    <value>Wybrane wartości</value>
   </data>
   <data name="Manager Dashboard" xml:space="preserve">
     <value>Panel Menadżera</value>
@@ -508,7 +508,7 @@
     <value>Karty</value>
   </data>
   <data name="Selection Page" xml:space="preserve">
-    <value>Strona Wyboru</value>
+    <value>Strona wyboru</value>
   </data>
   <data name="Question 1" xml:space="preserve">
     <value>Pytanie 1</value>
@@ -555,14 +555,14 @@
   <data name="Edit note" xml:space="preserve">
     <value>Edytuj odpowiedź</value>
   </data>
-  <data name="Open questions" xml:space="preserve">
+  <data name="Open Questions" xml:space="preserve">
     <value>Pytania otwarte</value>
   </data>
-  <data name="Closed questions" xml:space="preserve">
+  <data name="Closed Questions" xml:space="preserve">
     <value>Pytania zamknięte</value>
   </data>
   <data name="My Categories" xml:space="preserve">
-    <value>Moje Kategorie</value>
+    <value>Moje kategorie</value>
   </data>
   <data name="Answer" xml:space="preserve">
     <value>Odpowiedź</value>
@@ -578,5 +578,29 @@
   </data>
   <data name="Zaloguj" xml:space="preserve">
     <value>Zaloguj</value>
+  </data>
+  <data name="Edit Question" xml:space="preserve">
+    <value>Edytuj pytanie</value>
+  </data>
+  <data name="Max length" xml:space="preserve">
+    <value>Maksymalna długość</value>
+  </data>
+  <data name="Role Name" xml:space="preserve">
+    <value>Rola:</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>Zaznacz aby przydzielić:</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Department Name" xml:space="preserve">
+    <value>Nazwa działu</value>
+  </data>
+  <data name="Department name is required!" xml:space="preserve">
+    <value>Nazwa działu jest wymagana!</value>
+  </data>
+  <data name="Department Description" xml:space="preserve">
+    <value>Opis działu</value>
   </data>
 </root>

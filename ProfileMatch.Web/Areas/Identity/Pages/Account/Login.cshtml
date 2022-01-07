@@ -5,7 +5,7 @@
 @model LoginModel
 @inject IStringLocalizer<LanguageService> L
 
-<body class="text-center">
+<body class="text-center" >
     <div class="container d-flex p-3 mx-auto w-100 flex-column">
         <header class="mb-auto">
         </header>
@@ -46,13 +46,13 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Email:</label>
                             <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="admin@profilematch.com">
+                                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="admin@profilematch.pl">
                             </div>
                         </div>
                         <br />
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Wybierz temat:</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
+                            <select class="form-control" id="Subject">
                                 <option>1. Zapomniałeś loginu lub hasła</option>
                                 <option>2. Nie posiadasz konta</option>
                                 <option>3. Nie możesz się zalogować</option>
@@ -63,13 +63,13 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Opisz swój problem:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="message form-control" id="Message" rows="3"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-                    <button class="btn btn-primary" type="submit">Wyślij</button>
+                    <button class="btn btn-primary" type="submit" onclick="SendMail()">Wyślij</button>
                 </div>
             </div>
         </div>
@@ -77,6 +77,9 @@
     <div>
         <p class="mt-5 mb-5 text-muted text-center">&copy; 2022 Karol Pluciński, Łukasz Pietrzak & Paweł Przytuła</p>
     </div>
+
+     <script src="~/js/SendMail.js"></script>
+    
 </body>
 
 
