@@ -18,7 +18,7 @@
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Members"]>@context.ApplicationUsers.Count</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>DepartmentUpdate(context))">@L["Edit"]</MudButton>
+            <MudButton OnClick="((e)=>DepartmentUpdate(context))" Color="Color.Tertiary">@L["Edit"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

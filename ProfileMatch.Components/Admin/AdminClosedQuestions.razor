@@ -42,8 +42,8 @@ else
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
             <MudTd Class="d-flex justify-end" DataLabel="Actions">
-                <MudButton OnClick="@(()=>QuestionDisplay(context))">@L["Display"]</MudButton>
-                <MudButton OnClick="@(()=>QuestionDialog(context))">@L["Edit"]</MudButton>
+                <MudButton OnClick="@(()=>QuestionDisplay(context))" Color="Color.Tertiary">@L["Display"]</MudButton>
+                <MudButton OnClick="@(()=>QuestionDialog(context))" Color="Color.Success">@L["Edit"]</MudButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>
