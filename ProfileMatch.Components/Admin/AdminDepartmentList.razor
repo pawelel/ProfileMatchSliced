@@ -1,9 +1,23 @@
-﻿<MudButton OnClick="(()=>DepartmentCreate())" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
+﻿
+<MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="5">
+    <MudText Typo="Typo.h6">@L["Departments"]</MudText>
+    </MudItem>
+    <MudItem xs="12" md="5">
+        <MudTextField Class="d-flex justify-end"
+                      @bind-Value="searchString1"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"></MudTextField>
+    </MudItem>
+</MudGrid>
+
 <MudTable Items="@Departments" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+
     <ToolBarContent>
-        <MudText Typo="Typo.h6">@L["Departments"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(()=>DepartmentCreate())" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Department"]</MudButton>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>@L["Id"]</MudTh>
@@ -18,7 +32,7 @@
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Members"]>@context.ApplicationUsers.Count</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>DepartmentUpdate(context))" Color="Color.Tertiary">@L["Edit"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>DepartmentUpdate(context))">@L["Edit Department"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

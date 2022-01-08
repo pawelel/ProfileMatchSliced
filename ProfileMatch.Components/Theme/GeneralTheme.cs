@@ -18,7 +18,8 @@ namespace ProfileMatch.Components.Theme
                 DrawerText = "rgba(0,0,0, 0.7)",
                 Secondary = Colors.Pink.Lighten1,
                 Success = Colors.Green.Darken4,
-                Tertiary = Colors.Teal.Darken1
+                Tertiary = Colors.Teal.Darken1,
+                InfoLighten = Colors.Shades.Black
 
             };
 

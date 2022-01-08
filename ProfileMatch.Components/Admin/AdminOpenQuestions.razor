@@ -1,13 +1,20 @@
-﻿ <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
-  <MudSpacer />
-        <MudGrid Spacing="0" Class="d-flex justify-end">
-                <MudItem xs="12" md="5">
-   <MudTextField  @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="d-flex justify-end"></MudTextField>
-</MudItem>   
+﻿ <MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="5">
+    <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
+    </MudItem>
+    <MudItem xs="12" md="5">
+        <MudTextField Class="d-flex justify-end"
+                      @bind-Value="searchString1"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"></MudTextField>
+    </MudItem>
 </MudGrid>
 <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudButton OnClick="(()=>NoteCreate())" Class="pa-2 mx-2" Variant="Variant.Text" Color="Color.Primary">@L["Add New"]</MudButton>
+        <MudButton Variant=Variant.Outlined Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)"OnClick="(()=>NoteCreate())">@L["Add New"]</MudButton>
        <MudSpacer/>
     </ToolBarContent>
     <ColGroup>
@@ -27,7 +34,7 @@
         <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>NoteUpdate(context))" Color="Color.Tertiary">@L["Edit Question"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>NoteUpdate(context))">@L["Edit Question"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
