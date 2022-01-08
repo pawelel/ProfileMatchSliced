@@ -27,7 +27,7 @@ else
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="@(()=>UserAnswerDialog(context))" Color="Color.Tertiary">@L["Edit Answer"]</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Outlined" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

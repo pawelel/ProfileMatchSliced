@@ -21,7 +21,7 @@
         <MudTd DataLabel=@L["Description"]>@context.OpenQuestionDescription</MudTd>
         <MudTd DataLabel=@L["Answer"]>@context.UserDescription</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>UserNoteUpdate(context))" Color="Color.Tertiary">@L["Edit Answer"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
