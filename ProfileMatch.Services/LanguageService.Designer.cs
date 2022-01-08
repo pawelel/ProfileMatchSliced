@@ -1340,6 +1340,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show profile.
+        /// </summary>
+        public static string Show_profile {
+            get {
+                return ResourceManager.GetString("Show profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign Up.
         /// </summary>
         public static string Sign_Up {
