@@ -558,7 +558,7 @@
   <data name="Open ClosedQuestions" xml:space="preserve">
     <value>Pytania otwarte</value>
   </data>
-  <data name="Closed ClosedQuestions" xml:space="preserve">
+  <data name="Closed Questions" xml:space="preserve">
     <value>Pytania zamknięte</value>
   </data>
   <data name="My Categories" xml:space="preserve">
@@ -579,7 +579,7 @@
   <data name="Zaloguj" xml:space="preserve">
     <value>Zaloguj</value>
   </data>
-  <data name="Edit Closed Question" xml:space="preserve">
+  <data name="Edit Question" xml:space="preserve">
     <value>Edytuj pytanie</value>
   </data>
   <data name="Max length" xml:space="preserve">

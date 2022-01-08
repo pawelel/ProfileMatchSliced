@@ -340,11 +340,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Closed ClosedQuestions.
+        ///   Looks up a localized string similar to Closed Questions.
         /// </summary>
-        public static string Closed_ClosedQuestions {
+        public static string Closed_Questions {
             get {
-                return ResourceManager.GetString("Closed ClosedQuestions", resourceCulture);
+                return ResourceManager.GetString("Closed Questions", resourceCulture);
             }
         }
         
@@ -601,15 +601,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Closed Question.
-        /// </summary>
-        public static string Edit_Closed_Question {
-            get {
-                return ResourceManager.GetString("Edit Closed Question", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Level.
         /// </summary>
         public static string Edit_Level {
@@ -624,6 +615,15 @@ namespace ProfileMatch.Services {
         public static string Edit_note {
             get {
                 return ResourceManager.GetString("Edit note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Question.
+        /// </summary>
+        public static string Edit_Question {
+            get {
+                return ResourceManager.GetString("Edit Question", resourceCulture);
             }
         }
         
