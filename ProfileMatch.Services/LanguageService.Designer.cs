@@ -502,6 +502,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Answer Level.
+        /// </summary>
+        public static string Edit_Answer_Level {
+            get {
+                return ResourceManager.GetString("Edit Answer Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Category.
         /// </summary>
         public static string Edit_Category {
@@ -886,6 +895,15 @@ namespace ProfileMatch.Services {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string New {
+            get {
+                return ResourceManager.GetString("New", resourceCulture);
             }
         }
         

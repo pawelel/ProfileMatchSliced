@@ -7,7 +7,7 @@ else
      <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
      <MudSpacer/>
       <MudGrid Spacing="0" Class="d-flex justify-space-between">
-                <MudItem xs="12" md="5" Class="mt-0">
+                <MudItem xs="12" md="5">
         <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
             @foreach (var cat in categories)
             {
@@ -22,8 +22,7 @@ else
             Adornment="Adornment.Start" 
             Immediate="true" 
             AdornmentIcon="@Icons.Material.Filled.Search"
-            IconSize="Size.Medium"
-            Class="mt-0"></MudTextField>
+            IconSize="Size.Medium"></MudTextField>
             </MudItem>
             </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">

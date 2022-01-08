@@ -621,4 +621,10 @@
   <data name="Show profile" xml:space="preserve">
     <value>Show profile</value>
   </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Edit Answer Level" xml:space="preserve">
+    <value>Edit Answer Level</value>
+  </data>
 </root>

@@ -44,7 +44,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
-            var dialog = DialogService.Show<AdminLevelDialog>($"Edit Answer Level {answerOption.Level}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminLevelDialog>(L["Edit Answer Level"]+$" {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
 

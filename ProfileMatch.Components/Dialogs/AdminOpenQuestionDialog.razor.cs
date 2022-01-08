@@ -18,14 +18,14 @@ namespace ProfileMatch.Components.Dialogs
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public OpenQuestion EditedNote { get; set; } = new();
+        [Parameter] public OpenQuestion EditedOpenQuestion { get; set; } = new();
         public string TempName { get; set; }
         public string TempDescription { get; set; }
 
         protected override void OnInitialized()
         {
-            TempName = EditedNote.Name;
-            TempDescription = EditedNote.Description;
+            TempName = EditedOpenQuestion.Name;
+            TempDescription = EditedOpenQuestion.Description;
         }
 
         [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
@@ -43,8 +43,8 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                EditedNote.Name = TempName;
-                EditedNote.Description = TempDescription;
+                EditedOpenQuestion.Name = TempName;
+                EditedOpenQuestion.Description = TempDescription;
                 try
                 {
                     await Save();
@@ -54,20 +54,20 @@ namespace ProfileMatch.Components.Dialogs
                     Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(EditedNote));
+                MudDialog.Close(DialogResult.Ok(EditedOpenQuestion));
             }
         }
 
         private async Task Save()
         {
-            if (EditedNote.Id == 0)
+            if (EditedOpenQuestion.Id == 0)
             {
-                var result = await OpenQuestionRepository.Insert(EditedNote);
+                var result = await OpenQuestionRepository.Insert(EditedOpenQuestion);
                 Snackbar.Add($"Note {result.Name} created", Severity.Success);
             }
             else
             {
-                var result = await OpenQuestionRepository.Update(EditedNote);
+                var result = await OpenQuestionRepository.Update(EditedOpenQuestion);
                 Snackbar.Add($"Note {result.Name} updated", Severity.Success);
             }
         }
