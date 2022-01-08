@@ -29,6 +29,11 @@ namespace ProfileMatch.Components.User
         List<UserCategoryVM> publicCategoriesVM=new();
         protected override async Task OnInitializedAsync()
         {
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
             userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
             categories = await CategoryManager.Get();
             UserCategoryVMs = (from uc in userCategories
@@ -65,8 +70,9 @@ namespace ProfileMatch.Components.User
                     UserCategoryVMs.Add(ucVM);
                 }
             }
-                publicCategoriesVM = UserCategoryVMs.Where(c => c.IsSelected).ToList();
+            publicCategoriesVM = UserCategoryVMs.Where(c => c.IsSelected).ToList();
         }
+
         bool edit = false;
         async Task<bool> SetCategoryAsync(UserCategoryVM category)
         {
@@ -82,8 +88,8 @@ namespace ProfileMatch.Components.User
             }
             else { Snackbar.Add(L["Category"] + $" { category.CategoryName} { L["unchecked"]}", Severity.Success);    
             }
-
-          return  data.Want;
+            await LoadData();
+            return category.IsSelected;
         }
     }
 }
