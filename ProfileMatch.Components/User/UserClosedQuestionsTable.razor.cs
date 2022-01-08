@@ -95,7 +95,7 @@ namespace ProfileMatch.Components.User
                     var optionId = answerOptions.FirstOrDefault(o => o.ClosedQuestionId == q.Id && o.Level == 1).Id;
                     var answer = new UserClosedAnswer()
                     {
-                        AnswerOptionId = null,
+                        AnswerOptionId = optionId,
                         ClosedQuestionId = q.Id,
                         ApplicationUserId = UserId,
                         LastModified = DateTime.Now

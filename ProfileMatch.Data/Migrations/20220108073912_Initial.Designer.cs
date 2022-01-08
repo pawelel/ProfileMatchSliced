@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProfileMatch.Data;
 
@@ -11,9 +12,10 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108073912_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -519,8 +521,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fc7f6c07-2bf9-4847-ab11-e5fc1b6a2642",
-                            DateOfBirth = new DateTime(2022, 1, 8, 8, 46, 44, 917, DateTimeKind.Local).AddTicks(4010),
+                            ConcurrencyStamp = "7bea4d16-772d-46c1-88ca-1a047bb107f1",
+                            DateOfBirth = new DateTime(2022, 1, 8, 8, 39, 12, 580, DateTimeKind.Local).AddTicks(1999),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -530,9 +532,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEOR2NCNlOyQGa14BF4BVcfqYWvukz08F4YsRy3x094jWrzqQhvvHtAC9rLeOPpDSg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFhNzHQkpgysuE4waivUujr3CzEYbJ4xbsTNJSeE2b0gSQ8b9CVeGolWOimWU46x/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "91619ec8-fffc-424f-97fe-43cfb72cac2a",
+                            SecurityStamp = "3370dc60-bfac-4348-a340-34d392fcf9ef",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -664,7 +666,7 @@ namespace ProfileMatch.Data.Migrations
                             Id = 7,
                             CategoryId = 3,
                             Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Instalacja systemu Windows"
                         },
                         new
@@ -672,7 +674,7 @@ namespace ProfileMatch.Data.Migrations
                             Id = 8,
                             CategoryId = 4,
                             Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Obsługa programu magazynowego"
                         });
                 });

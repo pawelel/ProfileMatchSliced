@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220107235117_Initial")]
-    partial class Initial
+    [Migration("20220108074645_No answer")]
+    partial class Noanswer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -385,6 +385,41 @@ namespace ProfileMatch.Data.Migrations
                             ClosedQuestionId = 5,
                             Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
                             Level = 5
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ClosedQuestionId = 6,
+                            Description = "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa",
+                            Level = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ClosedQuestionId = 6,
+                            Description = "Znasz podstawowe elementy składowe komputera",
+                            Level = 2
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ClosedQuestionId = 6,
+                            Description = "Potrafisz zlokalizować i nazwać dany komponent komputera",
+                            Level = 3
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ClosedQuestionId = 6,
+                            Description = "Radzisz sobie z montażem podzespołów komputerowych",
+                            Level = 4
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ClosedQuestionId = 6,
+                            Description = "Bez problemu składasz od podstaw komputer i go uruchamiasz",
+                            Level = 5
                         });
                 });
 
@@ -486,8 +521,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "64698030-5c4c-48ea-9bb7-e06bdafe5608",
-                            DateOfBirth = new DateTime(2022, 1, 8, 0, 51, 17, 254, DateTimeKind.Local).AddTicks(95),
+                            ConcurrencyStamp = "fc7f6c07-2bf9-4847-ab11-e5fc1b6a2642",
+                            DateOfBirth = new DateTime(2022, 1, 8, 8, 46, 44, 917, DateTimeKind.Local).AddTicks(4010),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -497,9 +532,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGeKVCcu0op5OEH8wvWcl4diAjqqpMvJ9O2GH79B8Ob7+MkGdB8kIOOcrkIKu+46rg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEOR2NCNlOyQGa14BF4BVcfqYWvukz08F4YsRy3x094jWrzqQhvvHtAC9rLeOPpDSg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9ad47b29-8974-47c6-b1ed-e1f0f5f806fe",
+                            SecurityStamp = "91619ec8-fffc-424f-97fe-43cfb72cac2a",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -631,7 +666,7 @@ namespace ProfileMatch.Data.Migrations
                             Id = 7,
                             CategoryId = 3,
                             Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?",
-                            IsActive = true,
+                            IsActive = false,
                             Name = "Instalacja systemu Windows"
                         },
                         new
@@ -639,7 +674,7 @@ namespace ProfileMatch.Data.Migrations
                             Id = 8,
                             CategoryId = 4,
                             Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?",
-                            IsActive = true,
+                            IsActive = false,
                             Name = "Obsługa programu magazynowego"
                         });
                 });

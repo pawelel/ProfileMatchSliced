@@ -385,7 +385,7 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "64698030-5c4c-48ea-9bb7-e06bdafe5608", new DateTime(2022, 1, 8, 0, 51, 17, 254, DateTimeKind.Local).AddTicks(95), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGeKVCcu0op5OEH8wvWcl4diAjqqpMvJ9O2GH79B8Ob7+MkGdB8kIOOcrkIKu+46rg==", null, false, null, "9ad47b29-8974-47c6-b1ed-e1f0f5f806fe", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "7bea4d16-772d-46c1-88ca-1a047bb107f1", new DateTime(2022, 1, 8, 8, 39, 12, 580, DateTimeKind.Local).AddTicks(1999), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFhNzHQkpgysuE4waivUujr3CzEYbJ4xbsTNJSeE2b0gSQ8b9CVeGolWOimWU46x/w==", null, false, null, "3370dc60-bfac-4348-a340-34d392fcf9ef", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -431,7 +431,12 @@ namespace ProfileMatch.Data.Migrations
                     { 22, 5, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2 },
                     { 23, 5, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", 3 },
                     { 24, 5, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4 },
-                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5 }
+                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5 },
+                    { 26, 6, "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa", 1 },
+                    { 27, 6, "Znasz podstawowe elementy składowe komputera", 2 },
+                    { 28, 6, "Potrafisz zlokalizować i nazwać dany komponent komputera", 3 },
+                    { 29, 6, "Radzisz sobie z montażem podzespołów komputerowych", 4 },
+                    { 30, 6, "Bez problemu składasz od podstaw komputer i go uruchamiasz", 5 }
                 });
 
             migrationBuilder.InsertData(

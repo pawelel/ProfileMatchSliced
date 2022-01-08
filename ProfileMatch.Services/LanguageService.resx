@@ -579,8 +579,8 @@
   <data name="Zaloguj" xml:space="preserve">
     <value>Log in</value>
   </data>
-  <data name="Edit ClosedQuestion" xml:space="preserve">
-    <value>Edit ClosedQuestion</value>
+  <data name="Edit Closed Question" xml:space="preserve">
+    <value>Edit Closed Question</value>
   </data>
   <data name="Max length" xml:space="preserve">
     <value>Max length</value>

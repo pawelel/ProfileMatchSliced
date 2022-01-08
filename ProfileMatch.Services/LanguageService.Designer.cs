@@ -601,11 +601,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit ClosedQuestion.
+        ///   Looks up a localized string similar to Edit Closed Question.
         /// </summary>
-        public static string Edit_ClosedQuestion {
+        public static string Edit_Closed_Question {
             get {
-                return ResourceManager.GetString("Edit ClosedQuestion", resourceCulture);
+                return ResourceManager.GetString("Edit Closed Question", resourceCulture);
             }
         }
         

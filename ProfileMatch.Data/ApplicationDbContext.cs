@@ -202,7 +202,7 @@ namespace ProfileMatch.Data
                     Id = 7,
                     Name = "Instalacja systemu Windows",
                     CategoryId = 3,
-                    IsActive = true,
+                    IsActive = false,
                     Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?"
                 },
                 new ClosedQuestion()
@@ -210,7 +210,7 @@ namespace ProfileMatch.Data
                     Id = 8,
                     Name = "Obsługa programu magazynowego",
                     CategoryId = 4,
-                    IsActive = true,
+                    IsActive = false,
                     Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?"
                 }
                 );
@@ -406,7 +406,47 @@ namespace ProfileMatch.Data
                      Level = 5,
                      Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów"
 
-                 }
+                 },
+                 new AnswerOption()
+                 {
+                     Id = 26,
+                     ClosedQuestionId = 6,
+                     Level = 1,
+                     Description = "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa"
+
+                 },
+                  new AnswerOption()
+                  {
+                      Id = 27,
+                      ClosedQuestionId = 6,
+                      Level = 2,
+                      Description = "Znasz podstawowe elementy składowe komputera"
+
+                  },
+                   new AnswerOption()
+                   {
+                       Id = 28,
+                       ClosedQuestionId = 6,
+                       Level = 3,
+                       Description = "Potrafisz zlokalizować i nazwać dany komponent komputera"
+
+                   },
+                    new AnswerOption()
+                    {
+                        Id = 29,
+                        ClosedQuestionId = 6,
+                        Level = 4,
+                        Description = "Radzisz sobie z montażem podzespołów komputerowych"
+
+                    },
+                     new AnswerOption()
+                     {
+                         Id = 30,
+                         ClosedQuestionId = 6,
+                         Level = 5,
+                         Description = "Bez problemu składasz od podstaw komputer i go uruchamiasz"
+
+                     }
                 );
             builder.Entity<UserClosedAnswer>().HasData(
                 new UserClosedAnswer()
