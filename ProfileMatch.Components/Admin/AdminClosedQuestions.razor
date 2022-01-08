@@ -27,16 +27,16 @@ else
             </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Success">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">@L["Selected Categories"]: </MudText>
+            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
                 if (!string.IsNullOrEmpty(cat))
                 {
-                    <MudButtonGroup Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined" OverrideStyles="true">
-            <MudButton  OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-            <MudButton  OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
+                    <MudButtonGroup Size="Size.Small"  Variant="Variant.Outlined" OverrideStyles="true">
+            <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+            <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
             </MudButtonGroup>
-         <MudSpacer/>
+         <MudText>&nbsp;&nbsp;&nbsp;</MudText> 
                 }
             }
         <MudSpacer/>
@@ -52,8 +52,8 @@ else
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
             <MudTd Style="text-align: center;" DataLabel="Actions">
-                <MudButton OnClick="@(()=>QuestionDisplay(context))" Color="Color.Tertiary">@L["Display"]</MudButton>
-                <MudButton OnClick="@(()=>QuestionDialog(context))" Color="Color.Success">@L["Edit"]</MudButton>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))">@L["Edit Category"]</MudButton>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionDisplay(context))" >@L["Display"]</MudButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>

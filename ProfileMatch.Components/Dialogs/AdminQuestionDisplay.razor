@@ -18,7 +18,7 @@
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@level.Description">@level.Description</MudText>
 
-                                <MudButton Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Small" OnClick="@(() => EditLevelDialog(level))">@L["Edit Level"]</MudButton>
+                                <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(level))">@L["Edit Level"]</MudButton>
                             </MudItem>
                         </MudTabPanel>
                     }
