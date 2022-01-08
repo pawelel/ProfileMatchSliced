@@ -674,6 +674,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I want to develop.
+        /// </summary>
+        public static string I_want_to_develop {
+            get {
+                return ResourceManager.GetString("I want to develop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is a need.
         /// </summary>
         public static string Is_a_need {

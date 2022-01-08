@@ -630,4 +630,7 @@
   <data name="New Category" xml:space="preserve">
     <value>New Category</value>
   </data>
+  <data name="I want to develop" xml:space="preserve">
+    <value>I want to develop</value>
+  </data>
 </root>

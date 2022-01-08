@@ -15,8 +15,7 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserCategoryList : ComponentBase
     {
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         List<UserCategoryVM> UserCategoryVMs = new();
         [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
@@ -57,5 +56,7 @@ namespace ProfileMatch.Components.User
                 }
             }
         }
+        bool edit = false;
+
     }
 }

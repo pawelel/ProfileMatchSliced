@@ -1,4 +1,5 @@
-﻿@if (UserCategoryVMs.Count == 0)
+﻿    
+    @if (UserCategoryVMs.Count == 0)
 {
     <MudItem xs="0" sm="8" md="9">
     </MudItem>
@@ -10,13 +11,32 @@ else
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText  Typo="Typo.h6">@L["My Categories"]</MudText>
+                <AuthorizeView>
+    @if ((context.User.Identity.Name).ToUpper() == CurrentUser.NormalizedEmail)
+    {
+        <MudSwitch @bind-Checked="@edit">@L["Edit"]</MudSwitch>
+    }
+</AuthorizeView>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
+            @if(edit){
+    <MudTable Items="UserCategoryVMs" T="UserCategoryVM">
+        <HeaderContent>
+            <MudTh>@L["Category"]</MudTh>
+            <MudTh>@L["I want to develop"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="@L["Category"]">@context.CategoryName</MudTd>
+            <MudTd DataLabel="@L["I want to develop"]"><MudCheckBox @bind-Checked="@context.IsSelected"/></MudTd>
+        </RowTemplate>
+    </MudTable>
+}else{
             @foreach (var uc in UserCategoryVMs)
             {
                 <MudChip Text="@uc.CategoryName"></MudChip>
             }
+}
         </MudCardContent>
     </MudCard>
 </MudItem>
