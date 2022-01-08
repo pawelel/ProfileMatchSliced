@@ -2,21 +2,23 @@
 <InputFile id="fileInput" OnChange="@LoadSingleFile" hidden accept=".xlsx, .xls" />
 
 <MudItem Class="pa-2" xs="12" sm="4" md="3">
-            <MudCard>
-                <MudCardContent>
-                    <MudSelect T="string">
-                        <MudSelectItem T="string" Value="@("Department")">Department</MudSelectItem>
-                        <MudSelectItem T="string" Value="@("ApplicationUser")">User</MudSelectItem>
-                        <MudSelectItem T="string" Value="@("AnswerOption")">AnswerOption</MudSelectItem>
-                        <MudSelectItem T="string" Value="@("Category")">Category</MudSelectItem>
-                    </MudSelect>
-<MudButton HtmlTag="label"
-           Variant="Variant.Filled"
-           Color="Color.Inherit"
-           StartIcon="@Icons.Custom.FileFormats.FileExcel"
-           for="fileInput">
-    Upload File
-</MudButton>
-                </MudCardContent>
-            </MudCard>
-        </MudItem>
+    <MudCard>
+        <MudCardContent>
+            <MudSelect T="string">
+                <MudSelectItem T="string" Value="@("Department")">Department</MudSelectItem>
+                <MudSelectItem T="string" Value="@("ApplicationUser")">User</MudSelectItem>
+                <MudSelectItem T="string" Value="@("AnswerOption")">AnswerOption</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Category")">Category</MudSelectItem>
+            </MudSelect>
+            <br />
+            <MudButton HtmlTag="label"
+                       Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)"
+                       Variant="Variant.Outlined"
+                       Size="Size.Small"
+                       StartIcon="@Icons.Custom.FileFormats.FileExcel"
+                       for="fileInput">
+                Upload File
+            </MudButton>
+        </MudCardContent>
+    </MudCard>
+</MudItem>
