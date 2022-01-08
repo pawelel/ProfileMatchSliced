@@ -633,4 +633,28 @@
   <data name="I want to develop" xml:space="preserve">
     <value>Chcę rozwijać</value>
   </data>
+  <data name="Pomoc" xml:space="preserve">
+    <value>Pomoc</value>
+  </data>
+  <data name="Wybierz temat" xml:space="preserve">
+    <value>Wybierz temat</value>
+  </data>
+  <data name="1. Zapomniałeś loginu lub hasła" xml:space="preserve">
+    <value>1. Zapomniałeś loginu lub hasła</value>
+  </data>
+  <data name="2. Nie posiadasz konta" xml:space="preserve">
+    <value>2. Nie posiadasz konta</value>
+  </data>
+  <data name="3. Nie możesz się zalogować" xml:space="preserve">
+    <value>3. Nie możesz się zalogować</value>
+  </data>
+  <data name="Opisz swój problem" xml:space="preserve">
+    <value>Opisz swój problem</value>
+  </data>
+  <data name="Anuluj" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Wyślij" xml:space="preserve">
+    <value>Wyślij</value>
+  </data>
 </root>
