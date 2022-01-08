@@ -73,7 +73,7 @@ namespace ProfileMatch.Components.Dialogs
             }
 
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Answer updated");
+            Snackbar.Add(@L["Answer updated"]);
         }
 
         [Inject]

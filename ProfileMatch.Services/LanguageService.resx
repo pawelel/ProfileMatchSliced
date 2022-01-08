@@ -630,7 +630,103 @@
   <data name="New Category" xml:space="preserve">
     <value>New Category</value>
   </data>
-  <data name="I want to develop" xml:space="preserve">
-    <value>I want to develop</value>
+  <data name="Max allowed size is 5MB" xml:space="preserve">
+    <value>Max allowed size is 5MB</value>
+  </data>
+  <data name="Wrong file format. Allowed file formats are: .jpg, .jpeg, .png." xml:space="preserve">
+    <value>Wrong file format. Allowed file formats are: .jpg, .jpeg, .png.</value>
+  </data>
+  <data name="Max 20 characters" xml:space="preserve">
+    <value>Max 20 characters</value>
+  </data>
+  <data name="Category created" xml:space="preserve">
+    <value>Category created</value>
+  </data>
+  <data name="Category updated" xml:space="preserve">
+    <value>Category updated</value>
+  </data>
+  <data name="Question created" xml:space="preserve">
+    <value>Question created</value>
+  </data>
+  <data name="Question updated" xml:space="preserve">
+    <value>Question updated</value>
+  </data>
+  <data name="Question already exists." xml:space="preserve">
+    <value>Question already exists</value>
+  </data>
+  <data name="has been created[F]" xml:space="preserve">
+    <value>has been created</value>
+  </data>
+  <data name="has been updated[F]" xml:space="preserve">
+    <value>has been updated</value>
+  </data>
+  <data name="has been created[O]" xml:space="preserve">
+    <value>has been created</value>
+  </data>
+  <data name="already exists" xml:space="preserve">
+    <value>already exists</value>
+  </data>
+  <data name="has been updated[O]" xml:space="preserve">
+    <value>has been updated</value>
+  </data>
+  <data name="Answer option updated" xml:space="preserve">
+    <value>Answer option updated</value>
+  </data>
+  <data name="Answer option created" xml:space="preserve">
+    <value>Answer option created</value>
+  </data>
+  <data name="has been created[M]" xml:space="preserve">
+    <value>has been created</value>
+  </data>
+  <data name="has been updated[M]" xml:space="preserve">
+    <value>has been updated</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>created</value>
+  </data>
+  <data name="Upload file" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="AnswerOption" xml:space="preserve">
+    <value>Answer Option</value>
+  </data>
+  <data name="New User" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="New Department" xml:space="preserve">
+    <value>New Department</value>
+  </data>
+  <data name="Edit Department" xml:space="preserve">
+    <value>Edit Department</value>
+  </data>
+  <data name="Pomoc" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Wybierz temat" xml:space="preserve">
+    <value>Choose a topic</value>
+  </data>
+  <data name="1. Zapomniałeś loginu lub hasła" xml:space="preserve">
+    <value>1. You forgot your login or password</value>
+  </data>
+  <data name="2. Nie posiadasz konta" xml:space="preserve">
+    <value>2. You don't have an account</value>
+  </data>
+  <data name="3. Nie możesz się zalogować" xml:space="preserve">
+    <value>3. You cannot log in</value>
+  </data>
+  <data name="Opisz swój problem" xml:space="preserve">
+    <value>Describe your problem</value>
+  </data>
+  <data name="Anuluj" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Wyślij" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Closed Question" xml:space="preserve">
+    <value>Closed Question</value>
   </data>
 </root>

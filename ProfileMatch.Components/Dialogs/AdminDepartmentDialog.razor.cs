@@ -35,7 +35,7 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
 
         protected async Task HandleSave()
@@ -51,7 +51,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                    Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
                 }
 
                 MudDialog.Close(DialogResult.Ok(Dep));
@@ -63,12 +63,12 @@ namespace ProfileMatch.Components.Dialogs
             if (Dep.Id == 0)
             {
                 var result = await DepartmentRepository.Insert(Dep);
-                Snackbar.Add($"Department {result.Name} created", Severity.Success);
+                Snackbar.Add(@L["Department"] + $" {@L[result.Name]} " + @L["has been created[M]"], Severity.Success);
             }
             else
             {
                 var result = await DepartmentRepository.Update(Dep);
-                Snackbar.Add($"Department {result.Name} updated", Severity.Success);
+                Snackbar.Add(@L["Department"] + $" {@L[result.Name]} " + @L["has been updated[M]"], Severity.Success);
             }
         }
 

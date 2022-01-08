@@ -5,10 +5,10 @@
     <MudCard>
         <MudCardContent>
             <MudSelect T="string">
-                <MudSelectItem T="string" Value="@("Department")">Department</MudSelectItem>
-                <MudSelectItem T="string" Value="@("ApplicationUser")">User</MudSelectItem>
-                <MudSelectItem T="string" Value="@("AnswerOption")">AnswerOption</MudSelectItem>
-                <MudSelectItem T="string" Value="@("Category")">Category</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Department")">@L["Department"]</MudSelectItem>
+                <MudSelectItem T="string" Value="@("ApplicationUser")">@L["User"]</MudSelectItem>
+                <MudSelectItem T="string" Value="@("AnswerOption")">@L["AnswerOption"]</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Category")">@L["Category"]</MudSelectItem>
             </MudSelect>
             <br />
             <MudButton HtmlTag="label"
@@ -17,7 +17,7 @@
                        Size="Size.Small"
                        StartIcon="@Icons.Custom.FileFormats.FileExcel"
                        for="fileInput">
-                Upload File
+                @L["Upload File"]
             </MudButton>
         </MudCardContent>
     </MudCard>

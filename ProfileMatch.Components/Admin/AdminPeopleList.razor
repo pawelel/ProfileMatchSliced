@@ -25,7 +25,7 @@ else
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.Department.Name)" SortLabel=@L["Department"] T="ApplicationUser">@L["Department"]</MudTableSortLabel></MudTh>
-            <MudTh>@L["Photo"]</MudTh>
+            <MudTh Style="text-align: center">@L["Photo"]</MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.FirstName)" SortLabel=@L["First Name"] T="ApplicationUser">@L["First Name"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.LastName)" SortLabel=@L["Last Name"] T="ApplicationUser">@L["Last Name"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.DateOfBirth?.Date)" SortLabel=@L["Date Of Birth"] T="ApplicationUser">@L["Birth Date"]</MudTableSortLabel></MudTh>
@@ -35,7 +35,7 @@ else
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel=@L["Department"]>@(context.Department==null? @L["unassigned"] : @L[context.Department.Name])</MudTd>
-            <MudTd DataLabel=@L["Photo"]><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
+            <MudTd Style="text-align: center" DataLabel=@L["Photo"]><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
             <MudTd DataLabel=@L["First Name"]>@context.FirstName</MudTd>
             <MudTd DataLabel=@L["Last Name"]>@context.LastName</MudTd>
             <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth?.ToShortDateString()</MudTd>

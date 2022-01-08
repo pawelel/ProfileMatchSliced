@@ -2,12 +2,13 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-
+using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
+using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
+       [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         string path;
         private async Task LoadSingleFile(InputFileChangeEventArgs e)
@@ -41,7 +43,7 @@ fs.Close();
 foreach (var c in categories)
             {
                 await CategoryRepository.Insert(c);
-                Snackbar.Add($"{c.Name} created.", Severity.Success);
+                Snackbar.Add($"{c.Name} " + @L["created."], Severity.Success);
             }
             await InvokeAsync(() =>
             {
