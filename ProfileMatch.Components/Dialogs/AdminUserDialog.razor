@@ -19,7 +19,7 @@ else
                            AdornmentColor="Color.Tertiary">
                     @foreach (var dept in Departments)
                     {
-                        <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
+                        <MudSelectItem Value="@(dept.Id)">@L[dept.Name]</MudSelectItem>
                     }
                 </MudSelect>
 
@@ -31,8 +31,6 @@ else
                               Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" @bind-Value="@EditedUser.LastName" Immediate="true" Label=@L["Last Name"] Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" Label=@L["Email"] @bind-Value="@EditedUser.Email" Required="true" RequiredError=@L["Email is required!"] />
-
-                    <MudTextField Label=@L["Password"] Variant="Variant.Text" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" @bind-Value="@EditedUserPassword" Required="true" RequiredError=@L["Password is required!"] />
                 
                 <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@EditedUser.Gender"
                            OffsetY="true" RequiredError=@L["Gender is required!"]
@@ -41,7 +39,7 @@ else
                            AdornmentColor="Color.Tertiary">
                     @foreach (Gender? g in Enum.GetValues(typeof(Gender)))
                     {
-                        <MudSelectItem Value="@g">@g</MudSelectItem>
+                        <MudSelectItem Value="@g">@L[g.ToString()]</MudSelectItem>
                     }
                 </MudSelect>
                 <MudDatePicker @bind-Date="@_dob"
@@ -57,8 +55,8 @@ else
                                    <MudTh>@L["Assigned"]</MudTh>
                                    </HeaderContent>
                                    <RowTemplate>
-                                         <MudTd DataLabel="Role Name">@context.RoleName</MudTd>
-                                         <MudTd DataLabel="Assigned">
+                                         <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
+                                         <MudTd DataLabel=@L["Assigned"]>
                                              <MudCheckBox @bind-Checked="@context.IsSelected"/></MudTd>
                                    </RowTemplate>
                                </MudTable>
