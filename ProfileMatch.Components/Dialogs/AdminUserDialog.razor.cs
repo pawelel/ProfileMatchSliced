@@ -35,6 +35,7 @@ namespace ProfileMatch.Components.Dialogs
         private DateTime? _dob;
         [Parameter] public ApplicationUser EditedUser { get; set; } = new();
         private List<Department> Departments = new();
+        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
@@ -164,5 +165,11 @@ namespace ProfileMatch.Components.Dialogs
 
         [Inject]
         private IStringLocalizer<LanguageService> L { get; set; }
+        private void Cancel()
+        {
+            MudDialog.Cancel();
+            Snackbar.Add("Operation cancelled", Severity.Warning);
+        }
+
     }
 }

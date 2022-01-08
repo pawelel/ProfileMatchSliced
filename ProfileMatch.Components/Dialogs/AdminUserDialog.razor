@@ -61,8 +61,12 @@ else
                                    </RowTemplate>
                                </MudTable>
             </MudForm>
-            <MudButton OnClick="@HandleSave">@L["Save"]</MudButton>
+          
         </DialogContent>
+          <DialogActions>
+            <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
+            <MudButton OnClick="@HandleSave" Color="Color.Error">@L["Save"]</MudButton>
+            </DialogActions>
     </MudDialog>
 }
 @code{
