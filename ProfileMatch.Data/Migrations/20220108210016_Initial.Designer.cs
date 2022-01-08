@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220108074645_No answer")]
-    partial class Noanswer
+    [Migration("20220108210016_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -521,8 +521,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fc7f6c07-2bf9-4847-ab11-e5fc1b6a2642",
-                            DateOfBirth = new DateTime(2022, 1, 8, 8, 46, 44, 917, DateTimeKind.Local).AddTicks(4010),
+                            ConcurrencyStamp = "93fb3452-200f-4bfb-8027-695c5c8825d9",
+                            DateOfBirth = new DateTime(2022, 1, 8, 22, 0, 16, 238, DateTimeKind.Local).AddTicks(891),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -532,9 +532,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEOR2NCNlOyQGa14BF4BVcfqYWvukz08F4YsRy3x094jWrzqQhvvHtAC9rLeOPpDSg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHzPBAixVsKFGVUqMLjO3bhrd8TwdgvFcOCh2+MJznljmtkeJnZfW0VOQDdrLEsjaw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "91619ec8-fffc-424f-97fe-43cfb72cac2a",
+                            SecurityStamp = "04612579-4ec3-455c-a348-9c7eb7b4c8a8",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -838,18 +838,18 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("NoteId")
+                    b.Property<int>("OpenQuestionId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDisplayed")
                         .HasColumnType("bit");
 
-                    b.HasKey("ApplicationUserId", "NoteId");
+                    b.Property<string>("UserAnswer")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("NoteId");
+                    b.HasKey("ApplicationUserId", "OpenQuestionId");
+
+                    b.HasIndex("OpenQuestionId");
 
                     b.ToTable("UserOpenAnswers");
                 });
@@ -991,15 +991,15 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProfileMatch.Models.Models.OpenQuestion", "Note")
+                    b.HasOne("ProfileMatch.Models.Models.OpenQuestion", "OpenQuestion")
                         .WithMany("UserOpenAnswers")
-                        .HasForeignKey("NoteId")
+                        .HasForeignKey("OpenQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("Note");
+                    b.Navigation("OpenQuestion");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.AnswerOption", b =>

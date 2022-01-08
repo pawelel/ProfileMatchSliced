@@ -8,9 +8,9 @@ namespace ProfileMatch.Models.Models
         [Ignore]
         public ApplicationUser ApplicationUser { get; set; }
         [Ignore]
-        public OpenQuestion Note { get; set; }
-        public int NoteId { get; set; }
+        public OpenQuestion OpenQuestion { get; set; }
+        public int OpenQuestionId { get; set; }
         public bool IsDisplayed { get; set; }
-        public string Description { get; set; }
+        public string UserAnswer { get; set; }
     }
 }

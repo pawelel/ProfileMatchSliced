@@ -40,7 +40,7 @@
     ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
     
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    OpenQuestion - application/x-microsoft.net.object.binary.base64 is the format 
     that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
     
@@ -552,8 +552,8 @@
   <data name="Select all text" xml:space="preserve">
     <value>Select all text</value>
   </data>
-  <data name="Edit note" xml:space="preserve">
-    <value>Edit note</value>
+  <data name="Edit openQuestion" xml:space="preserve">
+    <value>Edit openQuestion</value>
   </data>
   <data name="Open Questions" xml:space="preserve">
     <value>Open Questions</value>

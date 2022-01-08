@@ -63,12 +63,12 @@ namespace ProfileMatch.Components.Dialogs
             if (EditedOpenQuestion.Id == 0)
             {
                 var result = await OpenQuestionRepository.Insert(EditedOpenQuestion);
-                Snackbar.Add($"Note {result.Name} created", Severity.Success);
+                Snackbar.Add($"OpenQuestion {result.Name} created", Severity.Success);
             }
             else
             {
                 var result = await OpenQuestionRepository.Update(EditedOpenQuestion);
-                Snackbar.Add($"Note {result.Name} updated", Severity.Success);
+                Snackbar.Add($"OpenQuestion {result.Name} updated", Severity.Success);
             }
         }
 

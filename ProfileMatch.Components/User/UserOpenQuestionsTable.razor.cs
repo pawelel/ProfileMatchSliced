@@ -55,13 +55,13 @@ namespace ProfileMatch.Components.User
             UserOpenAnswers = await GetUserNotesAsync();
             OpenQuestions = await GetNotesAsync();
 
-            foreach (var note in OpenQuestions)
+            foreach (var openQuestion in OpenQuestions)
             {
-                UserNoteVM userNoteVM;
+                UserAnswerVM userNoteVM;
                 UserOpenAnswer userNote;
                 try
                 {
-                    userNote = UserOpenAnswers.FirstOrDefault(un => un.NoteId == note.Id);
+                    userNote = UserOpenAnswers.FirstOrDefault(un => un.OpenQuestionId == openQuestion.Id);
                 }
                 catch (Exception)
                 {
@@ -71,26 +71,26 @@ namespace ProfileMatch.Components.User
 
                 if (userNote != null)
                 {
-                    userNoteVM = new UserNoteVM
+                    userNoteVM = new UserAnswerVM
                     {
                         UserId = UserId,
-                        UserDescription = userNote.Description,
+                        UserDescription = userNote.UserAnswer,
                         IsDisplayed = userNote.IsDisplayed,
-                        NoteId = note.Id,
-                        NoteName = note.Name,
-                        NoteDescription = note.Description
+                        AnswerId = openQuestion.Id,
+                        OpenQuestionName = openQuestion.Name,
+                        OpenQuestionDescription = openQuestion.Description
                     };
                 }
                 else
                 {
-                    userNoteVM = new UserNoteVM
+                    userNoteVM = new UserAnswerVM
                     {
                         UserId = UserId,
                         UserDescription = String.Empty,
                         IsDisplayed = false,
-                        NoteId = note.Id,
-                        NoteName = note.Name,
-                        NoteDescription = note.Description
+                        AnswerId = openQuestion.Id,
+                        OpenQuestionName = openQuestion.Name,
+                        OpenQuestionDescription = openQuestion.Description
                     };
                 }
                 UserNotesVM.Add(userNoteVM);
@@ -102,25 +102,25 @@ namespace ProfileMatch.Components.User
         
         
         private string searchString1 = "";
-        private UserNoteVM selectedItem1 = null;
-        private readonly List<UserNoteVM> UserNotesVM = new();
+        private UserAnswerVM selectedItem1 = null;
+        private readonly List<UserAnswerVM> UserNotesVM = new();
 
-        private bool FilterFunc1(UserNoteVM UserNoteVM) => FilterFunc(UserNoteVM, searchString1);
+        private bool FilterFunc1(UserAnswerVM UserNoteVM) => FilterFunc(UserNoteVM, searchString1);
 
-        private static bool FilterFunc(UserNoteVM UserNoteVM, string searchString)
+        private static bool FilterFunc(UserAnswerVM UserNoteVM, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (UserNoteVM.NoteName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (UserNoteVM.OpenQuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (UserNoteVM.NoteDescription != null && UserNoteVM.NoteDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (UserNoteVM.OpenQuestionDescription != null && UserNoteVM.OpenQuestionDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (UserNoteVM.UserDescription != null && UserNoteVM.UserDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
 
-        private async Task UserNoteUpdate(UserNoteVM UserNoteVM)
+        private async Task UserNoteUpdate(UserAnswerVM UserNoteVM)
         {
             var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
             var dialog = DialogService.Show<UserOpenQuestionDialog>("Edytuj pytanie", parameters);

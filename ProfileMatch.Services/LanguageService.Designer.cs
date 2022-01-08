@@ -529,11 +529,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit note.
+        ///   Looks up a localized string similar to Edit openQuestion.
         /// </summary>
-        public static string Edit_note {
+        public static string Edit_openQuestion {
             get {
-                return ResourceManager.GetString("Edit note", resourceCulture);
+                return ResourceManager.GetString("Edit openQuestion", resourceCulture);
             }
         }
         

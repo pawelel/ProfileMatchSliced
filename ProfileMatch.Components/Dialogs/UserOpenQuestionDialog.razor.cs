@@ -29,7 +29,7 @@ namespace ProfileMatch.Components.Dialogs
        
         [Inject] private ISnackbar Snackbar { get; set; }
         UserOpenAnswer EditUserNote;
-        [Parameter] public UserNoteVM UserNoteVM { get; set; }
+        [Parameter] public UserAnswerVM UserNoteVM { get; set; }
         string TempDescription;
         bool IsDisplayed;
         bool exists;
@@ -37,21 +37,21 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-            exists = await UserNoteRepository.ExistById(UserNoteVM.UserId, UserNoteVM.NoteId);
+            exists = await UserNoteRepository.ExistById(UserNoteVM.UserId, UserNoteVM.AnswerId);
             if (exists)
             {
-                EditUserNote = await UserNoteRepository.GetById(UserNoteVM.UserId, UserNoteVM.NoteId);
+                EditUserNote = await UserNoteRepository.GetById(UserNoteVM.UserId, UserNoteVM.AnswerId);
             }
             else
             {
                 EditUserNote = new()
                 {
                     IsDisplayed = UserNoteVM.IsDisplayed,
-                    NoteId = UserNoteVM.NoteId,
+                    OpenQuestionId = UserNoteVM.AnswerId,
                     ApplicationUserId = UserNoteVM.UserId
                 };
             }
-            TempDescription = EditUserNote.Description;
+            TempDescription = EditUserNote.UserAnswer;
             IsDisplayed = EditUserNote.IsDisplayed;
         }
 
@@ -71,7 +71,7 @@ namespace ProfileMatch.Components.Dialogs
             if (Form.IsValid)
             {
                 EditUserNote.IsDisplayed = IsDisplayed;
-                EditUserNote.Description = TempDescription;
+                EditUserNote.UserAnswer = TempDescription;
                 try
                 {
                     await Save();

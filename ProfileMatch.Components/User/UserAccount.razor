@@ -23,13 +23,13 @@
         <UserCategoryList CurrentUser="CurrentUser" />
 
 
-        @foreach (var un in UserNotesVM)
+        @foreach (var un in UserOpenAnswersVM)
         {
             <MudItem Class="pa-2" sm="6" xs="12" md="6">
                 <MudCard>
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <textfield Typo="Typo.h6">@un.NoteName</textfield>
+                            <textfield Typo="Typo.h6">@un.OpenQuestionName</textfield>
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>

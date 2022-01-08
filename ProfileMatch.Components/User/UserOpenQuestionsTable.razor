@@ -1,4 +1,4 @@
-﻿<MudTable Items="@UserNotesVM" T="UserNoteVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserNoteVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+﻿<MudTable Items="@UserNotesVM" T="UserAnswerVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserAnswerVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
         <MudSpacer />
@@ -17,8 +17,8 @@
         <MudTh>@L["Actions"]</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel=@L["Name"]>@context.NoteName</MudTd>
-        <MudTd DataLabel=@L["Description"]>@context.NoteDescription</MudTd>
+        <MudTd DataLabel=@L["Name"]>@context.OpenQuestionName</MudTd>
+        <MudTd DataLabel=@L["Description"]>@context.OpenQuestionDescription</MudTd>
         <MudTd DataLabel=@L["Answer"]>@context.UserDescription</MudTd>
         <MudTd DataLabel=@L["Edit"]>
             <MudButton OnClick="((e)=>UserNoteUpdate(context))" Color="Color.Tertiary">@L["Edit Answer"]</MudButton>

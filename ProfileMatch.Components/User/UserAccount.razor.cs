@@ -22,8 +22,8 @@ namespace ProfileMatch.Components.User
     {
         public string AvatarImageLink { get; set; }
         public string AvatarIcon { get; set; }
-        private List<UserNoteVM> UserNotesVM;
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
+        private List<UserAnswerVM> UserOpenAnswersVM;
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Parameter] public string UserId { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         ApplicationUser CurrentUser;
@@ -33,7 +33,6 @@ namespace ProfileMatch.Components.User
             if (!string.IsNullOrEmpty(UserId))
             {
                 CurrentUser = await AppUserManager.GetById(UserId);
-                
             }
             else
             {
@@ -43,27 +42,31 @@ namespace ProfileMatch.Components.User
                     UserId = principal.FindFirst("UserId").Value;
                 CurrentUser = await AppUserManager.GetById(UserId);
             }
-            UserNotesVM = await GetUserNotesVMAsync();
+            UserOpenAnswersVM = await GetUserAnswerVMAsync();
         }
-        private async Task<List<UserNoteVM>> GetUserNotesVMAsync()
+        private async Task<List<UserAnswerVM>> GetUserAnswerVMAsync()
         {
-            var notes = await UserNoteRepository.Get(u => u.ApplicationUserId == UserId, include: src => src.Include(n => n.Note));
-            notes = (from n in notes where n.IsDisplayed==true select n).ToList();
-            List<UserNoteVM> userNoteVMs = new();
-            foreach (var note in notes)
+            List<UserOpenAnswer> answers = new();
+                answers = await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == UserId, include: src => src.Include(n => n.OpenQuestion));
+            if (answers != null)
             {
-                    var noteVM = new UserNoteVM()
+                answers = (from n in answers where n.IsDisplayed == true select n).ToList();
+                List<UserAnswerVM> userAnswersVM = new();
+                foreach (var answer in answers)
+                {
+                    var answerVM = new UserAnswerVM()
                     {
-                        IsDisplayed = note.IsDisplayed,
-                        NoteDescription = note.Note.Description,
-                        NoteId = note.NoteId,
-                        NoteName = note.Note.Name,
-                        UserDescription = note.Description,
-                        UserId = note.ApplicationUserId
+                        IsDisplayed = answer.IsDisplayed,
+                        OpenQuestionDescription = answer.OpenQuestion.Description,
+                        AnswerId = answer.OpenQuestionId,
+                        OpenQuestionName = answer.OpenQuestion.Name,
+                        UserDescription = answer.UserAnswer,
+                        UserId = answer.ApplicationUserId
                     };
-                    userNoteVMs.Add(noteVM);
-            }
-            return userNoteVMs;
+                    userAnswersVM.Add(answerVM);
+                }
+                return userAnswersVM;
+            }return new();
         }
     }
 }

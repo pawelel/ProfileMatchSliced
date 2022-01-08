@@ -16,14 +16,14 @@ namespace ProfileMatch.Components.User
     public partial class UserCategoryList : ComponentBase
     {
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
-
+        [Parameter] public string UserID { get; set; }
         List<UserCategoryVM> UserCategoryVMs = new();
         [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryManager { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
         List<UserCategory> userCategories;
         List<Category> categories;
-
+        List<UserCategoryVM> publicCategories=new();
         protected override async Task OnInitializedAsync()
         {
             userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
@@ -39,6 +39,7 @@ namespace ProfileMatch.Components.User
                                    UserId = CurrentUser.Id
                                }
                                ).ToList();
+            publicCategories = UserCategoryVMs;
             UserCategoryVM ucVM;
             foreach (var cat in categories)
             {

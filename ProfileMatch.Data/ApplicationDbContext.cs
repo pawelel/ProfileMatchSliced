@@ -38,7 +38,7 @@ namespace ProfileMatch.Data
 
             //composite keys
             builder.Entity<UserCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
-            builder.Entity<UserOpenAnswer>().HasKey(x => new { x.ApplicationUserId, x.NoteId });
+            builder.Entity<UserOpenAnswer>().HasKey(x => new { x.ApplicationUserId, x.OpenQuestionId });
             //seed roles
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = "93877c5b-c988-4c83-b152-d0b17858f7c6", ConcurrencyStamp = "dd434162-84c9-4f3f-acd0-aa028df9b1f4" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
