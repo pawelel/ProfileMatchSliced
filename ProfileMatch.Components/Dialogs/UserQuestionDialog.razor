@@ -15,13 +15,13 @@
             {
                 <MudTabPanel Text="@answerOption.Level.ToString()">
 
-                    <MudItem>
+                    <MudItem Style="height:200px;">
                         <MudText Typo="Typo.subtitle1">@L["Level"] @answerOption.Level.ToString()</MudText>
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
                                 @if (CanSelect(answerOption))
                                 {
-                                    <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.ClosedQuestionId))" Color="Color.Tertiary" Size="Size.Small">@L["This is my Level"]</MudButton>
+                                    <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.ClosedQuestionId))" Size="Size.Small">@L["This is my Level"]</MudButton>
                                 }
                             </MudItem>
                         </MudTabPanel>
