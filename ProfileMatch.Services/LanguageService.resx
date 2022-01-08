@@ -627,4 +627,7 @@
   <data name="Edit Answer Level" xml:space="preserve">
     <value>Edit Answer Level</value>
   </data>
+  <data name="New Category" xml:space="preserve">
+    <value>New Category</value>
+  </data>
 </root>

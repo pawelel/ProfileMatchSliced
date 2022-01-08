@@ -908,6 +908,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Category.
+        /// </summary>
+        public static string New_Category {
+            get {
+                return ResourceManager.GetString("New Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Password.
         /// </summary>
         public static string New_Password {

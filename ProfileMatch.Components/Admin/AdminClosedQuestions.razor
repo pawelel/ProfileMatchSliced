@@ -27,7 +27,7 @@ else
             </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-            <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
+           <MudButton Variant=Variant.Text Color="Color.Success">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
 <MudSpacer/>
         </ToolBarContent>
         <HeaderContent>

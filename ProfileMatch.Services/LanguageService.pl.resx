@@ -169,7 +169,7 @@
     <value>Edytuj</value>
   </data>
   <data name="Edit Category" xml:space="preserve">
-    <value>Edytuj kategorie</value>
+    <value>Edytuj kategorię</value>
   </data>
   <data name="Add Question" xml:space="preserve">
     <value>Dodaj pytanie</value>
@@ -626,5 +626,8 @@
   </data>
   <data name="Edit Answer Level" xml:space="preserve">
     <value>Edytuj poziom odpowiedzi</value>
+  </data>
+  <data name="New Category" xml:space="preserve">
+    <value>Nowa kategoria</value>
   </data>
 </root>
