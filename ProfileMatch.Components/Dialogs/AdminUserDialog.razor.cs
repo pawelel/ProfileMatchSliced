@@ -89,10 +89,12 @@ namespace ProfileMatch.Components.Dialogs
                 {
                     // Update the user
                     await ApplicationUserManager.Update(EditedUser);
+                    Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been updated[O]"], Severity.Success);
                 }
                 else
                 {
                     await ApplicationUserManager.Insert(EditedUser);
+                    Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
                 }
                 foreach (var role in UserRoles)
                 {
@@ -120,13 +122,13 @@ namespace ProfileMatch.Components.Dialogs
             if (!imageTypes.Any(i=>i.Contains(imageType)))
             {
                 Snackbar.Clear();
-                Snackbar.Add("Wrong file format. Allowed file formats are: .jpg, .jpeg, .png.", Severity.Error);
+                Snackbar.Add(@L["Wrong file format. Allowed file formats are: .jpg, .jpeg, .png."], Severity.Error);
                 return;
             }
             if (file.Size> 5200000)
             {
                 Snackbar.Clear();
-                Snackbar.Add("Max allowed size is 5MB", Severity.Error);
+                Snackbar.Add(@L["Max allowed size is 5MB"], Severity.Error);
                 return;
             }
 
@@ -147,8 +149,8 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
-
+       
     }
 }

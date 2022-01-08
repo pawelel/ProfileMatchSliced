@@ -28,10 +28,10 @@ namespace ProfileMatch.Components.Dialogs
             TempName = Cat.Name;
             TempDescription = Cat.Description;
         }
-        private static IEnumerable<string> MaxCharacters(string ch)
+        private IEnumerable<string> MaxCharacters(string ch)
         {
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
-                yield return "Max 20 characters";
+                yield return L["Max 20 characters"];
         }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
@@ -40,7 +40,7 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
 
         protected async Task HandleSave()
@@ -56,7 +56,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                    Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
                 }
 
                 MudDialog.Close(DialogResult.Ok(Cat));
@@ -68,12 +68,12 @@ namespace ProfileMatch.Components.Dialogs
             if (Cat.Id == 0)
             {
                 var result = await CategoryRepository.Insert(Cat);
-                Snackbar.Add($"Category {result.Name} created", Severity.Success);
+                Snackbar.Add(@L["Category"] + $" {@L[result.Name]} " + @L["has been created[F]"], Severity.Success);
             }
             else
             {
                 var result = await CategoryRepository.Update(Cat);
-                Snackbar.Add($"Category {result.Name} updated", Severity.Success);
+                Snackbar.Add(@L["Category"] + $" {@L[result.Name]} " + @L["has been updated[F]"], Severity.Success);
             }
         }
 

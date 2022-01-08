@@ -40,7 +40,7 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
 
         protected async Task HandleSave()
@@ -58,7 +58,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                    Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
                 }
 
                 MudDialog.Close(DialogResult.Ok(Q));
@@ -71,16 +71,16 @@ namespace ProfileMatch.Components.Dialogs
             if (Q.Id == 0 && !exists)
             {
                 var result = await ClosedQuestionRepository.Insert(Q);
-                Snackbar.Add($"ClosedQuestion {result.Name} created", Severity.Success);
+                Snackbar.Add(@L["ClosedQuestion"] + $" {@L[result.Name]} " + @L["has been created[M]"], Severity.Success);
             }
             else if (!exists)
             {
                 await ClosedQuestionRepository.Update(Q);
-                Snackbar.Add($"ClosedQuestion {Q.Name} updated", Severity.Success);
+                Snackbar.Add(@L["ClosedQuestion"] + $" {@L[Q.Name]} " + @L["has been updated[M]"], Severity.Success);
             }
             else
             {
-                Snackbar.Add($"ClosedQuestion {Q.Name} already exists.", Severity.Error);
+                Snackbar.Add(@L["ClosedQuestion"] + $" {L[Q.Name]} " + @L["already exists[M]"], Severity.Error);
             }
         }
 

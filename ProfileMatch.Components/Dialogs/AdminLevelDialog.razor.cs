@@ -33,7 +33,7 @@ namespace ProfileMatch.Components.Dialogs
         private void Cancel()
         {
             MudDialog.Cancel();
-            Snackbar.Add("Operation cancelled", Severity.Warning);
+            Snackbar.Add(@L["Operation cancelled"], Severity.Warning);
         }
 
         protected async Task HandleSave()
@@ -48,7 +48,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    Snackbar.Add($"There was an error: {ex.Message}", Severity.Error);
+                    Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
                 }
 
                 MudDialog.Close(DialogResult.Ok(O));
@@ -60,12 +60,12 @@ namespace ProfileMatch.Components.Dialogs
             if (O.Id == 0)
             {
                 var result = await AnswerOptionRepository.Insert(O);
-                Snackbar.Add($"Answer Option created", Severity.Success);
+                Snackbar.Add(@L["Answer option created"], Severity.Success);
             }
             else
             {
                 await AnswerOptionRepository.Update(O);
-                Snackbar.Add($"Answer Option updated", Severity.Success);
+                Snackbar.Add(@L["Answer option updated"], Severity.Success);
             }
         }
 
