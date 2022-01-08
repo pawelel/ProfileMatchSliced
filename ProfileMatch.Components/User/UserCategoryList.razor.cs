@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
+using MudBlazor;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
@@ -15,6 +17,7 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserCategoryList : ComponentBase
     {
+        [Inject] ISnackbar Snackbar { get; set; }
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         [Parameter] public string UserID { get; set; }
         List<UserCategoryVM> UserCategoryVMs = new();
@@ -23,7 +26,7 @@ namespace ProfileMatch.Components.User
         [Parameter] public ApplicationUser CurrentUser { get; set; }
         List<UserCategory> userCategories;
         List<Category> categories;
-        List<UserCategoryVM> publicCategories=new();
+        List<UserCategoryVM> publicCategoriesVM=new();
         protected override async Task OnInitializedAsync()
         {
             userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
@@ -39,7 +42,6 @@ namespace ProfileMatch.Components.User
                                    UserId = CurrentUser.Id
                                }
                                ).ToList();
-            publicCategories = UserCategoryVMs;
             UserCategoryVM ucVM;
             foreach (var cat in categories)
             {
@@ -53,11 +55,35 @@ namespace ProfileMatch.Components.User
                         IsSelected = false,
                         UserId = CurrentUser.Id
                     };
+                    UserCategory uc = new()
+                    {
+                        ApplicationUserId = CurrentUser.Id,
+                        CategoryId = cat.Id,
+                        Want = false
+                    };
+                    await UserCategoryManager.Insert(uc);
                     UserCategoryVMs.Add(ucVM);
                 }
             }
+                publicCategoriesVM = UserCategoryVMs.Where(c => c.IsSelected).ToList();
         }
         bool edit = false;
+        async Task<bool> SetCategoryAsync(UserCategoryVM category)
+        {
+            var data = await UserCategoryManager.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == category.CategoryId);
+            if (data != null)
+            {
+                data.Want = category.IsSelected;
+                await UserCategoryManager.Update(data);
+            }
+            if (category.IsSelected)
+            {
+            Snackbar.Add(L["Category"] + $" {L[category.CategoryName]} {L["checked"]}", Severity.Success);
+            }
+            else { Snackbar.Add(L["Category"] + $" { category.CategoryName} { L["unchecked"]}", Severity.Success);    
+            }
 
+          return  data.Want;
+        }
     }
 }
