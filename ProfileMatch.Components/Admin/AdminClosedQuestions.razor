@@ -35,13 +35,13 @@ else
             <MudTh>Id</MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
-            <MudTh>@L["Actions"]</MudTh>
+            <MudTh Class="d-flex justify-center">@L["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd Class="d-flex justify-end" DataLabel="Actions">
+            <MudTd Class="d-flex justify-sm-start justify-md-center" DataLabel="Actions">
                 <MudButton OnClick="@(()=>QuestionDisplay(context))" Color="Color.Tertiary">@L["Display"]</MudButton>
                 <MudButton OnClick="@(()=>QuestionDialog(context))" Color="Color.Success">@L["Edit"]</MudButton>
             </MudTd>
