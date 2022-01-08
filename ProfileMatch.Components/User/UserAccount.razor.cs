@@ -23,7 +23,7 @@ namespace ProfileMatch.Components.User
         public string AvatarImageLink { get; set; }
         public string AvatarIcon { get; set; }
         private List<UserNoteVM> UserNotesVM;
-        [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
         [Parameter] public string UserId { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         ApplicationUser CurrentUser;

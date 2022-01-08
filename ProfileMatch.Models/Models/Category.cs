@@ -10,8 +10,8 @@ namespace ProfileMatch.Models.Models
         public string Name { get; set; }
         public string Description { get; set; }
         [Ignore]
-        public virtual List<Question> Questions { get; set; }
+        public virtual List<ClosedQuestion> ClosedQuestions { get; set; }
         [Ignore]
-        public virtual List<UserCategory> UserNeedCategories { get; set; }
+        public virtual List<UserCategory> UserCategories { get; set; }
     }
 }

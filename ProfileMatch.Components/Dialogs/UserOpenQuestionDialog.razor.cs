@@ -21,14 +21,14 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class UserNoteDialog
+    public partial class UserOpenQuestionDialog
     {
        [Inject]  private  IStringLocalizer<LanguageService> L { get; set; }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
        
         [Inject] private ISnackbar Snackbar { get; set; }
-        UserNote EditUserNote;
+        UserOpenAnswer EditUserNote;
         [Parameter] public UserNoteVM UserNoteVM { get; set; }
         string TempDescription;
         bool IsDisplayed;
@@ -55,7 +55,7 @@ namespace ProfileMatch.Components.Dialogs
             IsDisplayed = EditUserNote.IsDisplayed;
         }
 
-        [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
 
         private MudForm Form;
 

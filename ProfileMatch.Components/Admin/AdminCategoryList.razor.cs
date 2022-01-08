@@ -30,7 +30,7 @@ namespace ProfileMatch.Components.Admin
 
         private async Task<List<Category>> GetCategoriesAsync()
         {
-            return await CategoryRepository.Get(include: c => c.Include(c => c.Questions));
+            return await CategoryRepository.Get(include: c => c.Include(c => c.ClosedQuestions));
         }
 
         protected override async Task OnInitializedAsync()
@@ -72,7 +72,7 @@ namespace ProfileMatch.Components.Admin
         private async Task QuestionCreate(Category category)
         {
             var parameters = new DialogParameters { ["CategoryId"] = category.Id };
-            var dialog = DialogService.Show<AdminQuestionDialog>($"Dodaj pytanie dla: {category.Name}", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>($"Dodaj pytanie dla: {category.Name}", parameters);
             await dialog.Result;
             Categories = await GetCategoriesAsync();
         }

@@ -14,11 +14,11 @@ using System;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminNoteDialog : ComponentBase
+    public partial class AdminOpenQuestionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Note EditedNote { get; set; } = new();
+        [Parameter] public OpenQuestion EditedNote { get; set; } = new();
         public string TempName { get; set; }
         public string TempDescription { get; set; }
 
@@ -28,7 +28,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = EditedNote.Description;
         }
 
-        [Inject] DataManager<Note, ApplicationDbContext> NoteRepository { get; set; }
+        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
 
         private MudForm Form;
 
@@ -62,12 +62,12 @@ namespace ProfileMatch.Components.Dialogs
         {
             if (EditedNote.Id == 0)
             {
-                var result = await NoteRepository.Insert(EditedNote);
+                var result = await OpenQuestionRepository.Insert(EditedNote);
                 Snackbar.Add($"Note {result.Name} created", Severity.Success);
             }
             else
             {
-                var result = await NoteRepository.Update(EditedNote);
+                var result = await OpenQuestionRepository.Update(EditedNote);
                 Snackbar.Add($"Note {result.Name} updated", Severity.Success);
             }
         }

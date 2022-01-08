@@ -33,7 +33,7 @@ namespace ProfileMatch.Models.Models
         [Ignore]
         public List<UserCategory> UserNeedCategories { get; set; }
         [Ignore]
-        public List<UserAnswer> UserAnswers { get; set; }
+        public List<UserClosedAnswer> UserClosedAnswers { get; set; }
         public string JobTitle { get; set; }
         [Ignore]
         public virtual ICollection<IdentityUserRole<string>> UserRoles { get; } = new List<IdentityUserRole<string>>();

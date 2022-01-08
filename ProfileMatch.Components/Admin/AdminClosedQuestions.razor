@@ -13,25 +13,26 @@ else
         </MudSelect>
         <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
-    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<Question,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ColGroup>
             <col />
             <col style="width: 60%;" />
             <col />
         </ColGroup>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
+            <MudText Typo="Typo.h6">@L["Closed ClosedQuestions"]</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["ClosedQuestion"]</MudTableSortLabel></MudTh>
             <MudTh>@L["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
-            <MudTd DataLabel="Question">@context.Name</MudTd>
+            <MudTd DataLabel="ClosedQuestion">@context.Name</MudTd>
             <MudTd DataLabel="Actions">
                 <MudButton OnClick="@(()=>QuestionDisplay(context))">@L["Display"]</MudButton>
                 <MudButton OnClick="@(()=>QuestionDialog(context))">@L["Edit"]</MudButton>

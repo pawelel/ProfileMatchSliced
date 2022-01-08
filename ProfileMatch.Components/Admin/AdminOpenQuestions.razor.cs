@@ -27,16 +27,16 @@ namespace ProfileMatch.Components.Admin
         [Inject]
         private IDialogService DialogService { get; set; }
 
-        [Inject] DataManager<Note, ApplicationDbContext> NoteRepository { get; set; }
+        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
 
-        private async Task<List<Note>> GetNotesAsync()
+        private async Task<List<OpenQuestion>> GetNotesAsync()
         {
-            return await NoteRepository.Get();
+            return await OpenQuestionRepository.Get();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            Notes = await GetNotesAsync();
+            OpenQuestions = await GetNotesAsync();
         }
 
         
@@ -44,12 +44,12 @@ namespace ProfileMatch.Components.Admin
         
         
         private string searchString1 = "";
-        private Note selectedItem1 = null;
-        private List<Note> Notes = new();
+        private OpenQuestion selectedItem1 = null;
+        private List<OpenQuestion> OpenQuestions = new();
 
-        private bool FilterFunc1(Note Note) => FilterFunc(Note, searchString1);
+        private bool FilterFunc1(OpenQuestion Note) => FilterFunc(Note, searchString1);
 
-        private static bool FilterFunc(Note Note, string searchString)
+        private static bool FilterFunc(OpenQuestion Note, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -60,18 +60,18 @@ namespace ProfileMatch.Components.Admin
             return false;
         }
 
-        private async Task NoteUpdate(Note Note)
+        private async Task NoteUpdate(OpenQuestion Note)
         {
             var parameters = new DialogParameters { ["EditedNote"] = Note };
-            var dialog = DialogService.Show<AdminNoteDialog>("Edytuj pytanie", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>("Edytuj pytanie", parameters);
             await dialog.Result;
         }
 
         private async Task NoteCreate()
         {
-            var dialog = DialogService.Show<AdminNoteDialog>("Stwórz pytanie");
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>("Stwórz pytanie");
             await dialog.Result;
-            Notes = await GetNotesAsync();
+            OpenQuestions = await GetNotesAsync();
         }
 
         

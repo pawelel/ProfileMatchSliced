@@ -20,24 +20,24 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserClosedQuestions : ComponentBase
+    public partial class UserClosedQuestionsTable : ComponentBase
     {
 
 
 
         private bool loading;
-        private List<Question> questions;
+        private List<ClosedQuestion> questions;
         private List<Category> categories;
         private List<AnswerOption> answerOptions;
-        private List<UserAnswer> userAnswers;
+        private List<UserClosedAnswer> userAnswers;
 
         private string UserId;
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-        [Inject] DataManager<UserAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
-        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
+        [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswOptionRepository { get; set; }
 
         [Inject] private IDialogService DialogService { get; set; }
@@ -66,10 +66,10 @@ namespace ProfileMatch.Components.User
         private async Task LoadData()
         {
             categories = await CategoryRepository.Get();
+            questions = await ClosedQuestionRepository.Get(q => q.IsActive == true);
             userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == UserId);
-            questions = await QuestionRepository.Get(q => q.IsActive == true);
             answerOptions = await AnswOptionRepository.Get();// need to filter by active question
-            answerOptions = (from q in questions join o in answerOptions on q.Id equals o.QuestionId select o).ToList();
+            answerOptions = (from q in questions join o in answerOptions on q.Id equals o.ClosedQuestionId select o).ToList();
         }
 
         private string searchString;
@@ -88,14 +88,15 @@ namespace ProfileMatch.Components.User
 
         private List<QuestionUserLevelVM> QuestionUserLevelVMs()
         {
-            foreach (Question q in questions)
+            foreach (ClosedQuestion q in questions)
             {
-                if (!userAnswers.Any(a => a.QuestionId == q.Id))
+                if (!userAnswers.Any(a => a.ClosedQuestionId == q.Id))
                 {
-                    var answer = new UserAnswer()
+                    var optionId = answerOptions.FirstOrDefault(o => o.ClosedQuestionId == q.Id && o.Level == 1).Id;
+                    var answer = new UserClosedAnswer()
                     {
-                        AnswerOptionId = answerOptions.Find(o => o.QuestionId == q.Id && o.Level == 1).Id,
-                        QuestionId = q.Id,
+                        AnswerOptionId = null,
+                        ClosedQuestionId = q.Id,
                         ApplicationUserId = UserId,
                         LastModified = DateTime.Now
                     };
@@ -104,12 +105,12 @@ namespace ProfileMatch.Components.User
             }
             var data = (from u in userAnswers
                         where u.ApplicationUserId == UserId
-                        join q in questions on u.QuestionId equals q.Id
+                        join q in questions on u.ClosedQuestionId equals q.Id
                         join c in categories on q.CategoryId equals c.Id
                         join a in answerOptions on u.AnswerOptionId equals a.Id
                         select new QuestionUserLevelVM()
                         {
-                            QuestionId = q.Id,
+                            ClosedQuestionId = q.Id,
                             QuestionName = q.Name,
                             Description = q.Description,
                             CategoryId = c.Id,
@@ -122,19 +123,19 @@ namespace ProfileMatch.Components.User
         }
         private async Task UserAnswerDialog(QuestionUserLevelVM vM)
         {
-           var UserAnswer = userAnswers.Find(q => q.QuestionId== vM.QuestionId);
-            Question question = questions.FirstOrDefault(q => q.Id == vM.QuestionId);
+            var UserClosedAnswer = userAnswers.FirstOrDefault(q => q.ClosedQuestionId == vM.ClosedQuestionId);
+            ClosedQuestion question = questions.FirstOrDefault(q => q.Id == vM.ClosedQuestionId);
             Category category = categories.FirstOrDefault(c => c.Name == vM.CategoryName);
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters
             {
                 ["Q"] = question,
                 ["UserId"] = UserId,
-                ["UserAnswer"]= UserAnswer
+                ["UserClosedAnswer"] = UserClosedAnswer
             };
             var dialog = DialogService.Show<UserQuestionDialog>($"{vM.CategoryName}: {vM.QuestionName}", parameters, maxWidth);
             var data = (await dialog.Result).Data;
-           await LoadData();
+            await LoadData();
         }
     }
 }

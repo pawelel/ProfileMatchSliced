@@ -13,18 +13,20 @@
         <col />
     </ColGroup>
     <HeaderContent>
+        <MudTh>@L["Id"]</MudTh>
         <MudTh>@L["Name"]</MudTh>
         <MudTh>@L["Description"]</MudTh>
-        <MudTh>@L["Questions"]</MudTh>
+        <MudTh>@L["ClosedQuestions"]</MudTh>
         <MudTh>@L["Actions"]</MudTh>
     </HeaderContent>
     <RowTemplate>
+        <MudTd DataLabel=@L["Id"]>@context.Id</MudTd>
         <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
-        <MudTd DataLabel=@L["Questions"]>@context.Questions.Count</MudTd>
+        <MudTd DataLabel=@L["ClosedQuestions"]>@context.ClosedQuestions.Count</MudTd>
         <MudTd DataLabel=@L["Edit"]>
             <MudButton OnClick="((e)=>CategoryUpdate(context))" Color="Color.Tertiary">@L["Edit Category"]</MudButton>
-            <MudButton OnClick="((e)=>QuestionCreate(context))" Color="Color.Success">@L["Add Question"]</MudButton>
+            <MudButton OnClick="((e)=>QuestionCreate(context))" Color="Color.Success">@L["Add ClosedQuestion"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

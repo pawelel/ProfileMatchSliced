@@ -52,7 +52,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notes",
+                name: "OpenQuestions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -62,7 +62,7 @@ namespace ProfileMatch.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notes", x => x.Id);
+                    table.PrimaryKey("PK_OpenQuestions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,7 +87,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Questions",
+                name: "ClosedQuestions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -99,9 +99,9 @@ namespace ProfileMatch.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.PrimaryKey("PK_ClosedQuestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_Categories_CategoryId",
+                        name: "FK_ClosedQuestions_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -154,7 +154,7 @@ namespace ProfileMatch.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    ClosedQuestionId = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -162,9 +162,9 @@ namespace ProfileMatch.Data.Migrations
                 {
                     table.PrimaryKey("PK_AnswerOptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AnswerOptions_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
+                        name: "FK_AnswerOptions_ClosedQuestions_ClosedQuestionId",
+                        column: x => x.ClosedQuestionId,
+                        principalTable: "ClosedQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -194,8 +194,8 @@ namespace ProfileMatch.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -239,8 +239,8 @@ namespace ProfileMatch.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -255,7 +255,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserNeedCategories",
+                name: "UserCategories",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -264,15 +264,15 @@ namespace ProfileMatch.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserNeedCategories", x => new { x.ApplicationUserId, x.CategoryId });
+                    table.PrimaryKey("PK_UserCategories", x => new { x.ApplicationUserId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_UserNeedCategories_AspNetUsers_ApplicationUserId",
+                        name: "FK_UserCategories_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserNeedCategories_Categories_CategoryId",
+                        name: "FK_UserCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -280,7 +280,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserNotes",
+                name: "UserOpenAnswers",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -290,49 +290,49 @@ namespace ProfileMatch.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserNotes", x => new { x.ApplicationUserId, x.NoteId });
+                    table.PrimaryKey("PK_UserOpenAnswers", x => new { x.ApplicationUserId, x.NoteId });
                     table.ForeignKey(
-                        name: "FK_UserNotes_AspNetUsers_ApplicationUserId",
+                        name: "FK_UserOpenAnswers_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserNotes_Notes_NoteId",
+                        name: "FK_UserOpenAnswers_OpenQuestions_NoteId",
                         column: x => x.NoteId,
-                        principalTable: "Notes",
+                        principalTable: "OpenQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAnswers",
+                name: "UserClosedAnswers",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
+                    ClosedQuestionId = table.Column<int>(type: "int", nullable: false),
                     AnswerOptionId = table.Column<int>(type: "int", nullable: true),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAnswers", x => new { x.ApplicationUserId, x.QuestionId });
+                    table.PrimaryKey("PK_UserClosedAnswers", x => new { x.ApplicationUserId, x.ClosedQuestionId });
                     table.ForeignKey(
-                        name: "FK_UserAnswers_AnswerOptions_AnswerOptionId",
+                        name: "FK_UserClosedAnswers_AnswerOptions_AnswerOptionId",
                         column: x => x.AnswerOptionId,
                         principalTable: "AnswerOptions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_UserAnswers_AspNetUsers_ApplicationUserId",
+                        name: "FK_UserClosedAnswers_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserAnswers_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
+                        name: "FK_UserClosedAnswers_ClosedQuestions_ClosedQuestionId",
+                        column: x => x.ClosedQuestionId,
+                        principalTable: "ClosedQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -370,7 +370,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Notes",
+                table: "OpenQuestions",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
@@ -385,10 +385,10 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "479c7fc7-416d-44bf-a65f-adafa4e759df", new DateTime(2021, 12, 20, 22, 24, 42, 90, DateTimeKind.Local).AddTicks(1801), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAELw+nG1GWh/99wZ+5Kt0IRQh6md92FKlKS6p8bKAR2o7K38hqW/T9x50BEWY0bHYVA==", null, false, null, "8e7f2b32-a25d-474c-b7cf-12da9cf061b8", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "64698030-5c4c-48ea-9bb7-e06bdafe5608", new DateTime(2022, 1, 8, 0, 51, 17, 254, DateTimeKind.Local).AddTicks(95), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGeKVCcu0op5OEH8wvWcl4diAjqqpMvJ9O2GH79B8Ob7+MkGdB8kIOOcrkIKu+46rg==", null, false, null, "9ad47b29-8974-47c6-b1ed-e1f0f5f806fe", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
-                table: "Questions",
+                table: "ClosedQuestions",
                 columns: new[] { "Id", "CategoryId", "Description", "IsActive", "Name" },
                 values: new object[,]
                 {
@@ -404,34 +404,34 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AnswerOptions",
-                columns: new[] { "Id", "Description", "Level", "QuestionId" },
+                columns: new[] { "Id", "ClosedQuestionId", "Description", "Level" },
                 values: new object[,]
                 {
-                    { 1, "Nie znasz podstaw tego języka programowania", 1, 1 },
-                    { 2, "Znasz podstawowe rzeczy związane z programowaniem w C#", 2, 1 },
-                    { 3, "Potrafisz pisać proste kody w języku", 3, 1 },
-                    { 4, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 1 },
-                    { 5, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 1 },
-                    { 6, "Nie znasz podstaw tego języka programowania", 1, 2 },
-                    { 7, "Znasz podstawowe rzeczy związane z programowaniem w C++", 2, 2 },
-                    { 8, "Potrafisz pisać proste kody w języku", 3, 2 },
-                    { 9, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 2 },
-                    { 10, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 2 },
-                    { 11, "Nie znasz podstaw tego języka programowania", 1, 3 },
-                    { 12, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", 2, 3 },
-                    { 13, "Potrafisz pisać proste kody w języku", 3, 3 },
-                    { 14, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4, 3 },
-                    { 15, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5, 3 },
-                    { 16, "Znasz podstawowe informacje na temat routera", 1, 4 },
-                    { 17, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", 2, 4 },
-                    { 18, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", 3, 4 },
-                    { 19, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", 4, 4 },
-                    { 20, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", 5, 4 },
-                    { 21, "Nie konfigurowałeś żadnej usługi Active Directory", 1, 5 },
-                    { 22, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2, 5 },
-                    { 23, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", 3, 5 },
-                    { 24, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4, 5 },
-                    { 25, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5, 5 }
+                    { 1, 1, "Nie znasz podstaw tego języka programowania", 1 },
+                    { 2, 1, "Znasz podstawowe rzeczy związane z programowaniem w C#", 2 },
+                    { 3, 1, "Potrafisz pisać proste kody w języku", 3 },
+                    { 4, 1, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 5, 1, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 6, 2, "Nie znasz podstaw tego języka programowania", 1 },
+                    { 7, 2, "Znasz podstawowe rzeczy związane z programowaniem w C++", 2 },
+                    { 8, 2, "Potrafisz pisać proste kody w języku", 3 },
+                    { 9, 2, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 10, 2, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 11, 3, "Nie znasz podstaw tego języka programowania", 1 },
+                    { 12, 3, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", 2 },
+                    { 13, 3, "Potrafisz pisać proste kody w języku", 3 },
+                    { 14, 3, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 15, 3, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 16, 4, "Znasz podstawowe informacje na temat routera", 1 },
+                    { 17, 4, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", 2 },
+                    { 18, 4, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", 3 },
+                    { 19, 4, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", 4 },
+                    { 20, 4, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", 5 },
+                    { 21, 5, "Nie konfigurowałeś żadnej usługi Active Directory", 1 },
+                    { 22, 5, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2 },
+                    { 23, 5, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", 3 },
+                    { 24, 5, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4 },
+                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -440,24 +440,24 @@ namespace ProfileMatch.Data.Migrations
                 values: new object[] { "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", "a96d7c75-47f4-409b-a4d1-03f93c105647" });
 
             migrationBuilder.InsertData(
-                table: "UserAnswers",
-                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
+                table: "UserClosedAnswers",
+                columns: new[] { "ApplicationUserId", "ClosedQuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
                 values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 1, 2, false, null });
 
             migrationBuilder.InsertData(
-                table: "UserAnswers",
-                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
+                table: "UserClosedAnswers",
+                columns: new[] { "ApplicationUserId", "ClosedQuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
                 values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 2, 4, false, null });
 
             migrationBuilder.InsertData(
-                table: "UserAnswers",
-                columns: new[] { "ApplicationUserId", "QuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
+                table: "UserClosedAnswers",
+                columns: new[] { "ApplicationUserId", "ClosedQuestionId", "AnswerOptionId", "IsConfirmed", "LastModified" },
                 values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 3, 3, false, null });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnswerOptions_QuestionId",
+                name: "IX_AnswerOptions_ClosedQuestionId",
                 table: "AnswerOptions",
-                column: "QuestionId");
+                column: "ClosedQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -504,28 +504,28 @@ namespace ProfileMatch.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_CategoryId",
-                table: "Questions",
+                name: "IX_ClosedQuestions_CategoryId",
+                table: "ClosedQuestions",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAnswers_AnswerOptionId",
-                table: "UserAnswers",
+                name: "IX_UserCategories_CategoryId",
+                table: "UserCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClosedAnswers_AnswerOptionId",
+                table: "UserClosedAnswers",
                 column: "AnswerOptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAnswers_QuestionId",
-                table: "UserAnswers",
-                column: "QuestionId");
+                name: "IX_UserClosedAnswers_ClosedQuestionId",
+                table: "UserClosedAnswers",
+                column: "ClosedQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserNeedCategories_CategoryId",
-                table: "UserNeedCategories",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserNotes_NoteId",
-                table: "UserNotes",
+                name: "IX_UserOpenAnswers_NoteId",
+                table: "UserOpenAnswers",
                 column: "NoteId");
         }
 
@@ -547,13 +547,13 @@ namespace ProfileMatch.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UserAnswers");
+                name: "UserCategories");
 
             migrationBuilder.DropTable(
-                name: "UserNeedCategories");
+                name: "UserClosedAnswers");
 
             migrationBuilder.DropTable(
-                name: "UserNotes");
+                name: "UserOpenAnswers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -565,10 +565,10 @@ namespace ProfileMatch.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Notes");
+                name: "OpenQuestions");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "ClosedQuestions");
 
             migrationBuilder.DropTable(
                 name: "Departments");

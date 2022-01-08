@@ -12,7 +12,7 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211220212442_Initial")]
+    [Migration("20220107235117_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,12 +127,10 @@ namespace ProfileMatch.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -176,12 +174,10 @@ namespace ProfileMatch.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -199,18 +195,18 @@ namespace ProfileMatch.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("ClosedQuestionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("ClosedQuestionId");
 
                     b.ToTable("AnswerOptions");
 
@@ -218,177 +214,177 @@ namespace ProfileMatch.Data.Migrations
                         new
                         {
                             Id = 1,
+                            ClosedQuestionId = 1,
                             Description = "Nie znasz podstaw tego języka programowania",
-                            Level = 1,
-                            QuestionId = 1
+                            Level = 1
                         },
                         new
                         {
                             Id = 2,
+                            ClosedQuestionId = 1,
                             Description = "Znasz podstawowe rzeczy związane z programowaniem w C#",
-                            Level = 2,
-                            QuestionId = 1
+                            Level = 2
                         },
                         new
                         {
                             Id = 3,
+                            ClosedQuestionId = 1,
                             Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 1
+                            Level = 3
                         },
                         new
                         {
                             Id = 4,
+                            ClosedQuestionId = 1,
                             Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 1
+                            Level = 4
                         },
                         new
                         {
                             Id = 5,
+                            ClosedQuestionId = 1,
                             Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 1
+                            Level = 5
                         },
                         new
                         {
                             Id = 6,
+                            ClosedQuestionId = 2,
                             Description = "Nie znasz podstaw tego języka programowania",
-                            Level = 1,
-                            QuestionId = 2
+                            Level = 1
                         },
                         new
                         {
                             Id = 7,
+                            ClosedQuestionId = 2,
                             Description = "Znasz podstawowe rzeczy związane z programowaniem w C++",
-                            Level = 2,
-                            QuestionId = 2
+                            Level = 2
                         },
                         new
                         {
                             Id = 8,
+                            ClosedQuestionId = 2,
                             Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 2
+                            Level = 3
                         },
                         new
                         {
                             Id = 9,
+                            ClosedQuestionId = 2,
                             Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 2
+                            Level = 4
                         },
                         new
                         {
                             Id = 10,
+                            ClosedQuestionId = 2,
                             Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 2
+                            Level = 5
                         },
                         new
                         {
                             Id = 11,
+                            ClosedQuestionId = 3,
                             Description = "Nie znasz podstaw tego języka programowania",
-                            Level = 1,
-                            QuestionId = 3
+                            Level = 1
                         },
                         new
                         {
                             Id = 12,
+                            ClosedQuestionId = 3,
                             Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie",
-                            Level = 2,
-                            QuestionId = 3
+                            Level = 2
                         },
                         new
                         {
                             Id = 13,
+                            ClosedQuestionId = 3,
                             Description = "Potrafisz pisać proste kody w języku",
-                            Level = 3,
-                            QuestionId = 3
+                            Level = 3
                         },
                         new
                         {
                             Id = 14,
+                            ClosedQuestionId = 3,
                             Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
-                            Level = 4,
-                            QuestionId = 3
+                            Level = 4
                         },
                         new
                         {
                             Id = 15,
+                            ClosedQuestionId = 3,
                             Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
-                            Level = 5,
-                            QuestionId = 3
+                            Level = 5
                         },
                         new
                         {
                             Id = 16,
+                            ClosedQuestionId = 4,
                             Description = "Znasz podstawowe informacje na temat routera",
-                            Level = 1,
-                            QuestionId = 4
+                            Level = 1
                         },
                         new
                         {
                             Id = 17,
+                            ClosedQuestionId = 4,
                             Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
-                            Level = 2,
-                            QuestionId = 4
+                            Level = 2
                         },
                         new
                         {
                             Id = 18,
+                            ClosedQuestionId = 4,
                             Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
-                            Level = 3,
-                            QuestionId = 4
+                            Level = 3
                         },
                         new
                         {
                             Id = 19,
+                            ClosedQuestionId = 4,
                             Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
-                            Level = 4,
-                            QuestionId = 4
+                            Level = 4
                         },
                         new
                         {
                             Id = 20,
+                            ClosedQuestionId = 4,
                             Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
-                            Level = 5,
-                            QuestionId = 4
+                            Level = 5
                         },
                         new
                         {
                             Id = 21,
+                            ClosedQuestionId = 5,
                             Description = "Nie konfigurowałeś żadnej usługi Active Directory",
-                            Level = 1,
-                            QuestionId = 5
+                            Level = 1
                         },
                         new
                         {
                             Id = 22,
+                            ClosedQuestionId = 5,
                             Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś",
-                            Level = 2,
-                            QuestionId = 5
+                            Level = 2
                         },
                         new
                         {
                             Id = 23,
+                            ClosedQuestionId = 5,
                             Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje",
-                            Level = 3,
-                            QuestionId = 5
+                            Level = 3
                         },
                         new
                         {
                             Id = 24,
+                            ClosedQuestionId = 5,
                             Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
-                            Level = 4,
-                            QuestionId = 5
+                            Level = 4
                         },
                         new
                         {
                             Id = 25,
+                            ClosedQuestionId = 5,
                             Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
-                            Level = 5,
-                            QuestionId = 5
+                            Level = 5
                         });
                 });
 
@@ -490,8 +486,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "479c7fc7-416d-44bf-a65f-adafa4e759df",
-                            DateOfBirth = new DateTime(2021, 12, 20, 22, 24, 42, 90, DateTimeKind.Local).AddTicks(1801),
+                            ConcurrencyStamp = "64698030-5c4c-48ea-9bb7-e06bdafe5608",
+                            DateOfBirth = new DateTime(2022, 1, 8, 0, 51, 17, 254, DateTimeKind.Local).AddTicks(95),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -501,9 +497,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELw+nG1GWh/99wZ+5Kt0IRQh6md92FKlKS6p8bKAR2o7K38hqW/T9x50BEWY0bHYVA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGeKVCcu0op5OEH8wvWcl4diAjqqpMvJ9O2GH79B8Ob7+MkGdB8kIOOcrkIKu+46rg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e7f2b32-a25d-474c-b7cf-12da9cf061b8",
+                            SecurityStamp = "9ad47b29-8974-47c6-b1ed-e1f0f5f806fe",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -555,94 +551,7 @@ namespace ProfileMatch.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "unassigned"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "IT"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "HR"
-                        });
-                });
-
-            modelBuilder.Entity("ProfileMatch.Models.Models.Note", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Co jest dla mnie ważne w pracy?"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Co jest ważne dla mnie osobiście?"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Moje hobby"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Moje inne umiejętności"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Moje zainteresowania"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Jakie są moje cele?"
-                        });
-                });
-
-            modelBuilder.Entity("ProfileMatch.Models.Models.Question", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -666,7 +575,7 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("ClosedQuestions");
 
                     b.HasData(
                         new
@@ -735,52 +644,90 @@ namespace ProfileMatch.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserAnswer", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
                 {
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("AnswerOptionId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ApplicationUserId", "QuestionId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AnswerOptionId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("UserAnswers");
+                    b.ToTable("Departments");
 
                     b.HasData(
                         new
                         {
-                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                            QuestionId = 1,
-                            AnswerOptionId = 2,
-                            IsConfirmed = false
+                            Id = 1,
+                            Name = "unassigned"
                         },
                         new
                         {
-                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                            QuestionId = 2,
-                            AnswerOptionId = 4,
-                            IsConfirmed = false
+                            Id = 2,
+                            Name = "IT"
                         },
                         new
                         {
-                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                            QuestionId = 3,
-                            AnswerOptionId = 3,
-                            IsConfirmed = false
+                            Id = 3,
+                            Name = "HR"
+                        });
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.OpenQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OpenQuestions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Co jest dla mnie ważne w pracy?"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Co jest ważne dla mnie osobiście?"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Moje hobby"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Moje inne umiejętności"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Moje zainteresowania"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Jakie są moje cele?"
                         });
                 });
 
@@ -799,10 +746,59 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("UserNeedCategories");
+                    b.ToTable("UserCategories");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserNote", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserClosedAnswer", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ClosedQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AnswerOptionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ApplicationUserId", "ClosedQuestionId");
+
+                    b.HasIndex("AnswerOptionId");
+
+                    b.HasIndex("ClosedQuestionId");
+
+                    b.ToTable("UserClosedAnswers");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            ClosedQuestionId = 1,
+                            AnswerOptionId = 2,
+                            IsConfirmed = false
+                        },
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            ClosedQuestionId = 2,
+                            AnswerOptionId = 4,
+                            IsConfirmed = false
+                        },
+                        new
+                        {
+                            ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            ClosedQuestionId = 3,
+                            AnswerOptionId = 3,
+                            IsConfirmed = false
+                        });
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserOpenAnswer", b =>
                 {
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -820,7 +816,7 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("NoteId");
 
-                    b.ToTable("UserNotes");
+                    b.ToTable("UserOpenAnswers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -876,13 +872,13 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.AnswerOption", b =>
                 {
-                    b.HasOne("ProfileMatch.Models.Models.Question", "Question")
+                    b.HasOne("ProfileMatch.Models.Models.ClosedQuestion", "ClosedQuestion")
                         .WithMany("AnswerOptions")
-                        .HasForeignKey("QuestionId")
+                        .HasForeignKey("ClosedQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Question");
+                    b.Navigation("ClosedQuestion");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
@@ -896,41 +892,15 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.Question", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
                 {
                     b.HasOne("ProfileMatch.Models.Models.Category", "Category")
-                        .WithMany("Questions")
+                        .WithMany("ClosedQuestions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserAnswer", b =>
-                {
-                    b.HasOne("ProfileMatch.Models.Models.AnswerOption", "AnswerOption")
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("AnswerOptionId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProfileMatch.Models.Models.Question", "Question")
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnswerOption");
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.UserCategory", b =>
@@ -942,7 +912,7 @@ namespace ProfileMatch.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ProfileMatch.Models.Models.Category", "Category")
-                        .WithMany("UserNeedCategories")
+                        .WithMany("UserCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -952,7 +922,33 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.UserNote", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserClosedAnswer", b =>
+                {
+                    b.HasOne("ProfileMatch.Models.Models.AnswerOption", "AnswerOption")
+                        .WithMany("UserClosedAnswers")
+                        .HasForeignKey("AnswerOptionId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserClosedAnswers")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProfileMatch.Models.Models.ClosedQuestion", "ClosedQuestion")
+                        .WithMany("UserClosedAnswers")
+                        .HasForeignKey("ClosedQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnswerOption");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("ClosedQuestion");
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.UserOpenAnswer", b =>
                 {
                     b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -960,8 +956,8 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProfileMatch.Models.Models.Note", "Note")
-                        .WithMany("UserNotes")
+                    b.HasOne("ProfileMatch.Models.Models.OpenQuestion", "Note")
+                        .WithMany("UserOpenAnswers")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -973,12 +969,12 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.AnswerOption", b =>
                 {
-                    b.Navigation("UserAnswers");
+                    b.Navigation("UserClosedAnswers");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("UserAnswers");
+                    b.Navigation("UserClosedAnswers");
 
                     b.Navigation("UserNeedCategories");
 
@@ -987,9 +983,16 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Category", b =>
                 {
-                    b.Navigation("Questions");
+                    b.Navigation("ClosedQuestions");
 
-                    b.Navigation("UserNeedCategories");
+                    b.Navigation("UserCategories");
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
+                {
+                    b.Navigation("AnswerOptions");
+
+                    b.Navigation("UserClosedAnswers");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
@@ -997,16 +1000,9 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("ApplicationUsers");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.Note", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.OpenQuestion", b =>
                 {
-                    b.Navigation("UserNotes");
-                });
-
-            modelBuilder.Entity("ProfileMatch.Models.Models.Question", b =>
-                {
-                    b.Navigation("AnswerOptions");
-
-                    b.Navigation("UserAnswers");
+                    b.Navigation("UserOpenAnswers");
                 });
 #pragma warning restore 612, 618
         }

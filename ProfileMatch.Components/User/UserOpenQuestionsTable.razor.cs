@@ -21,22 +21,22 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
-    public partial class UserOpenQuestions
+    public partial class UserOpenQuestionsTable
     {
         [Inject] public ISnackbar Snackbar { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
-        List<Note> Notes = new();
-        List<UserNote> UserNotes = new();
-        [Inject] DataManager<Note, ApplicationDbContext> NoteRepository { get; set; }
-        [Inject] DataManager<UserNote, ApplicationDbContext> UserNoteRepository { get; set; }
+        List<OpenQuestion> OpenQuestions = new();
+        List<UserOpenAnswer> UserOpenAnswers = new();
+        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         string UserId;
-        private async Task<List<Note>> GetNotesAsync()
+        private async Task<List<OpenQuestion>> GetNotesAsync()
         {
-            return await NoteRepository.Get();
+            return await OpenQuestionRepository.Get();
         }
-        private async Task<List<UserNote>> GetUserNotesAsync()
+        private async Task<List<UserOpenAnswer>> GetUserNotesAsync()
         {
             return await UserNoteRepository.Get(u => u.ApplicationUserId == UserId);
         }
@@ -52,16 +52,16 @@ namespace ProfileMatch.Components.User
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
-            UserNotes = await GetUserNotesAsync();
-            Notes = await GetNotesAsync();
+            UserOpenAnswers = await GetUserNotesAsync();
+            OpenQuestions = await GetNotesAsync();
 
-            foreach (var note in Notes)
+            foreach (var note in OpenQuestions)
             {
                 UserNoteVM userNoteVM;
-                UserNote userNote;
+                UserOpenAnswer userNote;
                 try
                 {
-                    userNote = UserNotes.FirstOrDefault(un => un.NoteId == note.Id);
+                    userNote = UserOpenAnswers.FirstOrDefault(un => un.NoteId == note.Id);
                 }
                 catch (Exception)
                 {
@@ -123,7 +123,7 @@ namespace ProfileMatch.Components.User
         private async Task UserNoteUpdate(UserNoteVM UserNoteVM)
         {
             var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
-            var dialog = DialogService.Show<UserNoteDialog>("Edytuj pytanie", parameters);
+            var dialog = DialogService.Show<UserOpenQuestionDialog>("Edytuj pytanie", parameters);
             await dialog.Result;
         }
 

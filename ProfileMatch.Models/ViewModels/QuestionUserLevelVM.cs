@@ -2,7 +2,7 @@
 {
     public class QuestionUserLevelVM
     {
-        public int QuestionId { get; set; }
+        public int ClosedQuestionId { get; set; }
         public string QuestionName { get; set; }
         public string UserId { get; set; }
         public string FirstName { get; set; }

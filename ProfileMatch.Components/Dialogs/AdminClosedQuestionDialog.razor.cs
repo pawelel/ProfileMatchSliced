@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class AdminQuestionDialog : ComponentBase
+    public partial class AdminClosedQuestionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Question Q { get; set; } = new();
+        [Parameter] public ClosedQuestion Q { get; set; } = new();
         [Parameter] public int CategoryId { get; set; }
 
-        public int QuestionId { get; set; }
+        public int ClosedQuestionId { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
         public bool TempIsActive { get; set; }
@@ -34,7 +34,7 @@ namespace ProfileMatch.Components.Dialogs
             TempDescription = Q.Description;
         }
 
-        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
         private MudForm Form;
 
         private void Cancel()
@@ -67,20 +67,20 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task Save()
         {//has any other question the same name in the category?
-            var exists = (await QuestionRepository.Get(q => q.Name.Contains(Q.Name))).Any();
+            var exists = (await ClosedQuestionRepository.Get(q => q.Name.Contains(Q.Name))).Any();
             if (Q.Id == 0 && !exists)
             {
-                var result = await QuestionRepository.Insert(Q);
-                Snackbar.Add($"Question {result.Name} created", Severity.Success);
+                var result = await ClosedQuestionRepository.Insert(Q);
+                Snackbar.Add($"ClosedQuestion {result.Name} created", Severity.Success);
             }
             else if (!exists)
             {
-                await QuestionRepository.Update(Q);
-                Snackbar.Add($"Question {Q.Name} updated", Severity.Success);
+                await ClosedQuestionRepository.Update(Q);
+                Snackbar.Add($"ClosedQuestion {Q.Name} updated", Severity.Success);
             }
             else
             {
-                Snackbar.Add($"Question {Q.Name} already exists.", Severity.Error);
+                Snackbar.Add($"ClosedQuestion {Q.Name} already exists.", Severity.Error);
             }
         }
 

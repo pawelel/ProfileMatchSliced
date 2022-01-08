@@ -4,7 +4,7 @@ using System;
 
 namespace ProfileMatch.Models.Models
 {
-    public class UserAnswer
+    public class UserClosedAnswer
     {
         public string ApplicationUserId { get; set; }
         [Ignore]
@@ -14,9 +14,9 @@ namespace ProfileMatch.Models.Models
         public int? AnswerOptionId { get; set; }
         public bool IsConfirmed { get; set; }
         public DateTime? LastModified { get; set; }
-        public int QuestionId { get; set; }
+        public int ClosedQuestionId { get; set; }
         [Ignore]
-        public Question Question { get; set; }
+        public ClosedQuestion ClosedQuestion { get; set; }
     }
 
 }

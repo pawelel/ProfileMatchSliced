@@ -19,27 +19,27 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class UserQuestionDialog : ComponentBase
     {
-        [Inject] DataManager<UserAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
+        [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
         [Parameter] public string CategoryName { get; set; }
-        [Parameter] public Question Q { get; set; }
-        [Parameter] public UserAnswer UserAnswer { get; set; }
+        [Parameter] public ClosedQuestion Q { get; set; }
+        [Parameter] public UserClosedAnswer UserClosedAnswer { get; set; }
         [Parameter] public string UserId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-        Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.QuestionId==Q.Id);            
+        Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.ClosedQuestionId==Q.Id);            
         }
 
         private bool CanSelect(AnswerOption answerOption)
         {
-            if (UserAnswer.AnswerOptionId == answerOption.Id)
+            if (UserClosedAnswer.AnswerOptionId == answerOption.Id)
             {
                 return false;
             }
-            if (UserAnswer == null)
+            if (UserClosedAnswer == null)
             {
                 return true;
             }
@@ -54,7 +54,7 @@ namespace ProfileMatch.Components.Dialogs
             {
                 userAnswer = new()
                 {
-                    QuestionId = questionId,
+                    ClosedQuestionId = questionId,
                     AnswerOptionId = answerOptionId,
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
@@ -64,7 +64,7 @@ namespace ProfileMatch.Components.Dialogs
             }
             else
             {
-                userAnswer.QuestionId = questionId;
+                userAnswer.ClosedQuestionId = questionId;
                 userAnswer.ApplicationUserId = UserId;
                 userAnswer.AnswerOptionId = answerOptionId;
                 userAnswer.IsConfirmed = false;

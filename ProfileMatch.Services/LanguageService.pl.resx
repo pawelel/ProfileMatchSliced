@@ -162,7 +162,7 @@
   <data name="Description" xml:space="preserve">
     <value>Opis</value>
   </data>
-  <data name="Questions" xml:space="preserve">
+  <data name="ClosedQuestions" xml:space="preserve">
     <value>Pytania</value>
   </data>
   <data name="Edit" xml:space="preserve">
@@ -171,7 +171,7 @@
   <data name="Edit Category" xml:space="preserve">
     <value>Edytuj kategorie</value>
   </data>
-  <data name="Add Question" xml:space="preserve">
+  <data name="Add ClosedQuestion" xml:space="preserve">
     <value>Dodaj pytanie</value>
   </data>
   <data name="Actions" xml:space="preserve">
@@ -261,19 +261,19 @@
   <data name="Select Category" xml:space="preserve">
     <value>Wybierz kategorię</value>
   </data>
-  <data name="Select Questions" xml:space="preserve">
+  <data name="Select ClosedQuestions" xml:space="preserve">
     <value>Wybierz pytanie</value>
   </data>
   <data name="Selected Categories" xml:space="preserve">
     <value>Wybrane kategorie</value>
   </data>
-  <data name="Questions Table" xml:space="preserve">
+  <data name="ClosedQuestions Table" xml:space="preserve">
     <value>Tabela pytań</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Kategoria</value>
   </data>
-  <data name="Question" xml:space="preserve">
+  <data name="ClosedQuestion" xml:space="preserve">
     <value>Pytanie</value>
   </data>
   <data name="Display" xml:space="preserve">
@@ -330,13 +330,13 @@
   <data name="Level Description is required!" xml:space="preserve">
     <value>Opis poziomu jest wymagany!</value>
   </data>
-  <data name="Question Name" xml:space="preserve">
+  <data name="ClosedQuestion Name" xml:space="preserve">
     <value>Nazwa pytania</value>
   </data>
-  <data name="Question Description" xml:space="preserve">
+  <data name="ClosedQuestion Description" xml:space="preserve">
     <value>Opis pytania</value>
   </data>
-  <data name="Question name is required!" xml:space="preserve">
+  <data name="ClosedQuestion name is required!" xml:space="preserve">
     <value>Nazwa pytania jest wymagana!</value>
   </data>
   <data name="Edit Level" xml:space="preserve">
@@ -510,19 +510,19 @@
   <data name="Selection Page" xml:space="preserve">
     <value>Strona wyboru</value>
   </data>
-  <data name="Question 1" xml:space="preserve">
+  <data name="ClosedQuestion 1" xml:space="preserve">
     <value>Pytanie 1</value>
   </data>
-  <data name="Question 2" xml:space="preserve">
+  <data name="ClosedQuestion 2" xml:space="preserve">
     <value>Pytanie 2</value>
   </data>
-  <data name="Question 3" xml:space="preserve">
+  <data name="ClosedQuestion 3" xml:space="preserve">
     <value>Pytanie 3</value>
   </data>
-  <data name="Question 4" xml:space="preserve">
+  <data name="ClosedQuestion 4" xml:space="preserve">
     <value>Pytanie 4</value>
   </data>
-  <data name="Question 5" xml:space="preserve">
+  <data name="ClosedQuestion 5" xml:space="preserve">
     <value>Pytanie 5</value>
   </data>
   <data name="Choose the question you want to answer" xml:space="preserve">
@@ -555,10 +555,10 @@
   <data name="Edit note" xml:space="preserve">
     <value>Edytuj odpowiedź</value>
   </data>
-  <data name="Open Questions" xml:space="preserve">
+  <data name="Open ClosedQuestions" xml:space="preserve">
     <value>Pytania otwarte</value>
   </data>
-  <data name="Closed Questions" xml:space="preserve">
+  <data name="Closed ClosedQuestions" xml:space="preserve">
     <value>Pytania zamknięte</value>
   </data>
   <data name="My Categories" xml:space="preserve">
@@ -579,7 +579,7 @@
   <data name="Zaloguj" xml:space="preserve">
     <value>Zaloguj</value>
   </data>
-  <data name="Edit Question" xml:space="preserve">
+  <data name="Edit ClosedQuestion" xml:space="preserve">
     <value>Edytuj pytanie</value>
   </data>
   <data name="Max length" xml:space="preserve">

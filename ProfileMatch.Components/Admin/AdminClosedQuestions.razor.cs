@@ -24,13 +24,13 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
-        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        private List<Question> questions = new();
-        private List<Question> questions1;
+        private List<ClosedQuestion> questions = new();
+        private List<ClosedQuestion> questions1;
         private List<Category> categories;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
         private IEnumerable<string> Quests { get; set; } = new HashSet<string>() { };
@@ -40,7 +40,7 @@ namespace ProfileMatch.Components.Admin
         {
             loading = true;
             categories = await CategoryRepository.Get();
-            questions = await QuestionRepository.Get(include: src => src.Include(q => q.Category).Include(q => q.AnswerOptions));
+            questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category).Include(q => q.AnswerOptions));
             questions1 = questions;
             loading = false;
         }
@@ -50,11 +50,11 @@ namespace ProfileMatch.Components.Admin
 
 
         private string searchString1 = "";
-        private Question selectedItem1 = null;
+        private ClosedQuestion selectedItem1 = null;
 
-        private bool FilterFunc1(Question question) => FilterFunc(question, searchString1);
+        private bool FilterFunc1(ClosedQuestion question) => FilterFunc(question, searchString1);
 
-        private static bool FilterFunc(Question question, string searchString)
+        private static bool FilterFunc(ClosedQuestion question, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -65,7 +65,7 @@ namespace ProfileMatch.Components.Admin
             return false;
         }
 
-        private List<Question> GetQuestions()
+        private List<ClosedQuestion> GetQuestions()
         {
             if (!Cats.Any())
             {
@@ -89,14 +89,14 @@ namespace ProfileMatch.Components.Admin
             return questions1;
         }
 
-        private async Task QuestionDialog(Question question)
+        private async Task QuestionDialog(ClosedQuestion question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDialog>($"Edytuj pytanie: {question.Name}", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>($"Edytuj pytanie: {question.Name}", parameters);
             await dialog.Result;
         }
 
-        private async Task QuestionDisplay(Question question)
+        private async Task QuestionDisplay(ClosedQuestion question)
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProfileMatch.Models.Models
 {
-    public class Question
+    public class ClosedQuestion
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
@@ -16,6 +16,6 @@ namespace ProfileMatch.Models.Models
         [Ignore]
         public List<AnswerOption> AnswerOptions { get; set; } = new();
         [Ignore]
-        public List<UserAnswer> UserAnswers { get; set; } = new();
+        public List<UserClosedAnswer> UserClosedAnswers { get; set; } = new();
     }
 }

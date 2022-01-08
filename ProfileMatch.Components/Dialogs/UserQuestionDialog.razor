@@ -20,7 +20,7 @@
                                  @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
                                 @if (CanSelect(answerOption))
                                 {
-                                    <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.QuestionId))" Color="Color.Tertiary" Size="Size.Small">@L["This is my Level"]</MudButton>
+                                    <MudButton Variant="Variant.Filled" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.ClosedQuestionId))" Color="Color.Tertiary" Size="Size.Small">@L["This is my Level"]</MudButton>
                                 }
                             </MudItem>
                         </MudTabPanel>

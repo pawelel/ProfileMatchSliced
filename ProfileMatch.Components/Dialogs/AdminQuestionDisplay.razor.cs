@@ -21,18 +21,18 @@ namespace ProfileMatch.Components.Dialogs
 
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
-        [Inject] DataManager<Question, ApplicationDbContext> QuestionRepository { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
-        [Parameter] public Question Q { get; set; }
+        [Parameter] public ClosedQuestion Q { get; set; }
 
-        private async Task AddLevels(Question question)
+        private async Task AddLevels(ClosedQuestion question)
         {
             for (int i = 1; i < 6; i++)
             {
                 question.AnswerOptions.Add(
                      await AnswerOptionRepository.Insert(new AnswerOption()
                      {
-                         QuestionId = question.Id,
+                         ClosedQuestionId = question.Id,
                          Description = string.Empty,
                          Level = i
                      })
@@ -50,7 +50,7 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-            Q.AnswerOptions = await AnswerOptionRepository.Get(q => q.QuestionId == Q.Id);
+            Q.AnswerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == Q.Id);
 
             if (Q.AnswerOptions.Count == 0 || Q.AnswerOptions == null)
             {
@@ -61,12 +61,12 @@ namespace ProfileMatch.Components.Dialogs
         private async Task<bool> IsActive()
         {
             Q.IsActive = !Q.IsActive;
-            await QuestionRepository.Update(Q);
+            await ClosedQuestionRepository.Update(Q);
             StateHasChanged();
             return Q.IsActive;
         }
 
-        private static bool CanActivate(Question question)
+        private static bool CanActivate(ClosedQuestion question)
         {//does list of answerOptions exist and any answerOption is nullOwWhiteSpace
             if (question.AnswerOptions is not null)
             {

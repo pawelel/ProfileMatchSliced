@@ -13,12 +13,12 @@ namespace ProfileMatch.Services
         {
             services.AddTransient<DataManager<Department, ApplicationDbContext>>();
             services.AddTransient<DataManager<Category, ApplicationDbContext>>();
-            services.AddTransient<DataManager<Question, ApplicationDbContext>>();
+            services.AddTransient<DataManager<ClosedQuestion, ApplicationDbContext>>();
             services.AddTransient<DataManager<AnswerOption, ApplicationDbContext>>();
-            services.AddTransient<DataManager<UserAnswer, ApplicationDbContext>>();
+            services.AddTransient<DataManager<UserClosedAnswer, ApplicationDbContext>>();
             services.AddTransient<DataManager<UserCategory, ApplicationDbContext>>();
-            services.AddTransient<DataManager<Note, ApplicationDbContext>>();
-            services.AddTransient<DataManager<UserNote, ApplicationDbContext>>();
+            services.AddTransient<DataManager<OpenQuestion, ApplicationDbContext>>();
+            services.AddTransient<DataManager<UserOpenAnswer, ApplicationDbContext>>();
             services.AddTransient<DataManager<ApplicationUser, ApplicationDbContext>>();
             services.AddTransient<DataManager<IdentityUserRole<string>, ApplicationDbContext>>();
             services.AddTransient<DataManager<IdentityRole, ApplicationDbContext>>();
