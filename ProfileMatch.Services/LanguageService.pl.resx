@@ -40,7 +40,7 @@
     ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
     
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    OpenQuestion - application/x-microsoft.net.object.binary.base64 is the format 
     that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
     
@@ -552,7 +552,7 @@
   <data name="Select all text" xml:space="preserve">
     <value>Zaznacz cały tekst</value>
   </data>
-  <data name="Edit note" xml:space="preserve">
+  <data name="Edit openQuestion" xml:space="preserve">
     <value>Edytuj odpowiedź</value>
   </data>
   <data name="Open Questions" xml:space="preserve">
@@ -725,5 +725,29 @@
   </data>
   <data name="Edit Department" xml:space="preserve">
     <value>Edytuj dział</value>
+  </data>
+  <data name="Pomoc" xml:space="preserve">
+    <value>Pomoc</value>
+  </data>
+  <data name="Wybierz temat" xml:space="preserve">
+    <value>Wybierz temat</value>
+  </data>
+  <data name="1. Zapomniałeś loginu lub hasła" xml:space="preserve">
+    <value>1. Zapomniałeś loginu lub hasła</value>
+  </data>
+  <data name="2. Nie posiadasz konta" xml:space="preserve">
+    <value>2. Nie posiadasz konta</value>
+  </data>
+  <data name="3. Nie możesz się zalogować" xml:space="preserve">
+    <value>3. Nie możesz się zalogować</value>
+  </data>
+  <data name="Opisz swój problem" xml:space="preserve">
+    <value>Opisz swój problem</value>
+  </data>
+  <data name="Anuluj" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Wyślij" xml:space="preserve">
+    <value>Wyślij</value>
   </data>
 </root>

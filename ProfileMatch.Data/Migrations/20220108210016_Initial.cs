@@ -284,13 +284,13 @@ namespace ProfileMatch.Data.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NoteId = table.Column<int>(type: "int", nullable: false),
+                    OpenQuestionId = table.Column<int>(type: "int", nullable: false),
                     IsDisplayed = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserOpenAnswers", x => new { x.ApplicationUserId, x.NoteId });
+                    table.PrimaryKey("PK_UserOpenAnswers", x => new { x.ApplicationUserId, x.OpenQuestionId });
                     table.ForeignKey(
                         name: "FK_UserOpenAnswers_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -298,8 +298,8 @@ namespace ProfileMatch.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserOpenAnswers_OpenQuestions_NoteId",
-                        column: x => x.NoteId,
+                        name: "FK_UserOpenAnswers_OpenQuestions_OpenQuestionId",
+                        column: x => x.OpenQuestionId,
                         principalTable: "OpenQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -385,7 +385,7 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "7bea4d16-772d-46c1-88ca-1a047bb107f1", new DateTime(2022, 1, 8, 8, 39, 12, 580, DateTimeKind.Local).AddTicks(1999), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFhNzHQkpgysuE4waivUujr3CzEYbJ4xbsTNJSeE2b0gSQ8b9CVeGolWOimWU46x/w==", null, false, null, "3370dc60-bfac-4348-a340-34d392fcf9ef", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "93fb3452-200f-4bfb-8027-695c5c8825d9", new DateTime(2022, 1, 8, 22, 0, 16, 238, DateTimeKind.Local).AddTicks(891), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEHzPBAixVsKFGVUqMLjO3bhrd8TwdgvFcOCh2+MJznljmtkeJnZfW0VOQDdrLEsjaw==", null, false, null, "04612579-4ec3-455c-a348-9c7eb7b4c8a8", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -398,8 +398,8 @@ namespace ProfileMatch.Data.Migrations
                     { 4, 2, "Jaka jest Twoja znajomość sieci komputerowych?", true, "Konfiguracja routera" },
                     { 5, 2, "Jaka jest Twoja znajomość usługi Active Directory?", true, "Usługa Active Directory" },
                     { 6, 3, "Jaka jest Twoja znajomość Hardware komputera?", true, "Hardware" },
-                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", true, "Instalacja systemu Windows" },
-                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", true, "Obsługa programu magazynowego" }
+                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", false, "Instalacja systemu Windows" },
+                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", false, "Obsługa programu magazynowego" }
                 });
 
             migrationBuilder.InsertData(
@@ -529,9 +529,9 @@ namespace ProfileMatch.Data.Migrations
                 column: "ClosedQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserOpenAnswers_NoteId",
+                name: "IX_UserOpenAnswers_OpenQuestionId",
                 table: "UserOpenAnswers",
-                column: "NoteId");
+                column: "OpenQuestionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

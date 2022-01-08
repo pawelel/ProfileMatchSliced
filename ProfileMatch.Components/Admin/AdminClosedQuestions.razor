@@ -4,27 +4,26 @@
 }
 else
 {
-     <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
-     <MudSpacer/>
-      <MudGrid Spacing="0" Class="d-flex justify-space-between">
-                <MudItem xs="12" md="5">
-        <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-            @foreach (var cat in categories)
-            {
-                <MudSelectItem T="string" Value="@cat.Name" />
-            }
-        </MudSelect>
-    </MudItem>
-             <MudItem xs="12" md="5">
-            <MudTextField
-            @bind-Value="searchString1"
-            Placeholder=@L["Search"] 
-            Adornment="Adornment.Start" 
-            Immediate="true" 
-            AdornmentIcon="@Icons.Material.Filled.Search"
-            IconSize="Size.Medium"></MudTextField>
-            </MudItem>
-            </MudGrid>
+    <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
+    <MudSpacer />
+    <MudGrid Spacing="0" Class="d-flex justify-space-between">
+        <MudItem xs="12" md="5">
+            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
+                @foreach (var cat in categories)
+                {
+                    <MudSelectItem T="string" Value="@cat.Name" />
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="5">
+            <MudTextField @bind-Value="searchString1"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"></MudTextField>
+        </MudItem>
+    </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
@@ -32,36 +31,39 @@ else
             {
                 if (!string.IsNullOrEmpty(cat))
                 {
-                    <MudButtonGroup Size="Size.Small"  Variant="Variant.Outlined" OverrideStyles="true">
-            <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-            <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
-            </MudButtonGroup>
-         <MudText>&nbsp;&nbsp;&nbsp;</MudText> 
+                <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
+                    <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+                    <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
+                </MudButtonGroup>
+                <MudText>&nbsp;&nbsp;&nbsp;</MudText>
                 }
             }
-        <MudSpacer/>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh>Id</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
-            <MudTh Style="text-align: center;">@L["Actions"]</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Id">@context.Id</MudTd>
-            <MudTd DataLabel="Category">@context.Category.Name</MudTd>
-            <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd Style="text-align: center;" DataLabel="Actions">
-                <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))">@L["Edit Category"]</MudButton>
-                <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionDisplay(context))" >@L["Display"]</MudButton>
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
-                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
-                           InfoFormat="{first_item}-{last_item} / {all_items}" />
-        </PagerContent>
-    </MudTable>
+        <MudSpacer />
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
+        <MudTh Style="text-align: center;">@L["Actions"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Category">@context.Category.Name</MudTd>
+        <MudTd DataLabel="Question">@context.Name</MudTd>
+
+        <MudTd Style="text-align: center;">
+            <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
+                <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Category"]</MudButton>
+                <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionDisplay(context))" Variant="Variant.Outlined">@L["Display"]</MudButton>
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager HidePagination="true" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
+                       PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
+                       InfoFormat="{first_item}-{last_item} / {all_items}" />
+    </PagerContent>
+</MudTable>
 }
 <style>
     .mud-tabs-panels {

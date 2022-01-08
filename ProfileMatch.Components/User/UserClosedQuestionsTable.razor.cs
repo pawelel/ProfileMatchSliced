@@ -126,7 +126,7 @@ namespace ProfileMatch.Components.User
             var UserClosedAnswer = userAnswers.FirstOrDefault(q => q.ClosedQuestionId == vM.ClosedQuestionId);
             ClosedQuestion question = questions.FirstOrDefault(q => q.Id == vM.ClosedQuestionId);
             Category category = categories.FirstOrDefault(c => c.Name == vM.CategoryName);
-            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
             var parameters = new DialogParameters
             {
                 ["Q"] = question,

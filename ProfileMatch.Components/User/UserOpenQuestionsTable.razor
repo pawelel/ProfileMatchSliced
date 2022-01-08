@@ -1,9 +1,20 @@
-﻿<MudTable Items="@UserNotesVM" T="UserNoteVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserNoteVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-    <ToolBarContent>
+﻿<MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="5">
         <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
+    </MudItem>
+    <MudItem xs="12" md="5">
+        <MudTextField Class="d-flex justify-end mt-0"
+                      @bind-Value="searchString1"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Immediate="true">
+                      </MudTextField>
+    </MudItem>
+</MudGrid>
+
+<MudTable Items="@UserNotesVM" T="UserAnswerVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserAnswerVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ColGroup>
         <col />
         <col style="width: 60%;" />
@@ -17,11 +28,11 @@
         <MudTh>@L["Actions"]</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel=@L["Name"]>@context.NoteName</MudTd>
-        <MudTd DataLabel=@L["Description"]>@context.NoteDescription</MudTd>
+        <MudTd DataLabel=@L["Name"]>@context.OpenQuestionName</MudTd>
+        <MudTd DataLabel=@L["Description"]>@context.OpenQuestionDescription</MudTd>
         <MudTd DataLabel=@L["Answer"]>@context.UserDescription</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="((e)=>UserNoteUpdate(context))" Color="Color.Tertiary">@L["Edit Answer"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

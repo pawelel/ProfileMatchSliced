@@ -63,12 +63,12 @@ namespace ProfileMatch.Components.Dialogs
             if (EditedOpenQuestion.Id == 0)
             {
                 var result = await OpenQuestionRepository.Insert(EditedOpenQuestion);
-                Snackbar.Add(@L["Note"] + $" {@L[result.Name]} " + @L["has been created[O]"], Severity.Success);
+                Snackbar.Add(@L["Question"] + $" {@L[result.Name]} " + @L["has been created[O]"], Severity.Success);
             }
             else
             {
                 var result = await OpenQuestionRepository.Update(EditedOpenQuestion);
-                Snackbar.Add(@L["Note"] + $" {@L[result.Name]} " + @L["has been updated[0]"], Severity.Success);
+                Snackbar.Add(@L["Question"] + $" {@L[result.Name]} " + @L["has been updated[0]"], Severity.Success);
             }
         }
 

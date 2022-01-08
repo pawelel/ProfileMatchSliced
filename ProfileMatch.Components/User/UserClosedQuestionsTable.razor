@@ -4,12 +4,22 @@
 }
 else
 {
+    <MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="5">
+        <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
+    </MudItem>
+    <MudItem xs="12" md="5">
+        <MudTextField Class="d-flex justify-end mt-0"
+                      @bind-Value="searchString"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Immediate="true">
+                      </MudTextField>
+    </MudItem>
+</MudGrid>
 <MudTable Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="@FilterFunc" >
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
     <ColGroup>
         <col />
         <col style="width: 60%;" />
@@ -27,7 +37,7 @@ else
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton OnClick="@(()=>UserAnswerDialog(context))" Color="Color.Tertiary">@L["Edit Answer"]</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Outlined" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

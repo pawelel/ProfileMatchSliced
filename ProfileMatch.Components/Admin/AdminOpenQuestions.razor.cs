@@ -47,22 +47,22 @@ namespace ProfileMatch.Components.Admin
         private OpenQuestion selectedItem1 = null;
         private List<OpenQuestion> OpenQuestions = new();
 
-        private bool FilterFunc1(OpenQuestion Note) => FilterFunc(Note, searchString1);
+        private bool FilterFunc1(OpenQuestion OpenQuestion) => FilterFunc(OpenQuestion, searchString1);
 
-        private static bool FilterFunc(OpenQuestion Note, string searchString)
+        private static bool FilterFunc(OpenQuestion OpenQuestion, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (Note.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (OpenQuestion.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (Note.Description != null && Note.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (OpenQuestion.Description != null && OpenQuestion.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
 
-        private async Task NoteUpdate(OpenQuestion Note)
+        private async Task NoteUpdate(OpenQuestion OpenQuestion)
         {
-            var parameters = new DialogParameters { ["EditedOpenQuestion"] = Note };
+            var parameters = new DialogParameters { ["EditedOpenQuestion"] = OpenQuestion };
             var dialog = DialogService.Show<AdminOpenQuestionDialog>("Edytuj pytanie", parameters);
             await dialog.Result;
         }
