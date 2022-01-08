@@ -28,8 +28,8 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel=@L["Id"]>@context.Id</MudTd>
-        <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
-        <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
+        <MudTd DataLabel=@L["Name"]>@L[context.Name]</MudTd>
+        <MudTd DataLabel=@L["Description"]>@L[context.Description]</MudTd>
         <MudTd DataLabel=@L["Members"]>@context.ApplicationUsers.Count</MudTd>
         <MudTd DataLabel=@L["Edit"]>
             <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>DepartmentUpdate(context))">@L["Edit Department"]</MudButton>
