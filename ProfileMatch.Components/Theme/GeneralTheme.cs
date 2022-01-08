@@ -10,12 +10,16 @@ namespace ProfileMatch.Components.Theme
             {
                 //Primary = Colors.Indigo.Darken3,
                 //Secondary = Colors.DeepPurple.Accent2,
-                Background = Colors.Grey.Lighten3,
+                Background = Colors.Grey.Lighten2,
                 Black = "#272c34",
                 AppbarBackground = Colors.Indigo.Darken3,
-                DrawerBackground = Colors.Indigo.Lighten5,
+                DrawerBackground = Colors.Grey.Lighten2,
+                Surface = Colors.Grey.Lighten3,
                 DrawerText = "rgba(0,0,0, 0.7)",
-                Success = "#06d79c"
+                Secondary = Colors.Pink.Lighten1,
+                Success = Colors.Green.Darken4,
+                Tertiary = Colors.Teal.Darken1
+
             };
 
             LayoutProperties = new LayoutProperties()
