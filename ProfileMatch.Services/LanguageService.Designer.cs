@@ -124,20 +124,20 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add ClosedQuestion.
-        /// </summary>
-        public static string Add_ClosedQuestion {
-            get {
-                return ResourceManager.GetString("Add ClosedQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string Add_New {
             get {
                 return ResourceManager.GetString("Add New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ClosedQuestion.
+        /// </summary>
+        public static string Add_Question {
+            get {
+                return ResourceManager.GetString("Add Question", resourceCulture);
             }
         }
         
@@ -349,101 +349,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion.
+        ///   Looks up a localized string similar to Closed Questions Table.
         /// </summary>
-        public static string ClosedQuestion {
+        public static string Closed_Questions_Table {
             get {
-                return ResourceManager.GetString("ClosedQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 1.
-        /// </summary>
-        public static string ClosedQuestion_1 {
-            get {
-                return ResourceManager.GetString("ClosedQuestion 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 2.
-        /// </summary>
-        public static string ClosedQuestion_2 {
-            get {
-                return ResourceManager.GetString("ClosedQuestion 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 3.
-        /// </summary>
-        public static string ClosedQuestion_3 {
-            get {
-                return ResourceManager.GetString("ClosedQuestion 3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 4.
-        /// </summary>
-        public static string ClosedQuestion_4 {
-            get {
-                return ResourceManager.GetString("ClosedQuestion 4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 5.
-        /// </summary>
-        public static string ClosedQuestion_5 {
-            get {
-                return ResourceManager.GetString("ClosedQuestion 5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion Description.
-        /// </summary>
-        public static string ClosedQuestion_Description {
-            get {
-                return ResourceManager.GetString("ClosedQuestion Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion Name.
-        /// </summary>
-        public static string ClosedQuestion_Name {
-            get {
-                return ResourceManager.GetString("ClosedQuestion Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion name is required!.
-        /// </summary>
-        public static string ClosedQuestion_name_is_required_ {
-            get {
-                return ResourceManager.GetString("ClosedQuestion name is required!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestions.
-        /// </summary>
-        public static string ClosedQuestions {
-            get {
-                return ResourceManager.GetString("ClosedQuestions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestions Table.
-        /// </summary>
-        public static string ClosedQuestions_Table {
-            get {
-                return ResourceManager.GetString("ClosedQuestions Table", resourceCulture);
+                return ResourceManager.GetString("Closed Questions Table", resourceCulture);
             }
         }
         
@@ -872,6 +782,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        public static string Maintenance {
+            get {
+                return ResourceManager.GetString("Maintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manager.
         /// </summary>
         public static string Manager {
@@ -982,9 +901,9 @@ namespace ProfileMatch.Services {
         /// <summary>
         ///   Looks up a localized string similar to Open ClosedQuestions.
         /// </summary>
-        public static string Open_ClosedQuestions {
+        public static string Open_Questions {
             get {
-                return ResourceManager.GetString("Open ClosedQuestions", resourceCulture);
+                return ResourceManager.GetString("Open Questions", resourceCulture);
             }
         }
         
@@ -1003,15 +922,6 @@ namespace ProfileMatch.Services {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to People Administration.
-        /// </summary>
-        public static string People_Administration {
-            get {
-                return ResourceManager.GetString("People Administration", resourceCulture);
             }
         }
         
@@ -1106,6 +1016,96 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        public static string Question {
+            get {
+                return ResourceManager.GetString("Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClosedQuestion 1.
+        /// </summary>
+        public static string Question_1 {
+            get {
+                return ResourceManager.GetString("Question 1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClosedQuestion 2.
+        /// </summary>
+        public static string Question_2 {
+            get {
+                return ResourceManager.GetString("Question 2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClosedQuestion 3.
+        /// </summary>
+        public static string Question_3 {
+            get {
+                return ResourceManager.GetString("Question 3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClosedQuestion 4.
+        /// </summary>
+        public static string Question_4 {
+            get {
+                return ResourceManager.GetString("Question 4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question 5.
+        /// </summary>
+        public static string Question_5 {
+            get {
+                return ResourceManager.GetString("Question 5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question Description.
+        /// </summary>
+        public static string Question_Description {
+            get {
+                return ResourceManager.GetString("Question Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question Name.
+        /// </summary>
+        public static string Question_Name {
+            get {
+                return ResourceManager.GetString("Question Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question name is required!.
+        /// </summary>
+        public static string Question_name_is_required_ {
+            get {
+                return ResourceManager.GetString("Question name is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions.
+        /// </summary>
+        public static string Questions {
+            get {
+                return ResourceManager.GetString("Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string Register {
@@ -1120,6 +1120,15 @@ namespace ProfileMatch.Services {
         public static string Reset_Password {
             get {
                 return ResourceManager.GetString("Reset Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Administration.
+        /// </summary>
+        public static string Resource_Administration {
+            get {
+                return ResourceManager.GetString("Resource Administration", resourceCulture);
             }
         }
         
@@ -1196,15 +1205,6 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select ClosedQuestions.
-        /// </summary>
-        public static string Select_ClosedQuestions {
-            get {
-                return ResourceManager.GetString("Select ClosedQuestions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select Date of Birth.
         /// </summary>
         public static string Select_Date_of_Birth {
@@ -1232,11 +1232,29 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Questions.
+        /// </summary>
+        public static string Select_Questions {
+            get {
+                return ResourceManager.GetString("Select Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Users.
         /// </summary>
         public static string Select_Users {
             get {
                 return ResourceManager.GetString("Select Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected.
+        /// </summary>
+        public static string Selected {
+            get {
+                return ResourceManager.GetString("Selected", resourceCulture);
             }
         }
         
@@ -1264,15 +1282,6 @@ namespace ProfileMatch.Services {
         public static string Selected_Values {
             get {
                 return ResourceManager.GetString("Selected Values", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selected1.
-        /// </summary>
-        public static string Selected1 {
-            get {
-                return ResourceManager.GetString("Selected1", resourceCulture);
             }
         }
         
@@ -1381,6 +1390,15 @@ namespace ProfileMatch.Services {
         public static string This_is_my_Level {
             get {
                 return ResourceManager.GetString("This is my Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unassigned.
+        /// </summary>
+        public static string unassigned {
+            get {
+                return ResourceManager.GetString("unassigned", resourceCulture);
             }
         }
         

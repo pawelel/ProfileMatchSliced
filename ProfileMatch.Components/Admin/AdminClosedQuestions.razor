@@ -26,13 +26,13 @@ else
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["ClosedQuestion"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Closed Question"]</MudTableSortLabel></MudTh>
             <MudTh>@L["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
-            <MudTd DataLabel="ClosedQuestion">@context.Name</MudTd>
+            <MudTd DataLabel="Question">@context.Name</MudTd>
             <MudTd DataLabel="Actions">
                 <MudButton OnClick="@(()=>QuestionDisplay(context))">@L["Display"]</MudButton>
                 <MudButton OnClick="@(()=>QuestionDialog(context))">@L["Edit"]</MudButton>
@@ -47,7 +47,7 @@ else
 
     <MudItem class="d-flex flex-wrap mt-4">
         <MudItem style="min-width:200px;">
-            <MudText Inline="true" Class="align-self-center">@L["Selected1"]: @selectedItem1?.Name</MudText>
+            <MudText Inline="true" Class="align-self-center">@L["Selected"]: @selectedItem1?.Name</MudText>
         </MudItem>
     </MudItem>
 }

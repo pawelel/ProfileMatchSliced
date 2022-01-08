@@ -162,8 +162,8 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="ClosedQuestions" xml:space="preserve">
-    <value>ClosedQuestions</value>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -171,7 +171,7 @@
   <data name="Edit Category" xml:space="preserve">
     <value>Edit Category</value>
   </data>
-  <data name="Add ClosedQuestion" xml:space="preserve">
+  <data name="Add Question" xml:space="preserve">
     <value>Add ClosedQuestion</value>
   </data>
   <data name="Actions" xml:space="preserve">
@@ -201,8 +201,8 @@
   <data name="Administration" xml:space="preserve">
     <value>Administration</value>
   </data>
-  <data name="People Administration" xml:space="preserve">
-    <value>People Administration</value>
+  <data name="Resource Administration" xml:space="preserve">
+    <value>Resource Administration</value>
   </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sort By</value>
@@ -261,26 +261,26 @@
   <data name="Select Category" xml:space="preserve">
     <value>Select Category</value>
   </data>
-  <data name="Select ClosedQuestions" xml:space="preserve">
-    <value>Select ClosedQuestions</value>
+  <data name="Select Questions" xml:space="preserve">
+    <value>Select Questions</value>
   </data>
   <data name="Selected Categories" xml:space="preserve">
     <value>Selected Categories</value>
   </data>
-  <data name="ClosedQuestions Table" xml:space="preserve">
-    <value>ClosedQuestions Table</value>
+  <data name="Closed Questions Table" xml:space="preserve">
+    <value>Closed Questions Table</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="ClosedQuestion" xml:space="preserve">
-    <value>ClosedQuestion</value>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
   </data>
   <data name="Display" xml:space="preserve">
     <value>Display</value>
   </data>
-  <data name="Selected1" xml:space="preserve">
-    <value>Selected1</value>
+  <data name="Selected" xml:space="preserve">
+    <value>Selected</value>
   </data>
   <data name="Forgot Password?" xml:space="preserve">
     <value>Forgot Password?</value>
@@ -330,14 +330,14 @@
   <data name="Level Description is required!" xml:space="preserve">
     <value>Level Description is required!</value>
   </data>
-  <data name="ClosedQuestion Name" xml:space="preserve">
-    <value>ClosedQuestion Name</value>
+  <data name="Question Name" xml:space="preserve">
+    <value>Question Name</value>
   </data>
-  <data name="ClosedQuestion Description" xml:space="preserve">
-    <value>ClosedQuestion Description</value>
+  <data name="Question Description" xml:space="preserve">
+    <value>Question Description</value>
   </data>
-  <data name="ClosedQuestion name is required!" xml:space="preserve">
-    <value>ClosedQuestion name is required!</value>
+  <data name="Question name is required!" xml:space="preserve">
+    <value>Question name is required!</value>
   </data>
   <data name="Edit Level" xml:space="preserve">
     <value>Edit Level</value>
@@ -510,20 +510,20 @@
   <data name="Selection Page" xml:space="preserve">
     <value>Selection Page</value>
   </data>
-  <data name="ClosedQuestion 1" xml:space="preserve">
+  <data name="Question 1" xml:space="preserve">
     <value>ClosedQuestion 1</value>
   </data>
-  <data name="ClosedQuestion 2" xml:space="preserve">
+  <data name="Question 2" xml:space="preserve">
     <value>ClosedQuestion 2</value>
   </data>
-  <data name="ClosedQuestion 3" xml:space="preserve">
+  <data name="Question 3" xml:space="preserve">
     <value>ClosedQuestion 3</value>
   </data>
-  <data name="ClosedQuestion 4" xml:space="preserve">
+  <data name="Question 4" xml:space="preserve">
     <value>ClosedQuestion 4</value>
   </data>
-  <data name="ClosedQuestion 5" xml:space="preserve">
-    <value>ClosedQuestion 5</value>
+  <data name="Question 5" xml:space="preserve">
+    <value>Question 5</value>
   </data>
   <data name="Choose the question you want to answer" xml:space="preserve">
     <value>Choose the question you want to answer</value>
@@ -555,7 +555,7 @@
   <data name="Edit note" xml:space="preserve">
     <value>Edit note</value>
   </data>
-  <data name="Open ClosedQuestions" xml:space="preserve">
+  <data name="Open Questions" xml:space="preserve">
     <value>Open ClosedQuestions</value>
   </data>
   <data name="Closed Questions" xml:space="preserve">
@@ -602,5 +602,11 @@
   </data>
   <data name="Department Description" xml:space="preserve">
     <value>Department Description</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="unassigned" xml:space="preserve">
+    <value>unassigned</value>
   </data>
 </root>

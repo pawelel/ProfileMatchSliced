@@ -7,7 +7,7 @@ else
 {
     <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["People Administration"]</MudText>
+            <MudText Typo="Typo.h6">@L["Resource Administration"]</MudText>
             <MudSpacer />
 
             <MudTextField @bind-Value="SearchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -23,7 +23,7 @@ else
             <MudTh>@L["Profile"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel=@L["Department"]>@(context.Department==null? "unassigned" : context.Department.Name)</MudTd>
+            <MudTd DataLabel=@L["Department"]>@(context.Department==null? @L["unassigned"] : @L[context.Department.Name])</MudTd>
             <MudTd DataLabel=@L["Photo"]><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
             <MudTd DataLabel=@L["First Name"]>@context.FirstName</MudTd>
             <MudTd DataLabel=@L["Last Name"]>@context.LastName</MudTd>
