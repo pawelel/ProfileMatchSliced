@@ -1,16 +1,14 @@
-﻿<MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["Add New"]</MudButton>
-@if (Users == null)
+﻿@if (Users == null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 }
 else
 {
+    <MudText Typo="Typo.h6">@L["Resource Administration"]</MudText>
     <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["Resource Administration"]</MudText>
-            <MudSpacer />
-
             <MudTextField @bind-Value="SearchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["New"]</MudButton>
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.Department.Name)" SortLabel=@L["Department"] T="ApplicationUser">@L["Department"]</MudTableSortLabel></MudTh>

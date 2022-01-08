@@ -133,7 +133,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add ClosedQuestion.
+        ///   Looks up a localized string similar to Add Question.
         /// </summary>
         public static string Add_Question {
             get {
@@ -917,7 +917,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open ClosedQuestions.
+        ///   Looks up a localized string similar to Open Questions.
         /// </summary>
         public static string Open_Questions {
             get {
@@ -1052,7 +1052,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 1.
+        ///   Looks up a localized string similar to Question 1.
         /// </summary>
         public static string Question_1 {
             get {
@@ -1061,7 +1061,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 2.
+        ///   Looks up a localized string similar to Question 2.
         /// </summary>
         public static string Question_2 {
             get {
@@ -1070,7 +1070,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 3.
+        ///   Looks up a localized string similar to Question 3.
         /// </summary>
         public static string Question_3 {
             get {
@@ -1079,7 +1079,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClosedQuestion 4.
+        ///   Looks up a localized string similar to Question 4.
         /// </summary>
         public static string Question_4 {
             get {

@@ -4,36 +4,44 @@
 }
 else
 {
-    <MudItem xs="12" md="6">
-        <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" @bind-SelectedValues="Cats">
+     <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
+     <MudSpacer/>
+      <MudGrid Spacing="0" Class="d-flex justify-space-between">
+                <MudItem xs="12" md="5" Class="mt-0">
+        <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
             @foreach (var cat in categories)
             {
                 <MudSelectItem T="string" Value="@cat.Name" />
             }
         </MudSelect>
-        <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
     </MudItem>
+             <MudItem xs="12" md="5">
+            <MudTextField
+            @bind-Value="searchString1"
+            Placeholder=@L["Search"] 
+            Adornment="Adornment.Start" 
+            Immediate="true" 
+            AdornmentIcon="@Icons.Material.Filled.Search"
+            IconSize="Size.Medium"
+            Class="mt-0"></MudTextField>
+            </MudItem>
+            </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-        <ColGroup>
-            <col />
-            <col style="width: 60%;" />
-            <col />
-        </ColGroup>
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString1" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudText Typo="Typo.body2">@L["Selected Categories"]:  @(string.Join(", ", Cats.Select(x=>$"\"{x}\""))) </MudText>
+<MudSpacer/>
         </ToolBarContent>
         <HeaderContent>
+            <MudTh>Id</MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Category.Name)">@L["Category"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Closed Question"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ClosedQuestion, object>(x=>x.Name)">@L["Question"]</MudTableSortLabel></MudTh>
             <MudTh>@L["Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Category">@context.Category.Name</MudTd>
             <MudTd DataLabel="Question">@context.Name</MudTd>
-            <MudTd DataLabel="Actions">
+            <MudTd Class="d-flex justify-end" DataLabel="Actions">
                 <MudButton OnClick="@(()=>QuestionDisplay(context))">@L["Display"]</MudButton>
                 <MudButton OnClick="@(()=>QuestionDialog(context))">@L["Edit"]</MudButton>
             </MudTd>
@@ -44,12 +52,6 @@ else
                            InfoFormat="{first_item}-{last_item} / {all_items}" />
         </PagerContent>
     </MudTable>
-
-    <MudItem class="d-flex flex-wrap mt-4">
-        <MudItem style="min-width:200px;">
-            <MudText Inline="true" Class="align-self-center">@L["Selected"]: @selectedItem1?.Name</MudText>
-        </MudItem>
-    </MudItem>
 }
 <style>
     .mud-tabs-panels {

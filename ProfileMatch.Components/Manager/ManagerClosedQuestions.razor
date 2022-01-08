@@ -49,7 +49,7 @@ else
             <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"]/>
         </Columns>
         <PagerContent>
-            <MudTablePager HidePagination="false" HorizontalAlignment="HorizontalAlignment.Right" Class="pl-2 pr-2"
+            <MudDataGridPager T="QuestionUserLevelVM"  Class="pl-2 pr-2"
                            PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"]
                            InfoFormat="{first_item}-{last_item} / {all_items}" />
         </PagerContent>
