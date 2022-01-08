@@ -74,7 +74,7 @@ namespace ProfileMatch.Components.Admin
         {
             var cat =   await CategoryRepository.GetOne(c=>c.Name==category);
             var parameters = new DialogParameters { ["CategoryId"] = cat.Id };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Dodaj pytanie dla"] + $": {category}", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Add Question"] + $": {category}", parameters);
             await dialog.Result;
             await LoadData();
         }
