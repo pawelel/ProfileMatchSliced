@@ -196,6 +196,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu already exists.
+        /// </summary>
+        public static string already_exists {
+            get {
+                return ResourceManager.GetString("already exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Answer.
         /// </summary>
         public static string Answer {
@@ -210,6 +219,24 @@ namespace ProfileMatch.Services {
         public static string Answer_added {
             get {
                 return ResourceManager.GetString("Answer added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Answer option created.
+        /// </summary>
+        public static string Answer_option_created {
+            get {
+                return ResourceManager.GetString("Answer option created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Answer option updated.
+        /// </summary>
+        public static string Answer_option_updated {
+            get {
+                return ResourceManager.GetString("Answer option updated", resourceCulture);
             }
         }
         
@@ -322,6 +349,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Category created.
+        /// </summary>
+        public static string Category_created {
+            get {
+                return ResourceManager.GetString("Category created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Category Description.
         /// </summary>
         public static string Category_Description {
@@ -345,6 +381,15 @@ namespace ProfileMatch.Services {
         public static string Category_name_is_required_ {
             get {
                 return ResourceManager.GetString("Category name is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Category updated.
+        /// </summary>
+        public static string Category_updated {
+            get {
+                return ResourceManager.GetString("Category updated", resourceCulture);
             }
         }
         
@@ -385,6 +430,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Closed Question.
+        /// </summary>
+        public static string Closed_Question {
+            get {
+                return ResourceManager.GetString("Closed Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Closed Questions.
         /// </summary>
         public static string Closed_Questions {
@@ -405,51 +459,6 @@ namespace ProfileMatch.Services {
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Compare.
         /// </summary>
-        public static string ClosedQuestion__Q_Name__updated {
-            get {
-                return ResourceManager.GetString("ClosedQuestion {Q.Name} updated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ClosedQuestion {result.Name} created.
-        /// </summary>
-        public static string ClosedQuestion__result_Name__created {
-            get {
-                return ResourceManager.GetString("ClosedQuestion {result.Name} created", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ClosedQuestion exists..
-        /// </summary>
-        public static string ClosedQuestion_already_exists_ {
-            get {
-                return ResourceManager.GetString("ClosedQuestion already exists.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ClosedQuestion created.
-        /// </summary>
-        public static string ClosedQuestion_created {
-            get {
-                return ResourceManager.GetString("ClosedQuestion created", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ClosedQuestion created.
-        /// </summary>
-        public static string ClosedQuestion_updated {
-            get {
-                return ResourceManager.GetString("ClosedQuestion updated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Compare.
-        /// </summary>
         public static string Compare {
             get {
                 return ResourceManager.GetString("Compare", resourceCulture);
@@ -457,7 +466,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dashboard.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu created.
         /// </summary>
         public static string created {
             get {
@@ -619,6 +628,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Edit Department.
+        /// </summary>
+        public static string Edit_Department {
+            get {
+                return ResourceManager.GetString("Edit Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Edit Level.
         /// </summary>
         public static string Edit_Level {
@@ -737,7 +755,43 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Password.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu has been created.
+        /// </summary>
+        public static string has_been_created_F_ {
+            get {
+                return ResourceManager.GetString("has been created[F]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu has been created.
+        /// </summary>
+        public static string has_been_created_M_ {
+            get {
+                return ResourceManager.GetString("has been created[M]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu has been created.
+        /// </summary>
+        public static string has_been_created_O_ {
+            get {
+                return ResourceManager.GetString("has been created[O]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu has been updated.
+        /// </summary>
+        public static string has_been_updated_F_ {
+            get {
+                return ResourceManager.GetString("has been updated[F]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu has been updated.
         /// </summary>
         public static string has_been_updated_M_ {
             get {
@@ -787,15 +841,6 @@ namespace ProfileMatch.Services {
         public static string Hover {
             get {
                 return ResourceManager.GetString("Hover", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu I want to develop.
-        /// </summary>
-        public static string I_want_to_develop {
-            get {
-                return ResourceManager.GetString("I want to develop", resourceCulture);
             }
         }
         
@@ -962,7 +1007,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Max 200 characters.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Max 20 characters.
         /// </summary>
         public static string Max_20_characters {
             get {
@@ -980,7 +1025,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Max length.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Max allowed size is 5MB.
         /// </summary>
         public static string Max_allowed_size_is_5MB {
             get {
@@ -1061,7 +1106,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu New Password.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu New Department.
         /// </summary>
         public static string New_Department {
             get {
@@ -1079,7 +1124,7 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Next people.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu New User.
         /// </summary>
         public static string New_User {
             get {
@@ -1102,15 +1147,6 @@ namespace ProfileMatch.Services {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Open Questions.
-        /// </summary>
-        public static string Note {
-            get {
-                return ResourceManager.GetString("Note", resourceCulture);
             }
         }
         
@@ -1313,6 +1349,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Question already exists.
+        /// </summary>
+        public static string Question_already_exists_ {
+            get {
+                return ResourceManager.GetString("Question already exists.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Question created.
+        /// </summary>
+        public static string Question_created {
+            get {
+                return ResourceManager.GetString("Question created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Question Description.
         /// </summary>
         public static string Question_Description {
@@ -1336,6 +1390,15 @@ namespace ProfileMatch.Services {
         public static string Question_name_is_required_ {
             get {
                 return ResourceManager.GetString("Question name is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Question updated.
+        /// </summary>
+        public static string Question_updated {
+            get {
+                return ResourceManager.GetString("Question updated", resourceCulture);
             }
         }
         
@@ -1664,6 +1727,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Upload file.
+        /// </summary>
+        public static string Upload_file {
+            get {
+                return ResourceManager.GetString("Upload file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu User Dashboard.
         /// </summary>
         public static string User_Dashboard {
@@ -1732,6 +1813,15 @@ namespace ProfileMatch.Services {
         public static string What_is_important_to_me_at_work {
             get {
                 return ResourceManager.GetString("What is important to me at work", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Wrong file format. Allowed file formats are: .jpg, .jpeg, .png..
+        /// </summary>
+        public static string Wrong_file_format__Allowed_file_formats_are___jpg___jpeg___png_ {
+            get {
+                return ResourceManager.GetString("Wrong file format. Allowed file formats are: .jpg, .jpeg, .png.", resourceCulture);
             }
         }
         

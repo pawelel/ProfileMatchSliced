@@ -639,47 +639,26 @@
   <data name="Max 20 characters" xml:space="preserve">
     <value>Max 20 characters</value>
   </data>
-  <data name="Category {result.Name} created" xml:space="preserve">
-    <value>Category {result.Name} created</value>
-  </data>
-  <data name="Category {result.Name} updated" xml:space="preserve">
-    <value>Category {result.Name} updated</value>
-  </data>
-  <data name="ClosedQuestion {result.Name} created" xml:space="preserve">
-    <value>ClosedQuestion {result.Name} created</value>
-  </data>
-  <data name="ClosedQuestion {Q.Name} updated" xml:space="preserve">
-    <value>ClosedQuestion {Q.Name} updated</value>
-  </data>
-  <data name="$&quot;ClosedQuestion {Q.Name} already exists.&quot;" xml:space="preserve">
-    <value>ClosedQuestion {Q.Name} already exists.</value>
-  </data>
-  <data name="There was an error: {ex.Message}" xml:space="preserve">
-    <value>There was an error: {ex.Message}</value>
-  </data>
   <data name="Category created" xml:space="preserve">
     <value>Category created</value>
   </data>
   <data name="Category updated" xml:space="preserve">
     <value>Category updated</value>
   </data>
-  <data name="ClosedQuestion created" xml:space="preserve">
-    <value>ClosedQuestion created</value>
+  <data name="Question created" xml:space="preserve">
+    <value>Question created</value>
   </data>
-  <data name="ClosedQuestion updated" xml:space="preserve">
-    <value>ClosedQuestion created</value>
+  <data name="Question updated" xml:space="preserve">
+    <value>Question updated</value>
   </data>
-  <data name="ClosedQuestion already exists." xml:space="preserve">
-    <value>ClosedQuestion exists.</value>
+  <data name="Question already exists." xml:space="preserve">
+    <value>Question already exists</value>
   </data>
   <data name="has been created[F]" xml:space="preserve">
     <value>has been created</value>
   </data>
   <data name="has been updated[F]" xml:space="preserve">
     <value>has been updated</value>
-  </data>
-  <data name="ClosedQuestion" xml:space="preserve">
-    <value>ClosedQuestion</value>
   </data>
   <data name="has been created[O]" xml:space="preserve">
     <value>has been created</value>
@@ -696,9 +675,6 @@
   <data name="Answer option created" xml:space="preserve">
     <value>Answer option created</value>
   </data>
-  <data name="Note" xml:space="preserve">
-    <value>Note</value>
-  </data>
   <data name="has been created[M]" xml:space="preserve">
     <value>has been created</value>
   </data>
@@ -706,7 +682,7 @@
     <value>has been updated</value>
   </data>
   <data name="created" xml:space="preserve">
-    <value>created </value>
+    <value>created</value>
   </data>
   <data name="Upload file" xml:space="preserve">
     <value>Upload file</value>
@@ -749,5 +725,8 @@
   </data>
   <data name="Wyślij" xml:space="preserve">
     <value>Send</value>
+  </data>
+  <data name="Closed Question" xml:space="preserve">
+    <value>Closed Question</value>
   </data>
 </root>
