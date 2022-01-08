@@ -5,10 +5,23 @@
 else
 {
     <MudText Typo="Typo.h6">@L["Resource Administration"]</MudText>
-    <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
+    
+        <MudGrid Spacing="0" Class="d-flex justify-end">
+                
+             <MudItem xs="12" md="5">
+            <MudTextField Class="d-flex justify-end"
+            @bind-Value="SearchString"
+            Placeholder=@L["Search"] 
+            Adornment="Adornment.Start" 
+            Immediate="true" 
+            AdornmentIcon="@Icons.Material.Filled.Search"
+            IconSize="Size.Medium"></MudTextField>
+            </MudItem>
+            </MudGrid>
+            <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
         <ToolBarContent>
-            <MudTextField @bind-Value="SearchString" Placeholder=@L["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-            <MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant="Variant.Filled" Color="Color.Primary">@L["New"]</MudButton>
+            
+            <MudButton OnClick="@(()=> EditProfile(new ApplicationUser()))" Class="pa-2 mx-2" Variant=Variant.Text Color="Color.Success">@L["New"]</MudButton>
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.Department.Name)" SortLabel=@L["Department"] T="ApplicationUser">@L["Department"]</MudTableSortLabel></MudTh>
@@ -17,8 +30,8 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.LastName)" SortLabel=@L["Last Name"] T="ApplicationUser">@L["Last Name"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.DateOfBirth?.Date)" SortLabel=@L["Date Of Birth"] T="ApplicationUser">@L["Birth Date"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.IsActive)" SortLabel=@L["Is Active"] T="ApplicationUser">@L["Is Active"]</MudTableSortLabel></MudTh>
-            <MudTh>@L["Edit"]</MudTh>
-            <MudTh>@L["Profile"]</MudTh>
+            <MudTh style="text-align: center;">@L["Actions"]</MudTh>
+            <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel=@L["Department"]>@(context.Department==null? @L["unassigned"] : @L[context.Department.Name])</MudTd>
@@ -27,16 +40,10 @@ else
             <MudTd DataLabel=@L["Last Name"]>@context.LastName</MudTd>
             <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth?.ToShortDateString()</MudTd>
             <MudTd DataLabel=@L["Is Active"]><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
-            <MudTd DataLabel="">
-             @*   @if(user.Identity.Name!=context.Email){*@
-               
-                <MudButton OnClick="@(()=> EditProfile(context))" Color="Color.Tertiary">@L["Edit User"]</MudButton>
-                @*}*@
-            </MudTd>
-            <MudTd DataLabel="">
-               
-           <MudButton OnClick="@(()=>ShowProfile(context))" Color="Color.Success">@L["Show profile"]</MudButton>
-            </MudTd>
+            <MudTd style="text-align: center;" DataLabel="Actions">
+                <MudButton OnClick="@(()=>EditProfile(context))" Color="Color.Tertiary">@L["Edit User"]</MudButton>
+                <MudButton OnClick="@(()=>ShowProfile(context))" Color="Color.Success">@L["Show profile"]</MudButton>
+            </MudTd>           
         </RowTemplate>
         <PagerContent>
             <MudTablePager RowsPerPageString=@L["Next people"] />
