@@ -66,7 +66,6 @@ namespace ProfileMatch.Components.Admin
         {
             var dialog = DialogService.Show<AdminCategoryDialog>("Stwórz kategorię");
             await dialog.Result;
-            Categories = await GetCategoriesAsync();
         }
 
         private async Task QuestionCreate(Category category)

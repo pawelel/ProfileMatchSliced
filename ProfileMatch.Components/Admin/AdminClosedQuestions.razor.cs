@@ -20,6 +20,7 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminClosedQuestions : ComponentBase
     {
+        [Inject] ISnackbar Snackbar  { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
@@ -30,22 +31,53 @@ namespace ProfileMatch.Components.Admin
         private bool loading;
         [Parameter] public int Id { get; set; }
         private List<ClosedQuestion> questions = new();
-        private List<ClosedQuestion> questions1;
         private List<Category> categories;
-        private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
-        private IEnumerable<string> Quests { get; set; } = new HashSet<string>() { };
+        private IEnumerable<string> Cats { get; set; }
+
         public bool ShowDetails { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
             loading = true;
             categories = await CategoryRepository.Get();
             questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category).Include(q => q.AnswerOptions));
-            questions1 = questions;
+            Cats = new HashSet<string>() { };
             loading = false;
         }
 
-
+        private async Task CategoryUpdate(string category)
+        { var Cat = await CategoryRepository.GetOne(c=>c.Name == category);
+            if (Cat != null)
+            {
+                var parameters = new DialogParameters { ["Cat"] = Cat };
+                var dialog = DialogService.Show<AdminCategoryDialog>(L["Edit Category"], parameters);
+                await dialog.Result;
+               await LoadData();
+            }
+            else
+            {
+                Snackbar.Add(L["Error"]);
+            }
+        }
+        private async Task CategoryCreate()
+        {
+            var dialog = DialogService.Show<AdminCategoryDialog>("Stwórz kategorię");
+            await dialog.Result;
+            await LoadData();
+        }
+        private async Task QuestionCreate(string category)
+        {
+            var cat =   await CategoryRepository.GetOne(c=>c.Name==category);
+            var parameters = new DialogParameters { ["CategoryId"] = cat.Id };
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Dodaj pytanie dla"] + $": {category}", parameters);
+            await dialog.Result;
+            await LoadData();
+        }
 
 
 
@@ -69,24 +101,15 @@ namespace ProfileMatch.Components.Admin
         {
             if (!Cats.Any())
             {
-                questions1 = questions;
+                return questions;
             }
             else
             {
-                questions1 = (from q in questions
+                return (from q in questions
                               from c in Cats
                               where q.Category.Name == c
                               select q).ToList();
             }
-            if (Quests.Any())
-            {
-                questions1 = (from q in questions1
-                              from a in Quests
-                              where q.Name == a
-                              select q).ToList();
-            }
-
-            return questions1;
         }
 
         private async Task QuestionDialog(ClosedQuestion question)

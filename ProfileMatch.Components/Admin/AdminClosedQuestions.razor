@@ -27,11 +27,16 @@ else
             </MudGrid>
     <MudTable Items="@(GetQuestions())" SortLabel=@L["Sort By"] Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" Filter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-            <MudButton Variant=Variant.Text Color="Color.Success">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">@L["Selected Categories"]:</MudText> @foreach (var cat in Cats)
+            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Success">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">@L["Selected Categories"]: </MudText>
+            @foreach (var cat in Cats)
             {
                 if (!string.IsNullOrEmpty(cat))
                 {
-            <MudButton Color="Color.Success">@L[@cat]</MudButton>
+                    <MudButtonGroup Size="Size.Small" Color="Color.Success" Variant="Variant.Outlined" OverrideStyles="true">
+            <MudButton  OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+            <MudButton  OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
+            </MudButtonGroup>
+         <MudSpacer/>
                 }
             }
         <MudSpacer/>

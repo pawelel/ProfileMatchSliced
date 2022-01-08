@@ -40,11 +40,6 @@ namespace ProfileMatch.Components.Dialogs
         {
             await LoadData();
         }
-        bool isShow;
-        InputType PasswordInput = InputType.Password;
-        string EditedUserPassword;
-        readonly PasswordHasher<ApplicationUser> hasher = new();
-        string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         private async Task LoadData()
         {
             Roles = await IdentityRoleManager.Get();
@@ -81,21 +76,6 @@ namespace ProfileMatch.Components.Dialogs
                 _dob = EditedUser.DateOfBirth;
             }
         }
-        void ButtonTestclick()
-        {
-            if (isShow)
-            {
-                isShow = false;
-                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-                PasswordInput = InputType.Password;
-            }
-            else
-            {
-                isShow = true;
-                PasswordInputIcon = Icons.Material.Filled.Visibility;
-                PasswordInput = InputType.Text;
-            }
-        }
         protected async Task HandleSave()
         {
             await Form.Validate();
@@ -112,7 +92,6 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 else
                 {
-                    EditedUser.PasswordHash = hasher.HashPassword(EditedUser, EditedUserPassword);
                     await ApplicationUserManager.Insert(EditedUser);
                 }
                 foreach (var role in UserRoles)
