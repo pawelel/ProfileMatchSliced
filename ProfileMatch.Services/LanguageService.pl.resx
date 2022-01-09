@@ -738,4 +738,7 @@
   <data name="Display the question" xml:space="preserve">
     <value>Wyświetl pytanie</value>
   </data>
+  <data name="I want to develop" xml:space="preserve">
+    <value>Chcę rozwijać</value>
+  </data>
 </root>
