@@ -1729,9 +1729,9 @@ namespace ProfileMatch.Services {
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Upload file.
         /// </summary>
-        public static string Upload_file {
+        public static string Upload_File {
             get {
-                return ResourceManager.GetString("Upload file", resourceCulture);
+                return ResourceManager.GetString("Upload File", resourceCulture);
             }
         }
         
