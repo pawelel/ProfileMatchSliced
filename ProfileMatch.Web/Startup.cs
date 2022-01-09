@@ -43,7 +43,7 @@ namespace ProfileMatch
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<ApplicationDbContext>();
+            services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(p =>
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
