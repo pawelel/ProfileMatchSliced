@@ -466,6 +466,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Create Category.
+        /// </summary>
+        public static string Create_Category {
+            get {
+                return ResourceManager.GetString("Create Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Create Department.
+        /// </summary>
+        public static string Create_Department {
+            get {
+                return ResourceManager.GetString("Create Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu created.
         /// </summary>
         public static string created {
@@ -588,6 +606,15 @@ namespace ProfileMatch.Services {
         public static string Display {
             get {
                 return ResourceManager.GetString("Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Display the question.
+        /// </summary>
+        public static string Display_the_question {
+            get {
+                return ResourceManager.GetString("Display the question", resourceCulture);
             }
         }
         

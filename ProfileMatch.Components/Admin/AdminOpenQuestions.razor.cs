@@ -63,13 +63,13 @@ namespace ProfileMatch.Components.Admin
         private async Task NoteUpdate(OpenQuestion OpenQuestion)
         {
             var parameters = new DialogParameters { ["EditedOpenQuestion"] = OpenQuestion };
-            var dialog = DialogService.Show<AdminOpenQuestionDialog>("Edytuj pytanie", parameters);
+            var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Edit Question"], parameters);
             await dialog.Result;
         }
 
         private async Task NoteCreate()
         {
-            var dialog = DialogService.Show<AdminOpenQuestionDialog>("Stwórz pytanie");
+            var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Create Question"]);
             await dialog.Result;
             OpenQuestions = await GetNotesAsync();
         }

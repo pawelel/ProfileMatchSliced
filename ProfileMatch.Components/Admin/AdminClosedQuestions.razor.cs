@@ -66,7 +66,7 @@ namespace ProfileMatch.Components.Admin
         }
         private async Task CategoryCreate()
         {
-            var dialog = DialogService.Show<AdminCategoryDialog>("Stwórz kategorię");
+            var dialog = DialogService.Show<AdminCategoryDialog>(L["Create Category"]);
             await dialog.Result;
             await LoadData();
         }
@@ -115,7 +115,7 @@ namespace ProfileMatch.Components.Admin
         private async Task QuestionDialog(ClosedQuestion question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>($"Edytuj pytanie: {question.Name}", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(@L["Edit Question:"] + $" {@L[question.Name]}", parameters);
             await dialog.Result;
         }
 
@@ -123,7 +123,7 @@ namespace ProfileMatch.Components.Admin
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDisplay>($"Wyświetl pytanie", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminQuestionDisplay>(L["Display the question"], parameters, maxWidth);
             await dialog.Result;
         }
 

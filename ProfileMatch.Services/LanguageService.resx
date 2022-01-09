@@ -729,4 +729,13 @@
   <data name="Closed Question" xml:space="preserve">
     <value>Closed Question</value>
   </data>
+  <data name="Create Department" xml:space="preserve">
+    <value>Create Department</value>
+  </data>
+  <data name="Create Category" xml:space="preserve">
+    <value>Create Category</value>
+  </data>
+  <data name="Display the question" xml:space="preserve">
+    <value>Display the question</value>
+  </data>
 </root>
