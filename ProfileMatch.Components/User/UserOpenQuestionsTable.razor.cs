@@ -102,11 +102,23 @@ namespace ProfileMatch.Components.User
         
         
         private string searchString1 = "";
+        private string searchString = "";
         private UserAnswerVM selectedItem1 = null;
         private readonly List<UserAnswerVM> UserNotesVM = new();
 
         private bool FilterFunc1(UserAnswerVM UserNoteVM) => FilterFunc(UserNoteVM, searchString1);
-
+        private Func<UserAnswerVM, bool> QuickFilter => question =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (question.OpenQuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (question.OpenQuestionDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (question.UserDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        };
         private static bool FilterFunc(UserAnswerVM UserNoteVM, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))

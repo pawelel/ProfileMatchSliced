@@ -21,6 +21,7 @@ namespace ProfileMatch.Components.Manager
 {
     public partial class ManagerClosedQuestions : ComponentBase
     {
+        [Inject] IDialogService DialogService { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
         [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryRepository { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
@@ -97,7 +98,13 @@ namespace ProfileMatch.Components.Manager
                 return true;
             return false;
         };
-
+        private async Task QuestionDisplay(int id)
+        {
+            var question1 = await ClosedQuestionRepository.GetOne(q => q.Id == id);
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
+            var parameters = new DialogParameters { ["Q"] = question1 };
+            DialogService.Show<ManagerQuestionDisplay>($"{question1.Name}", parameters, maxWidth);
+        }
 
         private List<QuestionUserLevelVM> GetCategoriesAndQuestions()
         {

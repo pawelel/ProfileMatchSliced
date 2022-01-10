@@ -10,32 +10,33 @@
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"
                       Immediate="true">
-                      </MudTextField>
+        </MudTextField>
     </MudItem>
 </MudGrid>
-
-<MudTable Items="@UserNotesVM" T="UserAnswerVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<UserAnswerVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
-    <ColGroup>
-        <col />
-        <col style="width: 60%;" />
-        <col />
-        <col />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>@L["Name"]</MudTh>
-        <MudTh>@L["Description"]</MudTh>
-        <MudTh>@L["Answer"]</MudTh>
-        <MudTh>@L["Actions"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel=@L["Name"]>@context.OpenQuestionName</MudTd>
-        <MudTd DataLabel=@L["Description"]>@context.OpenQuestionDescription</MudTd>
-        <MudTd DataLabel=@L["Answer"]>@context.UserDescription</MudTd>
-        <MudTd DataLabel=@L["Edit"]>
-            <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton>
-        </MudTd>
-    </RowTemplate>
+<MudDataGrid Height="500px"
+             FixedHeader="true"
+             Items="@UserNotesVM"
+             Dense="true"
+             T="UserAnswerVM"
+             Hover="true"
+             Bordered="false"
+             Striped="false"
+             Sortable="true"
+             Filterable="true"
+             QuickFilter="QuickFilter"
+             Breakpoint="Breakpoint.Sm"
+             @bind-SelectedItem="selectedItem1">
+    <Columns>
+        <Column T="UserAnswerVM" Field="OpenQuestionName" Title=@L["Name"] />
+        <Column T="UserAnswerVM" Field="OpenQuestionDescription" Title=@L["Description"] />
+        <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"]/>
+        <Column T="UserAnswerVM" Title="@L["Edit"]">
+            <CellTemplate><MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton></CellTemplate>
+        </Column>
+    </Columns>
     <PagerContent>
-        <MudTablePager RowsPerPageString=@L["Rows per page"] />
+        <MudDataGridPager T="UserAnswerVM" Class="pl-2 pr-2"
+                          PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"]
+                          InfoFormat="{first_item}-{last_item} / {all_items}" />
     </PagerContent>
-</MudTable>
+</MudDataGrid>

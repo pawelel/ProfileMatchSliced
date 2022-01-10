@@ -7,21 +7,20 @@ else
     <MudDialog>
         <DialogContent>
             <MudItem Class="pt-8"></MudItem>
-            <MudText Typo="Typo.h6">@Q.Category.Name:</MudText>
-            <MudText Typo="Typo.h6">@Q.Name</MudText>
-
             <MudTabs Outlined="true"
                  Position="Position.Top"
                  Rounded="true"
+                 DisableSliderAnimation="true"
                  Border="true"
                  ApplyEffectsToContainer="true"
+                 HideSlider=true
                  PanelClass="pa-6 d-block">
                 @foreach (var level in QAnswerOptions)
                 {
                     <MudTabPanel Text="@level.Level.ToString()">
 
                         <MudItem>
-                            <MudText Typo="Typo.subtitle1">Level @level.Level.ToString()</MudText>
+                            <MudText Typo="Typo.subtitle1">@L["Level"] @level.Level.ToString()</MudText>
                             <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@level.Description">@level.Description</MudText>
                         </MudItem>
@@ -35,5 +34,26 @@ else
     .mud-tab {
         min-width: 50px !important;
     }
+    
+
+.mud-tabs .mud-tabs-toolbar .mud-tooltip-root {
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+}
+
+
+.mud-tab::before {/*::after is already used for ripple effect*/
+    width: 0;
+	content: "";
+	position: absolute;
+	bottom: 0;
+	height: 2px;
+	transition: width .2s cubic-bezier(.64,.09,.08,1);
+}
+
+.mud-tab.mud-tab-active::before {
+	width: 50px !important;
+	background: var(--mud-palette-primary);
+}
   
 </style>

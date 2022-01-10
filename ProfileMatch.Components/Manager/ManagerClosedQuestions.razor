@@ -50,7 +50,7 @@ else
             <Column T="QuestionUserLevelVM" Field="Description" Title=@L["Description"]/>
             <Column T="QuestionUserLevelVM" Field="Level" Title=@L["Level"]>
                 <CellTemplate>
-                    <MudButton>hello</MudButton>
+                    <MudButton OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))">@context.Level</MudButton>
                 </CellTemplate>
             </Column>
             <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"]/>

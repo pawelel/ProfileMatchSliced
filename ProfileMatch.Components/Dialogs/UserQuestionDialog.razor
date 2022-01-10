@@ -34,4 +34,26 @@
     .mud-tab {
         min-width: 50px !important;
     }
+    
+
+.mud-tabs .mud-tabs-toolbar .mud-tooltip-root {
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+}
+
+
+.mud-tab::before {/*::after is already used for ripple effect*/
+    width: 0;
+	content: "";
+	position: absolute;
+	bottom: 0;
+	height: 2px;
+	transition: width .2s cubic-bezier(.64,.09,.08,1);
+}
+
+.mud-tab.mud-tab-active::before {
+	width: 50px !important;
+	background: var(--mud-palette-primary);
+}
+  
 </style>
