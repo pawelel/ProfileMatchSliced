@@ -97,14 +97,24 @@ namespace ProfileMatch.Components.Manager
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
             if (question.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (question.Level.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (ShareResource.IsEn())
+            {
+            if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            }
+            else
+            {
+                if (question.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (question.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
             return false;
         };
         private async Task QuestionDisplay(int id)
@@ -112,7 +122,15 @@ namespace ProfileMatch.Components.Manager
             var question1 = await ClosedQuestionRepository.GetOne(q => q.Id == id);
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question1 };
-            DialogService.Show<ManagerQuestionDisplay>($"{question1.Name}", parameters, maxWidth);
+
+            if (ShareResource.IsEn())
+            {
+                DialogService.Show<ManagerQuestionDisplay>($"{question1.Name}", parameters, maxWidth);
+            }
+            else
+            {
+            DialogService.Show<ManagerQuestionDisplay>($"{question1.NamePl}", parameters, maxWidth);
+            }
         }
 
         private List<QuestionUserLevelVM> GetCategoriesAndQuestions()
@@ -122,10 +140,17 @@ namespace ProfileMatch.Components.Manager
                 return questionUserLevels;
             }
             List<QuestionUserLevelVM> qs = new();
-
+            if (ShareResource.IsEn())
+            {
+                qs = (from q in questionUserLevels
+                      from c in Cats
+                      where q.CategoryName == c
+                      select q).ToList();
+                return qs;
+            }
             qs = (from q in questionUserLevels
                   from c in Cats
-                  where q.CategoryName == c
+                  where q.CategoryNamePl == c
                   select q).ToList();
             return qs;
         }

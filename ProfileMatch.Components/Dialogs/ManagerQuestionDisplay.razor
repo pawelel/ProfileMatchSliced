@@ -21,8 +21,16 @@ else
 
                         <MudItem>
                             <MudText Typo="Typo.subtitle1">@L["Level"] @level.Level.ToString()</MudText>
+                            @if (ShareResource.IsEn())
+                            {
                             <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@level.Description">@level.Description</MudText>
+                            }
+                            else
+                            {
+                            <MudText Typo="Typo.subtitle2"
+                                 @bind-Value="@level.Description">@level.DescriptionPl</MudText>
+                            }
                         </MudItem>
                     </MudTabPanel>
                 }

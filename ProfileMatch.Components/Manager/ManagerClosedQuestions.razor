@@ -4,15 +4,22 @@
 }
 else
 {
-<MudGrid Spacing="0" Class="d-flex justify-space-between">
-    <MudItem xs="12" md="12">
-    <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
-    </MudItem>        
-         <MudItem xs="12" md="5">
+    <MudGrid Spacing="0" Class="d-flex justify-space-between">
+        <MudItem xs="12" md="12">
+            <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
+        </MudItem>
+        <MudItem xs="12" md="5">
             <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
                 @foreach (var cat in categories)
                 {
-                    <MudSelectItem T="string" Value="@cat.Name" />
+                    if (ShareResource.IsEn())
+                    {
+                        <MudSelectItem T="string" Value="@cat.Name" />
+                    }
+                    else
+                    {
+                        <MudSelectItem T="string" Value="@cat.NamePl" />
+                    }
                 }
             </MudSelect>
         </MudItem>
@@ -27,36 +34,53 @@ else
             </MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid
-              Height="500px"
-              FixedHeader="true"
-              Items="@GetCategoriesAndQuestions()"
-              Dense="true"
-              Hover="true"
-              Bordered="false"
-              Striped="false"
-              Sortable="true"
-              Filterable="true"
-              QuickFilter="@QuickFilter"
-              Breakpoint="Breakpoint.Sm">
+    <MudDataGrid Height="500px"
+             FixedHeader="true"
+             Items="@GetCategoriesAndQuestions()"
+             Dense="true"
+             Hover="true"
+             Bordered="false"
+             Striped="false"
+             Sortable="true"
+             Filterable="true"
+             QuickFilter="@QuickFilter"
+             Breakpoint="Breakpoint.Sm">
         <Columns>
-            <Column T="QuestionUserLevelVM" Field="CategoryName" Title=@L["Category"]/>
+            @if (ShareResource.IsEn())
+        {
+            <Column T="QuestionUserLevelVM" Field="CategoryName" Title=@L["Category"]></Column>
             <Column T="QuestionUserLevelVM" Field="IsUserCategory" Title=@L["User Category"]>
                 <CellTemplate>@(context.IsUserCategory==1?L["Yes"]:L["No"])</CellTemplate>
             </Column>
-            <Column T="QuestionUserLevelVM" Field="QuestionName" Title=@L["Question"]/>
-            <Column T="QuestionUserLevelVM" Field="Description" Title=@L["Description"]/>
+            <Column T="QuestionUserLevelVM" Field="QuestionName" Title=@L["Question"] />
+            <Column T="QuestionUserLevelVM" Field="Description" Title=@L["Description"] />
             <Column T="QuestionUserLevelVM" Field="Level" Title=@L["Level"]>
                 <CellTemplate>
                     <MudButton OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))">@context.Level</MudButton>
                 </CellTemplate>
             </Column>
-            <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"]/>
-        </Columns>
+            <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"] />
+        }
+        else
+        {
+             <Column T="QuestionUserLevelVM" Field="CategoryNamePl" Title="Kategoria"></Column>
+            <Column T="QuestionUserLevelVM" Field="IsUserCategory" Title="Kategoria użytkownika">
+                <CellTemplate>@(context.IsUserCategory==1?"Tak":"Nie")</CellTemplate>
+            </Column>
+            <Column T="QuestionUserLevelVM" Field="QuestionNamePl" Title="Pytanie" />
+            <Column T="QuestionUserLevelVM" Field="DescriptionPl" Title="Opis" />
+            <Column T="QuestionUserLevelVM" Field="Level" Title="Poziom">
+                <CellTemplate>
+                    <MudButton OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))">@context.Level</MudButton>
+                </CellTemplate>
+            </Column>
+            <Column T="QuestionUserLevelVM" Field="FullName" Title="Imię i nazwisko" />
+        }
+    </Columns>
         <PagerContent>
-            <MudDataGridPager T="QuestionUserLevelVM"  Class="pl-2 pr-2"
-                           PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"]
-                           InfoFormat="{first_item}-{last_item} / {all_items}" />
+            <MudDataGridPager T="QuestionUserLevelVM" Class="pl-2 pr-2"
+                          PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Items per page"]
+                          InfoFormat="{first_item}-{last_item} / {all_items}" />
         </PagerContent>
     </MudDataGrid>
 }
