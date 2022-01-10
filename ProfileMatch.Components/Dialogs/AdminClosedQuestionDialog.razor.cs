@@ -64,27 +64,45 @@ namespace ProfileMatch.Components.Dialogs
                 MudDialog.Close(DialogResult.Ok(Q));
             }
         }
-
         private async Task Save()
         {//has any other question the same name in the category?
-            var exists = (await ClosedQuestionRepository.Get(q => q.Name.Contains(Q.Name))).Any();
-            if (Q.Id == 0 && !exists)
+            var exists = (await ClosedQuestionRepository.Get(q => q.Name == Q.Name));
+            if (Q.Id == 0 && exists.Count == 0)
             {
                 var result = await ClosedQuestionRepository.Insert(Q);
-                Snackbar.Add(@L["ClosedQuestion"] + $" {@L[result.Name]} " + @L["has been created[M]"], Severity.Success);
+                if (ShareResource.IsEn())
+                {
+                    Snackbar.Add($"Question {result.Name} has been created", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add($"Pytanie {result.Name} zostało utworzone", Severity.Success);
+                }
             }
-            else if (!exists)
+            else if (exists.Count <= 1)
             {
                 await ClosedQuestionRepository.Update(Q);
-                Snackbar.Add(@L["ClosedQuestion"] + $" {@L[Q.Name]} " + @L["has been updated[M]"], Severity.Success);
+                if (ShareResource.IsEn())
+                {
+                    Snackbar.Add($"Question {Q.Name} has been updated", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add($"Pytanie  {Q.Name} zostało zaktualizowane", Severity.Success);
+                }
             }
             else
             {
-                Snackbar.Add(@L["ClosedQuestion"] + $" {L[Q.Name]} " + @L["already exists[M]"], Severity.Error);
+                if (ShareResource.IsEn())
+                {
+                    Snackbar.Add($"Question{Q.Name} already exists", Severity.Error);
+                }
+                else
+                {
+                    Snackbar.Add($"Pytanie  {Q.Name} już istnieje", Severity.Error);
+                }
             }
         }
-
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

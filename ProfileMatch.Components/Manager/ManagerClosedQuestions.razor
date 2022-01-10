@@ -4,10 +4,29 @@
 }
 else
 {
-     <MudText Typo="Typo.h6">@L["Closed Questions Table"]</MudText>
-    <MudItem Class="d-flex">
-        
-    </MudItem>
+<MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="12">
+    <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
+    </MudItem>        
+         <MudItem xs="12" md="5">
+            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
+                @foreach (var cat in categories)
+                {
+                    <MudSelectItem T="string" Value="@cat.Name" />
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="5">
+            <MudTextField Class="d-flex justify-end"
+                      @bind-Value="searchString"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Immediate="true">
+            </MudTextField>
+        </MudItem>
+    </MudGrid>
     <MudDataGrid
               Height="500px"
               FixedHeader="true"
@@ -20,27 +39,6 @@ else
               Filterable="true"
               QuickFilter="@QuickFilter"
               Breakpoint="Breakpoint.Sm">
-        
-        <ToolBarContent>
-           
-            <MudItem xs="12" md="5">
-            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-                @foreach (var cat in categories)
-                {
-                    <MudSelectItem T="string" Value="@cat.Name" />
-                }
-            </MudSelect>
-        </MudItem>
-            <MudSpacer />
-            <MudTextField
-            @bind-Value="searchString"
-            Placeholder=@L["Search"] 
-            Adornment="Adornment.Start" 
-            Immediate="true" 
-            AdornmentIcon="@Icons.Material.Filled.Search"
-            IconSize="Size.Medium"
-            Class="mt-0"></MudTextField>
-        </ToolBarContent>
         <Columns>
             <Column T="QuestionUserLevelVM" Field="CategoryName" Title=@L["Category"]/>
             <Column T="QuestionUserLevelVM" Field="IsUserCategory" Title=@L["User Category"]>

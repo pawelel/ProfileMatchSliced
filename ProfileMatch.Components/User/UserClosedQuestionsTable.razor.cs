@@ -74,18 +74,27 @@ namespace ProfileMatch.Components.User
 
         private string searchString;
 
-        private Func<QuestionUserLevelVM, bool> FilterFunc => x =>
-       {
-           if (string.IsNullOrWhiteSpace(searchString))
-               return true;
-
-           if (x.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-               return true;
-           if (x.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-               return true;
-           return false;
-       };
-
+        private Func<QuestionUserLevelVM, bool> QuickFilter => x =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (ShareResource.IsEn())
+            {
+                if (x.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (x.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            else
+            {
+                if (x.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (x.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        };
+        private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
         private List<QuestionUserLevelVM> QuestionUserLevelVMs()
         {
             foreach (ClosedQuestion q in questions)
@@ -122,8 +131,31 @@ namespace ProfileMatch.Components.User
                             UserId = UserId
                         }
               ).ToList();
-            return data;
+            if (!Cats.Any())
+            {
+                return data;
+            }
+            List<QuestionUserLevelVM> qs = new();
+
+            if (ShareResource.IsEn())
+            {
+                qs = (from q in data
+                      from c in Cats
+                      where q.CategoryName == c
+                      select q).ToList();
+                return qs;
+            }
+            else
+            {
+                qs = (from q in data
+                      from c in Cats
+                      where q.CategoryNamePl == c
+                      select q).ToList();
+                return qs;
+            }
+            
         }
+    
         private async Task UserAnswerDialog(QuestionUserLevelVM vM)
         {
             var UserClosedAnswer = userAnswers.FirstOrDefault(q => q.ClosedQuestionId == vM.ClosedQuestionId);

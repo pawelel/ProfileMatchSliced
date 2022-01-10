@@ -44,6 +44,13 @@ namespace ProfileMatch.Components.Manager
         protected override async Task OnInitializedAsync()
         {
             loading = true;
+            await LoadData();
+
+            loading = false;
+        }
+
+        private async Task LoadData()
+        {
             categories = await CategoryRepository.Get();
             answerOptions = await AnswerOptionRepository.Get();
             userCategories = await UserCategoryRepository.Get();
@@ -63,8 +70,8 @@ namespace ProfileMatch.Components.Manager
                                   join c in categories
                                   on q.CategoryId
                                   equals c.Id
-                                  join uc in userCategories 
-                                  on new { ua.ApplicationUserId, q.CategoryId } 
+                                  join uc in userCategories
+                                  on new { ua.ApplicationUserId, q.CategoryId }
                                   equals new { uc.ApplicationUserId, uc.CategoryId }
                                   where uc.CategoryId == q.CategoryId
                                   where uc.ApplicationUserId == ua.ApplicationUserId
@@ -82,11 +89,10 @@ namespace ProfileMatch.Components.Manager
                                       UserId = u.Id,
                                       QuestionName = q.Name,
                                       QuestionNamePl = q.NamePl,
-                                      IsUserCategory = uc.IsSelected? 1:0
+                                      IsUserCategory = uc.IsSelected ? 1 : 0
                                   }).ToList();
-
-            loading = false;
         }
+
         private Func<QuestionUserLevelVM, bool> QuickFilter => question =>
         {
             if (string.IsNullOrWhiteSpace(searchString))
