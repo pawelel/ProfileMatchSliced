@@ -43,7 +43,7 @@ namespace ProfileMatch.Components.User
                                    CategoryName = c.Name,
                                    CategoryDescription = c.Description,
                                    CategoryId = uc.CategoryId,
-                                   IsSelected = uc.Want,
+                                   IsSelected = uc.IsSelected,
                                    UserId = CurrentUser.Id
                                }
                                ).ToList();
@@ -64,7 +64,7 @@ namespace ProfileMatch.Components.User
                     {
                         ApplicationUserId = CurrentUser.Id,
                         CategoryId = cat.Id,
-                        Want = false
+                        IsSelected = false
                     };
                     await UserCategoryManager.Insert(uc);
                     UserCategoryVMs.Add(ucVM);
@@ -79,7 +79,7 @@ namespace ProfileMatch.Components.User
             var data = await UserCategoryManager.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == category.CategoryId);
             if (data != null)
             {
-                data.Want = category.IsSelected;
+                data.IsSelected = category.IsSelected;
                 await UserCategoryManager.Update(data);
             }
             if (category.IsSelected)

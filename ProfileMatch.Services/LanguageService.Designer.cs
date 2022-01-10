@@ -421,11 +421,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the question you want to answer.
+        ///   Looks up a localized string similar to Choose the question you IsSelected to answer.
         /// </summary>
-        public static string Choose_the_question_you_want_to_answer {
+        public static string Choose_the_question_you_IsSelected_to_answer {
             get {
-                return ResourceManager.GetString("Choose the question you want to answer", resourceCulture);
+                return ResourceManager.GetString("Choose the question you IsSelected to answer", resourceCulture);
             }
         }
         
@@ -872,11 +872,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I want to develop.
+        ///   Looks up a localized string similar to I IsSelected to develop.
         /// </summary>
-        public static string I_want_to_develop {
+        public static string I_IsSelected_to_develop {
             get {
-                return ResourceManager.GetString("I want to develop", resourceCulture);
+                return ResourceManager.GetString("I IsSelected to develop", resourceCulture);
             }
         }
         
@@ -1826,11 +1826,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to the employee portal, select the tab you want to enter.
+        ///   Looks up a localized string similar to Welcome to the employee portal, select the tab you IsSelected to enter.
         /// </summary>
-        public static string Welcome_to_the_employee_portal__select_the_tab_you_want_to_enter {
+        public static string Welcome_to_the_employee_portal__select_the_tab_you_IsSelected_to_enter {
             get {
-                return ResourceManager.GetString("Welcome to the employee portal, select the tab you want to enter", resourceCulture);
+                return ResourceManager.GetString("Welcome to the employee portal, select the tab you IsSelected to enter", resourceCulture);
             }
         }
         

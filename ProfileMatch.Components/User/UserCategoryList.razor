@@ -26,11 +26,11 @@
                 <MudTable Items="UserCategoryVMs" T="UserCategoryVM">
                     <HeaderContent>
                         <MudTh>@L["Category"]</MudTh>
-                        <MudTh>@L["I want to develop"]</MudTh>
+                        <MudTh>@L["I IsSelected to develop"]</MudTh>
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="@L["Category"]">@context.CategoryName</MudTd>
-                        <MudTd DataLabel="@L["I want to develop"]"><MudCheckBox @onclick=@(()=>SetCategoryAsync(context)) @bind-Checked="@context.IsSelected" /></MudTd>
+                        <MudTd DataLabel="@L["I IsSelected to develop"]"><MudCheckBox @onclick=@(()=>SetCategoryAsync(context)) @bind-Checked="@context.IsSelected" /></MudTd>
                     </RowTemplate>
                 </MudTable>
             }

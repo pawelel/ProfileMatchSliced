@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220108210016_Initial")]
-    partial class Initial
+    [Migration("20220110130053_Added language")]
+    partial class Addedlanguage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,10 +127,12 @@ namespace ProfileMatch.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -174,10 +176,12 @@ namespace ProfileMatch.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -199,6 +203,9 @@ namespace ProfileMatch.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionPl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
@@ -431,9 +438,6 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Bio")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -461,6 +465,9 @@ namespace ProfileMatch.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("JobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitlePl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -521,8 +528,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93fb3452-200f-4bfb-8027-695c5c8825d9",
-                            DateOfBirth = new DateTime(2022, 1, 8, 22, 0, 16, 238, DateTimeKind.Local).AddTicks(891),
+                            ConcurrencyStamp = "32022a5f-2c5f-48af-b481-d56ea13b3e84",
+                            DateOfBirth = new DateTime(2022, 1, 10, 14, 0, 52, 803, DateTimeKind.Local).AddTicks(7146),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -532,9 +539,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHzPBAixVsKFGVUqMLjO3bhrd8TwdgvFcOCh2+MJznljmtkeJnZfW0VOQDdrLEsjaw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFovlfV3/F9v/Fgvsvs/PVZ+HBSBJjh/1KkxmoD1XsHbCnPgtGkhQ//PsrmezgJM/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "04612579-4ec3-455c-a348-9c7eb7b4c8a8",
+                            SecurityStamp = "b9cd9603-6bb3-42c6-b03e-9f975a5f6d14",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -551,7 +558,13 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -600,10 +613,16 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -690,7 +709,13 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -726,7 +751,13 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -774,7 +805,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Want")
+                    b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
 
                     b.HasKey("ApplicationUserId", "CategoryId");

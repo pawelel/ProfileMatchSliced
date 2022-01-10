@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using ProfileMatch.Models.Models;
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 
@@ -13,7 +16,7 @@ namespace ProfileMatch.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        { 
+        {
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,9 +46,9 @@ namespace ProfileMatch.Data
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
 
-            builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned" });
-            builder.Entity<Department>().HasData(new Department { Id = 2, Name = "IT" });
-            builder.Entity<Department>().HasData(new Department { Id = 3, Name = "HR" });
+            builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned", NamePl = "nieprzypisany" });
+            builder.Entity<Department>().HasData(new Department { Id = 2, Name = "IT", NamePl = "IT" });
+            builder.Entity<Department>().HasData(new Department { Id = 3, Name = "HR", NamePl = "HR" });
             base.OnModelCreating(builder);
 
             //a hasher to hash the password before seeding the user to the db
@@ -88,59 +91,70 @@ namespace ProfileMatch.Data
                new OpenQuestion()
                {
                    Id = 1,
-                   Name = "Co jest dla mnie ważne w pracy?"
+                   Name = "Co jest dla mnie ważne w pracy?",
+                   NamePl = "What is important to me at work?"
                },
                     new OpenQuestion()
                     {
                         Id = 2,
-                        Name = "Co jest ważne dla mnie osobiście?"
+                        NamePl = "Co jest ważne dla mnie osobiście?",
+                        Name = "What is important to me personally?"
                     },
                     new OpenQuestion()
                     {
                         Id = 3,
-                        Name = "Moje hobby"
+                        NamePl = "Moje hobby",
+                        Name = "My hobby"
                     },
                     new OpenQuestion()
                     {
                         Id = 4,
-                        Name = "Moje inne umiejętności"
+                        NamePl = "Moje inne umiejętności",
+                        Name = "My Skills"
                     },
                     new OpenQuestion()
                     {
                         Id = 5,
-                        Name = "Moje zainteresowania"
+                        NamePl = "Moje zainteresowania",
+                        Name = "My Interests"
                     },
                     new OpenQuestion()
                     {
                         Id = 6,
-                        Name = "Jakie są moje cele?"
+                        NamePl = "Jakie są moje cele?",
+                        Name = "What are my goals?"
                     }
                 );
             builder.Entity<Category>().HasData(
                 new Category()
                 {
                     Id = 1,
-                    Name = "Programowanie"
+                    NamePl = "Programowanie",
+                    Name = "Sftware development"
                 },
                 new Category()
                 {
-                    Name = "Sieci komputerowe",
-                    Id = 2
+                    NamePl = "Sieci komputerowe",
+                    Id = 2,
+                    Name = "Computer networks"
                 },
                 new Category()
                 {
-                    Name = "Obsługa komputera",
-                    Id = 3
+                    NamePl = "Obsługa komputera",
+                    Id = 3,
+                    Name = "Computer skills"
                 },
                 new Category()
                 {
-                    Name = "Handel",
-                    Id = 4
+                    NamePl = "Handel",
+                    Id = 4,
+                    Name = "Sales"
                 },
                  new Category()
                  {
-                     Name = "Lingwistyka",
-                     Id = 5
+                     NamePl = "Lingwistyka",
+                     Id = 5,
+                     Name = "Languages"
                  }
 
                 );
@@ -149,68 +163,85 @@ namespace ProfileMatch.Data
                 {
                     Id = 1,
                     Name = "C#",
+                    NamePl = "C#",
                     CategoryId = 1,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość programowania w C#?"
+                    DescriptionPl = "Jaka jest Twoja znajomość programowania w C#?",
+                    Description = "How good are you in C# development?"
 
                 },
                 new ClosedQuestion()
                 {
                     Id = 2,
                     Name = "C++",
+                    NamePl = "C++",
                     CategoryId = 1,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość programowania w C++?"
+                    DescriptionPl = "Jaka jest Twoja znajomość programowania w C++?",
+                    Description = "How good are you in C++ development?"
 
                 },
                 new ClosedQuestion()
                 {
                     Id = 3,
                     Name = "Python",
+                    NamePl = "Python",
                     CategoryId = 1,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość programowania w Pythonie?"
+                    DescriptionPl = "Jaka jest Twoja znajomość programowania w Pythonie?",
+                    Description = "How good are you in Python development?"
 
                 },
                 new ClosedQuestion()
                 {
                     Id = 4,
-                    Name = "Konfiguracja routera",
+                    NamePl = "Konfiguracja routera",
+                    Name = "Router configuration",
                     CategoryId = 2,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość sieci komputerowych?"
+                    DescriptionPl = "Jaka jest Twoja znajomość sieci komputerowych?",
+                    Description = "How good are you in CComputer Networks?"
                 },
                 new ClosedQuestion()
                 {
-                Id = 5,
-                    Name = "Usługa Active Directory",
+                    Id = 5,
+                    NamePl = "Usługa Active Directory",
+                    Name = "Active Directory",
                     CategoryId = 2,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość usługi Active Directory?"
+                    DescriptionPl = "Jaka jest Twoja znajomość usługi Active Directory?",
+                    Description = "How good are you in Active Directory?"
                 },
                 new ClosedQuestion()
                 {
                     Id = 6,
+                    NamePl = "Sprzęt komputerowy",
                     Name = "Hardware",
                     CategoryId = 3,
                     IsActive = true,
-                    Description = "Jaka jest Twoja znajomość Hardware komputera?"
+                    DescriptionPl = "Jaka jest Twoja znajomość Hardware komputera?",
+                    Description = "What is Your Computer Hardware Knowledge?"
                 },
                 new ClosedQuestion()
                 {
                     Id = 7,
-                    Name = "Instalacja systemu Windows",
+                    NamePl = "Instalacja systemu Windows",
+                    Name = "Windows installation",
                     CategoryId = 3,
                     IsActive = false,
-                    Description = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?"
+                    DescriptionPl = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?",
+                    Description = "How well you know MS Windows installation?"
+
                 },
                 new ClosedQuestion()
                 {
                     Id = 8,
-                    Name = "Obsługa programu magazynowego",
+                    NamePl = "Obsługa programu magazynowego",
+                    Name = "Handling of the warehouse software",
                     CategoryId = 4,
                     IsActive = false,
-                    Description = "Jaka jest Twoja znajomość obsługi programów magazynowych?"
+                    DescriptionPl = "Jaka jest Twoja znajomość obsługi programów magazynowych?",
+                    Description = "How good you are in Warehouse Management Software?"
                 }
                 );
             builder.Entity<AnswerOption>().HasData(
@@ -219,21 +250,24 @@ namespace ProfileMatch.Data
                     Id = 1,
                     ClosedQuestionId = 1,
                     Level = 1,
-                    Description = "Nie znasz podstaw tego języka programowania"
+                    DescriptionPl = "Nie znasz podstaw tego języka programowania",
+                    Description = "You have no idea about this language"
                 },
                 new AnswerOption()
                 {
                     Id = 2,
                     ClosedQuestionId = 1,
                     Level = 2,
-                    Description = "Znasz podstawowe rzeczy związane z programowaniem w C#"
+                    DescriptionPl = "Znasz podstawowe pojęcia związane z programowaniem w C#",
+                    Description = "You know the basic concepts of C# programming"
                 },
                 new AnswerOption()
                 {
                     Id = 3,
                     ClosedQuestionId = 1,
                     Level = 3,
-                    Description = "Potrafisz pisać proste kody w języku"
+                    DescriptionPl = "Potrafisz pisać proste kody w języku",
+                    Description = "You can write simple C# codes"
 
                 },
                  new AnswerOption()
@@ -241,7 +275,8 @@ namespace ProfileMatch.Data
                      Id = 4,
                      ClosedQuestionId = 1,
                      Level = 4,
-                     Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+                     DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
+                     Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
 
                  },
                   new AnswerOption()
@@ -249,7 +284,8 @@ namespace ProfileMatch.Data
                       Id = 5,
                       ClosedQuestionId = 1,
                       Level = 5,
-                      Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+                      DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
+                      Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
 
                   },
                 new AnswerOption()
@@ -257,28 +293,33 @@ namespace ProfileMatch.Data
                     Id = 6,
                     ClosedQuestionId = 2,
                     Level = 1,
-                    Description = "Nie znasz podstaw tego języka programowania"
+                    DescriptionPl = "Nie znasz podstaw tego języka programowania",
+                    Description = "You have no idea about this language"
+
                 },
                  new AnswerOption()
                  {
                      Id = 7,
                      ClosedQuestionId = 2,
                      Level = 2,
-                     Description = "Znasz podstawowe rzeczy związane z programowaniem w C++"
+                     DescriptionPl = "Znasz podstawowe rzeczy związane z programowaniem w C++",
+                     Description = "You know the basic concepts of C++ programming"
                  },
                 new AnswerOption()
                 {
                     Id = 8,
                     ClosedQuestionId = 2,
                     Level = 3,
-                    Description = "Potrafisz pisać proste kody w języku"
+                    DescriptionPl = "Potrafisz pisać proste kody w języku",
+                    Description = "You can write simple C++ codes"
                 },
                 new AnswerOption()
                 {
                     Id = 9,
                     ClosedQuestionId = 2,
                     Level = 4,
-                    Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+                    DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
+                    Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
 
                 },
                  new AnswerOption()
@@ -286,7 +327,8 @@ namespace ProfileMatch.Data
                      Id = 10,
                      ClosedQuestionId = 2,
                      Level = 5,
-                     Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+                     DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
+                     Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
 
                  },
                  new AnswerOption()
@@ -294,28 +336,33 @@ namespace ProfileMatch.Data
                      Id = 11,
                      ClosedQuestionId = 3,
                      Level = 1,
-                     Description = "Nie znasz podstaw tego języka programowania"
+                     DescriptionPl = "Nie znasz podstaw tego języka programowania",
+                     Description = "You have no idea about this language"
+
                  },
                  new AnswerOption()
                  {
                      Id = 12,
                      ClosedQuestionId = 3,
                      Level = 2,
-                     Description = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie"
+                     DescriptionPl = "Znasz podstawowe rzeczy związane z programowaniem w Pythonie",
+                     Description = "You know the basic concepts of Python programming"
                  },
                 new AnswerOption()
                 {
                     Id = 13,
                     ClosedQuestionId = 3,
                     Level = 3,
-                    Description = "Potrafisz pisać proste kody w języku"
+                    DescriptionPl = "Potrafisz pisać proste kody w języku",
+                    Description = "You can write simple Python codes"
                 },
                 new AnswerOption()
                 {
                     Id = 14,
                     ClosedQuestionId = 3,
                     Level = 4,
-                    Description = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)"
+                    DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
+                    Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
 
                 },
                  new AnswerOption()
@@ -323,7 +370,8 @@ namespace ProfileMatch.Data
                      Id = 15,
                      ClosedQuestionId = 3,
                      Level = 5,
-                     Description = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw"
+                     DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
+                     Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
 
                  },
                  new AnswerOption()
@@ -331,7 +379,8 @@ namespace ProfileMatch.Data
                      Id = 16,
                      ClosedQuestionId = 4,
                      Level = 1,
-                     Description = "Znasz podstawowe informacje na temat routera"
+                     DescriptionPl = "Znasz podstawowe informacje na temat routera",
+                     Description = "You know the basic information about the router"
 
                  },
                  new AnswerOption()
@@ -339,7 +388,8 @@ namespace ProfileMatch.Data
                      Id = 17,
                      ClosedQuestionId = 4,
                      Level = 2,
-                     Description = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie"
+                     DescriptionPl = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
+                     Description = "You can login to the router and you can freely navigate the interface"
 
                  },
                  new AnswerOption()
@@ -347,7 +397,8 @@ namespace ProfileMatch.Data
                      Id = 18,
                      ClosedQuestionId = 4,
                      Level = 3,
-                     Description = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze"
+                     DescriptionPl = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
+                     Description = "You can configure the basic network settings of the router"
 
                  },
                  new AnswerOption()
@@ -355,7 +406,8 @@ namespace ProfileMatch.Data
                      Id = 19,
                      ClosedQuestionId = 4,
                      Level = 4,
-                     Description = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci"
+                     DescriptionPl = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
+                     Description = "You can configure the router for many devices and take care of security in the network"
 
                  },
                  new AnswerOption()
@@ -363,7 +415,8 @@ namespace ProfileMatch.Data
                      Id = 20,
                      ClosedQuestionId = 4,
                      Level = 5,
-                     Description = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym"
+                     DescriptionPl = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
+                     Description = "Can you configure router in linux system in text mode"
 
                  },
                  new AnswerOption()
@@ -371,7 +424,8 @@ namespace ProfileMatch.Data
                      Id = 21,
                      ClosedQuestionId = 5,
                      Level = 1,
-                     Description = "Nie konfigurowałeś żadnej usługi Active Directory"
+                     DescriptionPl = "Nie konfigurowałeś żadnej usługi Active Directory",
+                     Description = "You have not configured any Active Directory service"
 
                  },
                  new AnswerOption()
@@ -379,15 +433,16 @@ namespace ProfileMatch.Data
                      Id = 22,
                      ClosedQuestionId = 5,
                      Level = 2,
-                     Description = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś"
-
+                     DescriptionPl = "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś",
+                     Description = "Youhave installed Active Directory but did not configure it"
                  },
                  new AnswerOption()
                  {
                      Id = 23,
                      ClosedQuestionId = 5,
                      Level = 3,
-                     Description = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje"
+                     DescriptionPl = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfigurację",
+                     Description = "You can add basic services to the domain and make simple configuration"
 
                  },
                  new AnswerOption()
@@ -395,7 +450,8 @@ namespace ProfileMatch.Data
                      Id = 24,
                      ClosedQuestionId = 5,
                      Level = 4,
-                     Description = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup"
+                     DescriptionPl = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
+                     Description = "It's easy for you to surf the domain network settings, you can easily deal with creating domains and adding user or group accounts"
 
                  },
                  new AnswerOption()
@@ -403,7 +459,8 @@ namespace ProfileMatch.Data
                      Id = 25,
                      ClosedQuestionId = 5,
                      Level = 5,
-                     Description = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów"
+                     DescriptionPl = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
+                     Description = "AD service is your bread and butter and it doesn't cause you any problems"
 
                  },
                  new AnswerOption()
@@ -411,7 +468,8 @@ namespace ProfileMatch.Data
                      Id = 26,
                      ClosedQuestionId = 6,
                      Level = 1,
-                     Description = "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa"
+                     DescriptionPl = "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa",
+                     Description = "You have never disassembled your desktop or laptop computer"
 
                  },
                   new AnswerOption()
@@ -419,7 +477,9 @@ namespace ProfileMatch.Data
                       Id = 27,
                       ClosedQuestionId = 6,
                       Level = 2,
-                      Description = "Znasz podstawowe elementy składowe komputera"
+                      DescriptionPl = "Znasz podstawowe elementy składowe komputera",
+
+                      Description = "You know the basic components of a computer"
 
                   },
                    new AnswerOption()
@@ -427,7 +487,8 @@ namespace ProfileMatch.Data
                        Id = 28,
                        ClosedQuestionId = 6,
                        Level = 3,
-                       Description = "Potrafisz zlokalizować i nazwać dany komponent komputera"
+                       DescriptionPl = "Potrafisz zlokalizować i nazwać dany komponent komputera",
+                       Description = "You can locate and name a given computer component"
 
                    },
                     new AnswerOption()
@@ -435,15 +496,16 @@ namespace ProfileMatch.Data
                         Id = 29,
                         ClosedQuestionId = 6,
                         Level = 4,
-                        Description = "Radzisz sobie z montażem podzespołów komputerowych"
-
+                        DescriptionPl = "Radzisz sobie z montażem podzespołów komputerowych",
+                        Description = "You deal with the assembly of computer components"
                     },
                      new AnswerOption()
                      {
                          Id = 30,
                          ClosedQuestionId = 6,
                          Level = 5,
-                         Description = "Bez problemu składasz od podstaw komputer i go uruchamiasz"
+                         DescriptionPl = "Bez problemu składasz od podstaw komputer i go uruchamiasz",
+                         Description = "You can easily assemble the computer from scratch and start it",
 
                      }
                 );

@@ -28,13 +28,13 @@ namespace ProfileMatch.Models.Models
         [Ignore]
         public Department Department { get; set; }
         public string PhotoPath { get; set; }
-        public string Bio { get; set; }
         public bool IsActive { get; set; }
         [Ignore]
         public List<UserCategory> UserNeedCategories { get; set; }
         [Ignore]
         public List<UserClosedAnswer> UserClosedAnswers { get; set; }
         public string JobTitle { get; set; }
+        public string JobTitlePl { get; set; }
         [Ignore]
         public virtual ICollection<IdentityUserRole<string>> UserRoles { get; } = new List<IdentityUserRole<string>>();
     }

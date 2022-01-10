@@ -525,8 +525,8 @@
   <data name="Question 5" xml:space="preserve">
     <value>Question 5</value>
   </data>
-  <data name="Choose the question you want to answer" xml:space="preserve">
-    <value>Choose the question you want to answer</value>
+  <data name="Choose the question you IsSelected to answer" xml:space="preserve">
+    <value>Choose the question you IsSelected to answer</value>
   </data>
   <data name="Max 200 characters" xml:space="preserve">
     <value>Max 200 characters</value>
@@ -534,8 +534,8 @@
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
-  <data name="Welcome to the employee portal, select the tab you want to enter" xml:space="preserve">
-    <value>Welcome to the employee portal, select the tab you want to enter</value>
+  <data name="Welcome to the employee portal, select the tab you IsSelected to enter" xml:space="preserve">
+    <value>Welcome to the employee portal, select the tab you IsSelected to enter</value>
   </data>
   <data name="Answer added" xml:space="preserve">
     <value>Answer added</value>
@@ -738,8 +738,8 @@
   <data name="Display the question" xml:space="preserve">
     <value>Display the question</value>
   </data>
-  <data name="I want to develop" xml:space="preserve">
-    <value>I want to develop</value>
+  <data name="I IsSelected to develop" xml:space="preserve">
+    <value>I IsSelected to develop</value>
   </data>
   <data name="User Category" xml:space="preserve">
     <value>User Category</value>

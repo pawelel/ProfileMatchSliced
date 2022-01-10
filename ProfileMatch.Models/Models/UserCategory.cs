@@ -4,7 +4,7 @@ namespace ProfileMatch.Models.Models
 {
     public class UserCategory
     {
-        public bool Want { get; set; }
+        public bool IsSelected { get; set; }
         public string ApplicationUserId { get; set; }
         public int CategoryId { get; set; }
         [Ignore]

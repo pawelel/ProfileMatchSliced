@@ -79,7 +79,7 @@ namespace ProfileMatch.Components.Manager
                                       ClosedQuestionId = q.Id,
                                       UserId = u.Id,
                                       QuestionName = q.Name,
-                                      IsUserCategory = uc.Want? 1:0
+                                      IsUserCategory = uc.IsSelected? 1:0
                                   }).ToList();
 
             loading = false;

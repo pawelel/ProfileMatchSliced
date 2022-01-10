@@ -12,6 +12,7 @@ namespace ProfileMatch.Models.Models
         [Ignore]
         public ClosedQuestion ClosedQuestion { get; set; }
         public string Description { get; set; }
+        public string DescriptionPl { get; set; }
         [Ignore]
         public List<UserClosedAnswer> UserClosedAnswers { get; set; } = new();
     }

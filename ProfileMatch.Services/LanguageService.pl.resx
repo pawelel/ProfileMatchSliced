@@ -525,7 +525,7 @@
   <data name="Question 5" xml:space="preserve">
     <value>Pytanie 5</value>
   </data>
-  <data name="Choose the question you want to answer" xml:space="preserve">
+  <data name="Choose the question you IsSelected to answer" xml:space="preserve">
     <value>Wybierz pytanie, na które chcesz odpowiedzieć</value>
   </data>
   <data name="Max 200 characters" xml:space="preserve">
@@ -534,7 +534,7 @@
   <data name="Send" xml:space="preserve">
     <value>Wyślij</value>
   </data>
-  <data name="Welcome to the employee portal, select the tab you want to enter" xml:space="preserve">
+  <data name="Welcome to the employee portal, select the tab you IsSelected to enter" xml:space="preserve">
     <value>Witamy w portalu pracowniczym, wybierz zakładkę, w którą chcesz wejść</value>
   </data>
   <data name="Answer added" xml:space="preserve">
@@ -738,7 +738,7 @@
   <data name="Display the question" xml:space="preserve">
     <value>Wyświetl pytanie</value>
   </data>
-  <data name="I want to develop" xml:space="preserve">
+  <data name="I IsSelected to develop" xml:space="preserve">
     <value>Chcę rozwijać</value>
   </data>
   <data name="User Category" xml:space="preserve">

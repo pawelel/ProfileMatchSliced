@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Addedlanguage : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,9 @@ namespace ProfileMatch.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NamePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,7 +46,9 @@ namespace ProfileMatch.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NamePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,7 +62,9 @@ namespace ProfileMatch.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NamePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,8 +100,10 @@ namespace ProfileMatch.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NamePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,9 +127,9 @@ namespace ProfileMatch.Data.Migrations
                     Gender = table.Column<int>(type: "int", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobTitlePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -156,7 +164,8 @@ namespace ProfileMatch.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClosedQuestionId = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,8 +203,8 @@ namespace ProfileMatch.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -239,8 +248,8 @@ namespace ProfileMatch.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -260,7 +269,7 @@ namespace ProfileMatch.Data.Migrations
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    Want = table.Column<bool>(type: "bit", nullable: false)
+                    IsSelected = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,94 +358,94 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, "Programowanie" },
-                    { 2, null, "Sieci komputerowe" },
-                    { 3, null, "Obsługa komputera" },
-                    { 4, null, "Handel" },
-                    { 5, null, "Lingwistyka" }
+                    { 1, null, null, "Programowanie", null },
+                    { 2, null, null, "Sieci komputerowe", null },
+                    { 3, null, null, "Obsługa komputera", null },
+                    { 4, null, null, "Handel", null },
+                    { 5, null, null, "Lingwistyka", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, "unassigned" },
-                    { 2, null, "IT" },
-                    { 3, null, "HR" }
+                    { 1, null, null, "unassigned", null },
+                    { 2, null, null, "IT", null },
+                    { 3, null, null, "HR", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "OpenQuestions",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, "Co jest dla mnie ważne w pracy?" },
-                    { 2, null, "Co jest ważne dla mnie osobiście?" },
-                    { 3, null, "Moje hobby" },
-                    { 4, null, "Moje inne umiejętności" },
-                    { 5, null, "Moje zainteresowania" },
-                    { 6, null, "Jakie są moje cele?" }
+                    { 1, null, null, "Co jest dla mnie ważne w pracy?", null },
+                    { 2, null, null, "Co jest ważne dla mnie osobiście?", null },
+                    { 3, null, null, "Moje hobby", null },
+                    { 4, null, null, "Moje inne umiejętności", null },
+                    { 5, null, null, "Moje zainteresowania", null },
+                    { 6, null, null, "Jakie są moje cele?", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, null, "93fb3452-200f-4bfb-8027-695c5c8825d9", new DateTime(2022, 1, 8, 22, 0, 16, 238, DateTimeKind.Local).AddTicks(891), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEHzPBAixVsKFGVUqMLjO3bhrd8TwdgvFcOCh2+MJznljmtkeJnZfW0VOQDdrLEsjaw==", null, false, null, "04612579-4ec3-455c-a348-9c7eb7b4c8a8", false, "admin@admin.com" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "JobTitlePl", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "32022a5f-2c5f-48af-b481-d56ea13b3e84", new DateTime(2022, 1, 10, 14, 0, 52, 803, DateTimeKind.Local).AddTicks(7146), 1, "admin@admin.com", true, "Klark", null, false, null, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFovlfV3/F9v/Fgvsvs/PVZ+HBSBJjh/1KkxmoD1XsHbCnPgtGkhQ//PsrmezgJM/w==", null, false, null, "b9cd9603-6bb3-42c6-b03e-9f975a5f6d14", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
-                columns: new[] { "Id", "CategoryId", "Description", "IsActive", "Name" },
+                columns: new[] { "Id", "CategoryId", "Description", "DescriptionPl", "IsActive", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, 1, "Jaka jest Twoja znajomość programowania w C#?", true, "C#" },
-                    { 2, 1, "Jaka jest Twoja znajomość programowania w C++?", true, "C++" },
-                    { 3, 1, "Jaka jest Twoja znajomość programowania w Pythonie?", true, "Python" },
-                    { 4, 2, "Jaka jest Twoja znajomość sieci komputerowych?", true, "Konfiguracja routera" },
-                    { 5, 2, "Jaka jest Twoja znajomość usługi Active Directory?", true, "Usługa Active Directory" },
-                    { 6, 3, "Jaka jest Twoja znajomość Hardware komputera?", true, "Hardware" },
-                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", false, "Instalacja systemu Windows" },
-                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", false, "Obsługa programu magazynowego" }
+                    { 1, 1, "Jaka jest Twoja znajomość programowania w C#?", null, true, "C#", null },
+                    { 2, 1, "Jaka jest Twoja znajomość programowania w C++?", null, true, "C++", null },
+                    { 3, 1, "Jaka jest Twoja znajomość programowania w Pythonie?", null, true, "Python", null },
+                    { 4, 2, "Jaka jest Twoja znajomość sieci komputerowych?", null, true, "Konfiguracja routera", null },
+                    { 5, 2, "Jaka jest Twoja znajomość usługi Active Directory?", null, true, "Usługa Active Directory", null },
+                    { 6, 3, "Jaka jest Twoja znajomość Hardware komputera?", null, true, "Hardware", null },
+                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", null, false, "Instalacja systemu Windows", null },
+                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", null, false, "Obsługa programu magazynowego", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "AnswerOptions",
-                columns: new[] { "Id", "ClosedQuestionId", "Description", "Level" },
+                columns: new[] { "Id", "ClosedQuestionId", "Description", "DescriptionPl", "Level" },
                 values: new object[,]
                 {
-                    { 1, 1, "Nie znasz podstaw tego języka programowania", 1 },
-                    { 2, 1, "Znasz podstawowe rzeczy związane z programowaniem w C#", 2 },
-                    { 3, 1, "Potrafisz pisać proste kody w języku", 3 },
-                    { 4, 1, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
-                    { 5, 1, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
-                    { 6, 2, "Nie znasz podstaw tego języka programowania", 1 },
-                    { 7, 2, "Znasz podstawowe rzeczy związane z programowaniem w C++", 2 },
-                    { 8, 2, "Potrafisz pisać proste kody w języku", 3 },
-                    { 9, 2, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
-                    { 10, 2, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
-                    { 11, 3, "Nie znasz podstaw tego języka programowania", 1 },
-                    { 12, 3, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", 2 },
-                    { 13, 3, "Potrafisz pisać proste kody w języku", 3 },
-                    { 14, 3, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
-                    { 15, 3, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
-                    { 16, 4, "Znasz podstawowe informacje na temat routera", 1 },
-                    { 17, 4, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", 2 },
-                    { 18, 4, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", 3 },
-                    { 19, 4, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", 4 },
-                    { 20, 4, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", 5 },
-                    { 21, 5, "Nie konfigurowałeś żadnej usługi Active Directory", 1 },
-                    { 22, 5, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2 },
-                    { 23, 5, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", 3 },
-                    { 24, 5, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4 },
-                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5 },
-                    { 26, 6, "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa", 1 },
-                    { 27, 6, "Znasz podstawowe elementy składowe komputera", 2 },
-                    { 28, 6, "Potrafisz zlokalizować i nazwać dany komponent komputera", 3 },
-                    { 29, 6, "Radzisz sobie z montażem podzespołów komputerowych", 4 },
-                    { 30, 6, "Bez problemu składasz od podstaw komputer i go uruchamiasz", 5 }
+                    { 1, 1, "Nie znasz podstaw tego języka programowania", null, 1 },
+                    { 2, 1, "Znasz podstawowe rzeczy związane z programowaniem w C#", null, 2 },
+                    { 3, 1, "Potrafisz pisać proste kody w języku", null, 3 },
+                    { 4, 1, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
+                    { 5, 1, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
+                    { 6, 2, "Nie znasz podstaw tego języka programowania", null, 1 },
+                    { 7, 2, "Znasz podstawowe rzeczy związane z programowaniem w C++", null, 2 },
+                    { 8, 2, "Potrafisz pisać proste kody w języku", null, 3 },
+                    { 9, 2, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
+                    { 10, 2, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
+                    { 11, 3, "Nie znasz podstaw tego języka programowania", null, 1 },
+                    { 12, 3, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", null, 2 },
+                    { 13, 3, "Potrafisz pisać proste kody w języku", null, 3 },
+                    { 14, 3, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
+                    { 15, 3, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
+                    { 16, 4, "Znasz podstawowe informacje na temat routera", null, 1 },
+                    { 17, 4, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", null, 2 },
+                    { 18, 4, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", null, 3 },
+                    { 19, 4, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", null, 4 },
+                    { 20, 4, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", null, 5 },
+                    { 21, 5, "Nie konfigurowałeś żadnej usługi Active Directory", null, 1 },
+                    { 22, 5, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", null, 2 },
+                    { 23, 5, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", null, 3 },
+                    { 24, 5, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", null, 4 },
+                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", null, 5 },
+                    { 26, 6, "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa", null, 1 },
+                    { 27, 6, "Znasz podstawowe elementy składowe komputera", null, 2 },
+                    { 28, 6, "Potrafisz zlokalizować i nazwać dany komponent komputera", null, 3 },
+                    { 29, 6, "Radzisz sobie z montażem podzespołów komputerowych", null, 4 },
+                    { 30, 6, "Bez problemu składasz od podstaw komputer i go uruchamiasz", null, 5 }
                 });
 
             migrationBuilder.InsertData(

@@ -35,7 +35,7 @@ namespace ProfileMatch.Components.User
 
         private void DelCert()
         {
-            DialogService.Show<UserDelCertDialog>("Are you sure you want to delete the certificate?");
+            DialogService.Show<UserDelCertDialog>("Are you sure you IsSelected to delete the certificate?");
         }
 
         [Inject]
