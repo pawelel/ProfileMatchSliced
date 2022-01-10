@@ -5,45 +5,47 @@
 else
 {
     <MudGrid Spacing="0" Class="d-flex justify-space-between">
-    <MudItem xs="12" md="5">
-        <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
-    </MudItem>
-    <MudItem xs="12" md="5">
-        <MudTextField Class="d-flex justify-end mt-0"
+        <MudItem xs="12" md="5">
+            <MudText Typo="Typo.h6">@L["Open Questions"]</MudText>
+        </MudItem>
+        <MudItem xs="12" md="5">
+            <MudTextField Class="d-flex justify-end mt-0"
                       @bind-Value="searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"
                       Immediate="true">
-                      </MudTextField>
-    </MudItem>
-</MudGrid>
-<MudTable Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="@FilterFunc" >
-    <ColGroup>
-        <col />
-        <col style="width: 60%;" />
-        <col />
-        <col />
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>@L["Name"]</MudTh>
-        <MudTh>@L["Description"]</MudTh>
-        <MudTh>@L["Answer"]</MudTh>
-        <MudTh>@L["Actions"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel=@L["Name"]>@context.CategoryName</MudTd>
-        <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
-        <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
-        <MudTd DataLabel=@L["Edit"]>
-            <MudButton Size="Size.Small" Variant="Variant.Outlined" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
-        </MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString=@L["Rows per page"] />
-    </PagerContent>
-</MudTable>
+            </MudTextField>
+        </MudItem>
+    </MudGrid>
+
+
+    <MudTable Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="@FilterFunc">
+        <ColGroup>
+            <col />
+            <col style="width: 60%;" />
+            <col />
+            <col />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh>@L["Name"]</MudTh>
+            <MudTh>@L["Description"]</MudTh>
+            <MudTh>@L["Answer"]</MudTh>
+            <MudTh>@L["Actions"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel=@L["Name"]>@context.CategoryName</MudTd>
+            <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
+            <MudTd DataLabel=@L["Level"]>@context.Level</MudTd>
+            <MudTd DataLabel=@L["Edit"]>
+                <MudButton Size="Size.Small" Variant="Variant.Outlined" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString=@L["Rows per page"] />
+        </PagerContent>
+    </MudTable>
 }
 <style>
     .mud-tabs-panels {

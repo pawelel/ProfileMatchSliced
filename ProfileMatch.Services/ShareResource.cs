@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,5 +25,10 @@ namespace ProfileMatch.Services
         {
             return _localizer[key];
         }
+        public static bool IsEn()
+        {
+            return CultureInfo.CurrentCulture.ToString().Contains("en") || string.IsNullOrEmpty(CultureInfo.CurrentCulture.ToString());
+        }
     }
+
 }

@@ -15,6 +15,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,9 +41,9 @@ namespace ProfileMatch.Components.User
         {
             return await UserNoteRepository.Get(u => u.ApplicationUserId == UserId);
         }
-
+        
         protected override async Task OnInitializedAsync()
-        {
+{
             var authState = await AuthenticationStateTask;
             if (authState.User.Identity.IsAuthenticated)
             {
@@ -97,16 +98,10 @@ namespace ProfileMatch.Components.User
             }
         }
 
-        
-        
-        
-        
-        private string searchString1 = "";
         private string searchString = "";
         private UserAnswerVM selectedItem1 = null;
         private readonly List<UserAnswerVM> UserNotesVM = new();
 
-        private bool FilterFunc1(UserAnswerVM UserNoteVM) => FilterFunc(UserNoteVM, searchString1);
         private Func<UserAnswerVM, bool> QuickFilter => question =>
         {
             if (string.IsNullOrWhiteSpace(searchString))
@@ -119,19 +114,6 @@ namespace ProfileMatch.Components.User
                 return true;
             return false;
         };
-        private static bool FilterFunc(UserAnswerVM UserNoteVM, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (UserNoteVM.OpenQuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (UserNoteVM.OpenQuestionDescription != null && UserNoteVM.OpenQuestionDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (UserNoteVM.UserDescription != null && UserNoteVM.UserDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
-        }
-
         private async Task UserNoteUpdate(UserAnswerVM UserNoteVM)
         {
             var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
