@@ -17,9 +17,12 @@
             {
                 @foreach (var uc in publicCategoriesVM)
                 {
+                    @if(ShareResource.IsEn()){
                     <MudChip Text="@uc.CategoryName"></MudChip>
+                    }else{
+                           <MudChip Text="@uc.CategoryNamePl"></MudChip>
+                    }
                 }
-
             }
             @if (edit)
             {
@@ -29,7 +32,13 @@
                         <MudTh>@L["I want to develop"]</MudTh>
                     </HeaderContent>
                     <RowTemplate>
-                        <MudTd DataLabel="@L["Category"]">@context.CategoryName</MudTd>
+                         @if(ShareResource.IsEn()){
+                            <MudTd DataLabel="@L["Category"]">@context.CategoryName</MudTd>
+                        }
+                        else
+                        {
+                           <MudTd DataLabel="@L["Category"]">@context.CategoryNamePl</MudTd> 
+                        }
                         <MudTd DataLabel="@L["I want to develop"]"><MudCheckBox @onclick=@(()=>SetCategoryAsync(context)) @bind-Checked="@context.IsSelected" /></MudTd>
                     </RowTemplate>
                 </MudTable>

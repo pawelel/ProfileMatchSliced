@@ -9,6 +9,7 @@ using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
@@ -30,26 +31,11 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
 
-        public string SearchString { get; set; }
+        string searchString;
 
 
         [CascadingParameter] private Task<AuthenticationState> AuthSP { get; set; }
-        private bool FilterFunc1(ApplicationUser person) => FilterFunc(person, SearchString);
-
-        private static bool FilterFunc(ApplicationUser person, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (person.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (person.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (person.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if ($"{person.DateOfBirth} {person.IsActive}".Contains(searchString))
-                return true;
-            return false;
-        }
+       
 
         public List<ApplicationUser> Users { get; set; }
 
@@ -74,5 +60,31 @@ namespace ProfileMatch.Components.Admin
         {
             NavigationManager.NavigateTo($"user/{applicationUser.Id}");
         }
+
+        private Func<ApplicationUser, bool> QuickFilter => person =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+          
+            if (person.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (person.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (ShareResource.IsEn())
+            {
+                if (person.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            else
+            {
+                if (person.Department.NamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        };
+
+
+
+
     }
 }

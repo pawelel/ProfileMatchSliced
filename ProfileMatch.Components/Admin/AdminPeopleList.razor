@@ -10,7 +10,7 @@ else
         </MudItem>
         <MudItem xs="12" md="5">
             <MudTextField Class="d-flex justify-end"
-                      @bind-Value="SearchString"
+                      @bind-Value="searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -18,37 +18,96 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudTable Items="@Users" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<ApplicationUser,bool>(FilterFunc1)" SortLabel=@L["Sort By"]>
+    <MudDataGrid Items="Users" T="ApplicationUser" Dense="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
         <ToolBarContent>
 
             <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Size="Size.Small" OnClick="@(()=> EditProfile(new ApplicationUser()))" Variant="Variant.Outlined">@L["New User"]</MudButton>
         </ToolBarContent>
-        <HeaderContent>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.Department.Name)" SortLabel=@L["Department"] T="ApplicationUser">@L["Department"]</MudTableSortLabel></MudTh>
-            <MudTh Style="text-align: center">@L["Photo"]</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.FirstName)" SortLabel=@L["First Name"] T="ApplicationUser">@L["First Name"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.LastName)" SortLabel=@L["Last Name"] T="ApplicationUser">@L["Last Name"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.DateOfBirth?.Date)" SortLabel=@L["Date Of Birth"] T="ApplicationUser">@L["Birth Date"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ApplicationUser, object>(x=>x.IsActive)" SortLabel=@L["Is Active"] T="ApplicationUser">@L["Is Active"]</MudTableSortLabel></MudTh>
-            <MudTh Style="text-align: center;">@L["Actions"]</MudTh>
-            <MudTh></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel=@L["Department"]>@(context.Department==null? @L["unassigned"] : @L[context.Department.Name])</MudTd>
-            <MudTd Style="text-align: center" DataLabel=@L["Photo"]><MudAvatar Image="@context.PhotoPath" Size="Size.Large" /></MudTd>
-            <MudTd DataLabel=@L["First Name"]>@context.FirstName</MudTd>
-            <MudTd DataLabel=@L["Last Name"]>@context.LastName</MudTd>
-            <MudTd DataLabel=@L["Date Of Birth"]>@context.DateOfBirth?.ToShortDateString()</MudTd>
-            <MudTd DataLabel=@L["Is Active"]><MudCheckBox Disabled="true" @bind-Checked="@context.IsActive"></MudCheckBox></MudTd>
-            <MudTd Style="text-align: center;">
-            <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
+<Columns>
+            @if (ShareResource.IsEn())
+            {
+                <Column T="ApplicationUser" Title="Department">
+                    <CellTemplate>
+                        @(context.Department==null? "unassigned" : context.Department.Name)
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Photo">
+                    <CellTemplate>
+                        <MudAvatar Image="@context.PhotoPath" Size="Size.Large" />
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="First Name">
+                    <CellTemplate>
+                        @context.FirstName
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Last Name">
+                    <CellTemplate>
+                        @context.LastName
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="date Of Birth">
+                    <CellTemplate>
+                       @context.DateOfBirth?.ToShortDateString()
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Is Active">
+                    <CellTemplate>
+                         @(context.IsActive?"Yes":"No")
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Actions">
+                    <CellTemplate>
+                         <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
                 <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>EditProfile(context))" Variant="Variant.Outlined">@L["Edit User"]</MudButton>
                 <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>ShowProfile(context))"  Variant="Variant.Outlined">@L["Show profile"]</MudButton>
             </MudButtonGroup>
-            </MudTd>
-        </RowTemplate>
+                    </CellTemplate>
+                </Column>
+            }
+            else{
+                                <Column T="ApplicationUser" Title="Dział">
+                    <CellTemplate>
+                         @(context.Department==null? "nieprzypisany" : context.Department.NamePl)
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Zdjęcie">
+                    <CellTemplate>
+                        <MudAvatar Image="@context.PhotoPath" Size="Size.Large" />
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Imię">
+                    <CellTemplate>
+                        @context.FirstName
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Nazwisko">
+                    <CellTemplate>
+                        @context.LastName
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Data urodzenia">
+                    <CellTemplate>
+                        @context.DateOfBirth?.ToShortDateString()
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Jest aktywny">
+                    <CellTemplate>
+                        @(context.IsActive?"Tak":"Nie")
+                    </CellTemplate>
+                </Column>
+                <Column T="ApplicationUser" Title="Działania">
+                    <CellTemplate>
+                         <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
+                <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>EditProfile(context))" Variant="Variant.Outlined">Edytuj użytkownika</MudButton>
+                <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>ShowProfile(context))"  Variant="Variant.Outlined">Pokaż profil</MudButton>
+            </MudButtonGroup>
+                    </CellTemplate>
+                </Column>
+            }
+        </Columns>
         <PagerContent>
-            <MudTablePager RowsPerPageString=@L["Next people"] />
+            <MudDataGridPager T="ApplicationUser" RowsPerPageString=@L["Next people"] />
         </PagerContent>
-    </MudTable>
+    </MudDataGrid>
 }
