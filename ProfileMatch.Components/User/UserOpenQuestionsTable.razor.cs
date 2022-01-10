@@ -30,16 +30,16 @@ namespace ProfileMatch.Components.User
         List<OpenQuestion> OpenQuestions = new();
         List<UserOpenAnswer> UserOpenAnswers = new();
         [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         string UserId;
-        private async Task<List<OpenQuestion>> GetNotesAsync()
+        private async Task<List<OpenQuestion>> GetOpenQuestions()
         {
             return await OpenQuestionRepository.Get();
         }
-        private async Task<List<UserOpenAnswer>> GetUserNotesAsync()
+        private async Task<List<UserOpenAnswer>> GetUserOpenAnswers()
         {
-            return await UserNoteRepository.Get(u => u.ApplicationUserId == UserId);
+            return await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == UserId);
         }
         
         protected override async Task OnInitializedAsync()
@@ -53,12 +53,12 @@ namespace ProfileMatch.Components.User
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
-            UserOpenAnswers = await GetUserNotesAsync();
-            OpenQuestions = await GetNotesAsync();
+            UserOpenAnswers = await GetUserOpenAnswers();
+            OpenQuestions = await GetOpenQuestions();
 
             foreach (var openQuestion in OpenQuestions)
             {
-                UserAnswerVM userNoteVM;
+                UserAnswerVM userAnswerVM;
                 UserOpenAnswer userNote;
                 try
                 {
@@ -72,35 +72,39 @@ namespace ProfileMatch.Components.User
 
                 if (userNote != null)
                 {
-                    userNoteVM = new UserAnswerVM
+                    userAnswerVM = new UserAnswerVM
                     {
                         UserId = UserId,
                         UserDescription = userNote.UserAnswer,
                         IsDisplayed = userNote.IsDisplayed,
                         AnswerId = openQuestion.Id,
                         OpenQuestionName = openQuestion.Name,
-                        OpenQuestionDescription = openQuestion.Description
+                        OpenQuestionNamePl = openQuestion.NamePl,
+                        OpenQuestionDescription = openQuestion.Description,
+                        OpenQuestionDescriptionPl = openQuestion.DescriptionPl
                     };
                 }
                 else
                 {
-                    userNoteVM = new UserAnswerVM
+                    userAnswerVM = new UserAnswerVM
                     {
                         UserId = UserId,
                         UserDescription = String.Empty,
                         IsDisplayed = false,
                         AnswerId = openQuestion.Id,
                         OpenQuestionName = openQuestion.Name,
-                        OpenQuestionDescription = openQuestion.Description
+                        OpenQuestionNamePl = openQuestion.NamePl,
+                        OpenQuestionDescription = openQuestion.Description,
+                        OpenQuestionDescriptionPl = openQuestion.DescriptionPl
                     };
                 }
-                UserNotesVM.Add(userNoteVM);
+                UserOpenAnswersVM.Add(userAnswerVM);
             }
         }
 
         private string searchString = "";
         private UserAnswerVM selectedItem1 = null;
-        private readonly List<UserAnswerVM> UserNotesVM = new();
+        private readonly List<UserAnswerVM> UserOpenAnswersVM = new();
 
         private Func<UserAnswerVM, bool> QuickFilter => question =>
         {
@@ -114,10 +118,12 @@ namespace ProfileMatch.Components.User
                 return true;
             return false;
         };
-        private async Task UserNoteUpdate(UserAnswerVM UserNoteVM)
+        private async Task UserNoteUpdate(UserAnswerVM userAnswerVM)
         {
-            var parameters = new DialogParameters { ["UserNoteVM"] = UserNoteVM };
-            var dialog = DialogService.Show<UserOpenQuestionDialog>("Edytuj pytanie", parameters);
+            var Title = ShareResource.IsEn()?userAnswerVM.OpenQuestionName:userAnswerVM.OpenQuestionNamePl;
+
+            var parameters = new DialogParameters { ["userAnswerVM"] = userAnswerVM };
+            var dialog = DialogService.Show<UserOpenQuestionDialog>(Title, parameters);
             await dialog.Result;
         }
 

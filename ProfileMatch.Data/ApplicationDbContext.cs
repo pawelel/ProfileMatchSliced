@@ -91,8 +91,8 @@ namespace ProfileMatch.Data
                new OpenQuestion()
                {
                    Id = 1,
-                   Name = "Co jest dla mnie ważne w pracy?",
-                   NamePl = "What is important to me at work?"
+                   NamePl = "Co jest dla mnie ważne w pracy?",
+                   Name = "What is important to me at work?"
                },
                     new OpenQuestion()
                     {
@@ -130,7 +130,7 @@ namespace ProfileMatch.Data
                 {
                     Id = 1,
                     NamePl = "Programowanie",
-                    Name = "Sftware development"
+                    Name = "Software development"
                 },
                 new Category()
                 {

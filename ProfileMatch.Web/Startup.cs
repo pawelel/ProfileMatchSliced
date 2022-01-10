@@ -74,7 +74,7 @@ namespace ProfileMatch
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<ShareResource>();
+            services.AddScoped<ShareResource>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();

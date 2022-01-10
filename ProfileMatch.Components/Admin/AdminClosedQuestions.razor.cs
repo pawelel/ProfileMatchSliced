@@ -20,7 +20,7 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminClosedQuestions : ComponentBase
     {
-        [Inject] ISnackbar Snackbar  { get; set; }
+        [Inject] ISnackbar Snackbar { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
@@ -38,11 +38,11 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-          
+
         }
         protected override void OnAfterRender(bool firstRender)
         {
-            
+
             base.OnAfterRender(firstRender);
         }
         private async Task LoadData()
@@ -55,13 +55,14 @@ namespace ProfileMatch.Components.Admin
         }
 
         private async Task CategoryUpdate(string category)
-        { var Cat = await CategoryRepository.GetOne(c=>c.Name == category);
+        {
+            var Cat = await CategoryRepository.GetOne(c => c.Name == category);
             if (Cat != null)
             {
                 var parameters = new DialogParameters { ["Cat"] = Cat };
                 var dialog = DialogService.Show<AdminCategoryDialog>(L["Edit Category"], parameters);
                 await dialog.Result;
-               await LoadData();
+                await LoadData();
             }
             else
             {
@@ -76,7 +77,7 @@ namespace ProfileMatch.Components.Admin
         }
         private async Task QuestionCreate(string category)
         {
-            var cat =   await CategoryRepository.GetOne(c=>c.Name==category);
+            var cat = await CategoryRepository.GetOne(c => c.Name == category);
             var parameters = new DialogParameters { ["CategoryId"] = cat.Id };
             var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Add Question"] + $": {category}", parameters);
             await dialog.Result;
@@ -110,9 +111,9 @@ namespace ProfileMatch.Components.Admin
             else
             {
                 return (from q in questions
-                              from c in Cats
-                              where q.Category.Name == c
-                              select q).ToList();
+                        from c in Cats
+                        where q.Category.Name == c
+                        select q).ToList();
             }
         }
 
@@ -121,6 +122,7 @@ namespace ProfileMatch.Components.Admin
             var parameters = new DialogParameters { ["Q"] = question };
             var dialog = DialogService.Show<AdminClosedQuestionDialog>(@L["Edit Question:"] + $" {@L[question.Name]}", parameters);
             await dialog.Result;
+            
         }
 
         private async Task QuestionDisplay(ClosedQuestion question)
@@ -131,7 +133,7 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
+
     }
 }

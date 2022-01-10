@@ -28,8 +28,8 @@ namespace ProfileMatch.Components.Dialogs
 
        
         [Inject] private ISnackbar Snackbar { get; set; }
-        UserOpenAnswer EditUserNote;
-        [Parameter] public UserAnswerVM UserNoteVM { get; set; }
+        UserOpenAnswer EditUserAnswer;
+        [Parameter] public UserAnswerVM UserAnswerVM { get; set; }
         string TempDescription;
         bool IsDisplayed;
         bool exists;
@@ -37,25 +37,25 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-            exists = await UserNoteRepository.ExistById(UserNoteVM.UserId, UserNoteVM.AnswerId);
+            exists = await UserOpenAnswerRepository.ExistById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
             if (exists)
             {
-                EditUserNote = await UserNoteRepository.GetById(UserNoteVM.UserId, UserNoteVM.AnswerId);
+                EditUserAnswer = await UserOpenAnswerRepository.GetById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
             }
             else
             {
-                EditUserNote = new()
+                EditUserAnswer = new()
                 {
-                    IsDisplayed = UserNoteVM.IsDisplayed,
-                    OpenQuestionId = UserNoteVM.AnswerId,
-                    ApplicationUserId = UserNoteVM.UserId
+                    IsDisplayed = UserAnswerVM.IsDisplayed,
+                    OpenQuestionId = UserAnswerVM.AnswerId,
+                    ApplicationUserId = UserAnswerVM.UserId
                 };
             }
-            TempDescription = EditUserNote.UserAnswer;
-            IsDisplayed = EditUserNote.IsDisplayed;
+            TempDescription = UserAnswerVM.OpenQuestionDescription;
+            IsDisplayed = EditUserAnswer.IsDisplayed;
         }
 
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserNoteRepository { get; set; }
+        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
 
         private MudForm Form;
 
@@ -70,8 +70,8 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                EditUserNote.IsDisplayed = IsDisplayed;
-                EditUserNote.UserAnswer = TempDescription;
+                EditUserAnswer.IsDisplayed = IsDisplayed;
+                EditUserAnswer.UserAnswer = TempDescription;
                 try
                 {
                     await Save();
@@ -80,9 +80,9 @@ namespace ProfileMatch.Components.Dialogs
                 {
                     Snackbar.Add(@L[$"There was an error: {ex.Message}"], Severity.Error);
                 }
-                UserNoteVM.IsDisplayed = IsDisplayed;
-                UserNoteVM.UserDescription = TempDescription;
-                MudDialog.Close(DialogResult.Ok(UserNoteVM));
+                UserAnswerVM.IsDisplayed = IsDisplayed;
+                UserAnswerVM.UserDescription = TempDescription;
+                MudDialog.Close(DialogResult.Ok(UserAnswerVM));
             }
         }
 
@@ -90,12 +90,12 @@ namespace ProfileMatch.Components.Dialogs
         {
             if (!exists)
             {
-                var result = await UserNoteRepository.Insert(EditUserNote);
+                var result = await UserOpenAnswerRepository.Insert(EditUserAnswer);
                 Snackbar.Add(@L["Answer added"], Severity.Success);
             }
             else
             {
-                var result = await UserNoteRepository.Update(EditUserNote);
+                var result = await UserOpenAnswerRepository.Update(EditUserAnswer);
                 Snackbar.Add(@L["Answer updated"], Severity.Success);
             }
         }

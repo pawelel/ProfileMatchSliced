@@ -21,12 +21,12 @@ namespace ProfileMatch.Components.User
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         [Parameter] public string UserID { get; set; }
         List<UserCategoryVM> UserCategoryVMs = new();
+        List<UserCategoryVM> publicCategoriesVM=new();
         [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryManager { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
         List<UserCategory> userCategories;
         List<Category> categories;
-        List<UserCategoryVM> publicCategoriesVM=new();
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
@@ -41,7 +41,9 @@ namespace ProfileMatch.Components.User
                                select new UserCategoryVM()
                                {
                                    CategoryName = c.Name,
+                                   CategoryNamePl = c.NamePl,
                                    CategoryDescription = c.Description,
+                                   CategoryDescriptionPl = c.DescriptionPl,
                                    CategoryId = uc.CategoryId,
                                    IsSelected = uc.IsSelected,
                                    UserId = CurrentUser.Id
@@ -55,7 +57,9 @@ namespace ProfileMatch.Components.User
                     ucVM = new()
                     {
                         CategoryName = cat.Name,
-                        CategoryDescription = cat.Description,
+                        CategoryNamePl = cat.NamePl,
+                        CategoryDescription = cat.DescriptionPl,
+                        CategoryDescriptionPl = cat.DescriptionPl,
                         CategoryId = cat.Id,
                         IsSelected = false,
                         UserId = CurrentUser.Id
@@ -84,9 +88,24 @@ namespace ProfileMatch.Components.User
             }
             if (category.IsSelected)
             {
-            Snackbar.Add(L["Category"] + $" {L[category.CategoryName]} {L["checked"]}", Severity.Success);
+                if (ShareResource.IsEn())
+                {
+                    Snackbar.Add(L["Category"] + $" {category.CategoryName} {L["checked[F]"]}", Severity.Success);
+                }if (!ShareResource.IsEn())
+                {
+                    Snackbar.Add(L["Category"] + $" {category.CategoryNamePl} {L["checked[F]"]}", Severity.Success);
+                }
             }
-            else { Snackbar.Add(L["Category"] + $" { category.CategoryName} { L["unchecked"]}", Severity.Success);    
+            else {
+                if (ShareResource.IsEn())
+                {
+
+                Snackbar.Add(L["Category"] + $" { category.CategoryName} { L["unchecked[F]"]}", Severity.Success);
+                }
+                if (!ShareResource.IsEn())
+                {
+                    Snackbar.Add(L["Category"] + $" { category.CategoryNamePl} { L["unchecked[F]"]}", Severity.Success);
+                }
             }
             await LoadData();
             return category.IsSelected;

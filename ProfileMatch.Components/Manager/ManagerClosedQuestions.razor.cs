@@ -72,13 +72,16 @@ namespace ProfileMatch.Components.Manager
                                   {
                                       CategoryId = c.Id,
                                       CategoryName = c.Name,
+                                      CategoryNamePl = c.NamePl,
                                       FirstName = u.FirstName,
                                       LastName = u.LastName,
                                       Description = q.Description,
+                                      DescriptionPl = q.DescriptionPl,
                                       Level = ao.Level,
                                       ClosedQuestionId = q.Id,
                                       UserId = u.Id,
                                       QuestionName = q.Name,
+                                      QuestionNamePl = q.NamePl,
                                       IsUserCategory = uc.IsSelected? 1:0
                                   }).ToList();
 

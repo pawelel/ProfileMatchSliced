@@ -12,6 +12,8 @@ namespace ProfileMatch.Models.ViewModels
         public bool IsSelected { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string CategoryNamePl { get; set; }
         public string CategoryDescription { get; set; }
+        public string CategoryDescriptionPl { get; set; }
     }
 }

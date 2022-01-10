@@ -10,15 +10,21 @@
                  Border="true"
                  ApplyEffectsToContainer="true"
                  DisableSliderAnimation="true"
+                 HideSlider="true"
                  PanelClass="pa-6 d-block">
             @foreach (var answerOption in Q.AnswerOptions)
-            {
+            {                    
                 <MudTabPanel Text="@answerOption.Level.ToString()">
-
-                    <MudItem Style="height:200px;">
-                        <MudText Typo="Typo.subtitle1">@L["Level"] @answerOption.Level.ToString()</MudText>
+                           <MudItem Style="height:200px;">
+                        <MudText Typo="Typo.subtitle1">@L["Level"]@answerOption.Level.ToString()</MudText>
+                        @if (ShareResource.IsEn())
+                {
                         <MudText Typo="Typo.subtitle2"
                                  @bind-Value="@answerOption.Description">@answerOption.Description</MudText>
+                }else{
+                    <MudText Typo="Typo.subtitle2"
+                                 @bind-Value="@answerOption.Description">@answerOption.DescriptionPl</MudText>
+                }
                                 @if (CanSelect(answerOption))
                                 {
                                     <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync(UserId, answerOption.Id, answerOption.ClosedQuestionId))" Size="Size.Small">@L["This is my Level"]</MudButton>

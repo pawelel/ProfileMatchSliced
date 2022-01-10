@@ -10,7 +10,9 @@ namespace ProfileMatch.Models.ViewModels
     {
         public string UserId { get; set; }
         public string OpenQuestionName { get; set; }
+        public string OpenQuestionNamePl { get; set; }
         public string OpenQuestionDescription { get; set; }
+        public string OpenQuestionDescriptionPl { get; set; }
         public int AnswerId { get; set; }
         public string UserDescription { get; set; }
         public bool IsDisplayed { get; set; }

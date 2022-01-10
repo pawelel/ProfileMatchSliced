@@ -30,7 +30,7 @@ namespace ProfileMatch.Components.Dialogs
 
         protected override async Task OnInitializedAsync()
         {
-        Q.AnswerOptions = await AnswerOptionRepository.Get(a=>a.ClosedQuestionId==Q.Id);            
+            Q.AnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
         }
 
         private bool CanSelect(AnswerOption answerOption)
@@ -43,7 +43,7 @@ namespace ProfileMatch.Components.Dialogs
             {
                 return true;
             }
-            
+
             return true;
         }
 
@@ -76,7 +76,7 @@ namespace ProfileMatch.Components.Dialogs
             Snackbar.Add(@L["Answer updated"]);
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
+
     }
 }

@@ -112,9 +112,12 @@ namespace ProfileMatch.Components.User
                         {
                             ClosedQuestionId = q.Id,
                             QuestionName = q.Name,
+                            QuestionNamePl = q.NamePl,
                             Description = q.Description,
+                            DescriptionPl = q.DescriptionPl,
                             CategoryId = c.Id,
                             CategoryName = c.Name,
+                            CategoryNamePl = c.NamePl,
                             Level = a.Level,
                             UserId = UserId
                         }
@@ -133,7 +136,9 @@ namespace ProfileMatch.Components.User
                 ["UserId"] = UserId,
                 ["UserClosedAnswer"] = UserClosedAnswer
             };
-            var dialog = DialogService.Show<UserQuestionDialog>($"{vM.CategoryName}: {vM.QuestionName}", parameters, maxWidth);
+            var title = ShareResource.IsEn() ? $"{vM.CategoryName}: {vM.QuestionName}" : $"{vM.CategoryNamePl}: {vM.QuestionNamePl}";
+
+            var dialog = DialogService.Show<UserQuestionDialog>(title, parameters, maxWidth);
             var data = (await dialog.Result).Data;
             await LoadData();
         }

@@ -15,7 +15,7 @@
 </MudGrid>
 <MudDataGrid Height="500px"
              FixedHeader="true"
-             Items="@UserNotesVM"
+             Items="@UserOpenAnswersVM"
              Dense="true"
              T="UserAnswerVM"
              Hover="true"
@@ -27,7 +27,17 @@
              Breakpoint="Breakpoint.Sm"
              @bind-SelectedItem="selectedItem1">
     <Columns>
-        <Column T="UserAnswerVM" Field="OpenQuestionName" Title=@L["Name"] />
+        <Column T="UserAnswerVM" Title=@L["Name"]>
+            <CellTemplate>
+                @if (ShareResource.IsEn())
+                {
+                    @context.OpenQuestionName
+                    
+                }else{
+                    @context.OpenQuestionNamePl
+                }
+            </CellTemplate>
+        </Column>
         <Column T="UserAnswerVM" Field="OpenQuestionDescription" Title=@L["Description"] />
         <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"]/>
         <Column T="UserAnswerVM" Title="@L["Edit"]">

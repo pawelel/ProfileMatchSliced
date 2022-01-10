@@ -421,6 +421,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to checked.
+        /// </summary>
+        public static string checked_F_ {
+            get {
+                return ResourceManager.GetString("checked[F]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to checked.
+        /// </summary>
+        public static string checked_M_ {
+            get {
+                return ResourceManager.GetString("checked[M]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose the question you IsSelected to answer.
         /// </summary>
         public static string Choose_the_question_you_IsSelected_to_answer {
@@ -1750,6 +1768,24 @@ namespace ProfileMatch.Services {
         public static string unassigned {
             get {
                 return ResourceManager.GetString("unassigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unchecked.
+        /// </summary>
+        public static string unchecked_F_ {
+            get {
+                return ResourceManager.GetString("unchecked[F]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unchecked.
+        /// </summary>
+        public static string unchecked_M_ {
+            get {
+                return ResourceManager.GetString("unchecked[M]", resourceCulture);
             }
         }
         

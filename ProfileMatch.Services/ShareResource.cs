@@ -29,6 +29,22 @@ namespace ProfileMatch.Services
         {
             return CultureInfo.CurrentCulture.ToString().Contains("en") || string.IsNullOrEmpty(CultureInfo.CurrentCulture.ToString());
         }
+        public static string GetString(object t, string property)
+        {
+            var language = CultureInfo.CurrentCulture.ToString();
+            if (language is not null and not "en")
+            {
+                foreach (var p in t.GetType().GetProperties().Where(p => p.Name.ToLower().Contains(property.ToLower() + language) && !string.IsNullOrWhiteSpace((string)p.GetValue(t))))
+                {
+                    return (string)p.GetValue(t);
+                }
+            }
+            foreach (var p in typeof(object).GetProperties().Where(p => p.Name == property))
+            {
+                return (string)p.GetValue(t);
+            }
+            return "";
+        }
     }
 
 }

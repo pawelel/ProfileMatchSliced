@@ -744,4 +744,16 @@
   <data name="User Category" xml:space="preserve">
     <value>User Category</value>
   </data>
+  <data name="checked[F]" xml:space="preserve">
+    <value>checked</value>
+  </data>
+  <data name="checked[M]" xml:space="preserve">
+    <value>checked</value>
+  </data>
+  <data name="unchecked[F]" xml:space="preserve">
+    <value>unchecked</value>
+  </data>
+  <data name="unchecked[M]" xml:space="preserve">
+    <value>unchecked</value>
+  </data>
 </root>

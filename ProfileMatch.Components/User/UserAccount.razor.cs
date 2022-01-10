@@ -58,8 +58,10 @@ namespace ProfileMatch.Components.User
                     {
                         IsDisplayed = answer.IsDisplayed,
                         OpenQuestionDescription = answer.OpenQuestion.Description,
+                        OpenQuestionDescriptionPl = answer.OpenQuestion.DescriptionPl,
                         AnswerId = answer.OpenQuestionId,
                         OpenQuestionName = answer.OpenQuestion.Name,
+                        OpenQuestionNamePl = answer.OpenQuestion.NamePl,
                         UserDescription = answer.UserAnswer,
                         UserId = answer.ApplicationUserId
                     };
