@@ -11,6 +11,7 @@
         public int Level { get; set; }
         public string FullName => $"{LastName}, {FirstName}";
         public string CategoryName { get; set; }
+        public int IsUserCategory { get; set; }
         public int CategoryId { get; set; }
     }
 }

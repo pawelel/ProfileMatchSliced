@@ -741,4 +741,7 @@
   <data name="I want to develop" xml:space="preserve">
     <value>Chcę rozwijać</value>
   </data>
+  <data name="User Category" xml:space="preserve">
+    <value>Kategoria użytkownika</value>
+  </data>
 </root>

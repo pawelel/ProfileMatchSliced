@@ -22,14 +22,12 @@ namespace ProfileMatch.Components.Manager
     public partial class ManagerClosedQuestions : ComponentBase
     {
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-
+        [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryRepository { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
         [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-
-
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
- 
+
 
         private bool loading;
         [Parameter] public int Id { get; set; }
@@ -38,6 +36,7 @@ namespace ProfileMatch.Components.Manager
         List<UserClosedAnswer> userAnswers;
         private List<ApplicationUser> users;
         List<AnswerOption> answerOptions;
+        List<UserCategory> userCategories;
         List<ClosedQuestion> questions;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
         string searchString;
@@ -46,10 +45,42 @@ namespace ProfileMatch.Components.Manager
             loading = true;
             categories = await CategoryRepository.Get();
             answerOptions = await AnswerOptionRepository.Get();
+            userCategories = await UserCategoryRepository.Get();
             questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category));
             userAnswers = await UserAnswerRepository.Get();
             users = await UserRepository.Get();
-            questionUserLevels =  (from q in questions  join ua in userAnswers on q.Id equals ua.ClosedQuestionId join u in users on ua.ApplicationUserId equals u.Id join ao in answerOptions on ua.AnswerOptionId equals ao.Id join c in categories on q.CategoryId equals c.Id select new QuestionUserLevelVM() { CategoryId = c.Id, CategoryName = c.Name, FirstName = u.FirstName, LastName =u.LastName, Description=q.Description, Level = ao.Level, ClosedQuestionId = q.Id, UserId = u.Id, QuestionName = q.Name }).ToList();
+            questionUserLevels = (from q in questions
+                                  join ua in userAnswers
+                                  on q.Id
+                                  equals ua.ClosedQuestionId
+                                  join u in users
+                                  on ua.ApplicationUserId
+                                  equals u.Id
+                                  join ao in answerOptions
+                                  on ua.AnswerOptionId
+                                  equals ao.Id
+                                  join c in categories
+                                  on q.CategoryId
+                                  equals c.Id
+                                  join uc in userCategories 
+                                  on new { ua.ApplicationUserId, q.CategoryId } 
+                                  equals new { uc.ApplicationUserId, uc.CategoryId }
+                                  where uc.CategoryId == q.CategoryId
+                                  where uc.ApplicationUserId == ua.ApplicationUserId
+                                  select new QuestionUserLevelVM()
+                                  {
+                                      CategoryId = c.Id,
+                                      CategoryName = c.Name,
+                                      FirstName = u.FirstName,
+                                      LastName = u.LastName,
+                                      Description = q.Description,
+                                      Level = ao.Level,
+                                      ClosedQuestionId = q.Id,
+                                      UserId = u.Id,
+                                      QuestionName = q.Name,
+                                      IsUserCategory = uc.Want? 1:0
+                                  }).ToList();
+
             loading = false;
         }
         private Func<QuestionUserLevelVM, bool> QuickFilter => question =>
@@ -66,7 +97,7 @@ namespace ProfileMatch.Components.Manager
                 return true;
             return false;
         };
-        
+
 
         private List<QuestionUserLevelVM> GetCategoriesAndQuestions()
         {

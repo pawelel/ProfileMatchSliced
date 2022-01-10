@@ -43,9 +43,16 @@ else
         </ToolBarContent>
         <Columns>
             <Column T="QuestionUserLevelVM" Field="CategoryName" Title=@L["Category"]/>
+            <Column T="QuestionUserLevelVM" Field="IsUserCategory" Title=@L["User Category"]>
+                <CellTemplate>@(context.IsUserCategory==1?L["Yes"]:L["No"])</CellTemplate>
+            </Column>
             <Column T="QuestionUserLevelVM" Field="QuestionName" Title=@L["Question"]/>
             <Column T="QuestionUserLevelVM" Field="Description" Title=@L["Description"]/>
-            <Column T="QuestionUserLevelVM" Field="Level" Title=@L["Level"]/>
+            <Column T="QuestionUserLevelVM" Field="Level" Title=@L["Level"]>
+                <CellTemplate>
+                    <MudButton>hello</MudButton>
+                </CellTemplate>
+            </Column>
             <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"]/>
         </Columns>
         <PagerContent>

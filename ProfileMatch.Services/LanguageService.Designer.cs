@@ -1781,6 +1781,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Category.
+        /// </summary>
+        public static string User_Category {
+            get {
+                return ResourceManager.GetString("User Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Dashboard.
         /// </summary>
         public static string User_Dashboard {

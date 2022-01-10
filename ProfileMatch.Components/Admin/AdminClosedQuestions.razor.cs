@@ -27,7 +27,6 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
-
         private bool loading;
         [Parameter] public int Id { get; set; }
         private List<ClosedQuestion> questions = new();
@@ -39,8 +38,13 @@ namespace ProfileMatch.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
+          
         }
-
+        protected override void OnAfterRender(bool firstRender)
+        {
+            
+            base.OnAfterRender(firstRender);
+        }
         private async Task LoadData()
         {
             loading = true;
