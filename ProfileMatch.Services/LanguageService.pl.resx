@@ -801,4 +801,10 @@
   <data name="Department Description PL" xml:space="preserve">
     <value>Opis działu PL</value>
   </data>
+  <data name="Current Level" xml:space="preserve">
+    <value>Bieżący poziom</value>
+  </data>
+  <data name="Display on profile page" xml:space="preserve">
+    <value>Pokaż na stronie profilu</value>
+  </data>
 </root>

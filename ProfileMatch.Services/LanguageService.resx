@@ -801,4 +801,10 @@
   <data name="Department Description PL" xml:space="preserve">
     <value>Department Description PL</value>
   </data>
+  <data name="Current Level" xml:space="preserve">
+    <value>Current Level</value>
+  </data>
+  <data name="Display on profile page" xml:space="preserve">
+    <value>Display on profile page</value>
+  </data>
 </root>

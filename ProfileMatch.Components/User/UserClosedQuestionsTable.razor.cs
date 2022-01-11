@@ -158,20 +158,14 @@ namespace ProfileMatch.Components.User
     
         private async Task UserAnswerDialog(QuestionUserLevelVM vM)
         {
-            var UserClosedAnswer = userAnswers.FirstOrDefault(q => q.ClosedQuestionId == vM.ClosedQuestionId);
-            ClosedQuestion question = questions.FirstOrDefault(q => q.Id == vM.ClosedQuestionId);
-            Category category = categories.FirstOrDefault(c => c.Name == vM.CategoryName);
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
             var parameters = new DialogParameters
             {
-                ["Q"] = question,
-                ["UserId"] = UserId,
-                ["UserClosedAnswer"] = UserClosedAnswer
+                ["Q"] = vM
             };
             var title = ShareResource.IsEn() ? $"{vM.CategoryName}: {vM.QuestionName}" : $"{vM.CategoryNamePl}: {vM.QuestionNamePl}";
-
             var dialog = DialogService.Show<UserClosedQuestionDialog>(title, parameters, maxWidth);
-            var data = (await dialog.Result).Data;
+            await dialog.Result;
             await LoadData();
         }
     }

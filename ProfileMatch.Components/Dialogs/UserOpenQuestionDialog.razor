@@ -4,8 +4,7 @@
             <MudItem xs="12" md="12" sm="12">
                 <MudForm @ref="Form">
                     <MudTextField @ref="multilineReference" T="string" @bind-Value="@TempDescription" Counter="200" MaxLength="200" HelperText=@L["Max length"] Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
-                        <MudButton Variant="@Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" @onclick="() => multilineReference.SelectAsync()">@L["Select all text"]</MudButton>
-                        <MudCheckBox @bind-Checked="IsDisplayed" Label=@L["Display"]/>
+                        
                         
                 </MudForm>
                 
@@ -13,6 +12,8 @@
         </MudGrid>
     </DialogContent>
     <DialogActions>
+        <MudButton Variant="@Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" @onclick="() => multilineReference.SelectAsync()">@L["Select all text"]</MudButton>
+                        <MudCheckBox @bind-Checked="IsDisplayed" Label=@L["Display on profile page"]/>
       <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" OnClick="Cancel">@L["Cancel"]</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Small" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>

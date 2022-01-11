@@ -13,6 +13,7 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
@@ -23,77 +24,71 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-        [Parameter] public string CategoryName { get; set; }
-        [Parameter] public ClosedQuestion Q { get; set; }
-        [Parameter] public UserClosedAnswer UserClosedAnswer { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
+        [Parameter] public QuestionUserLevelVM Q { get; set; }
+        int UserLevel;
         [Parameter] public string UserId { get; set; }
         AnswerOption tempAnswerOption;
+        List<AnswerOption> answerOptions;
         protected override async Task OnInitializedAsync()
-        {
-            Q.AnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
+        { 
+            if (Q.Level == 0||Q==null) Q.Level = 1;
+            UserLevel = Q.Level;
+            
+            answerOptions = await AnswerOptionRepository.Get(q=>q.ClosedQuestionId==Q.ClosedQuestionId);
+            
+            
+            tempAnswerOption = answerOptions.FirstOrDefault(q => q.ClosedQuestionId==Q.ClosedQuestionId&&q.Level==1);
+            UserId = Q.UserId;
         }
 
-        private bool CanSelect(AnswerOption answerOption)
-        {
-            if (UserClosedAnswer.AnswerOptionId == answerOption.Id)
-            {
-                return false;
-            }
-            if (UserClosedAnswer == null)
-            {
-                return true;
-            }
-
-            return true;
-        }
-
-        private async Task SelectLevelAsync(AnswerOption answerOption)
+        private async Task SelectLevelAsync()
         {
             string title;
             if (ShareResource.IsEn())
             {
-                title = Q.Name;
+                title = Q.QuestionName;
             }
-            else { title = Q.NamePl; }
-            var userAnswer = await UserAnswerRepository.GetById(UserId, answerOption.ClosedQuestionId);
+            else { title = Q.QuestionNamePl; }
+            var userAnswer = await UserAnswerRepository.GetById(UserId, tempAnswerOption.ClosedQuestionId);
             if (userAnswer == null)
             {
                 userAnswer = new()
                 {
-                    ClosedQuestionId = answerOption.ClosedQuestionId,
-                    AnswerOptionId = answerOption.Id,
+                    ClosedQuestionId = tempAnswerOption.ClosedQuestionId,
+                    AnswerOptionId = tempAnswerOption.Id,
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
                     LastModified = DateTime.Now,
                 };
-                
+
                 await UserAnswerRepository.Insert(userAnswer);
             }
             else
             {
-                userAnswer.ClosedQuestionId = answerOption.ClosedQuestionId;
+                userAnswer.ClosedQuestionId = tempAnswerOption.ClosedQuestionId;
                 userAnswer.ApplicationUserId = UserId;
-                userAnswer.AnswerOptionId = answerOption.Id;
+                userAnswer.AnswerOptionId = tempAnswerOption.Id;
                 userAnswer.IsConfirmed = false;
                 userAnswer.LastModified = DateTime.Now;
                 await UserAnswerRepository.Update(userAnswer);
             }
 
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add(@L["Answer updated"]+ $": {title}", Severity.Success);
+            Snackbar.Add(@L["Answer updated"] + $": {title}", Severity.Success);
         }
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
-       async Task SetOption(AnswerOption answerOption)
+        async Task SetOption(AnswerOption answerOption)
         {
             if (answerOption == null || answerOption.Id == 0)
             {
-                tempAnswerOption = await AnswerOptionRepository.GetOne(a=>a.ClosedQuestionId==Q.Id&&a.Level==1);
+                tempAnswerOption = await AnswerOptionRepository.GetOne(a => a.ClosedQuestionId == Q.ClosedQuestionId && a.Level == 1);
             }
             else
             {
-            tempAnswerOption = answerOption;
+                tempAnswerOption = answerOption;
             }
         }
     }

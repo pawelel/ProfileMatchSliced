@@ -547,6 +547,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Level.
+        /// </summary>
+        public static string Current_Level {
+            get {
+                return ResourceManager.GetString("Current Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -696,6 +705,15 @@ namespace ProfileMatch.Services {
         public static string Display {
             get {
                 return ResourceManager.GetString("Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display on profile page.
+        /// </summary>
+        public static string Display_on_profile_page {
+            get {
+                return ResourceManager.GetString("Display on profile page", resourceCulture);
             }
         }
         

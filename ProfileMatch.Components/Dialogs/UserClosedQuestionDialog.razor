@@ -1,4 +1,4 @@
-﻿
+﻿@if(answerOptions is not null){
 
 
 <MudDialog>
@@ -12,7 +12,7 @@
                  DisableSliderAnimation="true"
                  HideSlider="true"
                  PanelClass="pa-6 d-block">
-            @foreach (var answerOption in Q.AnswerOptions)
+            @foreach (var answerOption in answerOptions)
             {
                 <MudTabPanel OnClick="@(()=>SetOption(answerOption))" Text="@answerOption.Level.ToString()">
                     <MudItem Style="height:200px;">
@@ -33,14 +33,15 @@
         </MudTabs>
     </DialogContent>
     <DialogActions>
-        @if (CanSelect(tempAnswerOption))
-        {
-            <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync(tempAnswerOption))" Size="Size.Small">@L["This is my Level"]</MudButton>
-        }
+        <MudText>@L["Current Level"]: @UserLevel</MudText>
+            <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync())" Size="Size.Small">@L["This is my Level"]</MudButton>
     </DialogActions>
-</MudDialog>
-
-<style>
+    </MudDialog>
+}else
+    {
+        <MudProgressLinear></MudProgressLinear>
+    }
+    <style>
     .mud-tab {
         min-width: 50px !important;
     }
