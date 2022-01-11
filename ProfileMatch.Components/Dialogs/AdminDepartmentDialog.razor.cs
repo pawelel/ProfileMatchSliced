@@ -19,12 +19,16 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
+        public string TempNamePl { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
+        public string TempDescriptionPl { get; set; }
 
         protected override void OnInitialized()
         {
+            TempNamePl = Dep.NamePl;
             TempName = Dep.Name;
+            TempDescriptionPl = Dep.DescriptionPl;
             TempDescription = Dep.Description;
         }
 
@@ -43,7 +47,9 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
+                Dep.NamePl = TempNamePl;
                 Dep.Name = TempName;
+                Dep.DescriptionPl = TempDescriptionPl;
                 Dep.Description = TempDescription;
                 try
                 {
@@ -60,19 +66,31 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task Save()
         {
+            string created;
+            string updated;
+            if (ShareResource.IsEn())
+            {
+                created = $"Department {Dep.Name} created";
+                updated = $"Department {Dep.Name} updated";
+            }
+            else
+            {
+                updated = $"Nazwa działu {Dep.NamePl} zaktualizowana";
+                created = $"Nazwa działu {Dep.NamePl} utworzona";
+            }
+
+
             if (Dep.Id == 0)
             {
                 var result = await DepartmentRepository.Insert(Dep);
-                Snackbar.Add(@L["Department"] + $" {@L[result.Name]} " + @L["has been created[M]"], Severity.Success);
+                Snackbar.Add(created, Severity.Success);
             }
             else
             {
                 var result = await DepartmentRepository.Update(Dep);
-                Snackbar.Add(@L["Department"] + $" {@L[result.Name]} " + @L["has been updated[M]"], Severity.Success);
+                Snackbar.Add(updated, Severity.Success);
             }
         }
-
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

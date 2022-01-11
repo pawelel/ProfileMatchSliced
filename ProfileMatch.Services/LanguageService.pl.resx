@@ -759,4 +759,46 @@
   <data name="created[M]" xml:space="preserve">
     <value>utworzony</value>
   </data>
+  <data name="Question Description EN" xml:space="preserve">
+    <value>Opis pytania EN</value>
+  </data>
+  <data name="Question Description PL" xml:space="preserve">
+    <value>Opis pytania PL</value>
+  </data>
+  <data name="Question Name EN" xml:space="preserve">
+    <value>Nazwa pytania EN</value>
+  </data>
+  <data name="Question Name PL" xml:space="preserve">
+    <value>Nazwa pytania PL</value>
+  </data>
+  <data name="Levels" xml:space="preserve">
+    <value>Poziomy</value>
+  </data>
+  <data name="Go Back To Question" xml:space="preserve">
+    <value>Powrót do pytania</value>
+  </data>
+  <data name="First create Category" xml:space="preserve">
+    <value>Najpierw stwórz kategorię</value>
+  </data>
+  <data name="Category Description PL" xml:space="preserve">
+    <value>Opis kategorii PL</value>
+  </data>
+  <data name="Category Description EN" xml:space="preserve">
+    <value>Opis kategorii EN</value>
+  </data>
+  <data name="Category Name EN" xml:space="preserve">
+    <value>Nazwa kategorii EN</value>
+  </data>
+  <data name="Department Name EN" xml:space="preserve">
+    <value>Nazwa działu EN</value>
+  </data>
+  <data name="Department Name PL" xml:space="preserve">
+    <value>Nazwa działu PL</value>
+  </data>
+  <data name="Department Description EN" xml:space="preserve">
+    <value>Opis działu EN</value>
+  </data>
+  <data name="Department Description PL" xml:space="preserve">
+    <value>Opis działu PL</value>
+  </data>
 </root>

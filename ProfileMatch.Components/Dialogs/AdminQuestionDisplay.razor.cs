@@ -16,8 +16,7 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminQuestionDisplay : ComponentBase
     {
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        [Inject] private IDialogService DialogService { get; set; }
 
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
 
@@ -44,7 +43,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["O"] = answerOption };
-            var dialog = DialogService.Show<AdminLevelDialog>(L["Edit Answer Level"]+$" {answerOption.Level}", parameters, maxWidth);
+            var dialog = DialogService.Show<AdminLevelDialog>(L["Edit Answer Level"] + $" {answerOption.Level}", parameters, maxWidth);
             await dialog.Result;
         }
 

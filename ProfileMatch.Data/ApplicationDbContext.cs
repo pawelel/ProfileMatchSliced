@@ -200,7 +200,7 @@ namespace ProfileMatch.Data
                     CategoryId = 2,
                     IsActive = true,
                     DescriptionPl = "Jaka jest Twoja znajomość sieci komputerowych?",
-                    Description = "How good are you in CComputer Networks?"
+                    Description = "How good are you in Computer Networks?"
                 },
                 new ClosedQuestion()
                 {

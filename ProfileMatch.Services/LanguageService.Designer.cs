@@ -367,11 +367,38 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category Description EN.
+        /// </summary>
+        public static string Category_Description_EN {
+            get {
+                return ResourceManager.GetString("Category Description EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Description PL.
+        /// </summary>
+        public static string Category_Description_PL {
+            get {
+                return ResourceManager.GetString("Category Description PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category Name.
         /// </summary>
         public static string Category_Name {
             get {
                 return ResourceManager.GetString("Category Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Name EN.
+        /// </summary>
+        public static string Category_Name_EN {
+            get {
+                return ResourceManager.GetString("Category Name EN", resourceCulture);
             }
         }
         
@@ -592,6 +619,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department Description EN.
+        /// </summary>
+        public static string Department_Description_EN {
+            get {
+                return ResourceManager.GetString("Department Description EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department Description PL.
+        /// </summary>
+        public static string Department_Description_PL {
+            get {
+                return ResourceManager.GetString("Department Description PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department Name.
         /// </summary>
         public static string Department_Name {
@@ -601,11 +646,29 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department Name EN.
+        /// </summary>
+        public static string Department_Name_EN {
+            get {
+                return ResourceManager.GetString("Department Name EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department name is required!.
         /// </summary>
         public static string Department_name_is_required_ {
             get {
                 return ResourceManager.GetString("Department name is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department Name PL.
+        /// </summary>
+        public static string Department_Name_PL {
+            get {
+                return ResourceManager.GetString("Department Name PL", resourceCulture);
             }
         }
         
@@ -782,6 +845,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First create Category.
+        /// </summary>
+        public static string First_create_Category {
+            get {
+                return ResourceManager.GetString("First create Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string First_Name {
@@ -805,6 +877,15 @@ namespace ProfileMatch.Services {
         public static string Full_Name {
             get {
                 return ResourceManager.GetString("Full Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go Back To Question.
+        /// </summary>
+        public static string Go_Back_To_Question {
+            get {
+                return ResourceManager.GetString("Go Back To Question", resourceCulture);
             }
         }
         
@@ -994,6 +1075,15 @@ namespace ProfileMatch.Services {
         public static string Level_Description_is_required_ {
             get {
                 return ResourceManager.GetString("Level Description is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Levels.
+        /// </summary>
+        public static string Levels {
+            get {
+                return ResourceManager.GetString("Levels", resourceCulture);
             }
         }
         
@@ -1439,6 +1529,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Question Description EN.
+        /// </summary>
+        public static string Question_Description_EN {
+            get {
+                return ResourceManager.GetString("Question Description EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question Description PL.
+        /// </summary>
+        public static string Question_Description_PL {
+            get {
+                return ResourceManager.GetString("Question Description PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Question Name.
         /// </summary>
         public static string Question_Name {
@@ -1448,11 +1556,29 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Question Name EN.
+        /// </summary>
+        public static string Question_Name_EN {
+            get {
+                return ResourceManager.GetString("Question Name EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Question name is required!.
         /// </summary>
         public static string Question_name_is_required_ {
             get {
                 return ResourceManager.GetString("Question name is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question Name PL.
+        /// </summary>
+        public static string Question_Name_PL {
+            get {
+                return ResourceManager.GetString("Question Name PL", resourceCulture);
             }
         }
         

@@ -21,12 +21,16 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Category Cat { get; set; } = new();
         public string TempName { get; set; }
+        public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
+        public string TempDescriptionPl { get; set; }
 
         protected override void OnInitialized()
         {
             TempName = Cat.Name;
+            TempNamePl = Cat.NamePl;
             TempDescription = Cat.Description;
+            TempDescriptionPl = Cat.DescriptionPl;
         }
         private IEnumerable<string> MaxCharacters(string ch)
         {
@@ -50,6 +54,8 @@ namespace ProfileMatch.Components.Dialogs
             {
                 Cat.Name = TempName;
                 Cat.Description = TempDescription;
+                Cat.NamePl = TempNamePl;
+                Cat.DescriptionPl = TempDescriptionPl;
                 try
                 {
                     await Save();
@@ -65,15 +71,31 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task Save()
         {
+            string created;
+            string updated;
+            if (ShareResource.IsEn())
+            {
+                created = $"Category {Cat.Name} created";
+                updated = $"Category {Cat.Name} updated";
+            }
+            else
+            {
+                created = $"Kategoria {Cat.NamePl} utworzona";
+                updated = $"Kategoria {Cat.NamePl} zaktualizowana";
+            }
+
+
+
             if (Cat.Id == 0)
             {
                 var result = await CategoryRepository.Insert(Cat);
-                Snackbar.Add(@L["Category"] + $" {@L[result.Name]} " + @L["has been created[F]"], Severity.Success);
+
+                Snackbar.Add(created, Severity.Success);
             }
             else
             {
                 var result = await CategoryRepository.Update(Cat);
-                Snackbar.Add(@L["Category"] + $" {@L[result.Name]} " + @L["has been updated[F]"], Severity.Success);
+                Snackbar.Add(updated, Severity.Success);
             }
         }
 

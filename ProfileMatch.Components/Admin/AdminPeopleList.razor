@@ -18,7 +18,7 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid Items="Users" T="ApplicationUser" Dense="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
+    <MudDataGrid Items="Users" T="ApplicationUser" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
         <ToolBarContent>
 
             <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Size="Size.Small" OnClick="@(()=> EditProfile(new ApplicationUser()))" Variant="Variant.Outlined">@L["New User"]</MudButton>

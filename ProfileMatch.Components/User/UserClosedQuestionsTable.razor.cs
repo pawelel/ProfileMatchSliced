@@ -170,7 +170,7 @@ namespace ProfileMatch.Components.User
             };
             var title = ShareResource.IsEn() ? $"{vM.CategoryName}: {vM.QuestionName}" : $"{vM.CategoryNamePl}: {vM.QuestionNamePl}";
 
-            var dialog = DialogService.Show<UserQuestionDialog>(title, parameters, maxWidth);
+            var dialog = DialogService.Show<UserClosedQuestionDialog>(title, parameters, maxWidth);
             var data = (await dialog.Result).Data;
             await LoadData();
         }

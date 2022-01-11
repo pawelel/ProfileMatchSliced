@@ -32,15 +32,25 @@ else
             </MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" QuickFilter="@QuickFilter">
+    <MudDataGrid Sortable="true" Items="@QuestionUserLevelVMs()" T="QuestionUserLevelVM" Dense="true" Hover="true" Bordered="false" Striped="false" QuickFilter="@QuickFilter">
         <Columns>
-            <Column T="QuestionUserLevelVM" Title=@L["Name"]>
+            <Column T="QuestionUserLevelVM" Title=@L["Category"]>
                 <CellTemplate>
                     @if (ShareResource.IsEn())
                 {
                     @context.CategoryName
                 }else{
                     @context.CategoryNamePl
+                }
+                </CellTemplate>
+            </Column>   
+            <Column T="QuestionUserLevelVM" Title=@L["Question"]>
+                <CellTemplate>
+                    @if (ShareResource.IsEn())
+                {
+                    @context.QuestionName
+                }else{
+                    @context.QuestionNamePl
                 }
                 </CellTemplate>
             </Column>   

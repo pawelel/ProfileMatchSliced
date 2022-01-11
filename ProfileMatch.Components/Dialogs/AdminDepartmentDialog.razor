@@ -1,10 +1,10 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Department Name"]
-                          Required="true" RequiredError=@L["Department name is required!"] />
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Department Description"]
-                          Lines="5" />
+            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Department Name EN"] Required="true" RequiredError=@L["Department name is required!"] />
+            <MudTextField T="string" @bind-Value="@TempNamePl" Immediate="true" Label=@L["Department Name PL"] Required="true" RequiredError=@L["Department name is required!"] />
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Department Description EN"] Lines="5" />
+            <MudTextField T="string" @bind-Value="@TempDescriptionPl" Immediate="true" Label=@L["Department Description PL"] Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>

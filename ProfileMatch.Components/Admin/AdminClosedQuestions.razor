@@ -11,12 +11,19 @@ else
             <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
                 @foreach (var cat in categories)
                 {
-                    <MudSelectItem T="string" Value="@cat.Name" />
+                    @if (ShareResource.IsEn())
+                    {
+                        <MudSelectItem T="string" Value="@cat.Name" />
+                    }
+                    else
+                    {
+                        <MudSelectItem T="string" Value="@cat.NamePl" />
+                    }
                 }
             </MudSelect>
         </MudItem>
         <MudItem xs="12" md="5">
-            <MudTextField @bind-Value="searchString1"
+            <MudTextField @bind-Value="searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -24,76 +31,65 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="new Func<ClosedQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
                 if (!string.IsNullOrEmpty(cat))
                 {
-                <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
-                    <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-                    <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
-                </MudButtonGroup>
-                <MudText>&nbsp;&nbsp;&nbsp;</MudText>
+                    <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
+                        <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+                        <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
+                    </MudButtonGroup>
+                    <MudText>&nbsp;&nbsp;&nbsp;</MudText>
                 }
             }
-        <MudSpacer />
-    </ToolBarContent>
-    <Columns>
-        <Column T="ClosedQuestion" Title="Id">
-            <CellTemplate>
-                @context.Id
-            </CellTemplate>
-        </Column>
-        @if (ShareResource.IsEn())
+            <MudSpacer />
+        </ToolBarContent>
+        <Columns>
+            @if (ShareResource.IsEn())
             {
-
-            <Column T="ClosedQuestion" Title="Category">
-                <CellTemplate>
-                    @context.Category.Name
-                </CellTemplate>
-            </Column>
-            <Column T="ClosedQuestion" Title="Question">
-                <CellTemplate>
-                    @context.Name
-                </CellTemplate>
-            </Column>
-            <Column T="ClosedQuestion" Title="Actions">
-                <CellTemplate>
-                  <MudButtonGroup  Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
-                <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
-                <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionDisplay(context))" Variant="Variant.Outlined">@L["Display"]</MudButton>
-            </MudButtonGroup>
-            </CellTemplate>
-        </Column>
-        }else
-        {
-         <Column T="ClosedQuestion" Title="Kategoria">
-            <CellTemplate>
-                @context.Category.NamePl
-            </CellTemplate>
-        </Column>
-         <Column T="ClosedQuestion" Title="Pytanie">
-            <CellTemplate>
-                @context.NamePl
-            </CellTemplate>
-        </Column>
-         <Column T="ClosedQuestion" Title="Działania">
-            <CellTemplate>
-                 <MudButtonGroup  Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
-                <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
-                <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionDisplay(context))" Variant="Variant.Outlined">@L["Display"]</MudButton>
-            </MudButtonGroup>
-            </CellTemplate>
-        </Column>
-        }
-    </Columns>
-    <PagerContent>
-        <MudDataGridPager T="ClosedQuestion" Class="pl-2 pr-2" PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
-                       InfoFormat="{first_item}-{last_item} / {all_items}" />
-    </PagerContent>
-</MudDataGrid>
+                <Column Field="CategoryId" T="ClosedQuestionVM" Title=" Category Id" />
+                <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category" />
+                <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Question Id" />
+                <Column Field="QuestionName" T="ClosedQuestionVM" Title="Question" />
+                  <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
+                    <CellTemplate>
+                        @(context.IsActive?"Yes":"No")
+                    </CellTemplate>
+                </Column>
+                <Column Field="Description" T="ClosedQuestionVM" Title="Description" />
+                <Column Sortable="false" T="ClosedQuestionVM" Title="Actions">
+                    <CellTemplate>
+                        <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                    </CellTemplate>
+                </Column>
+            }
+            else
+            {
+                 <Column Field="CategoryId" T="ClosedQuestionVM" Title="Id Kategorii" />
+                <Column T="ClosedQuestionVM" Field="CategoryNamePl" Title="Kategoria"/>
+                <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Id Pytania" />
+                <Column Field="QuestionNamePl" T="ClosedQuestionVM" Title="Pytanie"/>
+                <Column Field="IsActive" T="ClosedQuestionVM" Title="Aktywne">
+                    <CellTemplate>
+                        @(context.IsActive?"Tak":"Nie")
+                    </CellTemplate>
+                </Column>
+                    <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
+                <Column Sortable="false" T="ClosedQuestionVM" Title="Działania">
+                    <CellTemplate>
+                        <MudButton Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                    </CellTemplate>
+                </Column>
+            }
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="ClosedQuestionVM" Class="pl-2 pr-2" PageSizeOptions="new int[] { 5, 10, 25, 50, 100 }" RowsPerPageString=@L["Rows per page"]
+                          InfoFormat="{first_item}-{last_item} / {all_items}" />
+        </PagerContent>
+    </MudDataGrid>
 }
 <style>
     .mud-tabs-panels {

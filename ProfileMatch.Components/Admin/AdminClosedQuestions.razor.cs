@@ -8,6 +8,7 @@ using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
@@ -24,16 +25,15 @@ namespace ProfileMatch.Components.Admin
         [Inject] private IDialogService DialogService { get; set; }
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
         private bool loading;
         [Parameter] public int Id { get; set; }
-        private List<ClosedQuestion> questions = new();
         private List<Category> categories;
-        private IEnumerable<string> Cats { get; set; }
+        private List<ClosedQuestion> questions;
+        List<ClosedQuestionVM> questionVMs;
+        private IEnumerable<string> Cats { get; set; } = new HashSet<string> { };
 
-        public bool ShowDetails { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,7 +49,40 @@ namespace ProfileMatch.Components.Admin
         {
             loading = true;
             categories = await CategoryRepository.Get();
-            questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category).Include(q => q.AnswerOptions));
+            questions = await ClosedQuestionRepository.Get();
+            questionVMs = (from c in categories
+                           join q in questions on c.Id equals q.CategoryId
+                           select new ClosedQuestionVM()
+                           {
+                               CategoryId = c.Id,
+                               CategoryName = c.Name,
+                               CategoryNamePl = c.NamePl,
+                               IsActive = q.IsActive,
+                               ClosedQuestionId = q.Id,
+                               QuestionNamePl = q.NamePl,
+                               QuestionName = q.Name,
+                               Description = q.Description,
+                               DescriptionPl = q.DescriptionPl
+                           }).ToList();
+            string nodata = "No questions yet";
+            ClosedQuestionVM vm;
+            string nodataPl = "Nie ma jeszcze pytań";
+            foreach (var cat in categories)
+            {
+                if (!questionVMs.Any(q => q.CategoryId == cat.Id && q.CategoryId != 0))
+                {
+                    vm = new ClosedQuestionVM()
+                    {
+                        QuestionName = nodata,
+                        QuestionNamePl = nodataPl,
+                        IsActive = false,
+                        CategoryId = cat.Id,
+                        CategoryName = cat.Name,
+                        CategoryNamePl = cat.NamePl
+                    };
+                    questionVMs.Add(vm);
+                }
+            }
             Cats = new HashSet<string>() { };
             loading = false;
         }
@@ -76,8 +109,24 @@ namespace ProfileMatch.Components.Admin
             await LoadData();
         }
         private async Task QuestionCreate(string category)
-        {
-            var cat = await CategoryRepository.GetOne(c => c.Name == category);
+        { 
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                Snackbar.Add(@L["First create Category"], Severity.Error );
+                return;
+            }
+            
+            // create caegory from string
+            Category cat;
+            if (ShareResource.IsEn())
+            {
+                cat = await CategoryRepository.GetOne(c => c.Name == category);
+            }
+            else
+            {
+                cat = await CategoryRepository.GetOne(c => c.NamePl == category);
+            }
+
             var parameters = new DialogParameters { ["CategoryId"] = cat.Id };
             var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Add Question"] + $": {category}", parameters);
             await dialog.Result;
@@ -86,53 +135,63 @@ namespace ProfileMatch.Components.Admin
 
 
 
-        private string searchString1 = "";
-        private ClosedQuestion selectedItem1 = null;
+        private string searchString = "";
+        private ClosedQuestionVM selectedItem1 = null;
 
-        private bool FilterFunc1(ClosedQuestion question) => FilterFunc(question, searchString1);
+        private Func<ClosedQuestionVM, bool> QuickFilter => question =>
+       {
+           if (string.IsNullOrWhiteSpace(searchString))
+               return true;
+           if (ShareResource.IsEn())
+           {
+               if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                   return true;
+               if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                   return true;
+           }
+           else
+           {
+               if (question.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                   return true;
+               if (question.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                   return true;
+           }
+           return false;
+       };
 
-        private static bool FilterFunc(ClosedQuestion question, string searchString)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (question.Category.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (question.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
-        }
-
-        private List<ClosedQuestion> GetQuestions()
+        private List<ClosedQuestionVM> GetQuestions()
         {
             if (!Cats.Any())
             {
-                return questions;
+                return questionVMs;
             }
             else
             {
-                return (from q in questions
-                        from c in Cats
-                        where q.Category.Name == c
-                        select q).ToList();
+                if (ShareResource.IsEn())
+                {
+                    return (from q in questionVMs
+                            from c in Cats
+                            where q.CategoryName == c
+                            select q).ToList();
+                }
+                else
+                {
+                    return (from q in questionVMs
+                            from c in Cats
+                            where q.CategoryNamePl == c
+                            select q).ToList();
+                }
+
             }
         }
 
-        private async Task QuestionDialog(ClosedQuestion question)
+        private async Task QuestionDialog(ClosedQuestionVM question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(@L["Edit Question:"] + $" {@L[question.Name]}", parameters);
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(@L["Edit Question:"] + $" {@L[question.QuestionName]}", parameters);
             await dialog.Result;
-            
-        }
 
-        private async Task QuestionDisplay(ClosedQuestion question)
-        {
-            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminQuestionDisplay>(L["Display the question"], parameters, maxWidth);
-            await dialog.Result;
         }
-
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
     }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Dialogs
 {
-    public partial class UserQuestionDialog : ComponentBase
+    public partial class UserClosedQuestionDialog : ComponentBase
     {
         [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
@@ -27,7 +27,7 @@ namespace ProfileMatch.Components.Dialogs
         [Parameter] public ClosedQuestion Q { get; set; }
         [Parameter] public UserClosedAnswer UserClosedAnswer { get; set; }
         [Parameter] public string UserId { get; set; }
-
+        AnswerOption tempAnswerOption;
         protected override async Task OnInitializedAsync()
         {
             Q.AnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
@@ -47,36 +47,54 @@ namespace ProfileMatch.Components.Dialogs
             return true;
         }
 
-        private async Task SelectLevelAsync(string UserId, int answerOptionId, int questionId)
+        private async Task SelectLevelAsync(AnswerOption answerOption)
         {
-            var userAnswer = await UserAnswerRepository.GetById(UserId, questionId);
+            string title;
+            if (ShareResource.IsEn())
+            {
+                title = Q.Name;
+            }
+            else { title = Q.NamePl; }
+            var userAnswer = await UserAnswerRepository.GetById(UserId, answerOption.ClosedQuestionId);
             if (userAnswer == null)
             {
                 userAnswer = new()
                 {
-                    ClosedQuestionId = questionId,
-                    AnswerOptionId = answerOptionId,
+                    ClosedQuestionId = answerOption.ClosedQuestionId,
+                    AnswerOptionId = answerOption.Id,
                     ApplicationUserId = UserId,
                     IsConfirmed = false,
                     LastModified = DateTime.Now,
                 };
+                
                 await UserAnswerRepository.Insert(userAnswer);
             }
             else
             {
-                userAnswer.ClosedQuestionId = questionId;
+                userAnswer.ClosedQuestionId = answerOption.ClosedQuestionId;
                 userAnswer.ApplicationUserId = UserId;
-                userAnswer.AnswerOptionId = answerOptionId;
+                userAnswer.AnswerOptionId = answerOption.Id;
                 userAnswer.IsConfirmed = false;
                 userAnswer.LastModified = DateTime.Now;
                 await UserAnswerRepository.Update(userAnswer);
             }
 
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add(@L["Answer updated"]);
+            Snackbar.Add(@L["Answer updated"]+ $": {title}", Severity.Success);
         }
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
+       async Task SetOption(AnswerOption answerOption)
+        {
+            if (answerOption == null || answerOption.Id == 0)
+            {
+                tempAnswerOption = await AnswerOptionRepository.GetOne(a=>a.ClosedQuestionId==Q.Id&&a.Level==1);
+            }
+            else
+            {
+            tempAnswerOption = answerOption;
+            }
+        }
     }
 }

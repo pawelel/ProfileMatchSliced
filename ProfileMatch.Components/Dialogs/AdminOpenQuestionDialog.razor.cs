@@ -20,12 +20,17 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public OpenQuestion EditedOpenQuestion { get; set; } = new();
         public string TempName { get; set; }
-        public string TempDescription { get; set; }
+        public string TempNamePl { get; set; }
 
+        public string TempDescription { get; set; }
+        public string TempDescriptionPl { get; set; }
         protected override void OnInitialized()
         {
+
             TempName = EditedOpenQuestion.Name;
+            TempNamePl = EditedOpenQuestion.NamePl;
             TempDescription = EditedOpenQuestion.Description;
+            TempDescriptionPl = EditedOpenQuestion.DescriptionPl;
         }
 
         [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
@@ -44,7 +49,9 @@ namespace ProfileMatch.Components.Dialogs
             if (Form.IsValid)
             {
                 EditedOpenQuestion.Name = TempName;
+                EditedOpenQuestion.NamePl = TempNamePl;
                 EditedOpenQuestion.Description = TempDescription;
+                EditedOpenQuestion.DescriptionPl = TempDescriptionPl;
                 try
                 {
                     await Save();
@@ -60,15 +67,30 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task Save()
         {
+            string title;
+            string updated;
+            string created;
+            if (ShareResource.IsEn())
+            {
+                title = $"Question {TempName} has been";
+                created = "created";
+                updated = "updated";
+            }
+            else
+            {
+                title = $"Pytanie {TempNamePl} zostało";
+                created = "utworzone";
+                updated = "zaktualizowane";
+            }
             if (EditedOpenQuestion.Id == 0)
             {
                 var result = await OpenQuestionRepository.Insert(EditedOpenQuestion);
-                Snackbar.Add(@L["Question"] + $" {@L[result.Name]} " + @L["has been created[O]"], Severity.Success);
+                Snackbar.Add( $"{title} {created}" , Severity.Success);
             }
             else
             {
                 var result = await OpenQuestionRepository.Update(EditedOpenQuestion);
-                Snackbar.Add(@L["Question"] + $" {@L[result.Name]} " + @L["has been updated[0]"], Severity.Success);
+                Snackbar.Add($"{title} {updated}", Severity.Success);
             }
         }
 

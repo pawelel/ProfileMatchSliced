@@ -1,12 +1,61 @@
-﻿<MudDialog>
-    <DialogContent>
-        <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name"] Required="true" RequiredError=@L["Question name is required!"] />
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description"] Lines="5" />
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success"  Size="Size.Small" OnClick="HandleSave">@L["Save"]</MudButton>
-    </DialogActions>
-</MudDialog>
+﻿@if (first)
+{
+    <MudDialog>
+        <DialogContent>
+            <MudForm @ref="Form">
+                <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name"] Required="true" RequiredError=@L["Question name is required!"] />
+                <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description"] Lines="5" />
+            </MudForm>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>CanLevel(Q))">@L["Levels"]</MudButton>
+            <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
+            <MudIconButton Color="Color.Tertiary" Icon=@Icons.Outlined.Add Size="Size.Small" Variant="Variant.Outlined" OnClick="Save" />
+            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Save" Color="Color.Success" Size="Size.Small" OnClick="SaveAndClose">@L["Save"]</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+
+@if (!first)
+{
+    <MudDialog>
+        <DialogContent>
+            <MudText Typo="Typo.h6">@Q.CategoryName: @Q.QuestionName</MudText>
+
+
+            <MudTabs Outlined="true"
+                 Position="Position.Top"
+                 Rounded="true"
+                 Border="true"
+                 ApplyEffectsToContainer="true"
+                 PanelClass="pa-6 d-block">
+                @foreach (var option in answerOptions)
+                {
+                    <MudTabPanel OnClick="@(()=>SetOption(option))" Text="@option.Level.ToString()">
+
+                        <MudItem>
+                            <MudText Typo="Typo.subtitle1">@L["Level"] @option.Level.ToString()</MudText>
+                            <MudText Typo="Typo.subtitle2"
+                             @bind-Value="@option.Description">@option.Description</MudText>
+                        </MudItem>
+                    </MudTabPanel>
+                }
+            </MudTabs>
+        </DialogContent>
+          <DialogActions>
+               @if (!TempIsActive)
+            {
+                <MudButton  @onclick="@(()=>ChangeActiveState(Q))">@L["Activate question"]</MudButton>
+            }
+              <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(tempOption))">@L["Edit Level"]</MudButton>
+               <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>ChangePage())">@L["Go Back To Question"]</MudButton>
+               <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
+          </DialogActions>
+    </MudDialog>
+
+    <style>
+        .mud-tab {
+            min-width: 50px !important;
+        }
+    </style>
+}

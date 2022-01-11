@@ -1,8 +1,10 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="Form">
-            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Category Name"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Category Description"] Lines="5" />
+            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Category Name EN"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@TempNamePl" Label=@L["Category Name PL"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Category Description EN"] Lines="5" />
+            <MudTextField T="string" @bind-Value="@TempDescriptionPl" Immediate="true" Label=@L["Category Description PL"] Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>
