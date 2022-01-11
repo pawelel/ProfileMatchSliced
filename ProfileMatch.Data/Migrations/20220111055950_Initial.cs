@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class Addedlanguage : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -361,11 +361,11 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Programowanie", null },
-                    { 2, null, null, "Sieci komputerowe", null },
-                    { 3, null, null, "Obsługa komputera", null },
-                    { 4, null, null, "Handel", null },
-                    { 5, null, null, "Lingwistyka", null }
+                    { 1, null, null, "Software development", "Programowanie" },
+                    { 2, null, null, "Computer networks", "Sieci komputerowe" },
+                    { 3, null, null, "Computer skills", "Obsługa komputera" },
+                    { 4, null, null, "Sales", "Handel" },
+                    { 5, null, null, "Languages", "Lingwistyka" }
                 });
 
             migrationBuilder.InsertData(
@@ -373,9 +373,9 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, null, "unassigned", null },
-                    { 2, null, null, "IT", null },
-                    { 3, null, null, "HR", null }
+                    { 1, null, null, "unassigned", "nieprzypisany" },
+                    { 2, null, null, "IT", "IT" },
+                    { 3, null, null, "HR", "HR" }
                 });
 
             migrationBuilder.InsertData(
@@ -383,32 +383,32 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Co jest dla mnie ważne w pracy?", null },
-                    { 2, null, null, "Co jest ważne dla mnie osobiście?", null },
-                    { 3, null, null, "Moje hobby", null },
-                    { 4, null, null, "Moje inne umiejętności", null },
-                    { 5, null, null, "Moje zainteresowania", null },
-                    { 6, null, null, "Jakie są moje cele?", null }
+                    { 1, null, null, "What is important to me at work?", "Co jest dla mnie ważne w pracy?" },
+                    { 2, null, null, "What is important to me personally?", "Co jest ważne dla mnie osobiście?" },
+                    { 3, null, null, "My hobby", "Moje hobby" },
+                    { 4, null, null, "My Skills", "Moje inne umiejętności" },
+                    { 5, null, null, "My Interests", "Moje zainteresowania" },
+                    { 6, null, null, "What are my goals?", "Jakie są moje cele?" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "JobTitlePl", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "32022a5f-2c5f-48af-b481-d56ea13b3e84", new DateTime(2022, 1, 10, 14, 0, 52, 803, DateTimeKind.Local).AddTicks(7146), 1, "admin@admin.com", true, "Klark", null, false, null, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFovlfV3/F9v/Fgvsvs/PVZ+HBSBJjh/1KkxmoD1XsHbCnPgtGkhQ//PsrmezgJM/w==", null, false, null, "b9cd9603-6bb3-42c6-b03e-9f975a5f6d14", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "fa1c7149-fc92-4778-a2c2-5ccb5ba4d9bc", new DateTime(2022, 1, 11, 6, 59, 50, 64, DateTimeKind.Local).AddTicks(7682), 1, "admin@admin.com", true, "Klark", null, false, null, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEMpIFzuy4bIAr7JLSXPOu8b+Q65Zb5in0dbmvWnhU3xqaQdBVLZ67okFGnTeCMLTTQ==", null, false, null, "2eca0ef1-f0f0-486f-b14c-f7fce38a17c9", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
                 columns: new[] { "Id", "CategoryId", "Description", "DescriptionPl", "IsActive", "Name", "NamePl" },
                 values: new object[,]
                 {
-                    { 1, 1, "Jaka jest Twoja znajomość programowania w C#?", null, true, "C#", null },
-                    { 2, 1, "Jaka jest Twoja znajomość programowania w C++?", null, true, "C++", null },
-                    { 3, 1, "Jaka jest Twoja znajomość programowania w Pythonie?", null, true, "Python", null },
-                    { 4, 2, "Jaka jest Twoja znajomość sieci komputerowych?", null, true, "Konfiguracja routera", null },
-                    { 5, 2, "Jaka jest Twoja znajomość usługi Active Directory?", null, true, "Usługa Active Directory", null },
-                    { 6, 3, "Jaka jest Twoja znajomość Hardware komputera?", null, true, "Hardware", null },
-                    { 7, 3, "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", null, false, "Instalacja systemu Windows", null },
-                    { 8, 4, "Jaka jest Twoja znajomość obsługi programów magazynowych?", null, false, "Obsługa programu magazynowego", null }
+                    { 1, 1, "How good are you in C# development?", "Jaka jest Twoja znajomość programowania w C#?", true, "C#", "C#" },
+                    { 2, 1, "How good are you in C++ development?", "Jaka jest Twoja znajomość programowania w C++?", true, "C++", "C++" },
+                    { 3, 1, "How good are you in Python development?", "Jaka jest Twoja znajomość programowania w Pythonie?", true, "Python", "Python" },
+                    { 4, 2, "How good are you in CComputer Networks?", "Jaka jest Twoja znajomość sieci komputerowych?", true, "Router configuration", "Konfiguracja routera" },
+                    { 5, 2, "How good are you in Active Directory?", "Jaka jest Twoja znajomość usługi Active Directory?", true, "Active Directory", "Usługa Active Directory" },
+                    { 6, 3, "What is Your Computer Hardware Knowledge?", "Jaka jest Twoja znajomość Hardware komputera?", true, "Hardware", "Sprzęt komputerowy" },
+                    { 7, 3, "How well you know MS Windows installation?", "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", false, "Windows installation", "Instalacja systemu Windows" },
+                    { 8, 4, "How good you are in Warehouse Management Software?", "Jaka jest Twoja znajomość obsługi programów magazynowych?", false, "Handling of the warehouse software", "Obsługa programu magazynowego" }
                 });
 
             migrationBuilder.InsertData(
@@ -416,36 +416,36 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "ClosedQuestionId", "Description", "DescriptionPl", "Level" },
                 values: new object[,]
                 {
-                    { 1, 1, "Nie znasz podstaw tego języka programowania", null, 1 },
-                    { 2, 1, "Znasz podstawowe rzeczy związane z programowaniem w C#", null, 2 },
-                    { 3, 1, "Potrafisz pisać proste kody w języku", null, 3 },
-                    { 4, 1, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
-                    { 5, 1, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
-                    { 6, 2, "Nie znasz podstaw tego języka programowania", null, 1 },
-                    { 7, 2, "Znasz podstawowe rzeczy związane z programowaniem w C++", null, 2 },
-                    { 8, 2, "Potrafisz pisać proste kody w języku", null, 3 },
-                    { 9, 2, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
-                    { 10, 2, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
-                    { 11, 3, "Nie znasz podstaw tego języka programowania", null, 1 },
-                    { 12, 3, "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", null, 2 },
-                    { 13, 3, "Potrafisz pisać proste kody w języku", null, 3 },
-                    { 14, 3, "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", null, 4 },
-                    { 15, 3, "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", null, 5 },
-                    { 16, 4, "Znasz podstawowe informacje na temat routera", null, 1 },
-                    { 17, 4, "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", null, 2 },
-                    { 18, 4, "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", null, 3 },
-                    { 19, 4, "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", null, 4 },
-                    { 20, 4, "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", null, 5 },
-                    { 21, 5, "Nie konfigurowałeś żadnej usługi Active Directory", null, 1 },
-                    { 22, 5, "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", null, 2 },
-                    { 23, 5, "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfiguracje", null, 3 },
-                    { 24, 5, "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", null, 4 },
-                    { 25, 5, "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", null, 5 },
-                    { 26, 6, "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa", null, 1 },
-                    { 27, 6, "Znasz podstawowe elementy składowe komputera", null, 2 },
-                    { 28, 6, "Potrafisz zlokalizować i nazwać dany komponent komputera", null, 3 },
-                    { 29, 6, "Radzisz sobie z montażem podzespołów komputerowych", null, 4 },
-                    { 30, 6, "Bez problemu składasz od podstaw komputer i go uruchamiasz", null, 5 }
+                    { 1, 1, "You have no idea about this language", "Nie znasz podstaw tego języka programowania", 1 },
+                    { 2, 1, "You know the basic concepts of C# programming", "Znasz podstawowe pojęcia związane z programowaniem w C#", 2 },
+                    { 3, 1, "You can write simple C# codes", "Potrafisz pisać proste kody w języku", 3 },
+                    { 4, 1, "You can write code that is more advanced (you know what are conditions, loops, objects, functions)", "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 5, 1, "You can easily analyze the code, edit it, introduce new changes or write the program from scratch", "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 6, 2, "You have no idea about this language", "Nie znasz podstaw tego języka programowania", 1 },
+                    { 7, 2, "You know the basic concepts of C++ programming", "Znasz podstawowe rzeczy związane z programowaniem w C++", 2 },
+                    { 8, 2, "You can write simple C++ codes", "Potrafisz pisać proste kody w języku", 3 },
+                    { 9, 2, "You can write code that is more advanced (you know what are conditions, loops, objects, functions)", "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 10, 2, "You can easily analyze the code, edit it, introduce new changes or write the program from scratch", "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 11, 3, "You have no idea about this language", "Nie znasz podstaw tego języka programowania", 1 },
+                    { 12, 3, "You know the basic concepts of Python programming", "Znasz podstawowe rzeczy związane z programowaniem w Pythonie", 2 },
+                    { 13, 3, "You can write simple Python codes", "Potrafisz pisać proste kody w języku", 3 },
+                    { 14, 3, "You can write code that is more advanced (you know what are conditions, loops, objects, functions)", "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)", 4 },
+                    { 15, 3, "You can easily analyze the code, edit it, introduce new changes or write the program from scratch", "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw", 5 },
+                    { 16, 4, "You know the basic information about the router", "Znasz podstawowe informacje na temat routera", 1 },
+                    { 17, 4, "You can login to the router and you can freely navigate the interface", "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie", 2 },
+                    { 18, 4, "You can configure the basic network settings of the router", "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze", 3 },
+                    { 19, 4, "You can configure the router for many devices and take care of security in the network", "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci", 4 },
+                    { 20, 4, "Can you configure router in linux system in text mode", "Potrafisz skonfigurować router w systemie linux w trybie tekstowym", 5 },
+                    { 21, 5, "You have not configured any Active Directory service", "Nie konfigurowałeś żadnej usługi Active Directory", 1 },
+                    { 22, 5, "Youhave installed Active Directory but did not configure it", "Instalowałeś usługę Active Directory, ale jej nie konfigurowałeś", 2 },
+                    { 23, 5, "You can add basic services to the domain and make simple configuration", "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfigurację", 3 },
+                    { 24, 5, "It's easy for you to surf the domain network settings, you can easily deal with creating domains and adding user or group accounts", "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup", 4 },
+                    { 25, 5, "AD service is your bread and butter and it doesn't cause you any problems", "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów", 5 },
+                    { 26, 6, "You have never disassembled your desktop or laptop computer", "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa", 1 },
+                    { 27, 6, "You know the basic components of a computer", "Znasz podstawowe elementy składowe komputera", 2 },
+                    { 28, 6, "You can locate and name a given computer component", "Potrafisz zlokalizować i nazwać dany komponent komputera", 3 },
+                    { 29, 6, "You deal with the assembly of computer components", "Radzisz sobie z montażem podzespołów komputerowych", 4 },
+                    { 30, 6, "You can easily assemble the computer from scratch and start it", "Bez problemu składasz od podstaw komputer i go uruchamiasz", 5 }
                 });
 
             migrationBuilder.InsertData(

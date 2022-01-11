@@ -41,6 +41,7 @@ namespace ProfileMatch.Components.Dialogs
             if (exists)
             {
                 EditUserAnswer = await UserOpenAnswerRepository.GetById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
+                TempDescription = EditUserAnswer.UserAnswer;
             }
             else
             {
@@ -51,7 +52,6 @@ namespace ProfileMatch.Components.Dialogs
                     ApplicationUserId = UserAnswerVM.UserId
                 };
             }
-            TempDescription = UserAnswerVM.OpenQuestionDescription;
             IsDisplayed = EditUserAnswer.IsDisplayed;
         }
 
