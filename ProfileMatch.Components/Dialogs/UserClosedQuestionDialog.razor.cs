@@ -24,7 +24,6 @@ namespace ProfileMatch.Components.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
         [Parameter] public QuestionUserLevelVM Q { get; set; }
         int UserLevel;
         [Parameter] public string UserId { get; set; }

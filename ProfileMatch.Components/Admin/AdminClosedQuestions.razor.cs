@@ -188,7 +188,17 @@ namespace ProfileMatch.Components.Admin
         private async Task QuestionDialog(ClosedQuestionVM question)
         {
             var parameters = new DialogParameters { ["Q"] = question };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(@L["Edit Question:"] + $" {@L[question.QuestionName]}", parameters);
+            string title;
+            if (ShareResource.IsEn())
+            {
+                title = $"Edit Question {question.CategoryName}: {question.QuestionName} ";
+            }
+            else
+            {
+                title = $"Edytuj pytanie {question.CategoryNamePl}: {question.QuestionNamePl}";
+            }
+
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(title, parameters);
             await dialog.Result;
 
         }

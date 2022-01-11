@@ -36,7 +36,7 @@ else
             <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
-                if (!string.IsNullOrEmpty(cat))
+                @if (!string.IsNullOrEmpty(cat))
                 {
                     <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
                         <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
