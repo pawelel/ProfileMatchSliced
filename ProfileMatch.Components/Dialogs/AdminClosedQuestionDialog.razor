@@ -3,8 +3,10 @@
     <MudDialog>
         <DialogContent>
             <MudForm @ref="Form">
-                <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name"] Required="true" RequiredError=@L["Question name is required!"] />
-                <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description"] Lines="5" />
+                <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name EN"] Required="true" RequiredError=@L["Question name is required!"] />
+                <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description EN"] Lines="5" />
+                <MudTextField T="string" @bind-Value="@TempNamePl" Immediate="true" Label=@L["Question Name PL"] Required="true" RequiredError=@L["Question name is required!"] />
+                <MudTextField T="string" @bind-Value="@TempDescriptionPl" Immediate="true" Label=@L["Question Description PL"] Lines="5" />
             </MudForm>
         </DialogContent>
         <DialogActions>
@@ -20,8 +22,14 @@
 {
     <MudDialog>
         <DialogContent>
+             if (ShareResource.IsEn())
+                    {
             <MudText Typo="Typo.h6">@Q.CategoryName: @Q.QuestionName</MudText>
-
+                    
+                    }else
+                    {
+                         <MudText Typo="Typo.h6">@Q.CategoryNamePl: @Q.QuestionNamePl</MudText>
+                    }
 
             <MudTabs Outlined="true"
                  Position="Position.Top"
@@ -31,14 +39,30 @@
                  PanelClass="pa-6 d-block">
                 @foreach (var option in answerOptions)
                 {
-                    <MudTabPanel OnClick="@(()=>SetOption(option))" Text="@option.Level.ToString()">
+                    if (ShareResource.IsEn())
+                    {
+
+
+                        <MudTabPanel OnClick="@(()=>SetOption(option))" Text="@option.Level.ToString()">
 
                         <MudItem>
                             <MudText Typo="Typo.subtitle1">@L["Level"] @option.Level.ToString()</MudText>
                             <MudText Typo="Typo.subtitle2"
                              @bind-Value="@option.Description">@option.Description</MudText>
                         </MudItem>
-                    </MudTabPanel>
+                        </MudTabPanel>
+                    }
+                    else
+                    {
+                        <MudTabPanel OnClick="@(()=>SetOption(option))" Text="@option.Level.ToString()">
+
+                        <MudItem>
+                            <MudText Typo="Typo.subtitle1">@L["Level"] @option.Level.ToString()</MudText>
+                            <MudText Typo="Typo.subtitle2"
+                             @bind-Value="@option.DescriptionPl">@option.DescriptionPl</MudText>
+                        </MudItem>
+                        </MudTabPanel>
+                    }
                 }
             </MudTabs>
         </DialogContent>
