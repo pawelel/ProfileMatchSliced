@@ -69,7 +69,7 @@ namespace ProfileMatch.Components.Dialogs
                 created = false;
                 EditedUser = new()
                 {
-                    PhotoPath = "files/blank-profile.png",
+                    PhotoPath = "blank-profile.png",
                     DateOfBirth = DateTime.Now
                 };
             }
