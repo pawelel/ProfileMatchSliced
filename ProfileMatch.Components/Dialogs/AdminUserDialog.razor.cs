@@ -22,6 +22,7 @@ namespace ProfileMatch.Components.Dialogs
 {
     public partial class AdminUserDialog : ComponentBase
     {
+        [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] IWebHostEnvironment Environment { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
@@ -29,65 +30,47 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
         List<IdentityRole> Roles;
-        readonly List<UserRoleVM> UserRoles = new();
+        readonly List<UserRoleVM> UserRolesVM = new();
         List<IdentityUserRole<string>> UserIdentityRoles;
         protected MudForm Form { get; set; } // TODO add validations
-        private DateTime? _dob;
         bool created;
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
         ApplicationUser EditedUser;
         private List<Department> Departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-
         IdentityRole UserRole;
         bool canChangeRoles;
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
+            CanChangeRolesCheck();
         }
         private async Task LoadData()
         {
-            UserRole = await IdentityRoleRepository.GetOne(q => q.Name.Contains("User"));
-
-
-            await CheckRoles(OpenedUser.UserId);
             Departments = await DepartmentRepository.Get();
-        }
-        private async Task CheckRoles(string userId)
-        {
-            UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == userId);
-            EditedUser = await ApplicationUserRepository.GetById(userId);
-            if (EditedUser != null)
+            Roles = await IdentityRoleRepository.Get();
+            UserRole = Roles.Find(r => r.Name.Contains("User"));
+            if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
             {
-                created = true;
+                try
+                {
+                    EditedUser = await ApplicationUserRepository.GetById(OpenedUser.UserId);
+                    created = true;
+                    await TryToAddUserRoles();
+                }
+                catch (Exception ex)
+                {
+                    Snackbar.Add(ex.Message, Severity.Error);
+                }
             }
-                if (EditedUser == null)
+            else
             {
+                created = false;
                 EditedUser = new()
                 {
                     PhotoPath = "files/blank-profile.png",
                     DateOfBirth = DateTime.Now
-                };
-            }
-            if (CurrentUser == null || CurrentUser.Id == userId || string.IsNullOrEmpty(userId))
-            {
-                canChangeRoles = false;
-                created = false;
-            }
-            if (UserIdentityRoles != null && UserIdentityRoles.Count == 0 && !string.IsNullOrEmpty(EditedUser.Id) && EditedUser != null)
-            {
-                await IdentityUserRoleRepository.Insert(new() { RoleId = UserRole.Id, UserId = EditedUser.Id });
-            }
-            Roles = await IdentityRoleRepository.Get();
-            foreach (var role in Roles)
-            {
-                var userRoleVM = new UserRoleVM
-                {
-                    RoleId = role.Id,
-                    RoleName = role.Name,
-                    UserId = EditedUser.Id,
-                    IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
                 };
             }
         }
@@ -96,7 +79,6 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                EditedUser.DateOfBirth = (DateTime)_dob;
                 EditedUser.UserName = EditedUser.Email;
                 EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
                 if (created)
@@ -110,9 +92,8 @@ namespace ProfileMatch.Components.Dialogs
                     EditedUser = await ApplicationUserRepository.Insert(EditedUser);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
                     created = true;
-                    await AddUserRole(EditedUser);
                 }
-                foreach (var role in UserRoles)
+                foreach (var role in UserRolesVM)
                 {
                     if (role.IsSelected && !await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
                     {
@@ -125,21 +106,26 @@ namespace ProfileMatch.Components.Dialogs
                         await IdentityUserRoleRepository.Delete(roleToRemove);
                     }
                 }
-                await AddUserRole(EditedUser);
+                MudDialog.Close(DialogResult.Ok(true));
+                await Task.Delay(2000);
+                NavigationManager.NavigateTo("admin/dashboard", true);
             }
         }
-
-        private async Task AddUserRole(ApplicationUser updatedUser)
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
+        private void Cancel()
         {
-
-            await CheckRoles(updatedUser.Id);
+            MudDialog.Cancel();
+            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
-
-        async Task OnChange(InputFileChangeEventArgs e)
+        async Task UploadImage(InputFileChangeEventArgs e)
         {
             string wwwPath;
             string contentPath = $"Files/{EditedUser.Id}/Profile.png";
             string path = Path.Combine(Environment.WebRootPath, "Files", EditedUser.Id);
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -169,20 +155,36 @@ namespace ProfileMatch.Components.Dialogs
                 wwwPath = $"{path}\\Profile.png";
                 using FileStream fs = File.Create(wwwPath);
                 await imageStream.CopyToAsync(fs);
-                imageStream.Close();
                 fs.Close();
+                imageStream.Close();
                 EditedUser.PhotoPath = contentPath;
                 StateHasChanged();
+
+            }
+        }
+        //prevent edit own role
+        private void CanChangeRolesCheck()
+        {
+            if (CurrentUser == null || CurrentUser.Id == OpenedUser.UserId)
+            {
+                canChangeRoles = false;
             }
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
-        private void Cancel()
+        // add rolesVM after user is created
+        private async Task TryToAddUserRoles()
         {
-            MudDialog.Cancel();
-            Snackbar.Add(L["Operation cancelled"], Severity.Warning);
+            UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == EditedUser.Id);
+            foreach (var role in Roles)
+            {
+                var userRoleVM = new UserRoleVM
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    UserId = EditedUser.Id,
+                    IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
+                };
+            }
         }
-
     }
 }

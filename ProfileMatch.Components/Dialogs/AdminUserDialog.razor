@@ -10,9 +10,9 @@ else
             <MudForm @ref="Form">
                 @if (created)
                 {
-                    <MudAvatar Image="@EditedUser?.PhotoPath">
+                    <MudAvatar Image="@EditedUser.PhotoPath">
                     </MudAvatar>
-                    <InputFile OnChange="@OnChange" @ref="inputFile" accept=".jpg, .jpeg, .png" />
+                    <InputFile OnChange="@UploadImage" @ref="inputFile" accept=".jpg, .jpeg, .png" />
                 }
                 <MudSelect @bind-Value="@EditedUser.DepartmentId"
                            T="int"
@@ -45,7 +45,7 @@ else
                         <MudSelectItem Value="@g">@L[g.ToString()]</MudSelectItem>
                     }
                 </MudSelect>
-                <MudDatePicker @bind-Date="@_dob"
+                <MudDatePicker @bind-Date="@EditedUser.DateOfBirth"
                                Required="true"
                                Rounded="true"
                                Elevation="1"
@@ -54,7 +54,7 @@ else
                                Editable="false" />
                 @if (canChangeRoles)
                 {
-                    <MudTable Items="@UserRoles">
+                    <MudTable Items="@UserRolesVM">
                         <HeaderContent>
                             <MudTh>@L["Role Name"]</MudTh>
                             <MudTh>@L["Assigned"]</MudTh>

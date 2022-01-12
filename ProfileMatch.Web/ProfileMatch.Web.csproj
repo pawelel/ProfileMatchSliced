@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Files\" />
+    <Folder Include="wwwroot\Files\a96d7c75-47f4-409b-a4d1-03f93c105647\" />
   </ItemGroup>
 
 </Project>
