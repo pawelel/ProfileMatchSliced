@@ -8,9 +8,12 @@ else
     <MudDialog>
         <DialogContent>
             <MudForm @ref="Form">
-                <MudAvatar Image="@EditedUser?.PhotoPath">
+                @if (created)
+                {
+                    <MudAvatar Image="@EditedUser?.PhotoPath">
                     </MudAvatar>
-                <InputFile OnChange="@OnChange" @ref="inputFile" accept=".jpg, .jpeg, .png" />
+                    <InputFile OnChange="@OnChange" @ref="inputFile" accept=".jpg, .jpeg, .png" />
+                }
                 <MudSelect @bind-Value="@EditedUser.DepartmentId"
                            T="int"
                            OffsetY="true"
@@ -49,17 +52,20 @@ else
                                RequiredError=@L["BirthDate is Required"]
                                Label=@L["Select Date of Birth"]
                                Editable="false" />
-                               <MudTable Items="@UserRoles">
-                                    <HeaderContent>
-                                   <MudTh>@L["Role Name"]</MudTh>
-                                   <MudTh>@L["Assigned"]</MudTh>
-                                   </HeaderContent>
-                                   <RowTemplate>
-                                         <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
-                                         <MudTd DataLabel=@L["Assigned"]>
-                                             <MudCheckBox @bind-Checked="@context.IsSelected"/></MudTd>
-                                   </RowTemplate>
-                               </MudTable>
+                @if (canChangeRoles)
+                {
+                    <MudTable Items="@UserRoles">
+                        <HeaderContent>
+                            <MudTh>@L["Role Name"]</MudTh>
+                            <MudTh>@L["Assigned"]</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
+                            <MudTd DataLabel=@L["Assigned"]>
+                                <MudCheckBox @bind-Checked="@context.IsSelected"/></MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                }
             </MudForm>
           
         </DialogContent>

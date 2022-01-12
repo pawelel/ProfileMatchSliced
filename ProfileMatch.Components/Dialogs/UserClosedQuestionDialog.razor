@@ -34,7 +34,7 @@
     </DialogContent>
     <DialogActions>
         <MudText>@L["Current Level"]: @UserLevel</MudText>
-            <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync())" Size="Size.Small">@L["This is my Level"]</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync())" Size="Size.Small">@L["This is my Level"]</MudButton>
     </DialogActions>
     </MudDialog>
 }else

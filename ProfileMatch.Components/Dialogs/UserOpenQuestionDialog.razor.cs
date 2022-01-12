@@ -33,10 +33,12 @@ namespace ProfileMatch.Components.Dialogs
         string TempDescription;
         bool IsDisplayed;
         bool exists;
+#pragma warning disable IDE0052 // Remove unread private members - reference to count
         private MudTextField<string> multilineReference;
+#pragma warning restore IDE0052 // Remove unread private members
 
         protected override async Task OnInitializedAsync()
-        {
+        { 
             exists = await UserOpenAnswerRepository.ExistById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
             if (exists)
             {
@@ -54,7 +56,6 @@ namespace ProfileMatch.Components.Dialogs
             }
             IsDisplayed = EditUserAnswer.IsDisplayed;
         }
-
         [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
 
         private MudForm Form;

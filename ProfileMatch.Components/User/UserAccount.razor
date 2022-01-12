@@ -29,7 +29,13 @@
                 <MudCard>
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <textfield Typo="Typo.h6">@un.OpenQuestionName</textfield>
+                            @if (ShareResource.IsEn())
+                            {
+                                <MudText T="string" Typo="Typo.h6">@un.OpenQuestionName</MudText>
+                            }else
+                            {
+                                <MudText T="string" Typo="Typo.h6">@un.OpenQuestionNamePl</MudText>
+                            }
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>

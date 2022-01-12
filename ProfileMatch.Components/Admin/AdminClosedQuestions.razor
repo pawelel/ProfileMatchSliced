@@ -33,14 +33,14 @@ else
     </MudGrid>
     <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
+            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
                 @if (!string.IsNullOrEmpty(cat))
                 {
                     <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
-                        <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-                        <MudButton Style="color: var(--mud-palette-success-darken)!important; border-color: var(--mud-palette-success-darken)" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
+                        <MudButton Color="Color.Info" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+                        <MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
                     </MudButtonGroup>
                     <MudText>&nbsp;&nbsp;&nbsp;</MudText>
                 }
@@ -62,7 +62,7 @@ else
                 <Column Field="Description" T="ClosedQuestionVM" Title="Description" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Actions">
                     <CellTemplate>
-                        <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                        <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
                     </CellTemplate>
                 </Column>
             }
@@ -80,7 +80,7 @@ else
                     <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Działania">
                     <CellTemplate>
-                        <MudButton Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                        <MudButton Size="Size.Small" Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
                     </CellTemplate>
                 </Column>
             }

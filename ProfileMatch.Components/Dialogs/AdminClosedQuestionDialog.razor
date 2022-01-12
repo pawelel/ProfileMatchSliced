@@ -71,7 +71,7 @@
             {
                 <MudButton  @onclick="@(()=>ChangeActiveState(Q))">@L["Activate question"]</MudButton>
             }
-              <MudButton Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(tempOption))">@L["Edit Level"]</MudButton>
+              <MudButton Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(tempOption))">@L["Edit Level"]</MudButton>
                <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>ChangePage())">@L["Go Back To Question"]</MudButton>
                <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
           </DialogActions>

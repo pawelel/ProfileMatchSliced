@@ -18,7 +18,7 @@ namespace ProfileMatch.Components.Theme
                 AppbarBackground = "#27272f",
                 AppbarText = "rgba(255,255,255, 0.70)",
                 TextPrimary = "rgba(255,255,255, 0.70)",
-                Primary = Colors.Indigo.Lighten1,
+                Primary = Colors.LightBlue.Default,
                 TextSecondary = "rgba(255,255,255, 0.50)",
                 ActionDefault = "#adadb1",
                 ActionDisabled = "rgba(255,255,255, 0.26)",
@@ -30,7 +30,9 @@ namespace ProfileMatch.Components.Theme
                 LinesInputs = "rgba(255,255,255, 0.3)",
                 TextDisabled = "rgba(255,255,255, 0.2)",
                 Secondary = Colors.Pink.Lighten3,
-                Success = Colors.Green.Darken1
+                Success = Colors.Green.Darken1,
+                SuccessDarken = "#E91E63",
+                Info = Colors.LightGreen.Accent3
             };
             LayoutProperties = new LayoutProperties()
             {

@@ -8,7 +8,7 @@ namespace ProfileMatch.Components.Theme
         {
             Palette = new Palette()
             {
-                //Primary = Colors.Indigo.Darken3,
+                Primary = Colors.Purple.Default,
                 //Secondary = Colors.DeepPurple.Accent2,
                 Background = Colors.Grey.Lighten2,
                 Black = "#272c34",
@@ -19,7 +19,9 @@ namespace ProfileMatch.Components.Theme
                 Secondary = Colors.Pink.Lighten1,
                 Success = Colors.Green.Darken4,
                 Tertiary = Colors.Teal.Darken1,
-                InfoLighten = Colors.Shades.Black
+                InfoLighten = Colors.Shades.Black,
+                SuccessDarken = "rgb(0,163,68)",
+                Info = Colors.Teal.Default
 
             };
 

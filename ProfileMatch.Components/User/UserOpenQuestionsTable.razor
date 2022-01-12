@@ -40,7 +40,7 @@
             <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"] />
         }
         <Column Sortable="false" T="UserAnswerVM" Title="@L["Edit"]">
-            <CellTemplate><MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-info-darken)!important; border-color: var(--mud-palette-info-darken)" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton></CellTemplate>
+            <CellTemplate><MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton></CellTemplate>
         </Column>
     </Columns>
     <PagerContent>

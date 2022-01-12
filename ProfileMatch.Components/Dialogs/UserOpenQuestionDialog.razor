@@ -4,10 +4,7 @@
             <MudItem xs="12" md="12" sm="12">
                 <MudForm @ref="Form">
                     <MudTextField @ref="multilineReference" T="string" @bind-Value="@TempDescription" Counter="200" MaxLength="200" HelperText=@L["Max length"] Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
-
-
                 </MudForm>
-
             </MudItem>
         </MudGrid>
     </DialogContent>
