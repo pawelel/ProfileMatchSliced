@@ -89,6 +89,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 else
                 {
+                    
                     EditedUser = await ApplicationUserRepository.Insert(EditedUser);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
                     created = true;

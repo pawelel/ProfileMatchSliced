@@ -730,10 +730,10 @@
     <value>Pytanie zamknięte</value>
   </data>
   <data name="Create Department" xml:space="preserve">
-    <value>Stwórz dział</value>
+    <value>Nowy dział</value>
   </data>
   <data name="Create Category" xml:space="preserve">
-    <value>Stwórz Kategorie</value>
+    <value>Nowa Kategoria</value>
   </data>
   <data name="Display the question" xml:space="preserve">
     <value>Wyświetl pytanie</value>

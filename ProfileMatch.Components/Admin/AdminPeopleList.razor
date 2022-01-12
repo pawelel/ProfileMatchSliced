@@ -19,65 +19,72 @@ else
         </MudItem>
     </MudGrid>
     <MudDataGrid Items="Users" T="DepartmentUserVM" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
-        <ToolBarContent>
-
-            <MudButton Color="Color.Primary" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined">@L["New User"]</MudButton>
-        </ToolBarContent>
 <Columns>
             @if (ShareResource.IsEn())
             {
-                  <Column T="DepartmentUserVM" Field="DepartmentId" Title="Department Id" />
+                  <Column  T="DepartmentUserVM" Field="DepartmentId" Title="Department Id" />
                 <Column T="DepartmentUserVM" Field="DepartmentName" Title="Department">
+                    <HeaderTemplate>
+                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentCreate())" Variant="Variant.Outlined"/>
+                    </HeaderTemplate>
                     <CellTemplate>
                         @(string.IsNullOrWhiteSpace(context.DepartmentName)? "unassigned" : context.DepartmentName)
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Sortable="false" Title="Photo">
                     <CellTemplate>
-                        <MudAvatar Image="@context.PhotoPath" Size="Size.Large" />
+                         <MudTooltip Text="@($"{context.FullName} Profile")">
+                        <MudAvatar Class="zoom" @onclick="@(()=>ShowProfile(context))" Image="@context.PhotoPath" Size="Size.Large" />
+                            </MudTooltip>
                     </CellTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Field="FirstName" Title="First Name"/>
-                <Column T="DepartmentUserVM" Field="LastName" Title="Last Name"/>
+                <Column T="DepartmentUserVM" Field="FullName" Title="User">
+                    <HeaderTemplate>
+                        @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined"/>
+                    </HeaderTemplate>
+                </Column>
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Is Active">
                     <CellTemplate>
                          @(context.IsActive?"Yes":"No")
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Sortable="false" Title="Actions">
-                    <CellTemplate>
-                         <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
-                <MudButton Color="Color.Primary" OnClick="@(()=>EditProfile(context))" Variant="Variant.Outlined">@L["Edit User"]</MudButton>
-                <MudButton Color="Color.Info" OnClick="@(()=>ShowProfile(context))"  Variant="Variant.Outlined">@L["Show profile"]</MudButton>
-            </MudButtonGroup>
+                    <CellTemplate>         
+                <MudButton Color="Color.Primary" OnClick="@(()=>EditProfile(context))" Variant="Variant.Outlined">@L["Edit User"]</MudButton>       
                     </CellTemplate>
                 </Column>
             }
             else{
-                   <Column T="DepartmentUserVM" Field="DepartmentId" Title="Id działu" />
-                                <Column T="DepartmentUserVM" Title="Dział">
+                   <Column  T="DepartmentUserVM" Field="DepartmentId" Title="Id działu" />
+                   <Column T="DepartmentUserVM" Field="DepartmentNamePl" Title="Dział">
+                    <HeaderTemplate>
+                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentCreate())" Variant="Variant.Outlined"/>
+                    </HeaderTemplate>
                     <CellTemplate>
-                         @(string.IsNullOrWhiteSpace(context.DepartmentNamePl)? "nieprzypisany" : context.DepartmentNamePl)
+                        @(string.IsNullOrWhiteSpace(context.DepartmentNamePl)? "nieprzypisany" : context.DepartmentNamePl)
                     </CellTemplate>
                 </Column>
                 <Column Sortable="false" T="DepartmentUserVM" Title="Zdjęcie">
                     <CellTemplate>
-                        <MudAvatar Image="@context.PhotoPath" Size="Size.Large" />
+                        <MudTooltip Text="@($"Profil {context.FullName}")">
+                        <MudAvatar Class="zoom" @onclick="@(()=>ShowProfile(context))" Image="@context.PhotoPath" Size="Size.Large" />
+                        </MudTooltip>
                     </CellTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Field="FirstName" Title="Imię"/>
-                <Column T="DepartmentUserVM" Field="LastName" Title="Nazwisko"/>
+                <Column T="DepartmentUserVM" Field="FullName" Title="Imię i nazwisko">
+                    <HeaderTemplate>
+                        @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined"/>
+                    </HeaderTemplate>
+                </Column>
+ 
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Jest aktywny">
                     <CellTemplate>
                         @(context.IsActive?"Tak":"Nie")
                     </CellTemplate>
                 </Column>
                 <Column Sortable="false" T="DepartmentUserVM" Title="Działania">
-                    <CellTemplate>
-                         <MudButtonGroup Style="text-align: center;" Size="Size.Small" DataLabel="Actions" Variant="Variant.Outlined" OverrideStyles="false">
+                    <CellTemplate>   
                 <MudButton Color="Color.Primary" OnClick="@(()=>EditProfile(context))" Variant="Variant.Outlined">Edytuj użytkownika</MudButton>
-                <MudButton Color="Color.Info" OnClick="@(()=>ShowProfile(context))"  Variant="Variant.Outlined">Pokaż profil</MudButton>
-            </MudButtonGroup>
                     </CellTemplate>
                 </Column>
             }
@@ -87,3 +94,14 @@ else
         </PagerContent>
     </MudDataGrid>
 }
+<style>
+    .zoom {
+    
+    transition: transform 250ms;
+  }
+  
+  .zoom:hover {
+    transform: translateY(-px);
+    transform: scale(1.1);
+  }
+</style>

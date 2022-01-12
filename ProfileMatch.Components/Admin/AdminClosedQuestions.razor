@@ -33,7 +33,7 @@ else
     </MudGrid>
     <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-            <MudButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary">@L["New Category"]</MudButton> <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
+           <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
                 @if (!string.IsNullOrEmpty(cat))
@@ -51,7 +51,11 @@ else
             @if (ShareResource.IsEn())
             {
                 <Column Field="CategoryId" T="ClosedQuestionVM" Title=" Category Id" />
-                <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category" />
+                <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category">
+                    <HeaderTemplate>
+                     @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add"/>
+                    </HeaderTemplate>
+                </Column>
                 <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Question Id" />
                 <Column Field="QuestionName" T="ClosedQuestionVM" Title="Question" />
                   <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
@@ -69,7 +73,11 @@ else
             else
             {
                  <Column Field="CategoryId" T="ClosedQuestionVM" Title="Id Kategorii" />
-                <Column T="ClosedQuestionVM" Field="CategoryNamePl" Title="Kategoria"/>
+                <Column T="ClosedQuestionVM" Field="CategoryNamePl" Title="Kategoria">
+                     <HeaderTemplate>
+                       @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add"/>
+                    </HeaderTemplate>
+                </Column>
                 <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Id Pytania" />
                 <Column Field="QuestionNamePl" T="ClosedQuestionVM" Title="Pytanie"/>
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Aktywne">

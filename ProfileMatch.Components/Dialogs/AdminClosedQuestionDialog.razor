@@ -11,7 +11,7 @@
         </DialogContent>
         <DialogActions>
             <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>CanLevel(Q))">@L["Levels"]</MudButton>
-            <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
+            <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudIconButton Color="Color.Tertiary" Icon=@Icons.Outlined.Add Size="Size.Small" Variant="Variant.Outlined" OnClick="Save" />
             <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Save" Color="Color.Success" Size="Size.Small" OnClick="SaveAndClose">@L["Save"]</MudButton>
         </DialogActions>
@@ -73,7 +73,7 @@
             }
               <MudButton Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(tempOption))">@L["Edit Level"]</MudButton>
                <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>ChangePage())">@L["Go Back To Question"]</MudButton>
-               <MudButton Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
+               <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
           </DialogActions>
     </MudDialog>
 

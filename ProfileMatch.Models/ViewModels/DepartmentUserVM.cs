@@ -19,5 +19,6 @@ namespace ProfileMatch.Models.ViewModels
         public bool IsActive { get; set; }
         public string PhotoPath { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string FullName => $"{LastName} {FirstName}";
     }
 }

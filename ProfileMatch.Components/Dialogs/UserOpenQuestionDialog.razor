@@ -11,7 +11,7 @@
     <DialogActions>
         <MudCheckBox @bind-Checked="IsDisplayed" Label=@L["Display on profile page"] />
         <MudSpacer />
-        <MudButton Variant="Variant.Outlined" Size="Size.Small" Style="color: var(--mud-palette-warning)!important; border-color: var(--mud-palette-warning)" OnClick="Cancel">@L["Cancel"]</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Warning" OnClick="Cancel">@L["Cancel"]</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Small" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>
 </MudDialog>
