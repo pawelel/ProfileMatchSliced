@@ -39,7 +39,7 @@ namespace ProfileMatch.Components.Dialogs
         ApplicationUser EditedUser;
         private List<Department> Departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        
+
         IdentityRole UserRole;
         bool canChangeRoles;
         protected override async Task OnInitializedAsync()
@@ -48,39 +48,34 @@ namespace ProfileMatch.Components.Dialogs
         }
         private async Task LoadData()
         {
-            
             UserRole = await IdentityRoleRepository.GetOne(q => q.Name.Contains("User"));
+
 
             await CheckRoles(OpenedUser.UserId);
             Departments = await DepartmentRepository.Get();
-            if (string.IsNullOrEmpty(EditedUser.PhotoPath))
-            {
-                EditedUser.PhotoPath = "files/blank-profile.png";
-            }
-            if (EditedUser.DateOfBirth == null)
-            {
-                _dob = DateTime.Now;
-            }
-            else
-            {
-                _dob = EditedUser.DateOfBirth;
-            }
         }
         private async Task CheckRoles(string userId)
         {
-            EditedUser = await ApplicationUserRepository.GetById(userId) == null ? EditedUser = new() : EditedUser;
-            if (CurrentUser.Id == userId || string.IsNullOrEmpty(userId))
+            UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == userId);
+            EditedUser = await ApplicationUserRepository.GetById(userId);
+                if (EditedUser == null)
+            {
+                EditedUser = new()
+                {
+                    PhotoPath = "files/blank-profile.png",
+                    DateOfBirth = DateTime.Now
+                };
+            }
+            if (CurrentUser == null || CurrentUser.Id == userId || string.IsNullOrEmpty(userId))
             {
                 canChangeRoles = false;
                 created = false;
-                return;
             }
-            if (UserIdentityRoles.Count == 0&&!string.IsNullOrEmpty(EditedUser.Id))
+            if (UserIdentityRoles != null && UserIdentityRoles.Count == 0 && !string.IsNullOrEmpty(EditedUser.Id) && EditedUser != null)
             {
                 await IdentityUserRoleRepository.Insert(new() { RoleId = UserRole.Id, UserId = EditedUser.Id });
             }
             Roles = await IdentityRoleRepository.Get();
-            UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == EditedUser.Id);
             foreach (var role in Roles)
             {
                 var userRoleVM = new UserRoleVM
@@ -131,7 +126,7 @@ namespace ProfileMatch.Components.Dialogs
 
         private async Task AddUserRole(ApplicationUser updatedUser)
         {
-           
+
             await CheckRoles(updatedUser.Id);
         }
 
