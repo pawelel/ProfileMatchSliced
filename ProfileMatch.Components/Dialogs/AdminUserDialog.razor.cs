@@ -58,6 +58,10 @@ namespace ProfileMatch.Components.Dialogs
         {
             UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == userId);
             EditedUser = await ApplicationUserRepository.GetById(userId);
+            if (EditedUser != null)
+            {
+                created = true;
+            }
                 if (EditedUser == null)
             {
                 EditedUser = new()
@@ -105,6 +109,7 @@ namespace ProfileMatch.Components.Dialogs
                 {
                     EditedUser = await ApplicationUserRepository.Insert(EditedUser);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
+                    created = true;
                     await AddUserRole(EditedUser);
                 }
                 foreach (var role in UserRoles)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
+using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
 
 namespace ProfileMatch.Sites
