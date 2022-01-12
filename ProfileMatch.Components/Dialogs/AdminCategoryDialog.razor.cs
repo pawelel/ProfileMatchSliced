@@ -68,7 +68,21 @@ namespace ProfileMatch.Components.Dialogs
                 MudDialog.Close(DialogResult.Ok(Cat));
             }
         }
+        private async Task Delete()
+        {
+            if(await CategoryRepository.ExistById(Cat.Id))
+            {
+            var result = await CategoryRepository.Delete(Cat);
+            }
+            if (ShareResource.IsEn())
+            {
+                Snackbar.Add($"Category {Cat.Name} deleted");
+            }else
+            {
+                Snackbar.Add($"Kategoria {Cat.NamePl} usunięta");
+            }
 
+        }
         private async Task Save()
         {
             string created;

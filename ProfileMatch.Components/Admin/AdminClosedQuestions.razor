@@ -33,15 +33,13 @@ else
     </MudGrid>
     <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
-           <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
+            <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)
             {
                 @if (!string.IsNullOrEmpty(cat))
                 {
-                    <MudButtonGroup Size="Size.Small" Variant="Variant.Outlined" OverrideStyles="true">
                         <MudButton Color="Color.Info" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-                        <MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(cat))">@L["+"]</MudButton>
-                    </MudButtonGroup>
+          
                     <MudText>&nbsp;&nbsp;&nbsp;</MudText>
                 }
             }
@@ -53,12 +51,12 @@ else
                 <Column Field="CategoryId" T="ClosedQuestionVM" Title=" Category Id" />
                 <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category">
                     <HeaderTemplate>
-                     @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add"/>
+                        @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
                 <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Question Id" />
                 <Column Field="QuestionName" T="ClosedQuestionVM" Title="Question" />
-                  <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
+                <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
                     <CellTemplate>
                         @(context.IsActive?"Yes":"No")
                     </CellTemplate>
@@ -66,29 +64,41 @@ else
                 <Column Field="Description" T="ClosedQuestionVM" Title="Description" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Actions">
                     <CellTemplate>
-                        <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                        @if (context.ClosedQuestionId > 0)
+                        {
+                            <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
+                           }Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                        }else{
+<MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(context.CategoryName))">@L["New Question"]</MudButton>
+                        }
                     </CellTemplate>
                 </Column>
             }
             else
             {
-                 <Column Field="CategoryId" T="ClosedQuestionVM" Title="Id Kategorii" />
+                <Column Field="CategoryId" T="ClosedQuestionVM" Title="Id Kategorii" />
                 <Column T="ClosedQuestionVM" Field="CategoryNamePl" Title="Kategoria">
-                     <HeaderTemplate>
-                       @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add"/>
+                    <HeaderTemplate>
+                        @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
                 <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Id Pytania" />
-                <Column Field="QuestionNamePl" T="ClosedQuestionVM" Title="Pytanie"/>
+                <Column Field="QuestionNamePl" T="ClosedQuestionVM" Title="Pytanie" />
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Aktywne">
                     <CellTemplate>
                         @(context.IsActive?"Tak":"Nie")
                     </CellTemplate>
                 </Column>
-                    <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
+                <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Działania">
                     <CellTemplate>
-                        <MudButton Size="Size.Small" Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                         @if (context.ClosedQuestionId > 0)
+                        {
+                            <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
+                           Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                        }else{
+<MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(context.CategoryName))">@L["New Question"]</MudButton>
+                        }
                     </CellTemplate>
                 </Column>
             }
