@@ -11,7 +11,7 @@ namespace ProfileMatch.Components.Theme
                 Black = "#27272f",
                 Background = "#32333d",
                 BackgroundGrey = "#27272f",
-                Surface = "#373740",
+                Surface = "#373740", 
                 DrawerBackground = Colors.BlueGrey.Darken4,
                 DrawerText = "rgba(255,255,255, 0.50)",
                 DrawerIcon = "rgba(255,255,255, 0.50)",

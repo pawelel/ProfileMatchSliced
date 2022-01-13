@@ -8,11 +8,11 @@ namespace ProfileMatch.Components.Theme
         {
             Palette = new Palette()
             {
-                Primary = Colors.Purple.Default,
+                Primary = Colors.LightBlue.Darken3,
                 //Secondary = Colors.DeepPurple.Accent2,
                 Background = Colors.Grey.Lighten2,
                 Black = "#272c34",
-                AppbarBackground = Colors.Indigo.Darken3,
+                AppbarBackground = Colors.LightBlue.Darken4,
                 DrawerBackground = Colors.Grey.Lighten2,
                 Surface = Colors.Grey.Lighten3,
                 DrawerText = "rgba(0,0,0, 0.7)",
