@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Certificates : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -141,7 +141,7 @@ namespace ProfileMatch.Data.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
-                    JobTitleId = table.Column<int>(type: "int", nullable: true),
+                    JobTitleId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -284,6 +284,31 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Certificates_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserCategories",
                 columns: table => new
                 {
@@ -418,7 +443,7 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitleId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "8156e1c6-3002-49d5-8b77-e5fdee923f48", new DateTime(2022, 1, 13, 17, 52, 42, 32, DateTimeKind.Local).AddTicks(9407), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAvPk4hQZ7YGf5NY/u6LR7FizNdGbLOAzMTo7ve/7Rp0RHHMWuItXcNAD0f0TdvW+A==", null, false, null, "d4939e33-7e35-497c-9f46-db843dc26b98", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "30b66b59-447d-4c20-acfd-c41f8fce6571", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEA7gpniRqOhGbX3OVv1plgKhHVDGYMZQO57xAm3KT+mbdanTTBIMNLMrFesdgtnefA==", null, false, "/default-profile.png", "bde9c84c-0e35-4ced-a804-2ce4440b0f2c", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -547,6 +572,11 @@ namespace ProfileMatch.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Certificates_ApplicationUserId",
+                table: "Certificates",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClosedQuestions_CategoryId",
                 table: "ClosedQuestions",
                 column: "CategoryId");
@@ -588,6 +618,9 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Certificates");
 
             migrationBuilder.DropTable(
                 name: "UserCategories");

@@ -29,6 +29,8 @@ namespace ProfileMatch.Models.Models
         public int DepartmentId { get; set; } = 1; //NOTE had to initialize
         [Ignore]
         public Department Department { get; set; }
+        [Ignore]
+        public virtual ICollection<Certificate> Certificates { get; set; }
         public string PhotoPath { get; set; }
         public bool IsActive { get; set; }
         [Ignore]

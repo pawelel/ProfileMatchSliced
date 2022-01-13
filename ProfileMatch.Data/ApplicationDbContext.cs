@@ -20,53 +20,37 @@ namespace ProfileMatch.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //relations
-            builder.Entity<UserClosedAnswer>(entity =>
-            {
-                entity.HasKey(x => new { x.ApplicationUserId, x.ClosedQuestionId });
-                entity.HasOne(a => a.AnswerOption)
-                .WithMany(u => u.UserClosedAnswers)
-                .HasForeignKey(a => a.AnswerOptionId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-                entity.HasOne(q => q.ClosedQuestion)
-                .WithMany(a => a.UserClosedAnswers)
-                .HasForeignKey(q => q.ClosedQuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
-                entity.HasOne(u => u.ApplicationUser)
-                .WithMany(a => a.UserClosedAnswers)
-                .HasForeignKey(u => u.ApplicationUserId)
-                .OnDelete(DeleteBehavior.Cascade);
-            });
-
             //composite keys
             builder.Entity<UserCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
             builder.Entity<UserOpenAnswer>().HasKey(x => new { x.ApplicationUserId, x.OpenQuestionId });
             //seed roles
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
-
-            builder.Entity<Department>().HasData(new Department { Id = 1, Name = "unassigned", NamePl = "nieprzypisany" });
-            builder.Entity<Department>().HasData(new Department { Id = 2, Name = "IT", NamePl = "IT" });
-            builder.Entity<Department>().HasData(new Department { Id = 3, Name = "HR", NamePl = "HR" });
+            builder.Entity<IdentityRole>(role =>
+            {
+                role.HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
+                role.HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
+            });
+            builder.Entity<Department>(department =>
+            {
+                department.HasData(new Department { Id = 1, Name = "unassigned", NamePl = "nieprzypisany" });
+                department.HasData(new Department { Id = 2, Name = "IT", NamePl = "IT" });
+                department.HasData(new Department { Id = 3, Name = "HR", NamePl = "HR" });
+            }
+                );
             base.OnModelCreating(builder);
-
             //a hasher to hash the password before seeding the user to the db
             var hasher = new PasswordHasher<ApplicationUser>();
-
-            builder.Entity<ApplicationUser>()
-        .HasMany(e => e.UserRoles)
+            builder.Entity<ApplicationUser>(user =>
+            {
+                user.HasMany(e => e.UserRoles)
         .WithOne()
         .HasForeignKey(e => e.UserId)
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<ApplicationUser>().HasOne(j=>j.JobTitle)
-                .WithMany(a=>a.ApplicationUsers)
-                .HasForeignKey(a=>a.JobTitleId)
+                user.HasOne(j => j.JobTitle)
+                .WithMany(a => a.ApplicationUsers)
+                .HasForeignKey(a => a.JobTitleId)
                 .OnDelete(DeleteBehavior.ClientCascade);
-
-            //Seeding the User to AspNetUsers table
-            builder.Entity<ApplicationUser>().HasData(
+                user.HasData(
                 new ApplicationUser
                 {
                     Id = "a96d7c75-47f4-409b-a4d1-03f93c105647", // primary key
@@ -78,10 +62,14 @@ namespace ProfileMatch.Data
                     Email = "admin@admin.com",
                     NormalizedEmail = "ADMIN@ADMIN.COM",
                     FirstName = "Klark",
-                    LastName = "Kent"
+                    LastName = "Kent",
+                    JobTitleId=1,
+                    IsActive = true,
+                    PhotoPath = "/default-profile.png",
+                    DateOfBirth = new DateTime(day:26 , month:1, year:1971)
                 }
-            );
-
+                            );
+            });
             //Seeding the relation between our user and role to AspNetUserRoles table
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
@@ -90,7 +78,6 @@ namespace ProfileMatch.Data
                     UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647"
                 }
             );
-
             //Seeding first set of questions
             builder.Entity<OpenQuestion>().HasData(
                new OpenQuestion()
@@ -161,19 +148,16 @@ namespace ProfileMatch.Data
                      Id = 5,
                      Name = "Languages"
                  }
-
                 );
             builder.Entity<JobTitle>().HasData(
-
                 new JobTitle()
                 {
-                    Id =1,
+                    Id = 1,
                     NamePl = "nie przypisano",
-                    Name  = "not assigned",
+                    Name = "not assigned",
                     Description = "Initial Job Title",
                     DescriptionPl = "Wstępne stanowisko"
                 });
-
             builder.Entity<ClosedQuestion>().HasData(
                 new ClosedQuestion()
                 {
@@ -184,7 +168,6 @@ namespace ProfileMatch.Data
                     IsActive = true,
                     DescriptionPl = "Jaka jest Twoja znajomość programowania w C#?",
                     Description = "How good are you in C# development?"
-
                 },
                 new ClosedQuestion()
                 {
@@ -195,7 +178,6 @@ namespace ProfileMatch.Data
                     IsActive = true,
                     DescriptionPl = "Jaka jest Twoja znajomość programowania w C++?",
                     Description = "How good are you in C++ development?"
-
                 },
                 new ClosedQuestion()
                 {
@@ -206,7 +188,6 @@ namespace ProfileMatch.Data
                     IsActive = true,
                     DescriptionPl = "Jaka jest Twoja znajomość programowania w Pythonie?",
                     Description = "How good are you in Python development?"
-
                 },
                 new ClosedQuestion()
                 {
@@ -247,7 +228,6 @@ namespace ProfileMatch.Data
                     IsActive = false,
                     DescriptionPl = "Jaka jest Twoja znajomość na temat instalacji systemu Windows?",
                     Description = "How well you know MS Windows installation?"
-
                 },
                 new ClosedQuestion()
                 {
@@ -284,7 +264,6 @@ namespace ProfileMatch.Data
                     Level = 3,
                     DescriptionPl = "Potrafisz pisać proste kody w języku",
                     Description = "You can write simple C# codes"
-
                 },
                  new AnswerOption()
                  {
@@ -293,7 +272,6 @@ namespace ProfileMatch.Data
                      Level = 4,
                      DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
                      Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
-
                  },
                   new AnswerOption()
                   {
@@ -302,7 +280,6 @@ namespace ProfileMatch.Data
                       Level = 5,
                       DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
                       Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
-
                   },
                 new AnswerOption()
                 {
@@ -311,7 +288,6 @@ namespace ProfileMatch.Data
                     Level = 1,
                     DescriptionPl = "Nie znasz podstaw tego języka programowania",
                     Description = "You have no idea about this language"
-
                 },
                  new AnswerOption()
                  {
@@ -336,7 +312,6 @@ namespace ProfileMatch.Data
                     Level = 4,
                     DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
                     Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
-
                 },
                  new AnswerOption()
                  {
@@ -345,7 +320,6 @@ namespace ProfileMatch.Data
                      Level = 5,
                      DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
                      Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
-
                  },
                  new AnswerOption()
                  {
@@ -354,7 +328,6 @@ namespace ProfileMatch.Data
                      Level = 1,
                      DescriptionPl = "Nie znasz podstaw tego języka programowania",
                      Description = "You have no idea about this language"
-
                  },
                  new AnswerOption()
                  {
@@ -379,7 +352,6 @@ namespace ProfileMatch.Data
                     Level = 4,
                     DescriptionPl = "Potrafisz pisać kod, który jest bardziej zaawansowany (wiesz na czym polegają warunki, pętle, obiekty, funkcje)",
                     Description = "You can write code that is more advanced (you know what are conditions, loops, objects, functions)"
-
                 },
                  new AnswerOption()
                  {
@@ -388,7 +360,6 @@ namespace ProfileMatch.Data
                      Level = 5,
                      DescriptionPl = "Bez problemu analizujesz kod, edytujesz go, wprowadzasz nowe zmiany lub piszesz program od podstaw",
                      Description = "You can easily analyze the code, edit it, introduce new changes or write the program from scratch"
-
                  },
                  new AnswerOption()
                  {
@@ -397,7 +368,6 @@ namespace ProfileMatch.Data
                      Level = 1,
                      DescriptionPl = "Znasz podstawowe informacje na temat routera",
                      Description = "You know the basic information about the router"
-
                  },
                  new AnswerOption()
                  {
@@ -406,7 +376,6 @@ namespace ProfileMatch.Data
                      Level = 2,
                      DescriptionPl = "Potrafisz zalogować się do routera i swobodnie poruszasz się po interfejsie",
                      Description = "You can login to the router and you can freely navigate the interface"
-
                  },
                  new AnswerOption()
                  {
@@ -415,7 +384,6 @@ namespace ProfileMatch.Data
                      Level = 3,
                      DescriptionPl = "Potrafisz skonfigurować podstawowe ustawienia sieciowe w routerze",
                      Description = "You can configure the basic network settings of the router"
-
                  },
                  new AnswerOption()
                  {
@@ -424,7 +392,6 @@ namespace ProfileMatch.Data
                      Level = 4,
                      DescriptionPl = "Potrafisz skonfigurować router dla wielu urządzeń oraz zadbać o bezpieczeństwo w sieci",
                      Description = "You can configure the router for many devices and take care of security in the network"
-
                  },
                  new AnswerOption()
                  {
@@ -433,7 +400,6 @@ namespace ProfileMatch.Data
                      Level = 5,
                      DescriptionPl = "Potrafisz skonfigurować router w systemie linux w trybie tekstowym",
                      Description = "Can you configure router in linux system in text mode"
-
                  },
                  new AnswerOption()
                  {
@@ -442,7 +408,6 @@ namespace ProfileMatch.Data
                      Level = 1,
                      DescriptionPl = "Nie konfigurowałeś żadnej usługi Active Directory",
                      Description = "You have not configured any Active Directory service"
-
                  },
                  new AnswerOption()
                  {
@@ -459,7 +424,6 @@ namespace ProfileMatch.Data
                      Level = 3,
                      DescriptionPl = "Potrafisz dodawać podstawowe usługi do domeny i zrobić prostą konfigurację",
                      Description = "You can add basic services to the domain and make simple configuration"
-
                  },
                  new AnswerOption()
                  {
@@ -468,7 +432,6 @@ namespace ProfileMatch.Data
                      Level = 4,
                      DescriptionPl = "Łatwość sprawia ci surfowanie po ustawieniach sieciowych domeny, bez problemu radzisz sobie z tworzeniem domen i dodawaniem kont użytkowników lub grup",
                      Description = "It's easy for you to surf the domain network settings, you can easily deal with creating domains and adding user or group accounts"
-
                  },
                  new AnswerOption()
                  {
@@ -477,7 +440,6 @@ namespace ProfileMatch.Data
                      Level = 5,
                      DescriptionPl = "Usługa AD jest dla ciebie chlebem powszednim i nie sprawia ci żadnych problemów",
                      Description = "AD service is your bread and butter and it doesn't cause you any problems"
-
                  },
                  new AnswerOption()
                  {
@@ -486,7 +448,6 @@ namespace ProfileMatch.Data
                      Level = 1,
                      DescriptionPl = "Nigdy nie rozmontowywałeś komputera stacjonarnego lub laptopa",
                      Description = "You have never disassembled your desktop or laptop computer"
-
                  },
                   new AnswerOption()
                   {
@@ -494,9 +455,7 @@ namespace ProfileMatch.Data
                       ClosedQuestionId = 6,
                       Level = 2,
                       DescriptionPl = "Znasz podstawowe elementy składowe komputera",
-
                       Description = "You know the basic components of a computer"
-
                   },
                    new AnswerOption()
                    {
@@ -522,36 +481,47 @@ namespace ProfileMatch.Data
                          Level = 5,
                          DescriptionPl = "Bez problemu składasz od podstaw komputer i go uruchamiasz",
                          Description = "You can easily assemble the computer from scratch and start it",
-
                      }
                 );
-            builder.Entity<UserClosedAnswer>().HasData(
-                new UserClosedAnswer()
-                {
 
-                    ClosedQuestionId = 1,
-                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                    AnswerOptionId = 2
-
-                },
-                new UserClosedAnswer()
-                {
-
-                    ClosedQuestionId = 2,
-                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                    AnswerOptionId = 4
-
-                },
-                new UserClosedAnswer()
-                {
-
-                    ClosedQuestionId = 3,
-                    ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
-                    AnswerOptionId = 3
-
-                }
-                );
+            builder.Entity<UserClosedAnswer>(entity =>
+            {
+                entity.HasKey(x => new { x.ApplicationUserId, x.ClosedQuestionId });
+                entity.HasOne(a => a.AnswerOption)
+                .WithMany(u => u.UserClosedAnswers)
+                .HasForeignKey(a => a.AnswerOptionId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+                entity.HasOne(q => q.ClosedQuestion)
+                .WithMany(a => a.UserClosedAnswers)
+                .HasForeignKey(q => q.ClosedQuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(u => u.ApplicationUser)
+                .WithMany(a => a.UserClosedAnswers)
+                .HasForeignKey(u => u.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasData(
+                    new UserClosedAnswer()
+                    {
+                        ClosedQuestionId = 1,
+                        ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                        AnswerOptionId = 2
+                    },
+                    new UserClosedAnswer()
+                    {
+                        ClosedQuestionId = 2,
+                        ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                        AnswerOptionId = 4
+                    },
+                    new UserClosedAnswer()
+                    {
+                        ClosedQuestionId = 3,
+                        ApplicationUserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                        AnswerOptionId = 3
+                    }
+                    );
+            });
         }
+
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -562,5 +532,7 @@ namespace ProfileMatch.Data
         public DbSet<OpenQuestion> OpenQuestions { get; set; }
         public DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
         public DbSet<JobTitle> JobTitles { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
+
     }
 }

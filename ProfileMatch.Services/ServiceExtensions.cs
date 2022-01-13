@@ -23,6 +23,7 @@ namespace ProfileMatch.Services
             services.AddTransient<DataManager<IdentityUserRole<string>, ApplicationDbContext>>();
             services.AddTransient<DataManager<IdentityRole, ApplicationDbContext>>();
             services.AddTransient<DataManager<JobTitle, ApplicationDbContext>>();
+            services.AddTransient<DataManager<Certificate, ApplicationDbContext>>();
             services.AddScoped<IRedirection, Redirection>();
         }
     }

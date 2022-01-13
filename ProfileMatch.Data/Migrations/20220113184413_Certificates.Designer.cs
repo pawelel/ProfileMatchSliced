@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220113165242_Initial")]
-    partial class Initial
+    [Migration("20220113184413_Certificates")]
+    partial class Certificates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -487,7 +487,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("JobTitleId")
+                    b.Property<int>("JobTitleId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -550,20 +550,22 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8156e1c6-3002-49d5-8b77-e5fdee923f48",
-                            DateOfBirth = new DateTime(2022, 1, 13, 17, 52, 42, 32, DateTimeKind.Local).AddTicks(9407),
+                            ConcurrencyStamp = "30b66b59-447d-4c20-acfd-c41f8fce6571",
+                            DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Klark",
-                            IsActive = false,
+                            IsActive = true,
+                            JobTitleId = 1,
                             LastName = "Kent",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAvPk4hQZ7YGf5NY/u6LR7FizNdGbLOAzMTo7ve/7Rp0RHHMWuItXcNAD0f0TdvW+A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA7gpniRqOhGbX3OVv1plgKhHVDGYMZQO57xAm3KT+mbdanTTBIMNLMrFesdgtnefA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4939e33-7e35-497c-9f46-db843dc26b98",
+                            PhotoPath = "/default-profile.png",
+                            SecurityStamp = "bde9c84c-0e35-4ced-a804-2ce4440b0f2c",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -624,6 +626,45 @@ namespace ProfileMatch.Data.Migrations
                             Name = "Languages",
                             NamePl = "Lingwistyka"
                         });
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.Certificate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Certificates");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
@@ -1045,11 +1086,21 @@ namespace ProfileMatch.Data.Migrations
                     b.HasOne("ProfileMatch.Models.Models.JobTitle", "JobTitle")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("JobTitleId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
 
                     b.Navigation("JobTitle");
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.Certificate", b =>
+                {
+                    b.HasOne("ProfileMatch.Models.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Certificates")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
@@ -1134,6 +1185,8 @@ namespace ProfileMatch.Data.Migrations
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Certificates");
+
                     b.Navigation("UserClosedAnswers");
 
                     b.Navigation("UserNeedCategories");

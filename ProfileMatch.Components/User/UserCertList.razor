@@ -1,21 +1,18 @@
-﻿@*@using MudBlazor.Examples.Data.Models
+﻿
 
 <MudText Typo="Typo.h6">@L["Certificates"]</MudText>
 
-<MudTable Items="@Elements" MultiSelection="true" @bind-SelectedItems="selectedItems1" Dense="true" Hover="true" Bordered="false" Striped="false">
+<MudTable Items="@certificates" MultiSelection="true" Dense="true" Hover="true" Bordered="false" Striped="false">
     <HeaderContent>
-        <MudTh>#</MudTh>
-        <MudTh>@L["Employee"]</MudTh>
         <MudTh>@L["Cert name"]</MudTh>
         <MudTh>@L["Date of issue"]</MudTh>
         <MudTh>@L["File"]</MudTh>
         <MudTh>@L["Upload"]</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="#">@context.Number</MudTd>
-        <MudTd DataLabel=@L["Employee"]>@context.Sign</MudTd>
+       
         <MudTd DataLabel=@L["Cert name"]>@context.Name</MudTd>
-        <MudTd DataLabel=@L["Date of issue"]>@context.Position</MudTd>
+        <MudTd DataLabel=@L["Date of issue"]>@context.DateModified</MudTd>
         <MudTd DataLabel=@L["File"]>
             @if (files != null)
             {
@@ -47,10 +44,6 @@
     </FooterContent>
 </MudTable>
 
-<MudText Inline="true">@L["Selected items"]: @(selectedItems1==null ? "" : string.Join(", ", selectedItems1.OrderBy(x=>x.Number).Select(x=>x.Number)))</MudText>
-<MudText Inline="true">@L["Selected items"]: @(selectedItems2==null ? "" : string.Join(", ", selectedItems2.OrderBy(x=>x.Number).Select(x=>x.Number)))</MudText>
-
-<br />
 
 <MudButton @onclick="AddCert" Variant="Variant.Filled" Color="Color.Primary">@L["Add Certificate"]</MudButton>
-<MudButton @onclick="DelCert" Variant="Variant.Filled" Color="Color.Primary">@L["Delete"]</MudButton>*@
+<MudButton @onclick="DelCert" Variant="Variant.Filled" Color="Color.Primary">@L["Delete"]</MudButton>

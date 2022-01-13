@@ -38,7 +38,6 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
-        int jobtitleId = 1;
         ApplicationUser CurrentUser;
         ApplicationUser EditedUser;
         List<JobTitle> jobTitles;
@@ -48,7 +47,6 @@ namespace ProfileMatch.Components.Dialogs
         bool canChangeRoles;
         protected override async Task OnInitializedAsync()
         {
-            jobtitleId = OpenedUser.JobTitleId;
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var principal = authState.User;
             if (principal != null)
