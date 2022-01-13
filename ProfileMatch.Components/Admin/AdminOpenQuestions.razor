@@ -12,6 +12,7 @@
                       IconSize="Size.Medium"></MudTextField>
     </MudItem>
 </MudGrid>
+@if(ShareResource.IsEn()){
 <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>NoteCreate())">@L["Add New"]</MudButton>
@@ -41,3 +42,35 @@
         <MudTablePager RowsPerPageString=@L["Rows per page"] />
     </PagerContent>
 </MudTable>
+}
+else{
+    <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>NoteCreate())">@L["Add New"]</MudButton>
+       <MudSpacer/>
+    </ToolBarContent>
+    <ColGroup>
+        <col />
+        <col style="width: 60%;" />
+        <col />
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>@L["Id"]</MudTh>
+        <MudTh>@L["Name"]</MudTh>
+        <MudTh>@L["Description"]</MudTh>
+        <MudTh>@L["Actions"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel=@L["Id"]>@context.Id</MudTd>
+        <MudTd DataLabel=@L["Name"]>@context.NamePl</MudTd>
+        <MudTd DataLabel=@L["Description"]>@context.DescriptionPl</MudTd>
+        <MudTd DataLabel=@L["Edit"]>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>NoteUpdate(context))">@L["Edit Question"]</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager RowsPerPageString=@L["Rows per page"] />
+    </PagerContent>
+</MudTable>
+}
