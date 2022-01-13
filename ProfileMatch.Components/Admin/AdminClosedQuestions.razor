@@ -38,7 +38,7 @@ else
             {
                 @if (!string.IsNullOrEmpty(cat))
                 {
-                        <MudButton Color="Color.Info" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
+                        <MudButton Color="Color.Primary" Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
           
                     <MudText>&nbsp;&nbsp;&nbsp;</MudText>
                 }
@@ -69,7 +69,7 @@ else
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            }Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
                         }else{
-<MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(context.CategoryName))">@L["New Question"]</MudButton>
+<MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
                         }
                     </CellTemplate>
                 </Column>
@@ -97,7 +97,7 @@ else
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
                         }else{
-<MudButton Color="Color.Info" OnClick="@(()=>QuestionCreate(context.CategoryName))">@L["New Question"]</MudButton>
+<MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
                         }
                     </CellTemplate>
                 </Column>

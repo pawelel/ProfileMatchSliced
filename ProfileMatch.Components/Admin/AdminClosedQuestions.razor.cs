@@ -26,7 +26,7 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
-
+        bool deleteEnabled;
         private bool loading;
         [Parameter] public int Id { get; set; }
         private List<Category> categories;
@@ -108,32 +108,6 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
             await LoadData();
         }
-        private async Task QuestionCreate(string category)
-        { 
-            if (string.IsNullOrWhiteSpace(category))
-            {
-                Snackbar.Add(@L["First create Category"], Severity.Error );
-                return;
-            }
-            
-            // create caegory from string
-            Category cat;
-            if (ShareResource.IsEn())
-            {
-                cat = await CategoryRepository.GetOne(c => c.Name == category);
-            }
-            else
-            {
-                cat = await CategoryRepository.GetOne(c => c.NamePl == category);
-            }
-
-            var parameters = new DialogParameters { ["CategoryId"] = cat.Id };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(L["Add Question"] + $": {category}", parameters);
-            await dialog.Result;
-            await LoadData();
-        }
-
-
 
         private string searchString = "";
         private ClosedQuestionVM selectedItem1 = null;
@@ -185,24 +159,38 @@ namespace ProfileMatch.Components.Admin
             }
         }
 
-        private async Task QuestionDialog(ClosedQuestionVM question)
+        private async Task QuestionDialog(ClosedQuestionVM cqVM)
         {
-            var parameters = new DialogParameters { ["Q"] = question };
+            string create;
+            string update;
             string title;
             if (ShareResource.IsEn())
             {
-                title = $"Edit Question {question.CategoryName}: {question.QuestionName} ";
+                update = $"Edit Question {cqVM.CategoryName}: {cqVM.QuestionName} ";
+                create = $"Create Question for {cqVM.CategoryName}";
             }
             else
             {
-                title = $"Edytuj pytanie {question.CategoryNamePl}: {question.QuestionNamePl}";
+                update = $"Edytuj pytanie {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
+                create = $"Nowe pytanie dla {cqVM.CategoryNamePl}";
             }
+            if(cqVM.ClosedQuestionId > 0)
+            {
+                title = update;
+                deleteEnabled = true;
+            }
+            else
+            {
+                title = create;
+                deleteEnabled = false;
+            }
+            var parameters = new DialogParameters { ["Q"] = cqVM, ["DeleteEnabled"]=deleteEnabled };
+
 
             var dialog = DialogService.Show<AdminClosedQuestionDialog>(title, parameters);
             await dialog.Result;
 
         }
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
-
     }
 }

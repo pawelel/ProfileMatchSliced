@@ -15,7 +15,7 @@
             if (string.IsNullOrWhiteSpace(returnUrl))
                 Navigation.NavigateTo("Identity/Account/Login", true);
             else
-                Navigation.NavigateTo($"auth/login?returnUrl={returnUrl}", true);
+                Navigation.NavigateTo($"", true);
         }
     }
 

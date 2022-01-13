@@ -40,7 +40,7 @@ namespace ProfileMatch.Services
                 if (string.IsNullOrWhiteSpace(returnUrl))
                     nav.NavigateTo("Identity/Account/Login", true);
                 else
-                    nav.NavigateTo($"auth/login?returnUrl={returnUrl}", true);
+                    nav.NavigateTo("", true);
                 return new();
             }
             else

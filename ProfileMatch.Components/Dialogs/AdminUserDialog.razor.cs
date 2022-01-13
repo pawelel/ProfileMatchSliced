@@ -17,6 +17,7 @@ using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace ProfileMatch.Components.Dialogs
 {
@@ -30,27 +31,33 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
         List<IdentityRole> Roles;
-        readonly List<UserRoleVM> UserRolesVM = new();
+        string UserId;
+        List<UserRoleVM> UserRolesVM;
         List<IdentityUserRole<string>> UserIdentityRoles;
+        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
-        bool created;
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
-        [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
+        ApplicationUser CurrentUser;
         ApplicationUser EditedUser;
         private List<Department> Departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        IdentityRole UserRole;
+        bool created;
         bool canChangeRoles;
         protected override async Task OnInitializedAsync()
         {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var principal = authState.User;
+            if (principal != null)
+            UserId = principal.FindFirst("UserId").Value;
+            CurrentUser = await ApplicationUserRepository.GetById(UserId);
             await LoadData();
-            CanChangeRolesCheck();
+           await CanChangeRolesCheck();
         }
         private async Task LoadData()
         {
             Departments = await DepartmentRepository.Get();
             Roles = await IdentityRoleRepository.Get();
-            UserRole = Roles.Find(r => r.Name.Contains("User"));
+            
             if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
             {
                 try
@@ -92,6 +99,7 @@ namespace ProfileMatch.Components.Dialogs
                     
                     EditedUser = await ApplicationUserRepository.Insert(EditedUser);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
+
                     created = true;
                 }
                 foreach (var role in UserRolesVM)
@@ -164,17 +172,19 @@ namespace ProfileMatch.Components.Dialogs
             }
         }
         //prevent edit own role
-        private void CanChangeRolesCheck()
+        private async Task CanChangeRolesCheck()
         {
-            if (CurrentUser == null || CurrentUser.Id == OpenedUser.UserId)
+            await Task.Delay(0);
+            if (CurrentUser.Id != OpenedUser.UserId)
             {
-                canChangeRoles = false;
+                canChangeRoles = true;
             }
         }
 
         // add rolesVM after user is created
         private async Task TryToAddUserRoles()
         {
+            UserRolesVM = new();
             UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == EditedUser.Id);
             foreach (var role in Roles)
             {
@@ -185,6 +195,7 @@ namespace ProfileMatch.Components.Dialogs
                     UserId = EditedUser.Id,
                     IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
                 };
+                UserRolesVM.Add(userRoleVM);
             }
         }
     }

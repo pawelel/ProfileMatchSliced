@@ -22,7 +22,7 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public ClosedQuestionVM Q { get; set; } = new();
-        [Parameter] public int CategoryId { get; set; }
+        [Parameter] public bool DeleteEnabled { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
         public int ClosedQuestionId { get; set; }
@@ -34,6 +34,12 @@ namespace ProfileMatch.Components.Dialogs
         public bool TempIsActive { get; set; }
         AnswerOption tempOption;
         ClosedQuestion tempQuestion = new();
+
+        bool _isOpen = false;
+        public void ToggleOpen()
+        {
+            _isOpen = !_isOpen;
+        }
         protected override async Task OnInitializedAsync()
         {
             answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
@@ -68,7 +74,7 @@ namespace ProfileMatch.Components.Dialogs
         }
 
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
-        
+
         private MudForm Form;
 
         private void Cancel()
@@ -128,7 +134,7 @@ namespace ProfileMatch.Components.Dialogs
                 question.NamePl = Q.QuestionNamePl = TempNamePl;
                 question.Description = Q.Description = TempDescription;
                 question.DescriptionPl = Q.DescriptionPl = TempDescriptionPl;
-                question.CategoryId = Q.CategoryId = CategoryId;
+                question.CategoryId = Q.CategoryId = Q.CategoryId;
                 question.IsActive = Q.IsActive = TempIsActive;
                 try
                 {
@@ -222,7 +228,7 @@ namespace ProfileMatch.Components.Dialogs
             List<AnswerOption> answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == question.ClosedQuestionId);
             if (answerOptions is not null && !answerOptions.Any(ao => string.IsNullOrWhiteSpace(ao.Description)))
             {
-                
+
                 question.IsActive = !question.IsActive;
                 await ClosedQuestionRepository.Update(tempQuestion);
                 if (question.IsActive)
@@ -238,6 +244,43 @@ namespace ProfileMatch.Components.Dialogs
             Snackbar.Add(warning, Severity.Warning);
             return false;
         }
-        
+        async void Delete(ClosedQuestionVM cqVM)
+        {
+            string success;
+            string error;
+            if (cqVM != null)
+            {
+                var cat = await ClosedQuestionRepository.GetById(cqVM.ClosedQuestionId);
+                var result = await ClosedQuestionRepository.Delete(cat);
+                if (result)
+                {
+                    try
+                    {
+                        if (ShareResource.IsEn())
+                        {
+                            success = $"Question {cqVM.QuestionName} deleted";
+                            Snackbar.Add(success, Severity.Info);
+                        }
+                        else
+                        {
+                            success = $"Pytanie {cqVM.QuestionName} usunięte";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ShareResource.IsEn())
+                        {
+                            error = $"There was an error during deletion: {ex.Message}";
+                            Snackbar.Add(error, Severity.Error);
+                        }
+                        else
+                        {
+                            error = $"Wystąpił problem podczas usuwania: {ex.Message}";
+                            Snackbar.Add(error, Severity.Error);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

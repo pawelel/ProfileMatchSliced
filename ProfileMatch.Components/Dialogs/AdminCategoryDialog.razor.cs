@@ -24,7 +24,11 @@ namespace ProfileMatch.Components.Dialogs
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
-
+        bool _isOpen=false;
+       public void ToggleOpen()
+        {
+            _isOpen = !_isOpen;
+        }
         protected override void OnInitialized()
         {
             TempName = Cat.Name;
@@ -72,7 +76,7 @@ namespace ProfileMatch.Components.Dialogs
         {
             if(await CategoryRepository.ExistById(Cat.Id))
             {
-            var result = await CategoryRepository.Delete(Cat);
+            await CategoryRepository.Delete(Cat);
             }
             if (ShareResource.IsEn())
             {

@@ -807,4 +807,22 @@
   <data name="Display on profile page" xml:space="preserve">
     <value>Display on profile page</value>
   </data>
+  <data name="New Question" xml:space="preserve">
+    <value>New Question</value>
+  </data>
+  <data name="Forgot your password?" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="Enter your email." xml:space="preserve">
+    <value>Enter your email.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Forgot password confirmation" xml:space="preserve">
+    <value>Forgot password confirmation</value>
+  </data>
+  <data name="Please check your email to reset your password." xml:space="preserve">
+    <value>Please check your email to reset your password.</value>
+  </data>
 </root>

@@ -845,6 +845,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your email..
+        /// </summary>
+        public static string Enter_your_email_ {
+            get {
+                return ResourceManager.GetString("Enter your email.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Female.
         /// </summary>
         public static string Female {
@@ -886,6 +895,24 @@ namespace ProfileMatch.Services {
         public static string Forgot_Password_ {
             get {
                 return ResourceManager.GetString("Forgot Password?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot password confirmation.
+        /// </summary>
+        public static string Forgot_password_confirmation {
+            get {
+                return ResourceManager.GetString("Forgot password confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot your password?.
+        /// </summary>
+        public static string Forgot_your_password_ {
+            get {
+                return ResourceManager.GetString("Forgot your password?", resourceCulture);
             }
         }
         
@@ -1295,6 +1322,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Question.
+        /// </summary>
+        public static string New_Question {
+            get {
+                return ResourceManager.GetString("New Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New User.
         /// </summary>
         public static string New_User {
@@ -1390,6 +1426,15 @@ namespace ProfileMatch.Services {
         public static string Photo {
             get {
                 return ResourceManager.GetString("Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please check your email to reset your password..
+        /// </summary>
+        public static string Please_check_your_email_to_reset_your_password_ {
+            get {
+                return ResourceManager.GetString("Please check your email to reset your password.", resourceCulture);
             }
         }
         
@@ -1885,6 +1930,15 @@ namespace ProfileMatch.Services {
         public static string Striped {
             get {
                 return ResourceManager.GetString("Striped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         

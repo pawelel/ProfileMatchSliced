@@ -10,12 +10,30 @@
             </MudForm>
         </DialogContent>
         <DialogActions>
-            <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>CanLevel(Q))">@L["Levels"]</MudButton>
+            @if(DeleteEnabled){
+            <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
+            }
+            <MudButton Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined" OnClick="@(()=>CanLevel(Q))">@L["Levels"]</MudButton>
             <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudIconButton Color="Color.Tertiary" Icon=@Icons.Outlined.Add Size="Size.Small" Variant="Variant.Outlined" OnClick="Save" />
             <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Save" Color="Color.Success" Size="Size.Small" OnClick="SaveAndClose">@L["Save"]</MudButton>
         </DialogActions>
     </MudDialog>
+
+    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
+    <div class="d-flex flex-column">
+            @if (ShareResource.IsEn())
+            {
+        <MudText>@($"Removing Question {Q.QuestionName} will also remove all answers.\nAre you sure?")</MudText>
+            }
+            else
+            {
+                <MudText>@($"Usunięcie pytania {Q.QuestionNamePl} usunie także odpowiedzi.\nUsunąć?")</MudText>
+            }
+        <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>Delete(Q))">@L["Delete"]</MudButton>
+        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">Close</MudButton>
+    </div>
+</MudPopover>
 }
 
 @if (!first)

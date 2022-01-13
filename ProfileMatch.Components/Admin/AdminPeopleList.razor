@@ -1,4 +1,4 @@
-﻿@if (Users == null)
+﻿@if (users == null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 }
@@ -18,7 +18,7 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid Items="Users" T="DepartmentUserVM" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
+    <MudDataGrid Items="users" T="DepartmentUserVM" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
 <Columns>
             @if (ShareResource.IsEn())
             {
@@ -46,6 +46,19 @@ else
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Is Active">
                     <CellTemplate>
                          @(context.IsActive?"Yes":"No")
+                    </CellTemplate>
+                </Column>
+                 <Column T="DepartmentUserVM" Field="UserRolesVM" Title="Roles">
+                    <CellTemplate>
+                        @if (context.UserRolesVM.Count == 0)
+                        {
+                        <MudChip>User</MudChip>
+                        }else{
+                        @foreach(var role in context.UserRolesVM)
+                        {
+                        <MudChip>@role.RoleName</MudChip>
+                        }
+                        }
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Sortable="false" Title="Actions">
@@ -76,7 +89,19 @@ else
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined"/>
                     </HeaderTemplate>
                 </Column>
- 
+ <Column T="DepartmentUserVM" Field="UserRolesVM" Title="Role">
+                    <CellTemplate>
+                        @if (context.UserRolesVM.Count == 0)
+                        {
+                        <MudChip>User</MudChip>
+                        }else{
+                        @foreach(var role in context.UserRolesVM)
+                        {
+                        <MudChip>@role.RoleName</MudChip>
+                        }
+                        }
+                    </CellTemplate>
+                </Column>
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Jest aktywny">
                     <CellTemplate>
                         @(context.IsActive?"Tak":"Nie")

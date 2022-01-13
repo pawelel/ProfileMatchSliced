@@ -42,7 +42,6 @@ namespace ProfileMatch.Data
             builder.Entity<UserCategory>().HasKey(x => new { x.ApplicationUserId, x.CategoryId });
             builder.Entity<UserOpenAnswer>().HasKey(x => new { x.ApplicationUserId, x.OpenQuestionId });
             //seed roles
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = "93877c5b-c988-4c83-b152-d0b17858f7c6", ConcurrencyStamp = "dd434162-84c9-4f3f-acd0-aa028df9b1f4" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
 
@@ -67,7 +66,7 @@ namespace ProfileMatch.Data
                     Id = "a96d7c75-47f4-409b-a4d1-03f93c105647", // primary key
                     UserName = "admin@admin.com",
                     NormalizedUserName = "ADMIN@ADMIN.COM",
-                    PasswordHash = hasher.HashPassword(null, "Maslo123$"),
+                    PasswordHash = hasher.HashPassword(null, "SuperUser123$"),
                     DepartmentId = 1,
                     EmailConfirmed = true,
                     Email = "admin@admin.com",

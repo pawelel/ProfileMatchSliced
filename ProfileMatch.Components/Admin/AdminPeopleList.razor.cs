@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -25,13 +26,18 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
+        [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
+        [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
         string searchString;
-        public List<DepartmentUserVM> Users { get; set; }
+        List<IdentityRole> roles;
+        List<IdentityUserRole<string>> userIdentityRoles;
+        List<DepartmentUserVM> users;
         protected override async Task OnInitializedAsync()
         {
-
-            Users = await GetDepartmentsAsync();
+            userIdentityRoles = await IdentityUserRoleRepository.Get();
+            roles = await IdentityRoleRepository.Get();
+            users = await GetDepartmentsAsync();
         }
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
@@ -93,7 +99,7 @@ namespace ProfileMatch.Components.Admin
         {
             var appUsers = await ApplicationUserRepository.Get();
             var depts = await DepartmentRepository.Get();
-            return (from dept in depts
+            var appDepts = (from dept in depts
                     join appUser in appUsers on dept.Id equals appUser.DepartmentId
                     select new DepartmentUserVM()
                     {
@@ -108,6 +114,14 @@ namespace ProfileMatch.Components.Admin
                         PhotoPath = appUser.PhotoPath,
                         IsActive = appUser.IsActive
                     }).ToList();
-        }
+          List<UserRoleVM>  UserRolesVM = (from u in appUsers join r in userIdentityRoles on u.Id equals r.UserId join q in roles on r.RoleId equals q.Id select new UserRoleVM() { 
+                    RoleId = q.Id,
+                    RoleName = q.Name,
+                    UserId = u.Id,
+                    IsSelected = userIdentityRoles.Any(r => r.RoleId == q.Id)
+                }).ToList();
+            appDepts.ForEach(a => a.UserRolesVM.AddRange(UserRolesVM.Where(u => u.UserId == a.UserId && u.IsSelected).ToList()));
+            return appDepts;
+            }
     }
 }
