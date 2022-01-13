@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 using ProfileMatch.Models.Models;
+using ProfileMatch.Services;
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 {
@@ -22,14 +25,15 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 #pragma warning restore IDE0052 // Remove unread private members
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<ApplicationUser> signInManager,
+        private readonly IStringLocalizer<LanguageService> L;
+        public LoginModel(SignInManager<ApplicationUser> signInManager, IStringLocalizer<LanguageService> l, 
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            L=l;
         }
 
         [BindProperty]
@@ -100,7 +104,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, L["Invalid login attempt."]);
                     return Page();
                 }
             }

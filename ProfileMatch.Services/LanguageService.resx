@@ -843,4 +843,7 @@
   <data name="Job Title is required!" xml:space="preserve">
     <value>Job Title is required!</value>
   </data>
+  <data name="Invalid login attempt." xml:space="preserve">
+    <value>Invalid login attempt.</value>
+  </data>
 </root>
