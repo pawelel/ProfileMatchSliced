@@ -14,7 +14,12 @@
                         </MudAvatar>
                     </div>
                     <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
-                    <MudText Align="Align.Center">@CurrentUser?.JobTitle</MudText>
+                    @if (ShareResource.IsEn())
+                    {
+                    <MudText Align="Align.Center">@CurrentUser?.JobTitle?.Name</MudText>
+                    }else{
+                          <MudText Align="Align.Center">@CurrentUser?.JobTitle?.NamePl</MudText>
+                    }   
                 </MudCardContent>
             </MudCard>
         </MudItem>

@@ -27,6 +27,7 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] IWebHostEnvironment Environment { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
+        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
@@ -37,14 +38,17 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         protected MudForm Form { get; set; } // TODO add validations
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
+        int jobtitleId = 1;
         ApplicationUser CurrentUser;
         ApplicationUser EditedUser;
+        List<JobTitle> jobTitles;
         private List<Department> Departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         bool created;
         bool canChangeRoles;
         protected override async Task OnInitializedAsync()
         {
+            jobtitleId = OpenedUser.JobTitleId;
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var principal = authState.User;
             if (principal != null)
@@ -55,6 +59,7 @@ namespace ProfileMatch.Components.Dialogs
         }
         private async Task LoadData()
         {
+            jobTitles = await JobTitleRepository.Get();
             Departments = await DepartmentRepository.Get();
             Roles = await IdentityRoleRepository.Get();
             
@@ -77,7 +82,8 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser = new()
                 {
                     PhotoPath = "blank-profile.png",
-                    DateOfBirth = DateTime.Now
+                    DateOfBirth = DateTime.Now,
+                    JobTitleId = 1
                 };
             }
         }

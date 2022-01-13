@@ -67,7 +67,7 @@ else
                         @if (context.ClosedQuestionId > 0)
                         {
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
-                           }Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
+                           Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
                         }else{
 <MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
                         }

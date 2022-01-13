@@ -1,6 +1,6 @@
 ﻿@if (EditedUser == null || Departments == null)
 {
-    <p>@L["loading"]</p>
+    <MudProgressLinear Indeterminate="true"></MudProgressLinear>
 }
 else
 {
@@ -14,6 +14,7 @@ else
                     </MudAvatar>
                     <InputFile OnChange="@UploadImage" @ref="inputFile" accept=".jpg, .jpeg, .png" />
                 }
+                           @if(ShareResource.IsEn()){
                 <MudSelect @bind-Value="@EditedUser.DepartmentId"
                            T="int"
                            OffsetY="true"
@@ -25,7 +26,20 @@ else
                         <MudSelectItem Value="@(dept.Id)">@L[dept.Name]</MudSelectItem>
                     }
                 </MudSelect>
-
+                           }else
+                           {
+                               <MudSelect @bind-Value="@EditedUser.DepartmentId"
+                           T="int"
+                           OffsetY="true"
+                           CloseIcon="@Icons.Material.Filled.LocationCity"
+                           HelperText=@L["Select Department"]
+                           AdornmentColor="Color.Tertiary">
+                    @foreach (var dept in Departments)
+                    {
+                        <MudSelectItem Value="@(dept.Id)">@L[dept.NamePl]</MudSelectItem>
+                    }
+                </MudSelect>
+                           }
                 <MudSwitch @bind-Checked="@EditedUser.IsActive"
                            T="bool"
                            Label=@L["Is Active?"]
@@ -34,7 +48,25 @@ else
                               Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" @bind-Value="@EditedUser.LastName" Immediate="true" Label=@L["Last Name"] Required="true" RequiredError=@L["Person name is required!"] />
                 <MudTextField T="string" Label=@L["Email"] @bind-Value="@EditedUser.Email" Required="true" RequiredError=@L["Email is required!"] />
-                
+                @if (ShareResource.IsEn())
+                {
+                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@EditedUser.JobTitleId"
+                OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
+                    @foreach(JobTitle job in jobTitles)
+                    {
+                        <MudSelectItem T="int" Value="@job.Id">@job.Name</MudSelectItem>
+                    }
+                    </MudSelect>
+                }else
+                {
+                    <MudSelect Required="true" T="JobTitle" Label=@L["Select Job Title"] @bind-Value="@EditedUser.JobTitle"
+                OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
+                    @foreach(JobTitle job in jobTitles)
+                    {
+                        <MudSelectItem Value="@job">@job.NamePl]</MudSelectItem>
+                    }
+                </MudSelect>
+                }
                 <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@EditedUser.Gender"
                            OffsetY="true" RequiredError=@L["Gender is required!"]
                            CloseIcon="@Icons.Material.Filled.LocationCity"

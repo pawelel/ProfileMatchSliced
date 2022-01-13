@@ -59,6 +59,12 @@ namespace ProfileMatch.Data
         .HasForeignKey(e => e.UserId)
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>().HasOne(j=>j.JobTitle)
+                .WithMany(a=>a.ApplicationUsers)
+                .HasForeignKey(a=>a.JobTitleId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
             //Seeding the User to AspNetUsers table
             builder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
@@ -157,6 +163,17 @@ namespace ProfileMatch.Data
                  }
 
                 );
+            builder.Entity<JobTitle>().HasData(
+
+                new JobTitle()
+                {
+                    Id =1,
+                    NamePl = "nie przypisano",
+                    Name  = "not assigned",
+                    Description = "Initial Job Title",
+                    DescriptionPl = "Wstępne stanowisko"
+                });
+
             builder.Entity<ClosedQuestion>().HasData(
                 new ClosedQuestion()
                 {
@@ -544,5 +561,6 @@ namespace ProfileMatch.Data
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<OpenQuestion> OpenQuestions { get; set; }
         public DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
+        public DbSet<JobTitle> JobTitles { get; set; }
     }
 }

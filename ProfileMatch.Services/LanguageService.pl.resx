@@ -825,4 +825,22 @@
   <data name="Please check your email to reset your password." xml:space="preserve">
     <value>Proszę sprawdzić  swojego maila, aby zresetować hasło.</value>
   </data>
+  <data name="Job Title Description EN" xml:space="preserve">
+    <value>Opis stanowiska EN</value>
+  </data>
+  <data name="Job Title Description PL" xml:space="preserve">
+    <value>Opis stanowiska PL</value>
+  </data>
+  <data name="Job Title Name PL" xml:space="preserve">
+    <value>Nazwa stanowiska PL</value>
+  </data>
+  <data name="Job Title Name EN" xml:space="preserve">
+    <value>Nazwa stanowiska EN</value>
+  </data>
+  <data name="Select Job Title" xml:space="preserve">
+    <value>Wybierz stanowisko</value>
+  </data>
+  <data name="Job Title is required!" xml:space="preserve">
+    <value>Stanowisko jest wymagane!</value>
+  </data>
 </root>

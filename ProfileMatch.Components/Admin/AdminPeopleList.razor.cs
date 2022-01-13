@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
+using MudBlazor.Extensions;
 
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Contracts;
@@ -29,12 +30,15 @@ namespace ProfileMatch.Components.Admin
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
+        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
         string searchString;
         List<IdentityRole> roles;
+        List<JobTitle> jobTitles=new();
         List<IdentityUserRole<string>> userIdentityRoles;
         List<DepartmentUserVM> users;
         protected override async Task OnInitializedAsync()
         {
+            jobTitles = await JobTitleRepository.Get();
             userIdentityRoles = await IdentityUserRoleRepository.Get();
             roles = await IdentityRoleRepository.Get();
             users = await GetDepartmentsAsync();
@@ -45,11 +49,13 @@ namespace ProfileMatch.Components.Admin
         {
             if (applicationUser == null) applicationUser = new()
             {
-                FirstName = L["New User"]
+                FirstName = L["New User"],
+                JobTitleId = 1
             };
 
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
             var parameters = new DialogParameters { ["OpenedUser"] = applicationUser };
+
             var dialog = DialogService.Show<AdminUserDialog>(L.GetString("Account") + $": {applicationUser.FirstName} {applicationUser.LastName}", parameters, maxWidth);
             await dialog.Result;
         }
@@ -82,46 +88,65 @@ namespace ProfileMatch.Components.Admin
             return false;
         };
 
-
-        private async Task DepartmentUpdate(DepartmentUserVM department)
+        
+        private async Task DepartmentUpdate(DepartmentUserVM department = null)
         {
-            var parameters = new DialogParameters { ["Dep"] = department };
-            var dialog = DialogService.Show<AdminDepartmentDialog>(L["Edit Department"], parameters);
-            await dialog.Result;
+            if (department == null)
+            {
+                var dialog = DialogService.Show<AdminDepartmentDialog>(L["Create Department"]);
+                await dialog.Result;
+            }
+            else
+            {
+                var parameters = new DialogParameters { ["Dep"] = department };
+                var dialog = DialogService.Show<AdminDepartmentDialog>(L["Edit Department"], parameters);
+                await dialog.Result;
+            }
+
+        }
+        private async Task JobTitleUpdate(DepartmentUserVM jobTitle = null)
+        {
+            if (jobTitle == null)
+            {
+                var dialog = DialogService.Show<AdminJobTitleDialog>(L["Create Job Title"]);
+                await dialog.Result;
+            }
+            else
+            {
+                var parameters = new DialogParameters { ["JobTitle"] = jobTitle };
+                var dialog = DialogService.Show<AdminJobTitleDialog>(L["Edit Job Title"], parameters);
+                await dialog.Result;
+            }
+
         }
 
-        private async Task DepartmentCreate()
-        {
-            var dialog = DialogService.Show<AdminDepartmentDialog>(L["Create Department"]);
-            await dialog.Result;
-        }
         private async Task<List<DepartmentUserVM>> GetDepartmentsAsync()
         {
             var appUsers = await ApplicationUserRepository.Get();
             var depts = await DepartmentRepository.Get();
             var appDepts = (from dept in depts
-                    join appUser in appUsers on dept.Id equals appUser.DepartmentId
-                    select new DepartmentUserVM()
-                    {
-                        DepartmentId = dept.Id,
-                        DepartmentName = dept.Name,
-                        DepartmentNamePl = dept.NamePl,
-                        FirstName = appUser.FirstName,
-                        JobTitle = appUser.JobTitle,
-                        JobTitlePl = appUser.JobTitlePl,
-                        LastName = appUser.LastName,
-                        UserId = appUser.Id,
-                        PhotoPath = appUser.PhotoPath,
-                        IsActive = appUser.IsActive
-                    }).ToList();
-          List<UserRoleVM>  UserRolesVM = (from u in appUsers join r in userIdentityRoles on u.Id equals r.UserId join q in roles on r.RoleId equals q.Id select new UserRoleVM() { 
-                    RoleId = q.Id,
-                    RoleName = q.Name,
-                    UserId = u.Id,
-                    IsSelected = userIdentityRoles.Any(r => r.RoleId == q.Id)
-                }).ToList();
-            appDepts.ForEach(a => a.UserRolesVM.AddRange(UserRolesVM.Where(u => u.UserId == a.UserId && u.IsSelected).ToList()));
+                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in jobTitles on appUser.JobTitleId equals jt.Id join ur in userIdentityRoles on appUser.Id equals ur.UserId join r in roles on ur.RoleId equals r.Id
+                            select new DepartmentUserVM()
+                            {
+                                DepartmentId = dept.Id,
+                                DepartmentName = dept.Name,
+                                DepartmentNamePl = dept.NamePl,
+                                FirstName = appUser.FirstName,
+                                LastName = appUser.LastName,
+                                UserId = appUser.Id,
+                                JobTitleId = appUser.JobTitleId,
+                                PhotoPath = appUser.PhotoPath,
+                                JobTitle = jt,
+                                IsActive = appUser.IsActive,
+                                UserRolesVM = new List<UserRoleVM>() { new()
+                                {
+                                    RoleId = ur.RoleId,
+                                    UserId = appUser.Id,
+                                    RoleName = r.Name,
+                                    IsSelected = true
+                                } }
+                            }).ToList();
             return appDepts;
-            }
+        }
     }
 }

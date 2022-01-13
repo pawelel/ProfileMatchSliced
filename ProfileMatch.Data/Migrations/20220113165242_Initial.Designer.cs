@@ -12,7 +12,7 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220111055950_Initial")]
+    [Migration("20220113165242_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,13 +51,6 @@ namespace ProfileMatch.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
 
                     b.HasData(
-                        new
-                        {
-                            Id = "93877c5b-c988-4c83-b152-d0b17858f7c6",
-                            ConcurrencyStamp = "dd434162-84c9-4f3f-acd0-aa028df9b1f4",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
                         new
                         {
                             Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a",
@@ -494,11 +487,8 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitlePl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("JobTitleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -543,6 +533,8 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("JobTitleId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -558,8 +550,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa1c7149-fc92-4778-a2c2-5ccb5ba4d9bc",
-                            DateOfBirth = new DateTime(2022, 1, 11, 6, 59, 50, 64, DateTimeKind.Local).AddTicks(7682),
+                            ConcurrencyStamp = "8156e1c6-3002-49d5-8b77-e5fdee923f48",
+                            DateOfBirth = new DateTime(2022, 1, 13, 17, 52, 42, 32, DateTimeKind.Local).AddTicks(9407),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -569,9 +561,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMpIFzuy4bIAr7JLSXPOu8b+Q65Zb5in0dbmvWnhU3xqaQdBVLZ67okFGnTeCMLTTQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAvPk4hQZ7YGf5NY/u6LR7FizNdGbLOAzMTo7ve/7Rp0RHHMWuItXcNAD0f0TdvW+A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2eca0ef1-f0f0-486f-b14c-f7fce38a17c9",
+                            SecurityStamp = "d4939e33-7e35-497c-9f46-db843dc26b98",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -701,7 +693,7 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            Description = "How good are you in CComputer Networks?",
+                            Description = "How good are you in Computer Networks?",
                             DescriptionPl = "Jaka jest Twoja znajomość sieci komputerowych?",
                             IsActive = true,
                             Name = "Router configuration",
@@ -791,6 +783,41 @@ namespace ProfileMatch.Data.Migrations
                             Id = 3,
                             Name = "HR",
                             NamePl = "HR"
+                        });
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Initial Job Title",
+                            DescriptionPl = "Wstępne stanowisko",
+                            Name = "not assigned",
+                            NamePl = "nie przypisano"
                         });
                 });
 
@@ -1015,7 +1042,14 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProfileMatch.Models.Models.JobTitle", "JobTitle")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("JobTitleId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
                     b.Navigation("Department");
+
+                    b.Navigation("JobTitle");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
@@ -1122,6 +1156,11 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
+                {
+                    b.Navigation("ApplicationUsers");
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
                 {
                     b.Navigation("ApplicationUsers");
                 });

@@ -485,11 +485,8 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitlePl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("JobTitleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -534,6 +531,8 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("JobTitleId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -549,8 +548,8 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5698e531-21d1-4f87-8ba7-5263852cd1a9",
-                            DateOfBirth = new DateTime(2022, 1, 13, 11, 0, 28, 624, DateTimeKind.Local).AddTicks(9241),
+                            ConcurrencyStamp = "8156e1c6-3002-49d5-8b77-e5fdee923f48",
+                            DateOfBirth = new DateTime(2022, 1, 13, 17, 52, 42, 32, DateTimeKind.Local).AddTicks(9407),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
@@ -560,9 +559,9 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJZbnTvKoga3Mj4avMNAV+DgieD/ygjr9Duw6ViWbuwCeJpTnp+EhHM927onSMDuJw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAvPk4hQZ7YGf5NY/u6LR7FizNdGbLOAzMTo7ve/7Rp0RHHMWuItXcNAD0f0TdvW+A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d9bdde03-bf34-4619-8f2e-97ea88e68078",
+                            SecurityStamp = "d4939e33-7e35-497c-9f46-db843dc26b98",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -782,6 +781,41 @@ namespace ProfileMatch.Data.Migrations
                             Id = 3,
                             Name = "HR",
                             NamePl = "HR"
+                        });
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionPl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NamePl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Initial Job Title",
+                            DescriptionPl = "Wstępne stanowisko",
+                            Name = "not assigned",
+                            NamePl = "nie przypisano"
                         });
                 });
 
@@ -1006,7 +1040,14 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProfileMatch.Models.Models.JobTitle", "JobTitle")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("JobTitleId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
                     b.Navigation("Department");
+
+                    b.Navigation("JobTitle");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.ClosedQuestion", b =>
@@ -1113,6 +1154,11 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Department", b =>
+                {
+                    b.Navigation("ApplicationUsers");
+                });
+
+            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
                 {
                     b.Navigation("ApplicationUsers");
                 });

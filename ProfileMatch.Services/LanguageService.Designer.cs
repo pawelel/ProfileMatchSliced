@@ -1079,6 +1079,51 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job Title Description EN.
+        /// </summary>
+        public static string Job_Title_Description_EN {
+            get {
+                return ResourceManager.GetString("Job Title Description EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title Description PL.
+        /// </summary>
+        public static string Job_Title_Description_PL {
+            get {
+                return ResourceManager.GetString("Job Title Description PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title is required!.
+        /// </summary>
+        public static string Job_Title_is_required_ {
+            get {
+                return ResourceManager.GetString("Job Title is required!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title Name EN.
+        /// </summary>
+        public static string Job_Title_Name_EN {
+            get {
+                return ResourceManager.GetString("Job Title Name EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title Name PL.
+        /// </summary>
+        public static string Job_Title_Name_PL {
+            get {
+                return ResourceManager.GetString("Job Title Name PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to label.
         /// </summary>
         public static string label {
@@ -1786,6 +1831,15 @@ namespace ProfileMatch.Services {
         public static string Select_Gender {
             get {
                 return ResourceManager.GetString("Select Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Job Title.
+        /// </summary>
+        public static string Select_Job_Title {
+            get {
+                return ResourceManager.GetString("Select Job Title", resourceCulture);
             }
         }
         

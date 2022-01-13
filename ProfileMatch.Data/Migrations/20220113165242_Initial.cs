@@ -56,6 +56,22 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobTitles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NamePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTitles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OpenQuestions",
                 columns: table => new
                 {
@@ -125,11 +141,10 @@ namespace ProfileMatch.Data.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
+                    JobTitleId = table.Column<int>(type: "int", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JobTitlePl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -154,6 +169,11 @@ namespace ProfileMatch.Data.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_JobTitles_JobTitleId",
+                        column: x => x.JobTitleId,
+                        principalTable: "JobTitles",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -352,7 +372,6 @@ namespace ProfileMatch.Data.Migrations
                 values: new object[,]
                 {
                     { "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", "83256a0f-8959-4eb8-a15e-e9c74c782841", "Admin", "ADMIN" },
-                    { "93877c5b-c988-4c83-b152-d0b17858f7c6", "dd434162-84c9-4f3f-acd0-aa028df9b1f4", "User", "USER" },
                     { "af138749-2fc8-4bcf-8492-fadb9e0d5415", "6d68df77-faee-4dab-bb84-4c445d4cc7a1", "Manager", "MANAGER" }
                 });
 
@@ -379,6 +398,11 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "JobTitles",
+                columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
+                values: new object[] { 1, "Initial Job Title", "Wstępne stanowisko", "not assigned", "nie przypisano" });
+
+            migrationBuilder.InsertData(
                 table: "OpenQuestions",
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[,]
@@ -393,8 +417,8 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitle", "JobTitlePl", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "fa1c7149-fc92-4778-a2c2-5ccb5ba4d9bc", new DateTime(2022, 1, 11, 6, 59, 50, 64, DateTimeKind.Local).AddTicks(7682), 1, "admin@admin.com", true, "Klark", null, false, null, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEMpIFzuy4bIAr7JLSXPOu8b+Q65Zb5in0dbmvWnhU3xqaQdBVLZ67okFGnTeCMLTTQ==", null, false, null, "2eca0ef1-f0f0-486f-b14c-f7fce38a17c9", false, "admin@admin.com" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitleId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "8156e1c6-3002-49d5-8b77-e5fdee923f48", new DateTime(2022, 1, 13, 17, 52, 42, 32, DateTimeKind.Local).AddTicks(9407), 1, "admin@admin.com", true, "Klark", null, false, null, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAvPk4hQZ7YGf5NY/u6LR7FizNdGbLOAzMTo7ve/7Rp0RHHMWuItXcNAD0f0TdvW+A==", null, false, null, "d4939e33-7e35-497c-9f46-db843dc26b98", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -404,7 +428,7 @@ namespace ProfileMatch.Data.Migrations
                     { 1, 1, "How good are you in C# development?", "Jaka jest Twoja znajomość programowania w C#?", true, "C#", "C#" },
                     { 2, 1, "How good are you in C++ development?", "Jaka jest Twoja znajomość programowania w C++?", true, "C++", "C++" },
                     { 3, 1, "How good are you in Python development?", "Jaka jest Twoja znajomość programowania w Pythonie?", true, "Python", "Python" },
-                    { 4, 2, "How good are you in CComputer Networks?", "Jaka jest Twoja znajomość sieci komputerowych?", true, "Router configuration", "Konfiguracja routera" },
+                    { 4, 2, "How good are you in Computer Networks?", "Jaka jest Twoja znajomość sieci komputerowych?", true, "Router configuration", "Konfiguracja routera" },
                     { 5, 2, "How good are you in Active Directory?", "Jaka jest Twoja znajomość usługi Active Directory?", true, "Active Directory", "Usługa Active Directory" },
                     { 6, 3, "What is Your Computer Hardware Knowledge?", "Jaka jest Twoja znajomość Hardware komputera?", true, "Hardware", "Sprzęt komputerowy" },
                     { 7, 3, "How well you know MS Windows installation?", "Jaka jest Twoja znajomość na temat instalacji systemu Windows?", false, "Windows installation", "Instalacja systemu Windows" },
@@ -511,6 +535,11 @@ namespace ProfileMatch.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_JobTitleId",
+                table: "AspNetUsers",
+                column: "JobTitleId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -586,6 +615,9 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Departments");
+
+            migrationBuilder.DropTable(
+                name: "JobTitles");
 
             migrationBuilder.DropTable(
                 name: "Categories");
