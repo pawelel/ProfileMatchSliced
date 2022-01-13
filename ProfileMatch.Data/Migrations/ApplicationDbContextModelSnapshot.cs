@@ -562,7 +562,7 @@ namespace ProfileMatch.Data.Migrations
                             NormalizedUserName = "ADMIN@ADMIN.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEA7gpniRqOhGbX3OVv1plgKhHVDGYMZQO57xAm3KT+mbdanTTBIMNLMrFesdgtnefA==",
                             PhoneNumberConfirmed = false,
-                            PhotoPath = "/default-profile.png",
+                            PhotoPath = "/lank-profile.png",
                             SecurityStamp = "bde9c84c-0e35-4ced-a804-2ce4440b0f2c",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"

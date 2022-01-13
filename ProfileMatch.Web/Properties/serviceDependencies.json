@@ -4,9 +4,24 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:DefaultConnection"
     },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:SqliteDatabase"
+    },
+    "mssql3": {
+      "ignored": "true",
+      "suggestion": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Old"
+    },
     "signalr1": {
+      "ignored": "true",
+      "suggestion": "true",
       "type": "signalr",
-      "connectionId": "Azure:SignalR:ConnectionString"
+      "connectionId": ""
     }
   }
 }

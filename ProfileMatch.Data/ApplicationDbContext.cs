@@ -65,7 +65,7 @@ namespace ProfileMatch.Data
                     LastName = "Kent",
                     JobTitleId=1,
                     IsActive = true,
-                    PhotoPath = "/default-profile.png",
+                    PhotoPath = "/blank-profile.png",
                     DateOfBirth = new DateTime(day:26 , month:1, year:1971)
                 }
                             );
