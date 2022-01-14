@@ -873,4 +873,10 @@
   <data name="Edit Certificate" xml:space="preserve">
     <value>Edytuj certyfikat</value>
   </data>
+  <data name="Change Password" xml:space="preserve">
+    <value>Zmień hasło</value>
+  </data>
+  <data name="Password is Changed To:" xml:space="preserve">
+    <value>Hasło zostało zmienione na:</value>
+  </data>
 </root>

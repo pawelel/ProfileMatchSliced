@@ -873,4 +873,10 @@
   <data name="Edit Certificate" xml:space="preserve">
     <value>Edit Certificate</value>
   </data>
+  <data name="Change Password" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="Password is Changed To:" xml:space="preserve">
+    <value>Password is Changed To:</value>
+  </data>
 </root>

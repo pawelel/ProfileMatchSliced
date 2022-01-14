@@ -43,12 +43,12 @@ else
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Title="Job Title">
+                <Column T="DepartmentUserVM" Field="JobTitleName" Title="Job Title">
                     <HeaderTemplate>
                         @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobTitleUpdate())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
-                        @context.JobTitle.Name
+                        @context.JobTitleName
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Is Active">
@@ -100,12 +100,12 @@ else
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Title="Stanowisko">
+                <Column T="DepartmentUserVM" Field="JobTitleNamePl" Title="Stanowisko">
                     <HeaderTemplate>
                         @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobTitleUpdate())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
-                        @context.JobTitle.NamePl
+                        @context.JobTitleNamePl
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Field="UserRolesVM" Title="Role">

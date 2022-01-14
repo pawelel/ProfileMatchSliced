@@ -85,6 +85,10 @@ else
                                RequiredError=@L["BirthDate is Required"]
                                Label=@L["Select Date of Birth"]
                                Editable="false" />
+                               @if(created){
+                    <MudTextField T="String" Label="@L["New Password"]" @bind-Value="@PasswordHash"/>
+                    <MudButton OnClick="@(()=>ResetPassword(PasswordHash))" >@L["Change Password"]</MudButton>
+                }
                 @if (canChangeRoles)
                 {
                     <MudTable Items="@UserRolesVM">

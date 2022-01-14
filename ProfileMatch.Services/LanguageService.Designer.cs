@@ -484,6 +484,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string Change_Password {
+            get {
+                return ResourceManager.GetString("Change Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to checked.
         /// </summary>
         public static string checked_F_ {
@@ -1516,6 +1525,15 @@ namespace ProfileMatch.Services {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is Changed To:.
+        /// </summary>
+        public static string Password_is_Changed_To_ {
+            get {
+                return ResourceManager.GetString("Password is Changed To:", resourceCulture);
             }
         }
         

@@ -28,6 +28,7 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
         [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
+        [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
@@ -100,10 +101,9 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 else
                 {
-                    
-                    EditedUser = await ApplicationUserRepository.Insert(EditedUser);
+                    EditedUser.PasswordHash = "******";
+                    await UserManager.CreateAsync(EditedUser, EditedUser.PasswordHash);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
-
                     created = true;
                 }
                 foreach (var role in UserRolesVM)
@@ -124,6 +124,36 @@ namespace ProfileMatch.Components.Dialogs
                 NavigationManager.NavigateTo("admin/dashboard", true);
             }
         }
+        string PasswordHash;
+        async Task ResetPassword(string passwordHash)
+        {
+
+            var resetToken =
+                          await UserManager.GeneratePasswordResetTokenAsync(EditedUser);
+
+            var passworduser =
+                await UserManager.ResetPasswordAsync(
+                    EditedUser,
+                    resetToken,
+                    passwordHash);
+
+            if (!passworduser.Succeeded)
+            {
+                if (passworduser.Errors.FirstOrDefault() != null)
+                {
+                    Snackbar.Add(passworduser
+                        .Errors
+                        .FirstOrDefault()
+                        .Description);
+                }
+                else
+                {
+                    Snackbar.Add("Pasword error");
+                }
+            }
+            Snackbar.Add(@L["Password is Changed To:"] + passwordHash, Severity.Info);
+        }
+
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         private void Cancel()
         {

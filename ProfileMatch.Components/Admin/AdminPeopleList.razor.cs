@@ -136,7 +136,8 @@ namespace ProfileMatch.Components.Admin
                                 UserId = appUser.Id,
                                 JobTitleId = appUser.JobTitleId,
                                 PhotoPath = appUser.PhotoPath,
-                                JobTitle = jt,
+                                JobTitleNamePl = jt.NamePl,
+                                JobTitleName = jt.Name,
                                 IsActive = appUser.IsActive,
                                 UserRolesVM = new List<UserRoleVM>() { new()
                                 {
