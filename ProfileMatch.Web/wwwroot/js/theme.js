@@ -7,9 +7,10 @@ getTheme();
 
 darkswitch.addEventListener("click", changeTheme);
 function setCookie(cname, cvalue) {
-
-    document.cookie = cname + "=" + cvalue + ";";
+    document.cookie = `${cname}=${cvalue}; expires=${new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365).toUTCString()}; path=/`;
 }
+
+
 function getTheme() {
     var theme = getCookie("theme");
     if (theme == "dark") {
@@ -27,7 +28,7 @@ function getTheme() {
 function changeTheme() {
     if (darkswitch.checked) {
         logo.innerHTML = "<img src='../../images/logo-light.svg' alt='logo' />";
-        document.cookie = "theme=light;";
+        setCookie("theme", "light");
         darkswitch.checked = false;
         document.body.classList.remove("dark-mode");
     } else {

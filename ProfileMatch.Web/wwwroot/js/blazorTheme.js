@@ -1,27 +1,26 @@
 ﻿
 var theme = getCookie("theme");
 
-async function changeTheme() {
-    if (theme=="light") {
+function changeTheme() {
+    if (theme == "light") {
         document.body.classList.remove("light-mode");
         document.body.classList.add("dark-mode");
         setCookie("theme", "dark", 365);
     } else {
         document.body.classList.remove("dark-mode");
         document.body.classList.add("light-mode");
-        setCookie("theme", "light", 365);
+        setCookie("theme", "light");
     }
 }
 
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+function setCookie(cname, cvalue) {
+    document.cookie = `${cname}=${cvalue}; expires=${new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365).toUTCString()}; path=/`;
 }
 
- function getCookie(cname) {
+
+function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
