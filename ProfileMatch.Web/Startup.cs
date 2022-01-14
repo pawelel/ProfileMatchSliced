@@ -1,4 +1,4 @@
-using Blazored.LocalStorage;
+
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Localization;
 using MudBlazor;
 using MudBlazor.Services;
 
-using ProfileMatch.Contracts;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Services;
@@ -27,6 +27,7 @@ using System.IO;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 namespace ProfileMatch
 {
@@ -60,22 +61,9 @@ namespace ProfileMatch
                 options.ClaimsIdentity.UserIdClaimType = "UserId";
             });
 
-            //MailKit service
-            services.AddTransient<IEmailSender, MailKitEmailSender>();
-            services.Configure<MailKitEmailSenderOptions>(options =>
-            {
-                options.Host_Address = Configuration["ExternalProviders:MailKit:SMTP:Address"];
-                options.Host_Port = Convert.ToInt32(Configuration["ExternalProviders:MailKit:SMTP:Port"]);
-                options.Host_Username = Configuration["ExternalProviders:MailKit:SMTP:Account"];
-                options.Host_Password = Configuration["ExternalProviders:MailKit:SMTP:Password"];
-                options.Sender_EMail = Configuration["ExternalProviders:MailKit:SMTP:SenderEmail"];
-                options.Sender_Name = Configuration["ExternalProviders:MailKit:SMTP:SenderName"];
-            });
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<ShareResource>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddMvc()
@@ -117,10 +105,6 @@ namespace ProfileMatch
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
 
-            //dark theme toggler
-            services.AddScoped<IThemeService, ThemeService>();
-            //local storage - blazored
-            services.AddBlazoredLocalStorage();
             //localization service
             services.AddLocalization();
         }

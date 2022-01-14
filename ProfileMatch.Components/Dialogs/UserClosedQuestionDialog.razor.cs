@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-using ProfileMatch.Contracts;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;

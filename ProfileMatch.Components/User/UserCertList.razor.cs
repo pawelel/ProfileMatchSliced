@@ -9,7 +9,9 @@ using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
+
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.User
 {
@@ -22,12 +24,14 @@ namespace ProfileMatch.Components.User
         List<Certificate> certificates;
         private readonly IList<IBrowserFile> files = new List<IBrowserFile>();
 
+        protected override async Task OnInitializedAsync()
+        {
+            certificates = await CertificateRepository.Get();
+        }
+
         private void UploadFiles(InputFileChangeEventArgs e)
         {
-            foreach (var file in e.GetMultipleFiles())
-            {
-                files.Add(file);
-            }
+            
             //TODO upload the files to the server
         }
 
@@ -41,6 +45,6 @@ namespace ProfileMatch.Components.User
             DialogService.Show<UserCertDialog>("Are you sure you want to delete the certificate?");
         }
 
-        [Inject]        private IStringLocalizer<LanguageService> L { get; set; }
+        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

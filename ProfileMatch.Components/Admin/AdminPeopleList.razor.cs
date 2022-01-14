@@ -8,7 +8,7 @@ using MudBlazor;
 using MudBlazor.Extensions;
 
 using ProfileMatch.Components.Dialogs;
-using ProfileMatch.Contracts;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;

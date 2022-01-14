@@ -4,7 +4,7 @@
                    NoHeader="false"
                    Position="DialogPosition.Center" />
 <MudSnackbarProvider />
-<MudThemeProvider Theme="currentTheme" />
+<MudThemeProvider Theme="currentTheme" @bind-IsDarkMode="@isDarkTheme"/>
 <MudLayout>
     <CascadingAuthenticationState>
         <AuthorizeView>
@@ -14,14 +14,31 @@
                         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.Xs">
-                        <MudText Typo="Typo.h6" Class="ml-4">Profile Match</MudText>
+                        @if (isDarkTheme)
+                        {
+                        <div><img src='../../images/logo-dark.svg' alt='logo' /></div>
+                        }else{
+                            <div><img src='../../images/logo-light.svg' alt='logo' /></div>
+                        }
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                        <MudText Typo="Typo.subtitle2">Profile Match</MudText>
+                        @if (isDarkTheme)
+                        {
+                        <div><img src='../../images/logo-dark.svg' alt='logo' /></div>
+                        }else{
+                            <div><img src='../../images/logo-light.svg' alt='logo' /></div>
+                        }
                     </MudHidden>
                     <MudSpacer />
                     <CultureSelector />
-                    <ThemeToggle />
+                   @if (isDarkTheme)
+                        {
+                            <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.LightMode" Style="@($"color:{Colors.Amber.Darken1};")"/>
+                        }
+                        else
+                        {
+                             <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.Nightlight" Color="Color.Inherit"/>
+                        }
                     <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
                         <ActivatorContent>
                             <MudAvatar Image="@CurrentUser?.PhotoPath" />
@@ -68,7 +85,14 @@
                     <MudAppBar Dense="true">
                         <MudSpacer />
                         <CultureSelector />
-                        <ThemeToggle />
+                        @if (isDarkTheme)
+                        {
+                            <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.LightMode" Style="@($"color:{Colors.Amber.Darken1};")"/>
+                        }
+                        else
+                        {
+                             <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.Nightlight" Color="Color.Inherit"/>
+                        }
                     </MudAppBar>
                     <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
                         <div class="d-flex flex-column mud-width-full">

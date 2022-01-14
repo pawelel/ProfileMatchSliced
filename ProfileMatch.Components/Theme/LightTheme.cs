@@ -2,9 +2,9 @@
 
 namespace ProfileMatch.Components.Theme
 {
-    public class GeneralTheme : MudTheme
+    public class LightTheme : MudTheme
     {
-        public GeneralTheme()
+        public LightTheme()
         {
             Palette = new Palette()
             {

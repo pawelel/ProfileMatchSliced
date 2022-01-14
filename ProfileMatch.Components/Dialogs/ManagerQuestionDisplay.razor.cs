@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
-using ProfileMatch.Contracts;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;

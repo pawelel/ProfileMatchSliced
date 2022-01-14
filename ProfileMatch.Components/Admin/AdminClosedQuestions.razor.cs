@@ -5,7 +5,7 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Components.Dialogs;
-using ProfileMatch.Contracts;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;
@@ -40,11 +40,7 @@ namespace ProfileMatch.Components.Admin
             await LoadData();
 
         }
-        protected override void OnAfterRender(bool firstRender)
-        {
-
-            base.OnAfterRender(firstRender);
-        }
+        
         private async Task LoadData()
         {
             loading = true;
