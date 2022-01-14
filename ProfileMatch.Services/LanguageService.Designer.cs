@@ -1529,6 +1529,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password cannot be empty!.
+        /// </summary>
+        public static string Password_cannot_be_empty_ {
+            get {
+                return ResourceManager.GetString("Password cannot be empty!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password is Changed To:.
         /// </summary>
         public static string Password_is_Changed_To_ {

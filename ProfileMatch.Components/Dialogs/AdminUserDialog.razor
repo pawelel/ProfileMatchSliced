@@ -24,7 +24,7 @@ else
                            AdornmentColor="Color.Tertiary">
                     @foreach (var dept in Departments)
                     {
-                        <MudSelectItem Value="@(dept.Id)">@L[dept.Name]</MudSelectItem>
+                        <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
                     }
                 </MudSelect>
                            }else
@@ -37,7 +37,7 @@ else
                            AdornmentColor="Color.Tertiary">
                     @foreach (var dept in Departments)
                     {
-                        <MudSelectItem Value="@(dept.Id)">@L[dept.NamePl]</MudSelectItem>
+                        <MudSelectItem Value="@(dept.Id)">@dept.NamePl</MudSelectItem>
                     }
                 </MudSelect>
                            }
@@ -60,11 +60,11 @@ else
                     </MudSelect>
                 }else
                 {
-                    <MudSelect Required="true" T="JobTitle" Label=@L["Select Job Title"] @bind-Value="@EditedUser.JobTitle"
+                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@EditedUser.JobTitleId"
                 OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
                     @foreach(JobTitle job in jobTitles)
                     {
-                        <MudSelectItem Value="@job">@job.NamePl]</MudSelectItem>
+                        <MudSelectItem T="int" Value="@job.Id">@job.NamePl</MudSelectItem>
                     }
                 </MudSelect>
                 }
@@ -86,8 +86,8 @@ else
                                Label=@L["Select Date of Birth"]
                                Editable="false" />
                                @if(created){
-                    <MudTextField T="String" Label="@L["New Password"]" @bind-Value="@PasswordHash"/>
-                    <MudButton OnClick="@(()=>ResetPassword(PasswordHash))" >@L["Change Password"]</MudButton>
+                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" @bind-Value="@PasswordHash"/>
+                    <MudButton Size="Size.Small" Variant=Variant.Outlined Color="Color.Warning" OnClick="@(()=>ResetPassword(PasswordHash))" >@L["Change Password"]</MudButton>
                 }
                 @if (canChangeRoles)
                 {

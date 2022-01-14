@@ -28,6 +28,7 @@ namespace ProfileMatch.Data
             {
                 role.HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", ConcurrencyStamp = "83256a0f-8959-4eb8-a15e-e9c74c782841" });
                 role.HasData(new IdentityRole { Name = "Manager", NormalizedName = "MANAGER", Id = "af138749-2fc8-4bcf-8492-fadb9e0d5415", ConcurrencyStamp = "6d68df77-faee-4dab-bb84-4c445d4cc7a1" });
+                role.HasData(new IdentityRole() { Name = "User", NormalizedName = "USER", Id = "9588cfdb-8071-49c0-82cf-c51f20d305d2", ConcurrencyStamp = "83e0991b-0ddb-4291-bfe6-f9217019fde5"});
             });
             builder.Entity<Department>(department =>
             {

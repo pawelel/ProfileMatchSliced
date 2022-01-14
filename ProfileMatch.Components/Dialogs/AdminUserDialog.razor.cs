@@ -51,17 +51,17 @@ namespace ProfileMatch.Components.Dialogs
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var principal = authState.User;
             if (principal != null)
-            UserId = principal.FindFirst("UserId").Value;
+                UserId = principal.FindFirst("UserId").Value;
             CurrentUser = await ApplicationUserRepository.GetById(UserId);
             await LoadData();
-           await CanChangeRolesCheck();
+            await CanChangeRolesCheck();
         }
         private async Task LoadData()
         {
             jobTitles = await JobTitleRepository.Get();
             Departments = await DepartmentRepository.Get();
             Roles = await IdentityRoleRepository.Get();
-            
+
             if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
             {
                 try
@@ -81,8 +81,7 @@ namespace ProfileMatch.Components.Dialogs
                 EditedUser = new()
                 {
                     PhotoPath = "blank-profile.png",
-                    DateOfBirth = DateTime.Now,
-                    JobTitleId = 1
+                    DateOfBirth = DateTime.Now
                 };
             }
         }
@@ -101,11 +100,17 @@ namespace ProfileMatch.Components.Dialogs
                 }
                 else
                 {
-                    EditedUser.PasswordHash = "******";
-                    await UserManager.CreateAsync(EditedUser, EditedUser.PasswordHash);
+                    EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
+                    EditedUser.NormalizedUserName = EditedUser.Email.ToUpper();
+                    var hasher = new PasswordHasher<ApplicationUser>();
+                    EditedUser.PasswordHash = hasher.HashPassword(null, "Maslo123$");
+                    EditedUser = await ApplicationUserRepository.Insert(EditedUser);
                     Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
                     created = true;
+                    await IdentityUserRoleRepository.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = EditedUser.Id });
                 }
+
+                await TryToAddUserRoles();
                 foreach (var role in UserRolesVM)
                 {
                     if (role.IsSelected && !await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
@@ -127,6 +132,11 @@ namespace ProfileMatch.Components.Dialogs
         string PasswordHash;
         async Task ResetPassword(string passwordHash)
         {
+            if (string.IsNullOrEmpty(passwordHash))
+            {
+                Snackbar.Add(@L["Password cannot be empty!"], Severity.Warning);
+                return;
+            }
 
             var resetToken =
                           await UserManager.GeneratePasswordResetTokenAsync(EditedUser);
@@ -152,6 +162,7 @@ namespace ProfileMatch.Components.Dialogs
                 }
             }
             Snackbar.Add(@L["Password is Changed To:"] + passwordHash, Severity.Info);
+
         }
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
@@ -160,7 +171,7 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
-        
+
         async Task UploadImage(InputFileChangeEventArgs e)
         {
             string wwwPath;
@@ -219,14 +230,17 @@ namespace ProfileMatch.Components.Dialogs
             UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == EditedUser.Id);
             foreach (var role in Roles)
             {
-                var userRoleVM = new UserRoleVM
+                if (role.Name != "User")
                 {
-                    RoleId = role.Id,
-                    RoleName = role.Name,
-                    UserId = EditedUser.Id,
-                    IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
-                };
-                UserRolesVM.Add(userRoleVM);
+                    var userRoleVM = new UserRoleVM
+                    {
+                        RoleId = role.Id,
+                        RoleName = role.Name,
+                        UserId = EditedUser.Id,
+                        IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
+                    };
+                    UserRolesVM.Add(userRoleVM);
+                }
             }
         }
     }

@@ -879,4 +879,7 @@
   <data name="Password is Changed To:" xml:space="preserve">
     <value>Password is Changed To:</value>
   </data>
+  <data name="Password cannot be empty!" xml:space="preserve">
+    <value>Password cannot be empty!</value>
+  </data>
 </root>
