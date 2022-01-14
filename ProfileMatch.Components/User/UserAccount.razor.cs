@@ -26,7 +26,7 @@ namespace ProfileMatch.Components.User
         [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Parameter] public string UserId { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-        ApplicationUser CurrentUser;
+        [Parameter] public ApplicationUser CurrentUser { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> AppUserManager { get; set; }
         [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get;  set; }
         protected override async Task OnInitializedAsync()

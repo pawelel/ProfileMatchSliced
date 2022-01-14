@@ -135,10 +135,6 @@ namespace ProfileMatch.Components.Dialogs
             string wwwPath;
             string contentPath = $"Files/{EditedUser.Id}/Profile.png";
             string path = Path.Combine(Environment.WebRootPath, "Files", EditedUser.Id);
-            if (Directory.Exists(path))
-            {
-                Directory.Delete(path, true);
-            }
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

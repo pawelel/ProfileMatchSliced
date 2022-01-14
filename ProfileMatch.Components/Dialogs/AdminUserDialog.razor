@@ -13,6 +13,7 @@ else
                     <MudAvatar Image="@EditedUser.PhotoPath">
                     </MudAvatar>
                     <InputFile OnChange="@UploadImage" @ref="inputFile" accept=".jpg, .jpeg, .png" />
+                    <MudButton Size="Size.Small" Variant="Variant.Outlined" id="inputFile"  Color="Color.Default">@L["Upload Image"]</MudButton>
                 }
                            @if(ShareResource.IsEn()){
                 <MudSelect @bind-Value="@EditedUser.DepartmentId"

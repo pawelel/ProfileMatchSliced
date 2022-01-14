@@ -15,7 +15,7 @@
 @if(ShareResource.IsEn()){
 <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>NoteCreate())">@L["Add New"]</MudButton>
+        <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>OpenQuestionUpdate())">@L["Add New"]</MudButton>
        <MudSpacer/>
     </ToolBarContent>
     <ColGroup>
@@ -35,7 +35,7 @@
         <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
         <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>NoteUpdate(context))">@L["Edit Question"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))">@L["Edit Question"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
@@ -46,7 +46,7 @@
 else{
     <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>NoteCreate())">@L["Add New"]</MudButton>
+        <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>OpenQuestionUpdate())">@L["Add New"]</MudButton>
        <MudSpacer/>
     </ToolBarContent>
     <ColGroup>
@@ -66,7 +66,7 @@ else{
         <MudTd DataLabel=@L["Name"]>@context.NamePl</MudTd>
         <MudTd DataLabel=@L["Description"]>@context.DescriptionPl</MudTd>
         <MudTd DataLabel=@L["Edit"]>
-            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>NoteUpdate(context))">@L["Edit Question"]</MudButton>
+            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))">@L["Edit Question"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>

@@ -2,6 +2,18 @@
 
 <MudText Typo="Typo.h6">@L["Certificates"]</MudText>
 
+<MudDataGrid Items="certificates">
+    <Columns>
+        <Column T="Certificate" Field="Name">
+            <HeaderTemplate>
+              @L["Cert name"] <MudButton @onclick="UpdateCert" Variant="Variant.Filled" Color="Color.Primary">@L["Edit Certificate"]</MudButton>
+            </HeaderTemplate>
+            <CellTemplate>
+                @context.Name
+            </CellTemplate>
+        </Column>
+    </Columns>
+</MudDataGrid>
 <MudTable Items="@certificates" MultiSelection="true" Dense="true" Hover="true" Bordered="false" Striped="false">
     <HeaderContent>
         <MudTh>@L["Cert name"]</MudTh>
@@ -12,28 +24,11 @@
     <RowTemplate>
        
         <MudTd DataLabel=@L["Cert name"]>@context.Name</MudTd>
-        <MudTd DataLabel=@L["Date of issue"]>@context.DateModified</MudTd>
-        <MudTd DataLabel=@L["File"]>
-            @if (files != null)
-            {
-                <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
-                <MudList>
-                    @foreach (var file in files)
-                    {
-                        <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
-                            @file.Name <code>@file.Size bytes</code>
-                        </MudListItem>
-                    }
-                </MudList>
-            }
-        </MudTd>
+        <MudTd DataLabel=@L["Date of issue"]>@context.DateCreated</MudTd>
+        <MudTd DataLabel=@L["Date Valid To"]>@context.ValidToDate</MudTd>
+        
         <MudTd DataLabel=@L["Edit"]>
-
-            <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
-            <MudFab HtmlTag=@L["label"]
-                    Color="Color.Primary"
-                    Icon="@Icons.Filled.AttachFile"
-                    for="fileInput" />
+            <MudButton @onclick="UpdateCert" Variant="Variant.Filled" Color="Color.Primary">@L["Edit Certificate"]</MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
@@ -43,7 +38,3 @@
         <MudTd colspan="5">@L["Select All"]</MudTd>
     </FooterContent>
 </MudTable>
-
-
-<MudButton @onclick="AddCert" Variant="Variant.Filled" Color="Color.Primary">@L["Add Certificate"]</MudButton>
-<MudButton @onclick="DelCert" Variant="Variant.Filled" Color="Color.Primary">@L["Delete"]</MudButton>

@@ -1,43 +1,40 @@
 ﻿
-
 <MudDialog>
     <DialogContent>
-        <MudGrid>
-            <MudItem xs="12" sm="6" md="4">
-                <MudNumericField @bind-Value="IntValue" Label="#" Variant="Variant.Text" Min="0" Max="100" />
-            </MudItem>
-        </MudGrid>
-        <MudGrid>
-            <MudItem xs="12" sm="20" md="4">
-                <MudTextField @bind-Value="TextValue" Label=@L["Employee"] Variant="Variant.Text"></MudTextField>
-            </MudItem>
-        </MudGrid>
-        <MudGrid>
-            <MudItem xs="12" sm="20" md="4">
-                <MudTextField @bind-Value="TextValue" Label=@L["Certificate Name"] Variant="Variant.Text"></MudTextField>
-            </MudItem>
-        </MudGrid>
-        <MudGrid>
-            <MudItem xs="12" sm="15" md="4">
-                <MudDatePicker Label=@L["Date of issue"] @bind-Date="date" DisableToolbar="true" />
-            </MudItem>
-        </MudGrid>
+        <MudForm @ref="Form">
+            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Certificate Name"] Required="true" RequiredError=@L["Certificate name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@TempDescription" Label=@L["Certificate Description EN"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+                          <MudTextField T="string" @bind-Value="@TempDescriptionPl" Label=@L["Certificate Description PL"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+<MudDatePicker Label=@L["Date of Issue"] @bind-Date="TempDate" DateFormat="dd/MM/yyyy" />
+<MudDatePicker Label=@L["Date Valid To"] @bind-Date="TempValidTo" DateFormat="dd/MM/yyyy" />
+            <InputFile id="fileInput" OnChange="UploadImage" hidden multiple />
+            <MudFab HtmlTag=@L["label"]
+                    Color="Color.Primary"
+                    Icon="@Icons.Filled.AttachFile"
+                    for="fileInput" />
+        </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">@L["Add"]</MudButton>
+        @if (OpenCertificate.Id > 0)
+        {
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
+        }
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Warning" OnClick="Cancel">@L["Cancel"]</MudButton>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>
 </MudDialog>
-@code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-    public string TextValue { get; set; }
-    void Submit() => MudDialog.Close(DialogResult.Ok(true));
-    void Cancel() => MudDialog.Cancel();
 
-    public int IntValue { get; set; }
-    public double DoubleValue { get; set; }
-    public decimal DecimalValue { get; set; }
-
-    DateTime? date = DateTime.Today;
-
-}
+<MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
+    <div class="d-flex flex-column">
+            @if (ShareResource.IsEn())
+            {
+        <MudText>@($"\nAre you sure?")</MudText>
+            }
+            else
+            {
+                <MudText>@($"\nUsunąć?")</MudText>
+            }
+        <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>Delete())">@L["Delete"]</MudButton>
+        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">Close</MudButton>
+    </div>
+</MudPopover>

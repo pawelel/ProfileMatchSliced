@@ -846,4 +846,22 @@
   <data name="Invalid login attempt." xml:space="preserve">
     <value>Nieprawidłowe dane logowania.</value>
   </data>
+  <data name="Certificate name is required!" xml:space="preserve">
+    <value>Nazwa certyfikatu jest wymagana!</value>
+  </data>
+  <data name="Certificate Description EN" xml:space="preserve">
+    <value>Opis certyfikatu EN</value>
+  </data>
+  <data name="Certificate Description PL" xml:space="preserve">
+    <value>Opis certyfikatu PL</value>
+  </data>
+  <data name="Certificate description is required!" xml:space="preserve">
+    <value>Opis certyfikatu jest wymagany!</value>
+  </data>
+  <data name="Date Valid To" xml:space="preserve">
+    <value>Data ważności</value>
+  </data>
+  <data name="Upload Image" xml:space="preserve">
+    <value>Wstaw obraz</value>
+  </data>
 </root>

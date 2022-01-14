@@ -8,8 +8,27 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="Delete">@L["Delete"]</MudButton>
+
+        @if (Cat.Id > 0)
+        {
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
+        }
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Warning" OnClick="Cancel">@L["Cancel"]</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Small" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="HandleSave">@L["Save"]</MudButton>
     </DialogActions>
 </MudDialog>
+
+<MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
+    <div class="d-flex flex-column">
+            @if (ShareResource.IsEn())
+            {
+        <MudText>@($"\nAre you sure?")</MudText>
+            }
+            else
+            {
+                <MudText>@($"\nUsunąć?")</MudText>
+            }
+        <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>Delete())">@L["Delete"]</MudButton>
+        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">Close</MudButton>
+    </div>
+</MudPopover>

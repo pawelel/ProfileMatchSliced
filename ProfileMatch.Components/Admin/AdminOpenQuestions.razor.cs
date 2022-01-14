@@ -29,14 +29,14 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
 
-        private async Task<List<OpenQuestion>> GetNotesAsync()
+        private async Task<List<OpenQuestion>> GetOpenQuestions()
         {
             return await OpenQuestionRepository.Get();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            OpenQuestions = await GetNotesAsync();
+            OpenQuestions = await GetOpenQuestions();
         }
 
         
@@ -60,19 +60,22 @@ namespace ProfileMatch.Components.Admin
             return false;
         }
 
-        private async Task NoteUpdate(OpenQuestion OpenQuestion)
+        private async Task OpenQuestionUpdate(OpenQuestion OpenQuestion = null)
         {
             var parameters = new DialogParameters { ["EditedOpenQuestion"] = OpenQuestion };
+            if (OpenQuestion.Id > 0) { 
             var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Edit Question"], parameters);
-            await dialog.Result;
+                await dialog.Result;
+            }
+            else
+            {
+                var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Create Question"]);
+                await dialog.Result;
+            }
+            OpenQuestions = await GetOpenQuestions();
         }
 
-        private async Task NoteCreate()
-        {
-            var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Create Question"]);
-            await dialog.Result;
-            OpenQuestions = await GetNotesAsync();
-        }
+       
 
         
 

@@ -12,7 +12,7 @@ namespace ProfileMatch.Components.User
     {
         [Parameter] public string Class { get; set; }
         [Parameter] public string Style { get; set; }
-        [CascadingParameter] ApplicationUser CurrentUser { get; set; }
+        [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
     }
 }
