@@ -1,40 +1,55 @@
 ﻿
-
-<MudText Typo="Typo.h6">@L["Certificates"]</MudText>
-
-<MudDataGrid Items="certificates">
+<MudGrid Spacing="0" Class="d-flex justify-space-between">
+    <MudItem xs="12" md="5">
+        <MudText Typo="Typo.h6">@L["Certificates"]</MudText>
+    </MudItem>
+    <MudItem xs="12" md="5">
+        <MudTextField Class="d-flex justify-end"
+                      @bind-Value="searchString"
+                      Placeholder=@L["Search"]
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"></MudTextField>
+    </MudItem>
+</MudGrid>
+<MudDataGrid T="Certificate" Items="certificates"  Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter">
     <Columns>
-        <Column T="Certificate" Field="Name">
+        <Column T="Certificate" Field="Name" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
             <HeaderTemplate>
-              @L["Cert name"] <MudButton @onclick="UpdateCert" Variant="Variant.Filled" Color="Color.Primary">@L["Edit Certificate"]</MudButton>
+                @L["Cert name"] <MudIconButton @onclick="@(()=>CertUpdate())" Size="Size.Small" Icon="@Icons.Outlined.Add" Variant="Variant.Outlined" Color="Color.Primary" />
             </HeaderTemplate>
             <CellTemplate>
                 @context.Name
             </CellTemplate>
         </Column>
+        @if (ShareResource.IsEn())
+        {
+            <Column T="Certificate" Field="Description" Title=@L["Description"] />
+        }
+        else
+        {
+            <Column T="Certificate" Field="DescriptionPl" Title=@L["Description"] />
+        }
+        <Column T="Certificate" Field="Image" Sortable="false" Title=@L["Image"]>
+            <CellTemplate>
+                <div><img src="@context.Image" alt='@context.Name' /></div>
+            </CellTemplate>
+        </Column>
+        <Column T="Certificate" Field="Url" Title="Url">
+            <CellTemplate>
+                <a href="@context.Url" name="@context.Name"/>
+            </CellTemplate>
+        </Column>
+        <Column T="Certificate" Field="DateCreated" Title=@L["Date of Issue"] />
+        <Column T="Certificate" Field="ValidToDate" Title="@L["Valid To Date"]" />
+        <Column T="Certificate" Sortable="false" Title=@L["Edit"]>
+            <CellTemplate >
+                <MudButton @onclick="@(()=>CertUpdate(@context))" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" >@L["Edit Certificate"]</MudButton>
+            </CellTemplate>
+        </Column>
     </Columns>
-</MudDataGrid>
-<MudTable Items="@certificates" MultiSelection="true" Dense="true" Hover="true" Bordered="false" Striped="false">
-    <HeaderContent>
-        <MudTh>@L["Cert name"]</MudTh>
-        <MudTh>@L["Date of issue"]</MudTh>
-        <MudTh>@L["File"]</MudTh>
-        <MudTh>@L["Upload"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-       
-        <MudTd DataLabel=@L["Cert name"]>@context.Name</MudTd>
-        <MudTd DataLabel=@L["Date of issue"]>@context.DateCreated</MudTd>
-        <MudTd DataLabel=@L["Date Valid To"]>@context.ValidToDate</MudTd>
-        
-        <MudTd DataLabel=@L["Edit"]>
-            <MudButton @onclick="UpdateCert" Variant="Variant.Filled" Color="Color.Primary">@L["Edit Certificate"]</MudButton>
-        </MudTd>
-    </RowTemplate>
     <PagerContent>
-        <MudTablePager RowsPerPageString=@L["Rows per page"] PageSizeOptions="new int[]{50, 100}" />
+        <MudDataGridPager T="Certificate" RowsPerPageString=@L["Rows per page"] PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
-    <FooterContent>
-        <MudTd colspan="5">@L["Select All"]</MudTd>
-    </FooterContent>
-</MudTable>
+</MudDataGrid>

@@ -130,6 +130,7 @@ namespace ProfileMatch.Components.Dialogs
             MudDialog.Cancel();
             Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
+        
         async Task UploadImage(InputFileChangeEventArgs e)
         {
             string wwwPath;

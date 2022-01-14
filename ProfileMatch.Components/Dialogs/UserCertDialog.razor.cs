@@ -27,7 +27,9 @@ namespace ProfileMatch.Components.Dialogs
         [Inject] IWebHostEnvironment Environment { get; set; }
         [Inject] DataManager<Certificate, ApplicationDbContext> CertificateRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
-        [Parameter] public ApplicationUser CurrentUser { get; set; }
+        [Inject] IRedirection Redirection { get; set; }
+        [Parameter] public Certificate OpenCertificate { get; set; } = new();
+        [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
         [Inject] IStringLocalizer<LanguageService> L { get; set; }
         public string TempName { get; set; }
         public string TempImage { get; set; }
@@ -41,12 +43,37 @@ namespace ProfileMatch.Components.Dialogs
         public string TempDescriptionPl { get; set; }
         bool _isOpen = false;
         MudForm Form;
+ 
         public void ToggleOpen()
         {
             _isOpen = !_isOpen;
         }
 
-        [Parameter] public Certificate OpenCertificate { get; set; }
+
+
+        protected override async void OnInitialized()
+        {
+            if (CurrentUser == null)
+            {
+                CurrentUser = await Redirection.GetUser();
+            }
+
+            if (OpenCertificate == null)
+            {
+                OpenCertificate = new();
+
+            }else
+            {
+                TempDate = OpenCertificate.DateCreated;
+                TempValidTo = OpenCertificate.ValidToDate;
+                TempDescription = OpenCertificate.Description;
+                TempDescriptionPl = OpenCertificate.DescriptionPl;
+                TempImage = OpenCertificate.Image;
+                TempName = OpenCertificate.Name;
+                TempUrl = OpenCertificate.Url;
+            }
+
+        }
         private void Cancel()
         {
             MudDialog.Cancel();
@@ -144,7 +171,7 @@ namespace ProfileMatch.Components.Dialogs
 
                 var resizedImage = await file.RequestImageFileAsync(imageType, 400, 400);
                 using var imageStream = resizedImage.OpenReadStream(maxFileSize);
-                wwwPath = $"{path}\\Profile.png";
+                wwwPath = $"{path}\\{name}.png";
                 using FileStream fs = File.Create(wwwPath);
                 await imageStream.CopyToAsync(fs);
                 fs.Close();

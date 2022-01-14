@@ -619,11 +619,11 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date of issue.
+        ///   Looks up a localized string similar to Date of Issue.
         /// </summary>
-        public static string Date_of_issue {
+        public static string Date_of_Issue {
             get {
-                return ResourceManager.GetString("Date of issue", resourceCulture);
+                return ResourceManager.GetString("Date of Issue", resourceCulture);
             }
         }
         
@@ -804,6 +804,15 @@ namespace ProfileMatch.Services {
         public static string Edit_Category {
             get {
                 return ResourceManager.GetString("Edit Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Certificate.
+        /// </summary>
+        public static string Edit_Certificate {
+            get {
+                return ResourceManager.GetString("Edit Certificate", resourceCulture);
             }
         }
         
@@ -1075,6 +1084,15 @@ namespace ProfileMatch.Services {
         public static string I_want_to_develop {
             get {
                 return ResourceManager.GetString("I want to develop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
             }
         }
         
@@ -2182,6 +2200,15 @@ namespace ProfileMatch.Services {
         public static string Users {
             get {
                 return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid To Date.
+        /// </summary>
+        public static string Valid_To_Date {
+            get {
+                return ResourceManager.GetString("Valid To Date", resourceCulture);
             }
         }
         

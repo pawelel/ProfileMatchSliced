@@ -8,9 +8,11 @@ using MudBlazor;
 using ProfileMatch.Components.Dialogs;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,10 +23,10 @@ namespace ProfileMatch.Components.User
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] IRedirection Redirection { get; set; }
         [Inject] DataManager<Certificate, ApplicationDbContext> CertificateRepository { get; set; }
-        [CascadingParameter] public ApplicationUser CurrentUser    { get; set; }
+        [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
-        List<Certificate> certificates=new();
-
+        List<Certificate> certificates = new();
+        string searchString;
         protected override async Task OnInitializedAsync()
         {
             if (CurrentUser == null)
@@ -33,12 +35,37 @@ namespace ProfileMatch.Components.User
             }
             certificates = await CertificateRepository.Get();
         }
-        private void UpdateCert()
+       
+          
+        private async Task CertUpdate(Certificate certicicate = null)
         {
-            DialogService.Show<UserCertDialog>("fill in the fields");
+                var parameters = new DialogParameters { ["OpenCertificate"] = certicicate, ["CurrentUser"]= CurrentUser };
+
+            if (certicicate == null)
+            {
+                var dialog = DialogService.Show<UserCertDialog>(L["Add Certificate"]);
+                await dialog.Result;
+            }
+            else
+            {
+                var dialog = DialogService.Show<UserCertDialog>(L["Edit Certificate"], parameters);
+                await dialog.Result;
+            }
+
         }
 
-       
+        private Func<Certificate, bool> QuickFilter => cert =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (cert.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (cert.DescriptionPl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (cert.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        };
 
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }

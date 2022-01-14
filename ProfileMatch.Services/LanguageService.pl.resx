@@ -378,7 +378,7 @@
   <data name="date" xml:space="preserve">
     <value>Data</value>
   </data>
-  <data name="Date of issue" xml:space="preserve">
+  <data name="Date of Issue" xml:space="preserve">
     <value>Data wydania</value>
   </data>
   <data name="No" xml:space="preserve">
@@ -863,5 +863,14 @@
   </data>
   <data name="Upload Image" xml:space="preserve">
     <value>Wstaw obraz</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Obraz</value>
+  </data>
+  <data name="Valid To Date" xml:space="preserve">
+    <value>Data ważności</value>
+  </data>
+  <data name="Edit Certificate" xml:space="preserve">
+    <value>Edytuj certyfikat</value>
   </data>
 </root>
