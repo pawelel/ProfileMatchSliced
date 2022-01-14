@@ -3,13 +3,12 @@ var theme = getCookie("theme");
 
 function changeTheme() {
     if (theme == "light") {
-        document.body.classList.remove("light-mode");
         document.body.classList.add("dark-mode");
         setCookie("theme", "dark", 365);
     } else {
         document.body.classList.remove("dark-mode");
-        document.body.classList.add("light-mode");
-        setCookie("theme", "light");
+
+        setCookie("theme", "light", 365);
     }
 }
 

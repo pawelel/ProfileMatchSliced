@@ -28,12 +28,12 @@ function getTheme() {
 function changeTheme() {
     if (darkswitch.checked) {
         logo.innerHTML = "<img src='../../images/logo-light.svg' alt='logo' />";
-        setCookie("theme", "light");
+        setCookie("theme", "light", 365);
         darkswitch.checked = false;
         document.body.classList.remove("dark-mode");
     } else {
         logo.innerHTML = "<img src='../../images/logo-dark.svg' alt='logo' />";
-        setCookie("theme", "dark");
+        setCookie("theme", "dark",365);
         darkswitch.checked = true;
         document.body.classList.add("dark-mode");
     }
