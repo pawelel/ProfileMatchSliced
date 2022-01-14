@@ -33,7 +33,7 @@
         }
         <Column T="Certificate" Field="Image" Sortable="false" Title=@L["Image"]>
             <CellTemplate>
-                <div><img src="@context.Image" alt='@context.Name' /></div>
+                <MudAvatar Image="@context.Image"/>
             </CellTemplate>
         </Column>
         <Column T="Certificate" Field="Url" Title="Url">

@@ -7,7 +7,11 @@
                           <MudTextField T="string" @bind-Value="@TempDescriptionPl" Label=@L["Certificate Description PL"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
 <MudDatePicker Label=@L["Date of Issue"] @bind-Date="TempDate" DateFormat="dd/MM/yyyy" />
 <MudDatePicker Label=@L["Date Valid To"] @bind-Date="TempValidTo" DateFormat="dd/MM/yyyy" />
-            <InputFile id="fileInput" OnChange="UploadImage" />
+            <InputFile id="fileInput" OnChange="UploadImage" hidden />
+            <MudButton HtmlTag="label" Variant="Variant.Outlined"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Filled.AttachFile" 
+                    for="fileInput">@L["Upload Image"]</MudButton>
         </MudForm>
     </DialogContent>
     <DialogActions>

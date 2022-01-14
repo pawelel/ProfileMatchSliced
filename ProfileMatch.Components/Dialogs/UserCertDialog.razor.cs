@@ -43,7 +43,7 @@ namespace ProfileMatch.Components.Dialogs
         public string TempDescriptionPl { get; set; }
         bool _isOpen = false;
         MudForm Form;
- 
+
         public void ToggleOpen()
         {
             _isOpen = !_isOpen;
@@ -62,7 +62,8 @@ namespace ProfileMatch.Components.Dialogs
             {
                 OpenCertificate = new();
 
-            }else
+            }
+            else
             {
                 TempDate = OpenCertificate.DateCreated;
                 TempValidTo = OpenCertificate.ValidToDate;
@@ -139,12 +140,13 @@ namespace ProfileMatch.Components.Dialogs
                 Snackbar.Add(updated, Severity.Success);
             }
         }
+
         async Task UploadImage(InputFileChangeEventArgs e)
         {
             var file = e.File;
             var name = file.Name;
             string wwwPath;
-            string contentPath = $"Files/{CurrentUser.Id}/{name}.png";
+            string contentPath = $"Files/{CurrentUser.Id}/{name}";
             string path = Path.Combine(Environment.WebRootPath, "Files", CurrentUser.Id);
             if (!Directory.Exists(path))
             {
@@ -171,12 +173,12 @@ namespace ProfileMatch.Components.Dialogs
 
                 var resizedImage = await file.RequestImageFileAsync(imageType, 400, 400);
                 using var imageStream = resizedImage.OpenReadStream(maxFileSize);
-                wwwPath = $"{path}\\{name}.png";
+                wwwPath = $"{path}\\{name}";
                 using FileStream fs = File.Create(wwwPath);
                 await imageStream.CopyToAsync(fs);
                 fs.Close();
                 imageStream.Close();
-                OpenCertificate.Image= contentPath;
+                TempImage = contentPath;
                 StateHasChanged();
 
             }
