@@ -180,7 +180,6 @@ namespace ProfileMatch.Components.Dialogs
                 imageStream.Close();
                 TempImage = contentPath;
                 StateHasChanged();
-
             }
         }
 
