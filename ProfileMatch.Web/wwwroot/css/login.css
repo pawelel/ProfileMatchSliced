@@ -49,10 +49,17 @@ body {
 
 
 
-.dark-mode, .modal-content, #staticEmail {
+.dark-mode, .dark-mode .modal-content, .dark-mode .modal-content #staticEmail {
     background-color: #32333d;
     color: white;
 }
+    .dark-mode .btn-link, .dark-mode a {
+        color: cornflowerblue;
+    }
+    .dark-mode .btn-link:hover, .dark-mode a:hover {
+        color: aqua;
+    }
+
 /* .dark-mode .modal-content {
      background-color: #32333d;
      color: white;
