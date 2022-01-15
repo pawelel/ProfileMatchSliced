@@ -882,4 +882,25 @@
   <data name="Password cannot be empty!" xml:space="preserve">
     <value>Hasło nie może być puste!</value>
   </data>
+  <data name="Wrong data provided" xml:space="preserve">
+    <value>Podano nieprawidłowe dane</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="Upload Photo" xml:space="preserve">
+    <value>Wstaw zdjęcie</value>
+  </data>
+  <data name="User Deleted" xml:space="preserve">
+    <value>Użytkownik usunięty</value>
+  </data>
+  <data name="There is no user with those credentials" xml:space="preserve">
+    <value>Użytkownik nie istnieje</value>
+  </data>
+  <data name="Password is required" xml:space="preserve">
+    <value>Hasło jest wymagane</value>
+  </data>
+  <data name="Resend email confirmation" xml:space="preserve">
+    <value>Potwierdzenie konta Email</value>
+  </data>
 </root>

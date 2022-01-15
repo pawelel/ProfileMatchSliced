@@ -7,8 +7,7 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 using MudBlazor.Extensions;
 
-using ProfileMatch.Components.Dialogs;
-
+using ProfileMatch.Components.Admin.Dialogs;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Models.ViewModels;

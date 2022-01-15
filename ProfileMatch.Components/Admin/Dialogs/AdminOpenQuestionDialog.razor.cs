@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 using System;
 
-namespace ProfileMatch.Components.Dialogs
+namespace ProfileMatch.Components.Admin.Dialogs
 {
     public partial class AdminOpenQuestionDialog : ComponentBase
     {

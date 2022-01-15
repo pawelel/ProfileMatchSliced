@@ -917,6 +917,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Female.
         /// </summary>
         public static string Female {
@@ -1547,6 +1556,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password is required.
+        /// </summary>
+        public static string Password_is_required {
+            get {
+                return ResourceManager.GetString("Password is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to People Match.
         /// </summary>
         public static string People_Match {
@@ -1813,6 +1831,15 @@ namespace ProfileMatch.Services {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resend email confirmation.
+        /// </summary>
+        public static string Resend_email_confirmation {
+            get {
+                return ResourceManager.GetString("Resend email confirmation", resourceCulture);
             }
         }
         
@@ -2105,6 +2132,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no user with those credentials.
+        /// </summary>
+        public static string There_is_no_user_with_those_credentials {
+            get {
+                return ResourceManager.GetString("There is no user with those credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error.
         /// </summary>
         public static string There_was_an_error {
@@ -2177,6 +2213,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Photo.
+        /// </summary>
+        public static string Upload_Photo {
+            get {
+                return ResourceManager.GetString("Upload Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User.
         /// </summary>
         public static string User {
@@ -2200,6 +2245,15 @@ namespace ProfileMatch.Services {
         public static string User_Dashboard {
             get {
                 return ResourceManager.GetString("User Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Deleted.
+        /// </summary>
+        public static string User_Deleted {
+            get {
+                return ResourceManager.GetString("User Deleted", resourceCulture);
             }
         }
         
@@ -2272,6 +2326,15 @@ namespace ProfileMatch.Services {
         public static string What_is_important_to_me_at_work {
             get {
                 return ResourceManager.GetString("What is important to me at work", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong data provided.
+        /// </summary>
+        public static string Wrong_data_provided {
+            get {
+                return ResourceManager.GetString("Wrong data provided", resourceCulture);
             }
         }
         

@@ -36,11 +36,9 @@ namespace ProfileMatch.Services
             if (authState?.User?.Identity is null || !authState.User.Identity.IsAuthenticated)
             {
                 var returnUrl = nav.ToBaseRelativePath(nav.Uri);
-
                 if (string.IsNullOrWhiteSpace(returnUrl))
                     nav.NavigateTo("Identity/Account/Login", true);
-                else
-                    nav.NavigateTo("", true);
+                
                 return new();
             }
             else

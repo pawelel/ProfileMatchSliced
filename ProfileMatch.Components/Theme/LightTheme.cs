@@ -12,7 +12,7 @@ namespace ProfileMatch.Components.Theme
                 //Secondary = Colors.DeepPurple.Accent2,
                 Background = Colors.Grey.Lighten2,
                 Black = "#272c34",
-                AppbarBackground = Colors.LightBlue.Darken4,
+                AppbarBackground = "#f5f5f5",
                 DrawerBackground = Colors.Grey.Lighten2,
                 Surface = Colors.Grey.Lighten3,
                 DrawerText = "rgba(0,0,0, 0.7)",

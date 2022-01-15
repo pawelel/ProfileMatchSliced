@@ -18,7 +18,7 @@ using ProfileMatch.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ProfileMatch.Components.Dialogs
+namespace ProfileMatch.Components.User.Dialogs
 {
     public partial class UserCertDialog : ComponentBase
     {

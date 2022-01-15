@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,17 +49,17 @@ namespace ProfileMatch
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
 
             services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireDigit = true;
                 options.Password.RequireUppercase = true;
-                options.SignIn.RequireConfirmedAccount = false; //TODO disabled for testing purposes
+                options.SignIn.RequireConfirmedAccount = true;
                 options.ClaimsIdentity.UserIdClaimType = "UserId";
             });
-
+services.AddSingleton<IEmailSender, EmailSender>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<ShareResource>();

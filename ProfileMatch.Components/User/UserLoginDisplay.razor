@@ -1,4 +1,4 @@
-﻿
+﻿@page "/index"
 <AuthorizeView>
     <Authorized>
         <a href="Identity/Account/Manage">@L["Hell"], @context.User.Identity.Name</a>
@@ -8,8 +8,7 @@
     </Authorized>
     <NotAuthorized>
         <MudItem Class="d-flex justify-space-between">
-            <MudButton Link="Identity/Account/Register" Color="Color.Primary" Variant="Variant.Outlined">@L["Register"]</MudButton>
-            <MudText Typo="Typo.h5">@L["Profile Match"]</MudText>
+            <MudText Typo="Typo.h5">Profile Match</MudText>
             <MudButton Link="Identity/Account/Login" Color="Color.Success" Variant="Variant.Outlined">@L["Log in"]</MudButton>
         </MudItem>
     </NotAuthorized>

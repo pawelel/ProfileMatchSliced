@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
-using ProfileMatch.Components.Dialogs;
+
+using ProfileMatch.Components.Admin.Dialogs;
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProfileMatch.Components.Dialogs
+namespace ProfileMatch.Components.Admin.Dialogs
 {
     public partial class AdminClosedQuestionDialog : ComponentBase
     {

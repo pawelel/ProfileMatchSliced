@@ -33,9 +33,7 @@ namespace ProfileMatch.Components.Layout
         ApplicationUser CurrentUser = new();
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-        [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
-        [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
-        IdentityRole AdminRole;
+
         private bool _drawerOpen = true;
         bool isDarkTheme;
         
@@ -46,10 +44,14 @@ namespace ProfileMatch.Components.Layout
 
         protected override async Task OnInitializedAsync()
         {
-          
-            AdminRole = await IdentityRoleRepository.GetOne(q => q.Name.Contains("Admin"));
-            CurrentUser = await Redirection.GetUser();
-            await CheckUserRole(CurrentUser);
+            if (!NavigationManager.Uri.Contains("emailconfirmation"))
+            {
+ CurrentUser = await Redirection.GetUser();
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/account/login");
+            }
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -69,15 +71,7 @@ namespace ProfileMatch.Components.Layout
             NavigationManager.NavigateTo("admin/dashboard");
         }
         [Inject] private IStringLocalizer<LanguageService> L { get; set; }
-        private async Task CheckUserRole(ApplicationUser updatedUser)
-        {
-            var roles = await IdentityUserRoleRepository.Get(q => q.UserId == updatedUser.Id);
-            if (!roles.Any(r => r.RoleId == AdminRole.Id && updatedUser.NormalizedEmail == "ADMIN@ADMIN.COM") && roles != null)
-            {
-                await IdentityUserRoleRepository.Insert(new() { RoleId = AdminRole.Id, UserId = updatedUser.Id });
-            }
-        }
-        
+                
         async Task ChangeTheme()
         {
             if (theme == "light")

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
@@ -9,37 +10,38 @@ using ProfileMatch.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProfileMatch.Components.Dialogs
+namespace ProfileMatch.Components.Admin.Dialogs
 {
-    public partial class AdminCategoryDialog : ComponentBase
+    public partial class AdminJobTitleDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Category Cat { get; set; } = new();
+        [Parameter] public JobTitle JobTitle { get; set; } = new();
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
-        bool _isOpen=false;
-       public void ToggleOpen()
+        bool _isOpen = false;
+        public void ToggleOpen()
         {
             _isOpen = !_isOpen;
         }
         protected override void OnInitialized()
         {
-            TempName = Cat.Name;
-            TempNamePl = Cat.NamePl;
-            TempDescription = Cat.Description;
-            TempDescriptionPl = Cat.DescriptionPl;
+            TempName = JobTitle.Name;
+            TempNamePl = JobTitle.NamePl;
+            TempDescription = JobTitle.Description;
+            TempDescriptionPl = JobTitle.DescriptionPl;
         }
         private IEnumerable<string> MaxCharacters(string ch)
         {
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
                 yield return L["Max 20 characters"];
         }
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
+        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
 
         private MudForm Form;
 
@@ -54,10 +56,10 @@ namespace ProfileMatch.Components.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                Cat.Name = TempName;
-                Cat.Description = TempDescription;
-                Cat.NamePl = TempNamePl;
-                Cat.DescriptionPl = TempDescriptionPl;
+                JobTitle.Name = TempName;
+                JobTitle.Description = TempDescription;
+                JobTitle.NamePl = TempNamePl;
+                JobTitle.DescriptionPl = TempDescriptionPl;
                 try
                 {
                     await Save();
@@ -67,21 +69,22 @@ namespace ProfileMatch.Components.Dialogs
                     Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(Cat));
+                MudDialog.Close(DialogResult.Ok(JobTitle));
             }
         }
         private async Task Delete()
         {
-            if(await CategoryRepository.ExistById(Cat.Id))
+            if (await JobTitleRepository.ExistById(JobTitle.Id))
             {
-            await CategoryRepository.Delete(Cat);
+                await JobTitleRepository.Delete(JobTitle);
             }
             if (ShareResource.IsEn())
             {
-                Snackbar.Add($"Category {Cat.Name} deleted");
-            }else
+                Snackbar.Add($"JobTitle {JobTitle.Name} deleted");
+            }
+            else
             {
-                Snackbar.Add($"Kategoria {Cat.NamePl} usunięta");
+                Snackbar.Add($"Kategoria {JobTitle.NamePl} usunięta");
             }
 
         }
@@ -91,26 +94,26 @@ namespace ProfileMatch.Components.Dialogs
             string updated;
             if (ShareResource.IsEn())
             {
-                created = $"Category {Cat.Name} created";
-                updated = $"Category {Cat.Name} updated";
+                created = $"JobTitle {JobTitle.Name} created";
+                updated = $"JobTitle {JobTitle.Name} updated";
             }
             else
             {
-                created = $"Kategoria {Cat.NamePl} utworzona";
-                updated = $"Kategoria {Cat.NamePl} zaktualizowana";
+                created = $"Kategoria {JobTitle.NamePl} utworzona";
+                updated = $"Kategoria {JobTitle.NamePl} zaktualizowana";
             }
 
 
 
-            if (Cat.Id == 0)
+            if (JobTitle.Id == 0)
             {
-                var result = await CategoryRepository.Insert(Cat);
+                var result = await JobTitleRepository.Insert(JobTitle);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await CategoryRepository.Update(Cat);
+                var result = await JobTitleRepository.Update(JobTitle);
                 Snackbar.Add(updated, Severity.Success);
             }
         }
