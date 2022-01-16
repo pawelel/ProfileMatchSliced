@@ -57,17 +57,29 @@ namespace ProfileMatch.Components.Admin.Dialogs
         //on initialize
         protected override async Task OnInitializedAsync()
         {
+            await GetCurrentUserAsync();
+            await LoadDepartmentsJobTitlesRolesUser();
+            await CanChangeRolesCheck();
+        }
+
+        /// <summary>
+        /// Load logged in user
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetCurrentUserAsync()
+        {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var principal = authState.User;
             if (principal != null)
                 UserId = principal.FindFirst("UserId").Value;
             CurrentUser = await ApplicationUserRepository.GetById(UserId);
-            await LoadData();
-            await CanChangeRolesCheck();
         }
 
-        //load data
-        private async Task LoadData()
+        /// <summary>
+        /// initializes data from database
+        /// </summary>
+        /// <returns></returns>
+        private async Task LoadDepartmentsJobTitlesRolesUser()
         {
             jobTitles = await JobTitleRepository.Get();
             Departments = await DepartmentRepository.Get();
@@ -97,6 +109,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
         }
 
+        /// <summary>
+        /// opens/closes dialog
+        /// </summary>
         void ToggleOpen()
         {
             _isOpen = !_isOpen;
@@ -175,7 +190,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 }
             }
         }
-
+        /// <summary>
+        /// creates user and sends confirmation email
+        /// </summary>
+        /// <returns></returns>
         private async Task CreateUserWithUserRole()
         {
             var hasher = new PasswordHasher<ApplicationUser>();
@@ -245,7 +263,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             Snackbar.Add(@L["Password is Changed To:"] + passwordString, Severity.Info);
 
         }
-        //prevent self destruction
+        /// <summary>
+        /// prevent self destruction
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         async Task DeleteUser(string userId)
         {
             if (CurrentUser != null && EditedUser != CurrentUser)
@@ -275,7 +297,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             MudDialog.Cancel();
             Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
-        //upload profile image
+        /// <summary>
+        /// upload image for user profile
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         async Task UploadImage(InputFileChangeEventArgs e)
         {
             string wwwPath;
@@ -318,6 +344,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
         }
         //prevent edit own role
+        
+        /// <summary>
+        /// prevent of taking back admin role for current user - this way there should be always one admin - but it only partially
+        /// </summary>
+        /// <returns></returns>
         private async Task CanChangeRolesCheck()
         {
             await Task.Delay(0);

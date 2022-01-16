@@ -15,7 +15,8 @@
         <MudCardContent>
             @if (!edit)
             {
-                @foreach (var uc in publicCategoriesVM)
+
+                @foreach (var uc in UserCategoryVMs.Where(c=>c.IsSelected))
                 {
                     @if(ShareResource.IsEn()){
                     <MudChip Text="@uc.CategoryName"></MudChip>
