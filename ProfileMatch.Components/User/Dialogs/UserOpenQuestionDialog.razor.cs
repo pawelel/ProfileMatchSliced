@@ -23,7 +23,6 @@ namespace ProfileMatch.Components.User.Dialogs
 {
     public partial class UserOpenQuestionDialog
     {
-       [Inject]  private  IStringLocalizer<LanguageService> L { get; set; }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
        

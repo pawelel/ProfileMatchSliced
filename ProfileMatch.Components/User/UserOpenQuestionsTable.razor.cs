@@ -129,6 +129,5 @@ namespace ProfileMatch.Components.User
 
 
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

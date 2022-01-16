@@ -1,0 +1,19 @@
+﻿<MudDialogProvider FullWidth="true"
+                   CloseButton="true"
+                   DisableBackdropClick="true"
+                   NoHeader="false"
+                   Position="DialogPosition.Center" />
+<MudSnackbarProvider />
+<MudThemeProvider Theme="currentTheme" @bind-IsDarkMode="@isDarkTheme" />
+
+<MudAppBar Elevation="4">
+    @if (isDarkTheme)
+    {
+        <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.LightMode" Style="@($"color:{Colors.Amber.Darken1};")" />
+    }
+    else
+    {
+        <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.Nightlight" Color="Color.Inherit" />
+    }
+
+</MudAppBar>

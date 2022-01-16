@@ -70,7 +70,6 @@ namespace ProfileMatch.Components.Layout
         {
             NavigationManager.NavigateTo("admin/dashboard");
         }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
                 
         async Task ChangeTheme()
         {

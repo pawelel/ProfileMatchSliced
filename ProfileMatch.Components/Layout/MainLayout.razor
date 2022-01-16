@@ -6,13 +6,13 @@
 <MudSnackbarProvider />
 <MudThemeProvider Theme="currentTheme" @bind-IsDarkMode="@isDarkTheme"/>
 <MudLayout>
-    <CascadingAuthenticationState>
-        <AuthorizeView>
-            <Authorized>
+            
                 <MudAppBar Elevation="4">
+        <AuthorizeView>
+            
                     <MudHidden Breakpoint="Breakpoint.MdAndUp">
-                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                    </MudHidden>
+                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" /></MudHidden>
+                            </AuthorizeView>
                     <MudHidden Breakpoint="Breakpoint.Xs">
                         @if (isDarkTheme)
                         {
@@ -30,6 +30,7 @@
                         }
                     </MudHidden>
                     <MudSpacer />
+                    
                     <CultureSelector />
                    @if (isDarkTheme)
                         {
@@ -39,6 +40,7 @@
                         {
                              <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.Nightlight" Color="Color.Inherit"/>
                         }
+                        <AuthorizeView>
                     <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
                         <ActivatorContent>
                             <MudAvatar Image="@CurrentUser?.PhotoPath" />
@@ -57,12 +59,16 @@
                             </MudListItem>
                         </ChildContent>
                     </MudMenu>
+                    </AuthorizeView>
                 </MudAppBar>
+                <AuthorizeView>
+                    <Authorized>
                 <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
                     <CascadingValue Value="CurrentUser">
                         <NavMenu />
                     </CascadingValue>
                 </MudDrawer>
+               
                 <MudMainContent>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudToolBar DisableGutters="true">
@@ -78,10 +84,9 @@
                         @Body
                     </CascadingValue>
                 </MudMainContent>
-            </Authorized>
+                  </Authorized>
            <NotAuthorized>
-               <NoContent/>
+               <RedirectToLogin/>
            </NotAuthorized>
         </AuthorizeView>
-    </CascadingAuthenticationState>
 </MudLayout>

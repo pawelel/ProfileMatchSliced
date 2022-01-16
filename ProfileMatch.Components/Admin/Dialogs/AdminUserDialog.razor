@@ -90,7 +90,8 @@ else
                 @if (created)
                 {
                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" InputType="InputType.Password" @bind-Value="@PasswordHash" />
-                }else
+                }
+                else
                 {
                     <MudTextField Required="true" InputType="InputType.Password" RequiredError="@L["Password is required"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" @bind-Value="@PasswordHash" />
                 }
@@ -106,7 +107,7 @@ else
                         <RowTemplate>
                             <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
                             <MudTd DataLabel=@L["Assigned"]>
-                                <MudCheckBox @bind-Checked="@context.IsSelected" />
+                                <MudCheckBox T="bool" CheckedChanged="@(()=>UpdateUserRole(context))" />
                             </MudTd>
                         </RowTemplate>
                     </MudTable>
@@ -117,7 +118,10 @@ else
             @if (created)
             {
                 <MudButton Size="Size.Small" Variant=Variant.Outlined Color="Color.Warning" OnClick="@(()=>ResetPassword(PasswordHash))">@L["Change Password"]</MudButton>
-            <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="ToggleOpen">@L["Delete"]</MudButton>
+            }
+            @if (canChangeRoles)
+            {
+                <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="ToggleOpen">@L["Delete"]</MudButton>
             }
             <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudButton OnClick="@HandleSave" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Small">@L["Save"]</MudButton>
@@ -126,15 +130,15 @@ else
 }
 <MudPopover AnchorOrigin="Origin.CenterCenter" Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
     <div class="d-flex flex-column">
-            @if (ShareResource.IsEn())
-            {
-        <MudText>@($"\nAre you sure that you want to delete User {EditedUser.FullName}?")</MudText>
-            }
-            else
-            {
-                <MudText>@($"\nNa pewno usunąć użytkownika {EditedUser.FullName}?")</MudText>
-            }
+        @if (ShareResource.IsEn())
+        {
+            <MudText>@($"\nAre you sure that you want to delete User {EditedUser.FullName}?")</MudText>
+        }
+        else
+        {
+            <MudText>@($"\nNa pewno usunąć użytkownika {EditedUser.FullName}?")</MudText>
+        }
         <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>DeleteUser(EditedUser.Id))">@L["Delete"]</MudButton>
-        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">Close</MudButton>
+        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">@L["Cancel"]</MudButton>
     </div>
 </MudPopover>

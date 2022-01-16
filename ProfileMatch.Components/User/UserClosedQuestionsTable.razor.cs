@@ -41,7 +41,6 @@ namespace ProfileMatch.Components.User
 
         [Inject] private IDialogService DialogService { get; set; }
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 

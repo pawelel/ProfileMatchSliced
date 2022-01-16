@@ -16,7 +16,6 @@ namespace ProfileMatch.Components.Manager.Dialogs
 {
     public partial class ManagerQuestionDisplay : ComponentBase
     {
-        [Inject] IStringLocalizer<LanguageService> L { get; set; }
 
         private List<AnswerOption> QAnswerOptions;
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }

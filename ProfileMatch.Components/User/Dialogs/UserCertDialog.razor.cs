@@ -30,7 +30,6 @@ namespace ProfileMatch.Components.User.Dialogs
         [Inject] IRedirection Redirection { get; set; }
         [Parameter] public Certificate OpenCertificate { get; set; } = new();
         [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
-        [Inject] IStringLocalizer<LanguageService> L { get; set; }
         public string TempName { get; set; }
         public string TempImage { get; set; }
         public string TempUrl { get; set; }

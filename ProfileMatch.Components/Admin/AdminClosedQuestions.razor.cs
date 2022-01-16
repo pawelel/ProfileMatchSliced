@@ -186,6 +186,6 @@ namespace ProfileMatch.Components.Admin
             await dialog.Result;
 
         }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
+
     }
 }

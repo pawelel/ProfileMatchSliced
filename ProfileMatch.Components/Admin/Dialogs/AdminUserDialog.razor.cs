@@ -36,7 +36,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
         List<IdentityRole> Roles;
         string UserId;
@@ -54,7 +53,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         bool created;
         bool canChangeRoles;
         bool _isOpen;
-        //on initialize
+        //on user dialog initialize
         protected override async Task OnInitializedAsync()
         {
             await GetCurrentUserAsync();
@@ -164,7 +163,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     await SendConfirmationEmail();
                 }
                 await TryToAddUserRoles();
-                await UpdateUserRoles();
+                //await UpdateUserRoles();
                 MudDialog.Close(DialogResult.Ok(true));
                 await Task.Delay(2000);
                 NavigationManager.NavigateTo("admin/dashboard", true);
@@ -174,22 +173,70 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// add or remove Manager or Admin role
         /// </summary>
         /// <returns></returns>
-        private async Task UpdateUserRoles()
+        //private async Task UpdateUserRoles()
+        //{
+        //    foreach (var role in UserRolesVM)
+        //    {
+        //        if (role.RoleName == "Admin")
+        //        {
+        //            var roles = await IdentityUserRoleRepository.Get(q => q.RoleId == role.RoleId);
+
+        //        }
+
+        //        if (role.IsSelected && !await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
+        //        {
+        //            IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
+        //            await IdentityUserRoleRepository.Insert(roleToInsert);
+        //        }
+        //        if (!role.IsSelected && await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
+        //        {
+        //            IdentityUserRole<string> roleToRemove = new() { UserId = EditedUser.Id, RoleId = role.RoleId };
+        //            await IdentityUserRoleRepository.Delete(roleToRemove);
+        //        }
+        //    }
+        //}
+
+        /// <summary>
+        /// add or remove Manager or Admin role
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateUserRole(UserRoleVM uVM)
         {
-            foreach (var role in UserRolesVM)
+            var roles = await IdentityUserRoleRepository.Get();
+            var n = uVM.RoleName;
+            var id = uVM.RoleId;
+            var userRole = await IdentityUserRoleRepository.GetById(id);
+            var filteredRoles = roles.Where(r => r.RoleId == id);
+
+            if (n == "Admin" && filteredRoles.Count() > 1)
             {
-                if (role.IsSelected && !await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
+                switch (uVM.IsSelected)
                 {
-                    IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
-                    await IdentityUserRoleRepository.Insert(roleToInsert);
-                }
-                if (!role.IsSelected && await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
-                {
-                    IdentityUserRole<string> roleToRemove = new() { UserId = EditedUser.Id, RoleId = role.RoleId };
-                    await IdentityUserRoleRepository.Delete(roleToRemove);
+                    case true:
+                        await IdentityUserRoleRepository.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
+                        break;
+                    case false:
+                        await IdentityUserRoleRepository.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
+                        break;
                 }
             }
+            else
+            {
+                switch (uVM.IsSelected)
+                {
+                    case true:
+                        await IdentityUserRoleRepository.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
+                        break;
+                    case false:
+                        await IdentityUserRoleRepository.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
+                        break;
+                }
+            }
+
+
+
         }
+
         /// <summary>
         /// creates user and sends confirmation email
         /// </summary>
@@ -198,6 +245,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             var hasher = new PasswordHasher<ApplicationUser>();
             EditedUser.PasswordHash = hasher.HashPassword(null, PasswordHash);
+            EditedUser.UserName = EditedUser.Email;
             EditedUser = await ApplicationUserRepository.Insert(EditedUser);
             Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
             created = true;
@@ -281,6 +329,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                         Snackbar.Add(L["User Deleted"], Severity.Info);
                         _isOpen = false;
                         MudDialog.Close(DialogResult.Ok(true));
+                        await Task.Delay(1000);
                         NavigationManager.NavigateTo("admin/dashboard", true);
                     }
                     else
@@ -289,8 +338,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     }
                 }
             }
+            else
+            {
             Snackbar.Add(L["You cannot delete your account here."], Severity.Error);
             return;
+            }
         }
         private void Cancel()
         {
@@ -344,7 +396,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
         }
         //prevent edit own role
-        
+
         /// <summary>
         /// prevent of taking back admin role for current user - this way there should be always one admin - but it only partially
         /// </summary>
@@ -352,7 +404,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         private async Task CanChangeRolesCheck()
         {
             await Task.Delay(0);
-            if (CurrentUser.Id != OpenedUser.UserId)
+            if (CurrentUser.Id != OpenedUser.UserId&&OpenedUser!=null&&!string.IsNullOrWhiteSpace( OpenedUser.UserId))
             {
                 canChangeRoles = true;
             }

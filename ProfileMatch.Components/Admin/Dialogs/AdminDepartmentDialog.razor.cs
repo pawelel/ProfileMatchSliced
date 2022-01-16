@@ -91,6 +91,5 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 Snackbar.Add(updated, Severity.Success);
             }
         }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

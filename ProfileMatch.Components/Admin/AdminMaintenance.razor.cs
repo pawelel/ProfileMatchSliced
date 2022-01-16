@@ -22,7 +22,6 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-       [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         string path;
         private async Task LoadSingleFile(InputFileChangeEventArgs e)

@@ -80,7 +80,5 @@ namespace ProfileMatch.Components.Admin
 
         
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

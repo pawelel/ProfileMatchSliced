@@ -8,7 +8,6 @@ namespace ProfileMatch.Sites
 {
     public partial class UserDashboard : ComponentBase
     {
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+
     }
 }

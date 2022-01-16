@@ -7,7 +7,6 @@ namespace ProfileMatch.Sites
 {
     public partial class ManagerDashboard : ComponentBase
     {
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
+
     }
 }

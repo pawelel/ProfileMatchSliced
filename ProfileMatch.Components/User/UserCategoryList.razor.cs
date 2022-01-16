@@ -18,7 +18,6 @@ namespace ProfileMatch.Components.User
     public partial class UserCategoryList : ComponentBase
     {
         [Inject] ISnackbar Snackbar { get; set; }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         [Parameter] public string UserID { get; set; }
         List<UserCategoryVM> UserCategoryVMs;
 

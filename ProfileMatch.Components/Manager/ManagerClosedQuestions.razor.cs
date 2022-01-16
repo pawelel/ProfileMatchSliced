@@ -154,7 +154,5 @@ namespace ProfileMatch.Components.Manager
             return qs;
         }
 
-        [Inject]
-        private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

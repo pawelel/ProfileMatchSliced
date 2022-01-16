@@ -183,7 +183,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 }
             }
         }
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         private async Task AddLevels(ClosedQuestionVM questionVM)
         {
             var exist = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == questionVM.ClosedQuestionId);

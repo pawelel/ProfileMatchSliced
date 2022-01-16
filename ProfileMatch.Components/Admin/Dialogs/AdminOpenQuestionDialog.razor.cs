@@ -94,6 +94,5 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
         }
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

@@ -43,7 +43,6 @@ namespace ProfileMatch.Components.Admin
             users = await GetDepartmentsAsync();
         }
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
         private async Task EditProfile(DepartmentUserVM applicationUser = null)
         {
             if (applicationUser == null) applicationUser = new()

@@ -67,6 +67,5 @@ namespace ProfileMatch.Components.User
             return false;
         };
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
     }
 }

@@ -77,7 +77,6 @@ namespace ProfileMatch.Components.User.Dialogs
             Snackbar.Add(@L["Answer updated"] + $": {title}", Severity.Success);
         }
 
-        [Inject] private IStringLocalizer<LanguageService> L { get; set; }
 
         async Task SetOption(AnswerOption answerOption)
         {
