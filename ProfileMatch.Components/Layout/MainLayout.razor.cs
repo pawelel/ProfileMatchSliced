@@ -36,7 +36,7 @@ namespace ProfileMatch.Components.Layout
 
         private bool _drawerOpen = true;
         bool isDarkTheme;
-        
+
         private void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
@@ -46,7 +46,7 @@ namespace ProfileMatch.Components.Layout
         {
             if (!NavigationManager.Uri.Contains("emailconfirmation"))
             {
- CurrentUser = await Redirection.GetUser();
+                CurrentUser = await Redirection.GetUser();
             }
             else
             {
@@ -70,30 +70,30 @@ namespace ProfileMatch.Components.Layout
         {
             NavigationManager.NavigateTo("admin/dashboard");
         }
-                
+
         async Task ChangeTheme()
         {
             if (theme == "light")
             {
                 isDarkTheme = true;
                 theme = "dark";
-currentTheme = darkTheme;
+                currentTheme = darkTheme;
             }
             else
             {
                 isDarkTheme = false;
                 theme = "light";
-currentTheme = lightTheme;
-}
+                currentTheme = lightTheme;
+            }
             await JSRuntime.InvokeVoidAsync("setCookie", "theme", theme);
 
             StateHasChanged();
         }
 
-       async Task GetTheme()
+        async Task GetTheme()
         {
             theme = await JSRuntime.InvokeAsync<string>("getCookie", "theme");
-            if (theme=="dark")
+            if (theme == "dark")
             {
                 isDarkTheme = true;
                 currentTheme = darkTheme;
@@ -101,7 +101,7 @@ currentTheme = lightTheme;
             else
             {
                 theme = "light";
-                isDarkTheme= false;
+                isDarkTheme = false;
                 currentTheme = lightTheme;
             }
             StateHasChanged();

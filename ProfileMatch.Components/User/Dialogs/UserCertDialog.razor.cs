@@ -154,10 +154,21 @@ namespace ProfileMatch.Components.User.Dialogs
             long maxFileSize = 1024 * 1024 * 5;
             string imageType = file.ContentType;
             string[] imageTypes = { "image/jpeg", "image/jpeg", "image/png" };
-            if (!imageTypes.Any(i => i.Contains(imageType)))
+            string pdfFile = "application/pdf";
+            if (imageType == pdfFile)
+            {
+                using var fileToDisplay = file.OpenReadStream(maxFileSize);
+                wwwPath = $"{path}\\{name}";
+                using FileStream fs = File.Create(wwwPath);
+                await fileToDisplay.CopyToAsync(fs);
+                fs.Close();
+                fileToDisplay.Close();
+                TempImage = contentPath;
+                StateHasChanged();
+            }else if (!imageTypes.Any(i => i.Contains(imageType)))
             {
                 Snackbar.Clear();
-                Snackbar.Add(@L["Wrong file format. Allowed file formats are: .jpg, .jpeg, .png."], Severity.Error);
+                Snackbar.Add(@L["Wrong file format. Allowed file formats are: .jpg, .jpeg, .png, .pdf."], Severity.Error);
                 return;
             }
             if (file.Size > maxFileSize)
@@ -180,6 +191,7 @@ namespace ProfileMatch.Components.User.Dialogs
                 TempImage = contentPath;
                 StateHasChanged();
             }
+            
         }
 
         private async Task Delete()

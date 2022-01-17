@@ -34,7 +34,10 @@
         <Column T="Certificate" Field="Image" Sortable="false" Title=@L["Image"]>
             <CellTemplate>
                 <div class="cert">
-                <img src="@context.Image"/>
+             
+                   <iframe src ="@context.Image" style= "width:100%;height:1200px;" ></iframe>
+                
+                    
                 </div>
             </CellTemplate>
         </Column>
@@ -47,7 +50,7 @@
         <Column T="Certificate" Field="ValidToDate" Title="@L["Valid To Date"]" />
         <Column T="Certificate" Sortable="false" Title=@L["Edit"]>
             <CellTemplate >
-                <MudButton @onclick="@(()=>CertUpdate(@context))" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" >@L["Edit Certificate"]</MudButton>
+                <MudButton Class="guzik" @onclick="@(()=>CertUpdate(@context))" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" >@L["Edit Certificate"]</MudButton>
             </CellTemplate>
         </Column>
     </Columns>
