@@ -12,7 +12,7 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220115205209_Initial")]
+    [Migration("20220118213045_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -557,7 +557,7 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a7926ead-3db0-403e-a751-f41f3b5f6c40",
+                            ConcurrencyStamp = "34e16015-3f60-49af-96b4-150187063bb8",
                             DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
@@ -569,10 +569,10 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGbAvXs2dYpU2UFkQyhOUxtUO6bF7sCZ4SkwMdo+S3Wzhp37K4rzHkCZLor3G+P7Vg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENea/NTnGje94C7V+1KF2D5+hirT0ftBHfHCM7SyTx6Metzc7cGT05NNBzgItipKtw==",
                             PhoneNumberConfirmed = false,
                             PhotoPath = "/blank-profile.png",
-                            SecurityStamp = "148231a6-c43e-470e-8e01-41a07ce11fd5",
+                            SecurityStamp = "ea4d1fe0-92f4-41d5-a862-97a31f4883c3",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

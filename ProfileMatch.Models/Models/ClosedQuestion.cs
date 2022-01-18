@@ -1,11 +1,13 @@
 ﻿using Ganss.Excel;
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProfileMatch.Models.Models
 {
     public class ClosedQuestion
     {
+        [Key]
         public int Id { get; set; }
         public int CategoryId { get; set; }
         [Ignore]

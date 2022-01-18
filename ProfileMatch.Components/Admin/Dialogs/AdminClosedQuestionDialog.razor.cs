@@ -25,6 +25,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Parameter] public bool DeleteEnabled { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
+        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
         public int ClosedQuestionId { get; set; }
         List<AnswerOption> answerOptions;
         public string TempName { get; set; }
@@ -73,7 +74,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
             return false;
         }
 
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
         private MudForm Form;
 
@@ -119,61 +119,45 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             first = !first;
         }
+
         protected async Task SaveAndClose()
-        {
-            await Save();
-            MudDialog.Close(DialogResult.Ok(Q));
-        }
-        private async Task Save()
         {
             ClosedQuestion question = new();
             await Form.Validate();
             if (Form.IsValid)
             {
-                question.Name = Q.QuestionName = TempName;
-                question.NamePl = Q.QuestionNamePl = TempNamePl;
-                question.Description = Q.Description = TempDescription;
-                question.DescriptionPl = Q.DescriptionPl = TempDescriptionPl;
-                question.CategoryId = Q.CategoryId = Q.CategoryId;
-                question.IsActive = Q.IsActive = TempIsActive;
+                question.Name = TempName;
+                question.NamePl = TempNamePl;
+                question.Description = TempDescription;
+                question.DescriptionPl = TempDescriptionPl;
+                question.CategoryId = Q.CategoryId;
+                question.IsActive = TempIsActive;
                 try
                 {
-
-                    //has any other question the same name in the category?
-                    var exists = (await ClosedQuestionRepository.Get(q => q.Name == Q.QuestionName));
-                    if (Q.ClosedQuestionId == 0 && exists.Count == 0)
+                    if (Q.ClosedQuestionId == 0)
                     {
                         var result = await ClosedQuestionRepository.Insert(question);
-                        if (ShareResource.IsEn())
+                        switch (ShareResource.IsEn())
                         {
-                            Snackbar.Add($"Question {result.Name} has been created", Severity.Success);
-                        }
-                        else
-                        {
-                            Snackbar.Add($"Pytanie {result.NamePl} zostało utworzone", Severity.Success);
-                        }
-                    }
-                    else if (exists.Count <= 1)
-                    {
-                        await ClosedQuestionRepository.Update(question);
-                        if (ShareResource.IsEn())
-                        {
-                            Snackbar.Add($"Question {question.Name} has been updated", Severity.Success);
-                        }
-                        else
-                        {
-                            Snackbar.Add($"Pytanie  {question.NamePl} zostało zaktualizowane", Severity.Success);
+                            case true:
+                                Snackbar.Add($"Question {result.Name} has been created", Severity.Success);
+                                break;
+                            default:
+                                Snackbar.Add($"Pytanie {result.NamePl} zostało utworzone", Severity.Success);
+                                break;
                         }
                     }
                     else
                     {
-                        if (ShareResource.IsEn())
+                        await ClosedQuestionRepository.Update(question);
+                        switch (ShareResource.IsEn())
                         {
-                            Snackbar.Add($"Question{question.Name} already exists", Severity.Error);
-                        }
-                        else
-                        {
-                            Snackbar.Add($"Pytanie  {question.NamePl} już istnieje", Severity.Error);
+                            case true:
+                                Snackbar.Add($"Question {question.Name} has been updated", Severity.Success);
+                                break;
+                            default:
+                                Snackbar.Add($"Pytanie  {question.NamePl} zostało zaktualizowane", Severity.Success);
+                                break;
                         }
                     }
                 }
@@ -182,11 +166,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
                 }
             }
+            MudDialog.Close(DialogResult.Ok(Q));
         }
         private async Task AddLevels(ClosedQuestionVM questionVM)
         {
-            var exist = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == questionVM.ClosedQuestionId);
-            if (questionVM != null && questionVM.ClosedQuestionId != 0 || exist == null || exist.Count == 0)
+            if (await AnswerOptionRepository.Get(a => a.ClosedQuestionId == questionVM.ClosedQuestionId) == null && questionVM.ClosedQuestionId > 0)
+            {
                 for (int i = 1; i < 6; i++)
                 {
                     await AnswerOptionRepository.Insert(new AnswerOption()
@@ -198,6 +183,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     }
                );
                 }
+            }
         }
         private async Task EditLevelDialog(AnswerOption answerOption)
         {

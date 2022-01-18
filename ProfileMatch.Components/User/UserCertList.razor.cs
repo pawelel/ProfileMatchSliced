@@ -36,10 +36,7 @@ namespace ProfileMatch.Components.User
             certificates = await CertificateRepository.Get();
         }
        
-          void ShowPdf(string certificate)
-        {
-
-        }
+        
         private async Task CertUpdate(Certificate certicicate = null)
         {
                 var parameters = new DialogParameters { ["OpenCertificate"] = certicicate, ["CurrentUser"]= CurrentUser };
