@@ -29,8 +29,8 @@ namespace ProfileMatch.Services
             SmtpClient client = new();
             try
             {
-                client.Connect("185.204.216.20", 587, false);
-                client.Authenticate("info@profilematch.pl", "PMInfoSecret123$");
+                client.Connect("profilematch.pl", 587, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                client.Authenticate("info@DEFAULT", "PMInfoSecret123$");
                 client.Send(message);
                 Console.WriteLine("Email Sent!");
             }
