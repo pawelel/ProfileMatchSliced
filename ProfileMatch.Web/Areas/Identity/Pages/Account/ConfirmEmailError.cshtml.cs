@@ -12,17 +12,14 @@ using System.Threading.Tasks;
 namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class ConfirmEmailModel : PageModel
+    public class ConfirmEmailErrorModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        public ConfirmEmailErrorModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
-
-        
-        
-        
+  
     }
 }
