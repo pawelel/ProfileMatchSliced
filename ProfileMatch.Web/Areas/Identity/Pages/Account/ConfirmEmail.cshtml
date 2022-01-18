@@ -1,8 +1,15 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = @L["Confirmed email"];
 }
 
 <h1>@ViewData["Title"]</h1>
+<h4>@L["Thank you for confirming your email."]</h4>
+<hr />
+<div>
+    <a class="btn btn-primary" href="/Identity/Account/Login" role="button">@L["Back to login page"]</a>
+
+</div>
+
 <partial name="_StatusMessage" model="Model.StatusMessage" />

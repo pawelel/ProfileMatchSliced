@@ -1,0 +1,13 @@
+﻿@page
+@model ConfirmEmailErrorModel
+@{
+    ViewData["Title"] = @L["Email confirmation error"];
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>@L["Sorry, there was an error verifying your email."]</h4>
+<hr />
+<div>
+    <a class="btn btn-primary" href="/Identity/Account/Login" role="button">@L["Back to login page"]</a>
+
+</div>

@@ -10,7 +10,7 @@
     </header>
 
 </div>
-<form class="form-signin" id="account" method="post">
+<form class="form-signin text-center" id="account" method="post">
     <div class="logo"></div>
     <br />
     <h1 class="h3 mb-3">@L["Proszę się zalogować"]</h1>
@@ -32,6 +32,12 @@
             </p>
             <p>
                 <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">@L["Resend email confirmation"]</a>
+            </p>
+            <p>
+                <a id="confirm-email-verity" asp-page="./ConfirmEmail">@L["Test Email confirmation VERITY"]</a>
+            </p>
+             <p>
+                <a id="confirm-email-error" asp-page="./ConfirmEmailError">@L["Test Email confirmation ERROR"]</a>
             </p>
         </div>
         </div>

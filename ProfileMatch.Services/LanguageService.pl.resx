@@ -903,4 +903,19 @@
   <data name="Resend email confirmation" xml:space="preserve">
     <value>Potwierdzenie konta Email</value>
   </data>
+  <data name="Thank you for confirming your email." xml:space="preserve">
+    <value>Dziękujemy za potwierdzenie adresu e-mail.</value>
+  </data>
+  <data name="Back to login page" xml:space="preserve">
+    <value>Wróć do strony logowania</value>
+  </data>
+  <data name="Confirmed email" xml:space="preserve">
+    <value>Potwierdzenie e-mail</value>
+  </data>
+  <data name="Email confirmation error" xml:space="preserve">
+    <value>Błąd potwierdzenia e-mail</value>
+  </data>
+  <data name="Sorry, there was an error verifying your email." xml:space="preserve">
+    <value>Przepraszamy, wystąpił błąd podczas weryfikacji Twojego adresu e-mail.</value>
+  </data>
 </root>

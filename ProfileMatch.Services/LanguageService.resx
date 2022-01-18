@@ -903,4 +903,19 @@
   <data name="Resend email confirmation" xml:space="preserve">
     <value>Resend email confirmation</value>
   </data>
+  <data name="Thank you for confirming your email." xml:space="preserve">
+    <value>Thank you for confirming your email.</value>
+  </data>
+  <data name="Back to login page" xml:space="preserve">
+    <value>Back to login page</value>
+  </data>
+  <data name="Confirmed email" xml:space="preserve">
+    <value>Confirmed email</value>
+  </data>
+  <data name="Email confirmation error" xml:space="preserve">
+    <value>Email confirmation error</value>
+  </data>
+  <data name="Sorry, there was an error verifying your email." xml:space="preserve">
+    <value>Sorry, there was an error verifying your email.</value>
+  </data>
 </root>
