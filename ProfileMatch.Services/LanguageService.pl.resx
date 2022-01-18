@@ -903,4 +903,7 @@
   <data name="Resend email confirmation" xml:space="preserve">
     <value>Potwierdzenie konta Email</value>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Zalącznik</value>
+  </data>
 </root>
