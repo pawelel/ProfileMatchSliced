@@ -181,7 +181,7 @@ namespace ProfileMatch.Components.User.Dialogs
             if (imageTypes.Any(i => i.Contains(imageType)))
             {
 
-                var resizedImage = await file.RequestImageFileAsync(imageType, 400, 400);
+                var resizedImage = await file.RequestImageFileAsync(imageType, 1000, 1000);
                 using var imageStream = resizedImage.OpenReadStream(maxFileSize);
                 wwwPath = $"{path}\\{name}";
                 using FileStream fs = File.Create(wwwPath);
@@ -211,4 +211,5 @@ namespace ProfileMatch.Components.User.Dialogs
 
         }
     }
+
 }
