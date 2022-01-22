@@ -18,7 +18,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
 {
     public partial class AdminClosedQuestionDialog : ComponentBase
     {
-        bool first = true;
+        bool _first = true;
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public ClosedQuestionVM Q { get; set; } = new();
@@ -27,14 +27,14 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
         public int ClosedQuestionId { get; set; }
-        List<AnswerOption> answerOptions;
+        List<AnswerOption> _answerOptions;
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
         public bool TempIsActive { get; set; }
-        AnswerOption tempOption;
-        ClosedQuestion tempQuestion = new();
+        AnswerOption _tempOption;
+        ClosedQuestion _tempQuestion = new();
 
         bool _isOpen = false;
         public void ToggleOpen()
@@ -43,8 +43,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         protected override async Task OnInitializedAsync()
         {
-            answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
-            if (answerOptions == null)
+            _answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
+            if (_answerOptions == null)
             {
 
             }
@@ -61,21 +61,21 @@ namespace ProfileMatch.Components.Admin.Dialogs
             {
                 return;
             }
-            tempOption = option;
+            _tempOption = option;
         }
         private async Task<bool> QuestionExists(ClosedQuestionVM q)
         {
             // question parameteer null check
             if (q.ClosedQuestionId != 0 && q != null)
             {
-                return (tempQuestion = await ClosedQuestionRepository.GetById(q.ClosedQuestionId)) != null;
+                return (_tempQuestion = await ClosedQuestionRepository.GetById(q.ClosedQuestionId)) != null;
             }
 
             return false;
         }
 
 
-        private MudForm Form;
+        private MudForm _form;
 
         private void Cancel()
         {
@@ -111,20 +111,20 @@ namespace ProfileMatch.Components.Admin.Dialogs
             else
             {
                 await AddLevels(question);
-                tempOption = await AnswerOptionRepository.GetOne(o => o.ClosedQuestionId == question.ClosedQuestionId && o.Level == 1);
+                _tempOption = await AnswerOptionRepository.GetOne(o => o.ClosedQuestionId == question.ClosedQuestionId && o.Level == 1);
                 ChangePage();
             }
         }
         void ChangePage()
         {
-            first = !first;
+            _first = !_first;
         }
 
         protected async Task SaveAndClose()
         {
             ClosedQuestion question = new();
-            await Form.Validate();
-            if (Form.IsValid)
+            await _form.Validate();
+            if (_form.IsValid)
             {
                 question.Name = TempName;
                 question.NamePl = TempNamePl;
@@ -215,7 +215,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             {
 
                 question.IsActive = !question.IsActive;
-                await ClosedQuestionRepository.Update(tempQuestion);
+                await ClosedQuestionRepository.Update(_tempQuestion);
                 if (question.IsActive)
                 {
                     Snackbar.Add(titleOn, Severity.Success);

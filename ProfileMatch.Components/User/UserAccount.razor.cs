@@ -22,7 +22,7 @@ namespace ProfileMatch.Components.User
     {
         public string AvatarImageLink { get; set; }
         public string AvatarIcon { get; set; }
-        private List<UserAnswerVM> UserOpenAnswersVM;
+        private List<UserAnswerVM> _userOpenAnswersVM;
         [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Parameter] public string UserId { get; set; }
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -44,7 +44,7 @@ namespace ProfileMatch.Components.User
                 CurrentUser = await AppUserManager.GetById(UserId);
                 CurrentUser.JobTitle = await JobTitleRepository.GetOne(q => q.Id == CurrentUser.JobTitleId);
             }
-            UserOpenAnswersVM = await GetUserAnswerVMAsync();
+            _userOpenAnswersVM = await GetUserAnswerVMAsync();
         }
         private async Task<List<UserAnswerVM>> GetUserAnswerVMAsync()
         {

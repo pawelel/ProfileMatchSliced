@@ -1,4 +1,4 @@
-﻿@if (users == null|| jobTitles==null)
+﻿@if (_users == null|| _jobTitles==null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 }
@@ -10,7 +10,7 @@ else
         </MudItem>
         <MudItem xs="12" md="5">
             <MudTextField Class="d-flex justify-end"
-                      @bind-Value="searchString"
+                      @bind-Value="_searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -18,7 +18,7 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid Items="users" T="DepartmentUserVM" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
+    <MudDataGrid Items="_users" T="DepartmentUserVM" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
         <Columns>
             @if (ShareResource.IsEn())
             {

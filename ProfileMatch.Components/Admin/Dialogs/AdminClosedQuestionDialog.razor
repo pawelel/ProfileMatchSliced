@@ -1,8 +1,8 @@
-﻿@if (first)
+﻿@if (_first)
 {
     <MudDialog>
         <DialogContent>
-            <MudForm @ref="Form">
+            <MudForm @ref="_form">
                 <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name EN"] Required="true" RequiredError=@L["Question name is required!"] />
                 <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description EN"] Lines="5" />
                 <MudTextField T="string" @bind-Value="@TempNamePl" Immediate="true" Label=@L["Question Name PL"] Required="true" RequiredError=@L["Question name is required!"] />
@@ -35,7 +35,7 @@
 </MudPopover>
 }
 
-@if (!first)
+@if (!_first)
 {
     <MudDialog>
         <DialogContent>
@@ -54,7 +54,7 @@
                  Border="true"
                  ApplyEffectsToContainer="true"
                  PanelClass="pa-6 d-block">
-                @foreach (var option in answerOptions)
+                @foreach (var option in _answerOptions)
                 {
                     if (ShareResource.IsEn())
                     {
@@ -88,7 +88,7 @@
             {
                 <MudButton  @onclick="@(()=>ChangeActiveState(Q))">@L["Activate question"]</MudButton>
             }
-              <MudButton Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(tempOption))">@L["Edit Level"]</MudButton>
+              <MudButton Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => EditLevelDialog(_tempOption))">@L["Edit Level"]</MudButton>
                <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>ChangePage())">@L["Go Back To Question"]</MudButton>
                <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
           </DialogActions>

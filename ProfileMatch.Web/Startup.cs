@@ -56,6 +56,7 @@ namespace ProfileMatch
                 options.Password.RequiredLength = 8;
                 options.Password.RequireDigit = true;
                 options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
                 options.SignIn.RequireConfirmedAccount = true;
                 options.ClaimsIdentity.UserIdClaimType = "UserId";
             });

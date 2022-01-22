@@ -1,6 +1,6 @@
 ﻿<MudDialog>
     <DialogContent>
-        <MudForm @ref="Form">
+        <MudForm @ref="_form">
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Level Description"] Required="true" RequiredError=@L["Level Description is required!"] Lines="5" MaxLength="1500" />
         </MudForm>
     </DialogContent>

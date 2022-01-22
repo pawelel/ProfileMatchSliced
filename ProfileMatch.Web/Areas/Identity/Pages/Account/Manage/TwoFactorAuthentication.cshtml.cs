@@ -12,7 +12,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account.Manage
     public class TwoFactorAuthenticationModel : PageModel
     {
 #pragma warning disable IDE0051 // Remove unused private members
-        private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
+        private const string _authenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 #pragma warning restore IDE0051 // Remove unused private members
 
         private readonly UserManager<ApplicationUser> _userManager;

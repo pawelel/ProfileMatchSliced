@@ -24,13 +24,13 @@ namespace ProfileMatch.Components.User
 
 
 
-        private bool loading;
-        private List<ClosedQuestion> questions;
-        private List<Category> categories;
-        private List<AnswerOption> answerOptions;
-        private List<UserClosedAnswer> userAnswers;
+        private bool _loading;
+        private List<ClosedQuestion> _questions;
+        private List<Category> _categories;
+        private List<AnswerOption> _answerOptions;
+        private List<UserClosedAnswer> _userAnswers;
 
-        private string UserId;
+        private string _userId;
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -46,11 +46,11 @@ namespace ProfileMatch.Components.User
 
         protected override async Task OnInitializedAsync()
         {
-            loading = true;
+            _loading = true;
             var authState = await AuthenticationStateTask;
             if (authState.User.Identity.IsAuthenticated)
             {
-                UserId = authState.User.Claims.FirstOrDefault().Value;
+                _userId = authState.User.Claims.FirstOrDefault().Value;
                 await LoadData();
             }
             else
@@ -58,36 +58,36 @@ namespace ProfileMatch.Components.User
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
 
-            loading = false;
+            _loading = false;
         }
 
         private async Task LoadData()
         {
-            categories = await CategoryRepository.Get();
-            questions = await ClosedQuestionRepository.Get(q => q.IsActive == true);
-            userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == UserId);
-            answerOptions = await AnswOptionRepository.Get();// need to filter by active question
-            answerOptions = (from q in questions join o in answerOptions on q.Id equals o.ClosedQuestionId select o).ToList();
+            _categories = await CategoryRepository.Get();
+            _questions = await ClosedQuestionRepository.Get(q => q.IsActive == true);
+            _userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == _userId);
+            _answerOptions = await AnswOptionRepository.Get();// need to filter by active question
+            _answerOptions = (from q in _questions join o in _answerOptions on q.Id equals o.ClosedQuestionId select o).ToList();
         }
 
-        private string searchString;
+        private string _searchString;
 
         private Func<QuestionUserLevelVM, bool> QuickFilter => x =>
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
             if (ShareResource.IsEn())
             {
-                if (x.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (x.CategoryName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (x.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (x.QuestionName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             else
             {
-                if (x.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (x.CategoryNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (x.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (x.QuestionNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
@@ -95,26 +95,26 @@ namespace ProfileMatch.Components.User
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
         private List<QuestionUserLevelVM> QuestionUserLevelVMs()
         {
-            foreach (ClosedQuestion q in questions)
+            foreach (ClosedQuestion q in _questions)
             {
-                if (!userAnswers.Any(a => a.ClosedQuestionId == q.Id))
+                if (!_userAnswers.Any(a => a.ClosedQuestionId == q.Id))
                 {
-                    var optionId = answerOptions.FirstOrDefault(o => o.ClosedQuestionId == q.Id && o.Level == 1).Id;
+                    var optionId = _answerOptions.FirstOrDefault(o => o.ClosedQuestionId == q.Id && o.Level == 1).Id;
                     var answer = new UserClosedAnswer()
                     {
                         AnswerOptionId = optionId,
                         ClosedQuestionId = q.Id,
-                        ApplicationUserId = UserId,
+                        ApplicationUserId = _userId,
                         LastModified = DateTime.Now
                     };
-                    userAnswers.Add(answer);
+                    _userAnswers.Add(answer);
                 }
             }
-            var data = (from u in userAnswers
-                        where u.ApplicationUserId == UserId
-                        join q in questions on u.ClosedQuestionId equals q.Id
-                        join c in categories on q.CategoryId equals c.Id
-                        join a in answerOptions on u.AnswerOptionId equals a.Id
+            var data = (from u in _userAnswers
+                        where u.ApplicationUserId == _userId
+                        join q in _questions on u.ClosedQuestionId equals q.Id
+                        join c in _categories on q.CategoryId equals c.Id
+                        join a in _answerOptions on u.AnswerOptionId equals a.Id
                         select new QuestionUserLevelVM()
                         {
                             ClosedQuestionId = q.Id,
@@ -126,7 +126,7 @@ namespace ProfileMatch.Components.User
                             CategoryName = c.Name,
                             CategoryNamePl = c.NamePl,
                             Level = a.Level,
-                            UserId = UserId
+                            UserId = _userId
                         }
               ).ToList();
             if (!Cats.Any())

@@ -15,7 +15,7 @@ else
                  ApplyEffectsToContainer="true"
                  HideSlider=true
                  PanelClass="pa-6 d-block">
-                @foreach (var level in QAnswerOptions)
+                @foreach (var level in _qAnswerOptions)
                 {
                     <MudTabPanel Text="@level.Level.ToString()">
 

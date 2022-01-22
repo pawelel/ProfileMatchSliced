@@ -25,12 +25,12 @@ namespace ProfileMatch.Components.Admin
 
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
-        bool deleteEnabled;
-        private bool loading;
+        bool _deleteEnabled;
+        private bool _loading;
         [Parameter] public int Id { get; set; }
-        private List<Category> categories;
-        private List<ClosedQuestion> questions;
-        List<ClosedQuestionVM> questionVMs;
+        private List<Category> _categories;
+        private List<ClosedQuestion> _questions;
+        List<ClosedQuestionVM> _questionVMs;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string> { };
 
 
@@ -42,11 +42,11 @@ namespace ProfileMatch.Components.Admin
         
         private async Task LoadData()
         {
-            loading = true;
-            categories = await CategoryRepository.Get();
-            questions = await ClosedQuestionRepository.Get();
-            questionVMs = (from c in categories
-                           join q in questions on c.Id equals q.CategoryId
+            _loading = true;
+            _categories = await CategoryRepository.Get();
+            _questions = await ClosedQuestionRepository.Get();
+            _questionVMs = (from c in _categories
+                           join q in _questions on c.Id equals q.CategoryId
                            select new ClosedQuestionVM()
                            {
                                CategoryId = c.Id,
@@ -62,9 +62,9 @@ namespace ProfileMatch.Components.Admin
             string nodata = "No questions yet";
             ClosedQuestionVM vm;
             string nodataPl = "Nie ma jeszcze pytań";
-            foreach (var cat in categories)
+            foreach (var cat in _categories)
             {
-                if (!questionVMs.Any(q => q.CategoryId == cat.Id && q.CategoryId != 0))
+                if (!_questionVMs.Any(q => q.CategoryId == cat.Id && q.CategoryId != 0))
                 {
                     vm = new ClosedQuestionVM()
                     {
@@ -75,11 +75,11 @@ namespace ProfileMatch.Components.Admin
                         CategoryName = cat.Name,
                         CategoryNamePl = cat.NamePl
                     };
-                    questionVMs.Add(vm);
+                    _questionVMs.Add(vm);
                 }
             }
             Cats = new HashSet<string>() { };
-            loading = false;
+            _loading = false;
         }
 
         private async Task CategoryUpdate(string category)
@@ -104,25 +104,25 @@ namespace ProfileMatch.Components.Admin
             await LoadData();
         }
 
-        private string searchString = "";
-        private ClosedQuestionVM selectedItem1 = null;
+        private string _searchString = "";
+        private ClosedQuestionVM _selectedItem1 = null;
 
         private Func<ClosedQuestionVM, bool> QuickFilter => question =>
        {
-           if (string.IsNullOrWhiteSpace(searchString))
+           if (string.IsNullOrWhiteSpace(_searchString))
                return true;
            if (ShareResource.IsEn())
            {
-               if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.CategoryName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
-               if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.QuestionName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
            }
            else
            {
-               if (question.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.CategoryNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
-               if (question.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.QuestionNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
            }
            return false;
@@ -132,20 +132,20 @@ namespace ProfileMatch.Components.Admin
         {
             if (!Cats.Any())
             {
-                return questionVMs;
+                return _questionVMs;
             }
             else
             {
                 if (ShareResource.IsEn())
                 {
-                    return (from q in questionVMs
+                    return (from q in _questionVMs
                             from c in Cats
                             where q.CategoryName == c
                             select q).ToList();
                 }
                 else
                 {
-                    return (from q in questionVMs
+                    return (from q in _questionVMs
                             from c in Cats
                             where q.CategoryNamePl == c
                             select q).ToList();
@@ -172,14 +172,14 @@ namespace ProfileMatch.Components.Admin
             if(cqVM.ClosedQuestionId > 0)
             {
                 title = update;
-                deleteEnabled = true;
+                _deleteEnabled = true;
             }
             else
             {
                 title = create;
-                deleteEnabled = false;
+                _deleteEnabled = false;
             }
-            var parameters = new DialogParameters { ["Q"] = cqVM, ["DeleteEnabled"]=deleteEnabled };
+            var parameters = new DialogParameters { ["Q"] = cqVM, ["DeleteEnabled"]=_deleteEnabled };
 
 
             var dialog = DialogService.Show<AdminClosedQuestionDialog>(title, parameters);

@@ -34,7 +34,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
 
-        private MudForm Form;
+        private MudForm _form;
 
         private void Cancel()
         {
@@ -44,8 +44,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
         protected async Task HandleSave()
         {
-            await Form.Validate();
-            if (Form.IsValid)
+            await _form.Validate();
+            if (_form.IsValid)
             {
                 Dep.NamePl = TempNamePl;
                 Dep.Name = TempName;

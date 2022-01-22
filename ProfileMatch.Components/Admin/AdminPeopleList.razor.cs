@@ -30,17 +30,17 @@ namespace ProfileMatch.Components.Admin
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
         [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
-        string searchString;
-        List<IdentityRole> roles;
-        List<JobTitle> jobTitles=new();
-        List<IdentityUserRole<string>> userIdentityRoles;
-        List<DepartmentUserVM> users;
+        string _searchString;
+        List<IdentityRole> _roles;
+        List<JobTitle> _jobTitles=new();
+        List<IdentityUserRole<string>> _userIdentityRoles;
+        List<DepartmentUserVM> _users;
         protected override async Task OnInitializedAsync()
         {
-            jobTitles = await JobTitleRepository.Get();
-            userIdentityRoles = await IdentityUserRoleRepository.Get();
-            roles = await IdentityRoleRepository.Get();
-            users = await GetDepartmentsAsync();
+            _jobTitles = await JobTitleRepository.Get();
+            _userIdentityRoles = await IdentityUserRoleRepository.Get();
+            _roles = await IdentityRoleRepository.Get();
+            _users = await GetDepartmentsAsync();
         }
 
         private async Task EditProfile(DepartmentUserVM applicationUser = null)
@@ -66,21 +66,21 @@ namespace ProfileMatch.Components.Admin
 
         private Func<DepartmentUserVM, bool> QuickFilter => person =>
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
 
-            if (person.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (person.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (person.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (person.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (ShareResource.IsEn())
             {
-                if (person.DepartmentName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (person.DepartmentName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             else
             {
-                if (person.DepartmentNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (person.DepartmentNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
@@ -123,7 +123,7 @@ namespace ProfileMatch.Components.Admin
             var appUsers = await ApplicationUserRepository.Get();
             var depts = await DepartmentRepository.Get();
             var appDepts = (from dept in depts
-                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in jobTitles on appUser.JobTitleId equals jt.Id join ur in userIdentityRoles on appUser.Id equals ur.UserId join r in roles on ur.RoleId equals r.Id
+                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobTitles on appUser.JobTitleId equals jt.Id join ur in _userIdentityRoles on appUser.Id equals ur.UserId join r in _roles on ur.RoleId equals r.Id
                             select new DepartmentUserVM()
                             {
                                 DepartmentId = dept.Id,

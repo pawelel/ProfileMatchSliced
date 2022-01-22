@@ -2,14 +2,14 @@
     <DialogContent>
         <MudGrid>
             <MudItem xs="12" md="12" sm="12">
-                <MudForm @ref="Form">
-                    <MudTextField @ref="multilineReference" T="string" @bind-Value="@TempDescription" Counter="200" MaxLength="200" HelperText=@L["Max length"] Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
+                <MudForm @ref="_form">
+                    <MudTextField @ref="_multilineReference" T="string" @bind-Value="@_tempDescription" Counter="200" MaxLength="200" HelperText=@L["Max length"] Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Variant="Variant.Text" Lines="5" />
                 </MudForm>
             </MudItem>
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudCheckBox @bind-Checked="IsDisplayed" Label=@L["Display on profile page"] />
+        <MudCheckBox @bind-Checked="_isDisplayed" Label=@L["Display on profile page"] />
         <MudSpacer />
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Warning" OnClick="Cancel">@L["Cancel"]</MudButton>
         <MudButton Variant="Variant.Outlined" Size="Size.Small" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="HandleSave">@L["Save"]</MudButton>

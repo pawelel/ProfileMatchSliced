@@ -4,7 +4,7 @@
     </MudItem>
     <MudItem xs="12" md="5">
         <MudTextField Class="d-flex justify-end mt-0"
-                      @bind-Value="searchString"
+                      @bind-Value="_searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search"
@@ -15,7 +15,7 @@
 </MudGrid>
 <MudDataGrid Height="500px"
              FixedHeader="true"
-             Items="@UserOpenAnswersVM"
+             Items="@_userOpenAnswersVM"
              Dense="true"
              T="UserAnswerVM"
              Hover="true"
@@ -25,7 +25,7 @@
              Filterable="true"
              QuickFilter="QuickFilter"
              Breakpoint="Breakpoint.Sm"
-             @bind-SelectedItem="selectedItem1">
+             @bind-SelectedItem="_selectedItem1">
     <Columns>
         @if (ShareResource.IsEn())
         {

@@ -17,7 +17,7 @@ namespace ProfileMatch.Components.Manager.Dialogs
     public partial class ManagerQuestionDisplay : ComponentBase
     {
 
-        private List<AnswerOption> QAnswerOptions;
+        private List<AnswerOption> _qAnswerOptions;
         [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set;}
         [Parameter] public ClosedQuestion Q { get; set; }
@@ -25,7 +25,7 @@ namespace ProfileMatch.Components.Manager.Dialogs
         {
             Q = await ClosedQuestionRepository.GetOne(q=>q.Id==Q.Id, include:src=>src.Include(q=>q.Category).Include(q=>q.Category));
            
-            QAnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
+            _qAnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
         }
     }
 }

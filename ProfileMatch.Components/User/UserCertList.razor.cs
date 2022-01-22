@@ -25,15 +25,15 @@ namespace ProfileMatch.Components.User
         [Inject] DataManager<Certificate, ApplicationDbContext> CertificateRepository { get; set; }
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
-        List<Certificate> certificates = new();
-        string searchString;
+        List<Certificate> _certificates = new();
+        string _searchString;
         protected override async Task OnInitializedAsync()
         {
             if (CurrentUser == null)
             {
                 CurrentUser = await Redirection.GetUser();
             }
-            certificates = await CertificateRepository.Get();
+            _certificates = await CertificateRepository.Get();
         }
        
         
@@ -56,13 +56,13 @@ namespace ProfileMatch.Components.User
 
         private Func<Certificate, bool> QuickFilter => cert =>
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (cert.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (cert.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (cert.DescriptionPl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (cert.DescriptionPl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (cert.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (cert.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         };

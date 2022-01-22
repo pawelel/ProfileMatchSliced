@@ -29,47 +29,53 @@ namespace ProfileMatch.Components.Manager
         [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
 
 
-        private bool loading;
+        private bool _loading;
         [Parameter] public int Id { get; set; }
-        private List<QuestionUserLevelVM> questionUserLevels = new();
-        private List<Category> categories;
-        List<UserClosedAnswer> userAnswers;
-        private List<ApplicationUser> users;
-        List<AnswerOption> answerOptions;
-        List<UserCategory> userCategories;
-        List<ClosedQuestion> questions;
+        private List<QuestionUserLevelVM> _questionUserLevels = new();
+        private List<Category> _categories;
+        List<UserClosedAnswer> _userAnswers;
+        private List<ApplicationUser> _users;
+        List<AnswerOption> _answerOptions;
+        List<UserCategory> _userCategories;
+        List<ClosedQuestion> _questions;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
-        string searchString;
+        string _searchString;
+
+        public ManagerClosedQuestions(bool loading)
+        {
+            this._loading = loading;
+        }
+
         protected override async Task OnInitializedAsync()
         {
-            loading = true;
+            _loading = true;
             await LoadData();
 
-            loading = false;
+            _loading = false;
         }
 
         private async Task LoadData()
         {
-            categories = await CategoryRepository.Get();
-            answerOptions = await AnswerOptionRepository.Get();
-            userCategories = await UserCategoryRepository.Get();
-            questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category));
-            userAnswers = await UserAnswerRepository.Get();
-            users = await UserRepository.Get();
-            questionUserLevels = (from q in questions
-                                  join ua in userAnswers
+            _categories = await CategoryRepository.Get();
+            _answerOptions = await AnswerOptionRepository.Get();
+            _userCategories = await UserCategoryRepository.Get();
+            _questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category));
+            _userAnswers = await UserAnswerRepository.Get();
+            _users = await UserRepository.Get();
+            _questionUserLevels = (from q in _questions
+                                  join ua in _userAnswers
                                   on q.Id
                                   equals ua.ClosedQuestionId
-                                  join u in users
+                                  join u in _users
                                   on ua.ApplicationUserId
                                   equals u.Id
-                                  join ao in answerOptions
+                                  join ao in _answerOptions
                                   on ua.AnswerOptionId
                                   equals ao.Id
-                                  join c in categories
+                                  join c in _categories
                                   on q.CategoryId
                                   equals c.Id
-                                  join uc in userCategories
+                                  join uc in _userCategories
                                   on new { ua.ApplicationUserId, q.CategoryId }
                                   equals new { uc.ApplicationUserId, uc.CategoryId }
                                   where uc.CategoryId == q.CategoryId
@@ -94,24 +100,24 @@ namespace ProfileMatch.Components.Manager
 
         private Func<QuestionUserLevelVM, bool> QuickFilter => question =>
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (question.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.FullName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (question.Level.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.Level.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             if (ShareResource.IsEn())
             {
-            if (question.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.CategoryName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (question.QuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.QuestionName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             }
             else
             {
-                if (question.CategoryNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (question.CategoryNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (question.QuestionNamePl.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                if (question.QuestionNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
@@ -136,18 +142,18 @@ namespace ProfileMatch.Components.Manager
         {
             if (!Cats.Any())
             {
-                return questionUserLevels;
+                return _questionUserLevels;
             }
             List<QuestionUserLevelVM> qs = new();
             if (ShareResource.IsEn())
             {
-                qs = (from q in questionUserLevels
+                qs = (from q in _questionUserLevels
                       from c in Cats
                       where q.CategoryName == c
                       select q).ToList();
                 return qs;
             }
-            qs = (from q in questionUserLevels
+            qs = (from q in _questionUserLevels
                   from c in Cats
                   where q.CategoryNamePl == c
                   select q).ToList();

@@ -25,7 +25,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
 #pragma warning restore IDE0052 // Remove unread private members
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly IStringLocalizer<LanguageService> L;
+        private readonly IStringLocalizer<LanguageService> _l;
         public LoginModel(SignInManager<ApplicationUser> signInManager, IStringLocalizer<LanguageService> l, 
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
@@ -33,7 +33,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            L=l;
+            _l=l;
         }
 
         [BindProperty]
@@ -104,7 +104,7 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, L["Invalid login attempt."]);
+                    ModelState.AddModelError(string.Empty, _l["Invalid login attempt."]);
                     return Page();
                 }
             }

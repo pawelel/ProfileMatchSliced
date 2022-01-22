@@ -4,7 +4,7 @@
     </MudItem>
     <MudItem xs="12" md="5">
         <MudTextField Class="d-flex justify-end"
-                      @bind-Value="searchString1"
+                      @bind-Value="_searchString1"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -13,7 +13,7 @@
     </MudItem>
 </MudGrid>
 @if(ShareResource.IsEn()){
-<MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+<MudTable Items="@_openQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1">
     <ToolBarContent>
         <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>OpenQuestionUpdate())">@L["Add New"]</MudButton>
        <MudSpacer/>
@@ -44,7 +44,7 @@
 </MudTable>
 }
 else{
-    <MudTable Items="@OpenQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@_openQuestions" Dense="true" Hover="true" Bordered="false" Striped="false" Filter="new Func<OpenQuestion,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1">
     <ToolBarContent>
         <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary"OnClick="(()=>OpenQuestionUpdate())">@L["Add New"]</MudButton>
        <MudSpacer/>

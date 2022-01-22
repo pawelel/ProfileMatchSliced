@@ -18,13 +18,13 @@ namespace ProfileMatch.Services
     public class Redirection : IRedirection
     {
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        private readonly UserManager<ApplicationUser> userManager;
-        readonly NavigationManager nav;
+        private readonly UserManager<ApplicationUser> _userManager;
+        readonly NavigationManager _nav;
         public Redirection(AuthenticationStateProvider authenticationStateProvider, NavigationManager nav, UserManager<ApplicationUser> userManager)
         {
             _authenticationStateProvider = authenticationStateProvider;
-            this.nav = nav;
-            this.userManager = userManager;
+            this._nav = nav;
+            this._userManager = userManager;
         }
         public ApplicationUser AppUser { get; set; } = new();
 
@@ -35,16 +35,16 @@ namespace ProfileMatch.Services
 
             if (authState?.User?.Identity is null || !authState.User.Identity.IsAuthenticated)
             {
-                var returnUrl = nav.ToBaseRelativePath(nav.Uri);
+                var returnUrl = _nav.ToBaseRelativePath(_nav.Uri);
                 if (string.IsNullOrWhiteSpace(returnUrl))
-                    nav.NavigateTo("Identity/Account/Login", true);
+                    _nav.NavigateTo("Identity/Account/Login", true);
                 
                 return new();
             }
             else
             {
 
-                return await userManager.GetUserAsync(user);
+                return await _userManager.GetUserAsync(user);
             }
         }
     }

@@ -4,10 +4,10 @@
                    NoHeader="false"
                    Position="DialogPosition.Center" />
 <MudSnackbarProvider />
-<MudThemeProvider Theme="currentTheme" @bind-IsDarkMode="@isDarkTheme" />
+<MudThemeProvider Theme="_currentTheme" @bind-IsDarkMode="@_isDarkTheme" />
 
 <MudAppBar Elevation="4">
-    @if (isDarkTheme)
+    @if (_isDarkTheme)
     {
         <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.LightMode" Style="@($"color:{Colors.Amber.Darken1};")" />
     }

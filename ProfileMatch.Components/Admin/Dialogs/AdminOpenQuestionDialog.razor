@@ -1,6 +1,6 @@
 ﻿<MudDialog>
     <DialogContent>
-        <MudForm @ref="Form">
+        <MudForm @ref="_form">
             <MudTextField T="string" @bind-Value="@TempName" Immediate="true" Label=@L["Question Name EN"] Required="true" RequiredError=@L["Question name is required!"] />
             <MudTextField T="string" @bind-Value="@TempNamePl" Immediate="true" Label=@L["Question Name PL"] Required="true" RequiredError=@L["Question name is required!"] />
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Question Description EN"]  Lines="5" />

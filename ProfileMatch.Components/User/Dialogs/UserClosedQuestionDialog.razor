@@ -1,4 +1,4 @@
-﻿@if(answerOptions is not null){
+﻿@if(_answerOptions is not null){
 
 
 <MudDialog>
@@ -12,7 +12,7 @@
                  DisableSliderAnimation="true"
                  HideSlider="true"
                  PanelClass="pa-6 d-block">
-            @foreach (var answerOption in answerOptions)
+            @foreach (var answerOption in _answerOptions)
             {
                 <MudTabPanel OnClick="@(()=>SetOption(answerOption))" Text="@answerOption.Level.ToString()">
                     <MudItem Style="height:200px;">
@@ -33,7 +33,7 @@
         </MudTabs>
     </DialogContent>
     <DialogActions>
-        <MudText>@L["Current Level"]: @UserLevel</MudText>
+        <MudText>@L["Current Level"]: @_userLevel</MudText>
             <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="@(()=>SelectLevelAsync())" Size="Size.Small">@L["This is my Level"]</MudButton>
     </DialogActions>
     </MudDialog>

@@ -43,7 +43,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
 
-        private MudForm Form;
+        private MudForm _form;
 
         private void Cancel()
         {
@@ -53,8 +53,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
         protected async Task HandleSave()
         {
-            await Form.Validate();
-            if (Form.IsValid)
+            await _form.Validate();
+            if (_form.IsValid)
             {
                 JobTitle.Name = TempName;
                 JobTitle.Description = TempDescription;

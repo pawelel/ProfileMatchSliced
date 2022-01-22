@@ -37,18 +37,18 @@ namespace ProfileMatch.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            OpenQuestions = await GetOpenQuestions();
+            _openQuestions = await GetOpenQuestions();
         }
 
         
         
         
         
-        private string searchString1 = "";
-        private OpenQuestion selectedItem1 = null;
-        private List<OpenQuestion> OpenQuestions = new();
+        private string _searchString1 = "";
+        private OpenQuestion _selectedItem1 = null;
+        private List<OpenQuestion> _openQuestions = new();
 
-        private bool FilterFunc1(OpenQuestion OpenQuestion) => FilterFunc(OpenQuestion, searchString1);
+        private bool FilterFunc1(OpenQuestion OpenQuestion) => FilterFunc(OpenQuestion, _searchString1);
 
         private static bool FilterFunc(OpenQuestion OpenQuestion, string searchString)
         {
@@ -73,7 +73,7 @@ namespace ProfileMatch.Components.Admin
                 var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Create Question"]);
                 await dialog.Result;
             }
-            OpenQuestions = await GetOpenQuestions();
+            _openQuestions = await GetOpenQuestions();
         }
 
        

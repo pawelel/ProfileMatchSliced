@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
@@ -17,16 +16,18 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserCategoryList : ComponentBase
     {
-        [Inject] ISnackbar Snackbar { get; set; }
+        [Inject] private ISnackbar Snackbar { get; set; }
         [Parameter] public string UserID { get; set; }
-        List<UserCategoryVM> UserCategoryVMs;
 
-        [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
+        private List<UserCategoryVM> _userCategoryVMs;
+
+        [Inject] private DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
+        [Inject] private DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
-        List<UserCategory> userCategories;
-        List<Category> categories;
-        bool edit;
+
+        private List<UserCategory> _userCategories;
+        private List<Category> _categories;
+        private bool _edit;
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,30 +40,34 @@ namespace ProfileMatch.Components.User
         /// <returns></returns>
         private async Task LoadUserCategories()
         {
-            UserCategoryVMs = new();
-            userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
-            if (userCategories == null) userCategories = new();
-            categories = await CategoryRepository.Get();
-            if (categories == null)
+            _userCategoryVMs = new();
+            _userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
+            if (_userCategories == null)
             {
-                categories = new();
+                _userCategories = new();
+            }
+
+            _categories = await CategoryRepository.Get();
+            if (_categories == null)
+            {
+                _categories = new();
                 return;
             }
-            foreach (var (c, u) in from Category c in categories
-                                   let u = new UserCategoryVM()
-                                   {
-                                       CategoryName = c.Name,
-                                       CategoryNamePl = c.NamePl,
-                                       CategoryDescription = c.Description,
-                                       CategoryDescriptionPl = c.DescriptionPl,
-                                       CategoryId = c.Id,
-                                       IsSelected = userCategories.Any(q => q.CategoryId == c.Id && q.IsSelected),
-                                       UserId = CurrentUser.Id
-                                   }
-                                   select (c, u))
+            foreach ((Category c, UserCategoryVM u) in from Category c in _categories
+                                                       let u = new UserCategoryVM()
+                                                       {
+                                                           CategoryName = c.Name,
+                                                           CategoryNamePl = c.NamePl,
+                                                           CategoryDescription = c.Description,
+                                                           CategoryDescriptionPl = c.DescriptionPl,
+                                                           CategoryId = c.Id,
+                                                           IsSelected = _userCategories.Any(q => q.CategoryId == c.Id && q.IsSelected),
+                                                           UserId = CurrentUser.Id
+                                                       }
+                                                       select (c, u))
             {
-                UserCategoryVMs.Add(u);
-                if (!userCategories.Any(a => a.CategoryId == c.Id))
+                _userCategoryVMs.Add(u);
+                if (!_userCategories.Any(a => a.CategoryId == c.Id))
                 {
                     UserCategory uc = new()
                     {
@@ -76,9 +81,9 @@ namespace ProfileMatch.Components.User
         }
 
         //updates list of categories
-        async Task SetCategoryAsync(UserCategoryVM userCategory)
+        private async Task SetCategoryAsync(UserCategoryVM userCategory)
         {
-            var data = await UserCategoryManager.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == userCategory.CategoryId);
+            UserCategory data = await UserCategoryManager.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == userCategory.CategoryId);
             if (data != null && data.IsSelected != userCategory.IsSelected)
             {
                 data.IsSelected = userCategory.IsSelected;

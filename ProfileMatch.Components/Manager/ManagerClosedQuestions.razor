@@ -1,4 +1,4 @@
-﻿@if (loading)
+﻿@if (_loading)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
@@ -10,7 +10,7 @@ else
         </MudItem>
         <MudItem xs="12" md="5">
             <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-                @foreach (var cat in categories)
+                @foreach (var cat in _categories)
                 {
                     if (ShareResource.IsEn())
                     {
@@ -25,7 +25,7 @@ else
         </MudItem>
         <MudItem xs="12" md="5">
             <MudTextField Class="d-flex justify-end"
-                      @bind-Value="searchString"
+                      @bind-Value="_searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search"

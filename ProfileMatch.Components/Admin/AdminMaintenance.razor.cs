@@ -23,14 +23,14 @@ namespace ProfileMatch.Components.Admin
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
 
-        string path;
+        string _path;
         private async Task LoadSingleFile(InputFileChangeEventArgs e)
 {
             var tempDirectory = Path.GetTempPath();
             var fileName = e.File.Name;
             using Stream fileStream = e.File.OpenReadStream();
-            path = @$"{tempDirectory}\{fileName}";
-            FileStream fs = File.Create(path);
+            _path = @$"{tempDirectory}\{fileName}";
+            FileStream fs = File.Create(_path);
             await fileStream.CopyToAsync(fs);
 fileStream.Close();
 fs.Close();
@@ -38,7 +38,7 @@ fs.Close();
         }
         private async Task MapCategory()
         {
-            var categories = new ExcelMapper(path).Fetch<Category>();
+            var categories = new ExcelMapper(_path).Fetch<Category>();
 foreach (var c in categories)
             {
                 await CategoryRepository.Insert(c);

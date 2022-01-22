@@ -27,19 +27,19 @@ namespace ProfileMatch.Components.User
         [Inject] public ISnackbar Snackbar { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
-        List<OpenQuestion> OpenQuestions = new();
-        List<UserOpenAnswer> UserOpenAnswers = new();
+        List<OpenQuestion> _openQuestions = new();
+        List<UserOpenAnswer> _userOpenAnswers = new();
         [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
         [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-        string UserId;
+        string _userId;
         private async Task<List<OpenQuestion>> GetOpenQuestions()
         {
             return await OpenQuestionRepository.Get();
         }
         private async Task<List<UserOpenAnswer>> GetUserOpenAnswers()
         {
-            return await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == UserId);
+            return await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == _userId);
         }
         
         protected override async Task OnInitializedAsync()
@@ -47,22 +47,22 @@ namespace ProfileMatch.Components.User
             var authState = await AuthenticationStateTask;
             if (authState.User.Identity.IsAuthenticated)
             {
-                UserId = authState.User.Claims.FirstOrDefault().Value;
+                _userId = authState.User.Claims.FirstOrDefault().Value;
             }
             else
             {
                 NavigationManager.NavigateTo("Identity/Account/Login", true);
             }
-            UserOpenAnswers = await GetUserOpenAnswers();
-            OpenQuestions = await GetOpenQuestions();
+            _userOpenAnswers = await GetUserOpenAnswers();
+            _openQuestions = await GetOpenQuestions();
 
-            foreach (var openQuestion in OpenQuestions)
+            foreach (var openQuestion in _openQuestions)
             {
                 UserAnswerVM userAnswerVM;
                 UserOpenAnswer userNote;
                 try
                 {
-                    userNote = UserOpenAnswers.FirstOrDefault(un => un.OpenQuestionId == openQuestion.Id);
+                    userNote = _userOpenAnswers.FirstOrDefault(un => un.OpenQuestionId == openQuestion.Id);
                 }
                 catch (Exception)
                 {
@@ -74,7 +74,7 @@ namespace ProfileMatch.Components.User
                 {
                     userAnswerVM = new UserAnswerVM
                     {
-                        UserId = UserId,
+                        UserId = _userId,
                         UserDescription = userNote.UserAnswer,
                         IsDisplayed = userNote.IsDisplayed,
                         AnswerId = openQuestion.Id,
@@ -88,7 +88,7 @@ namespace ProfileMatch.Components.User
                 {
                     userAnswerVM = new UserAnswerVM
                     {
-                        UserId = UserId,
+                        UserId = _userId,
                         UserDescription = String.Empty,
                         IsDisplayed = false,
                         AnswerId = openQuestion.Id,
@@ -98,23 +98,23 @@ namespace ProfileMatch.Components.User
                         OpenQuestionDescriptionPl = openQuestion.DescriptionPl
                     };
                 }
-                UserOpenAnswersVM.Add(userAnswerVM);
+                _userOpenAnswersVM.Add(userAnswerVM);
             }
         }
 
-        private string searchString = "";
-        private UserAnswerVM selectedItem1 = null;
-        private readonly List<UserAnswerVM> UserOpenAnswersVM = new();
+        private string _searchString = "";
+        private UserAnswerVM _selectedItem1 = null;
+        private readonly List<UserAnswerVM> _userOpenAnswersVM = new();
 
         private Func<UserAnswerVM, bool> QuickFilter => question =>
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (question.OpenQuestionName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.OpenQuestionName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (question.OpenQuestionDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.OpenQuestionDescription.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (question.UserDescription.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (question.UserDescription.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         };

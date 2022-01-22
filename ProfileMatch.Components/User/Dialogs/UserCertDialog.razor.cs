@@ -33,15 +33,15 @@ namespace ProfileMatch.Components.User.Dialogs
         public string TempName { get; set; }
         public string TempImage { get; set; }
         public string TempUrl { get; set; }
-        DateTime? TempDate = DateTime.Today;
-        DateTime? TempValidTo = DateTime.Today;
+        DateTime? _tempDate = DateTime.Today;
+        DateTime? _tempValidTo = DateTime.Today;
 
 
 
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
         bool _isOpen = false;
-        MudForm Form;
+        MudForm _form;
 
         public void ToggleOpen()
         {
@@ -64,8 +64,8 @@ namespace ProfileMatch.Components.User.Dialogs
             }
             else
             {
-                TempDate = OpenCertificate.DateCreated;
-                TempValidTo = OpenCertificate.ValidToDate;
+                _tempDate = OpenCertificate.DateCreated;
+                _tempValidTo = OpenCertificate.ValidToDate;
                 TempDescription = OpenCertificate.Description;
                 TempDescriptionPl = OpenCertificate.DescriptionPl;
                 TempImage = OpenCertificate.Image;
@@ -81,8 +81,8 @@ namespace ProfileMatch.Components.User.Dialogs
         }
         protected async Task HandleSave()
         {
-            await Form.Validate();
-            if (Form.IsValid)
+            await _form.Validate();
+            if (_form.IsValid)
             {
                 OpenCertificate.Description = TempDescription;
                 OpenCertificate.Image = TempImage;
@@ -90,8 +90,8 @@ namespace ProfileMatch.Components.User.Dialogs
                 OpenCertificate.Description = TempDescription;
                 OpenCertificate.Url = TempUrl;
                 OpenCertificate.UserId = CurrentUser.Id;
-                OpenCertificate.DateCreated = (DateTime)TempDate;
-                OpenCertificate.ValidToDate = (DateTime)TempValidTo;
+                OpenCertificate.DateCreated = (DateTime)_tempDate;
+                OpenCertificate.ValidToDate = (DateTime)_tempValidTo;
                 OpenCertificate.DescriptionPl = TempDescriptionPl;
 
                 try

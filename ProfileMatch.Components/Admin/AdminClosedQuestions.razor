@@ -1,4 +1,4 @@
-﻿@if (loading)
+﻿@if (_loading)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
@@ -9,7 +9,7 @@ else
     <MudGrid Spacing="0" Class="d-flex justify-space-between">
         <MudItem xs="12" md="5">
             <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-                @foreach (var cat in categories)
+                @foreach (var cat in _categories)
                 {
                     @if (ShareResource.IsEn())
                     {
@@ -23,7 +23,7 @@ else
             </MudSelect>
         </MudItem>
         <MudItem xs="12" md="5">
-            <MudTextField @bind-Value="searchString"
+            <MudTextField @bind-Value="_searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -31,7 +31,7 @@ else
                       IconSize="Size.Medium"></MudTextField>
         </MudItem>
     </MudGrid>
-    <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="selectedItem1">
+    <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="_selectedItem1">
         <ToolBarContent>
             <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
             @foreach (var cat in Cats)

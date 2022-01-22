@@ -30,12 +30,12 @@ namespace ProfileMatch.Components.Layout
     {
         [Parameter] public RenderFragment Body { get; set; }
         [Inject] IRedirection Redirection { get; set; }
-        ApplicationUser CurrentUser = new();
+        ApplicationUser _currentUser = new();
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
 
         private bool _drawerOpen = true;
-        bool isDarkTheme;
+        bool _isDarkTheme;
 
         private void DrawerToggle()
         {
@@ -46,7 +46,7 @@ namespace ProfileMatch.Components.Layout
         {
             if (!NavigationManager.Uri.Contains("emailconfirmation"))
             {
-                CurrentUser = await Redirection.GetUser();
+                _currentUser = await Redirection.GetUser();
             }
             else
             {
@@ -62,10 +62,10 @@ namespace ProfileMatch.Components.Layout
             base.OnAfterRender(firstRender);
         }
 
-        string theme = "";
-        private readonly MudTheme lightTheme = new LightTheme();
-        private MudTheme currentTheme = new DarkTheme();
-        private readonly MudTheme darkTheme = new DarkTheme();
+        string _theme = "";
+        private readonly MudTheme _lightTheme = new LightTheme();
+        private MudTheme _currentTheme = new DarkTheme();
+        private readonly MudTheme _darkTheme = new DarkTheme();
         void GoBack()
         {
             NavigationManager.NavigateTo("admin/dashboard");
@@ -73,36 +73,36 @@ namespace ProfileMatch.Components.Layout
 
         async Task ChangeTheme()
         {
-            if (theme == "light")
+            if (_theme == "light")
             {
-                isDarkTheme = true;
-                theme = "dark";
-                currentTheme = darkTheme;
+                _isDarkTheme = true;
+                _theme = "dark";
+                _currentTheme = _darkTheme;
             }
             else
             {
-                isDarkTheme = false;
-                theme = "light";
-                currentTheme = lightTheme;
+                _isDarkTheme = false;
+                _theme = "light";
+                _currentTheme = _lightTheme;
             }
-            await JSRuntime.InvokeVoidAsync("setCookie", "theme", theme);
+            await JSRuntime.InvokeVoidAsync("setCookie", "theme", _theme);
 
             StateHasChanged();
         }
 
         async Task GetTheme()
         {
-            theme = await JSRuntime.InvokeAsync<string>("getCookie", "theme");
-            if (theme == "dark")
+            _theme = await JSRuntime.InvokeAsync<string>("getCookie", "theme");
+            if (_theme == "dark")
             {
-                isDarkTheme = true;
-                currentTheme = darkTheme;
+                _isDarkTheme = true;
+                _currentTheme = _darkTheme;
             }
             else
             {
-                theme = "light";
-                isDarkTheme = false;
-                currentTheme = lightTheme;
+                _theme = "light";
+                _isDarkTheme = false;
+                _currentTheme = _lightTheme;
             }
             StateHasChanged();
         }

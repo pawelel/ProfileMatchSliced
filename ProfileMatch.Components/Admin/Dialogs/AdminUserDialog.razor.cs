@@ -37,21 +37,21 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
-        List<IdentityRole> Roles;
-        string UserId;
-        List<UserRoleVM> UserRolesVM;
-        List<IdentityUserRole<string>> UserIdentityRoles;
+        List<IdentityRole> _roles;
+        string _userId;
+        List<UserRoleVM> _userRolesVM;
+        List<IdentityUserRole<string>> _userIdentityRoles;
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         protected MudForm Form { get; set; }
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
-        ApplicationUser CurrentUser;
-        ApplicationUser EditedUser;
-        List<JobTitle> jobTitles;
-        string PasswordHash;
-        private List<Department> Departments = new();
+        ApplicationUser _currentUser;
+        ApplicationUser _editedUser;
+        List<JobTitle> _jobTitles;
+        string _passwordHash;
+        private List<Department> _departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        bool created;
-        bool canChangeRoles;
+        bool _created;
+        bool _canChangeRoles;
         bool _isOpen;
         //on user dialog initialize
         protected override async Task OnInitializedAsync()
@@ -70,8 +70,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var principal = authState.User;
             if (principal != null)
-                UserId = principal.FindFirst("UserId").Value;
-            CurrentUser = await ApplicationUserRepository.GetById(UserId);
+                _userId = principal.FindFirst("UserId").Value;
+            _currentUser = await ApplicationUserRepository.GetById(_userId);
         }
 
         /// <summary>
@@ -80,16 +80,16 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         private async Task LoadDepartmentsJobTitlesRolesUser()
         {
-            jobTitles = await JobTitleRepository.Get();
-            Departments = await DepartmentRepository.Get();
-            Roles = await IdentityRoleRepository.Get();
+            _jobTitles = await JobTitleRepository.Get();
+            _departments = await DepartmentRepository.Get();
+            _roles = await IdentityRoleRepository.Get();
 
             if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
             {
                 try
                 {
-                    EditedUser = await ApplicationUserRepository.GetById(OpenedUser.UserId);
-                    created = true;
+                    _editedUser = await ApplicationUserRepository.GetById(OpenedUser.UserId);
+                    _created = true;
                     await TryToAddUserRoles();
                 }
                 catch (Exception ex)
@@ -99,8 +99,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
             else
             {
-                created = false;
-                EditedUser = new()
+                _created = false;
+                _editedUser = new()
                 {
                     PhotoPath = "blank-profile.png",
                     DateOfBirth = DateTime.Now
@@ -123,20 +123,20 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         private async Task TryToAddUserRoles()
         {
-            if (!string.IsNullOrWhiteSpace(EditedUser.Id))
+            if (!string.IsNullOrWhiteSpace(_editedUser.Id))
             {
-                UserRolesVM = new();
-                UserIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == EditedUser.Id);
-                foreach (var role in Roles.Where(r => r.Name != "User"))
+                _userRolesVM = new();
+                _userIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == _editedUser.Id);
+                foreach (var role in _roles.Where(r => r.Name != "User"))
                 {
                     var userRoleVM = new UserRoleVM
                     {
                         RoleId = role.Id,
                         RoleName = role.Name,
-                        UserId = EditedUser.Id,
-                        IsSelected = UserIdentityRoles.Any(r => r.RoleId == role.Id)
+                        UserId = _editedUser.Id,
+                        IsSelected = _userIdentityRoles.Any(r => r.RoleId == role.Id)
                     };
-                    UserRolesVM.Add(userRoleVM);
+                    _userRolesVM.Add(userRoleVM);
                 }
             }
         }
@@ -149,13 +149,13 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                EditedUser.NormalizedEmail = EditedUser.Email.ToUpper();
-                EditedUser.NormalizedUserName = EditedUser.Email.ToUpper();
-                if (created)
+                _editedUser.NormalizedEmail = _editedUser.Email.ToUpper();
+                _editedUser.NormalizedUserName = _editedUser.Email.ToUpper();
+                if (_created)
                 {
                     // Update the user
-                    await ApplicationUserRepository.Update(EditedUser);
-                    Snackbar.Add(@L["Account"] + EditedUser.FullName + @L["has been updated[O]"], Severity.Success);
+                    await ApplicationUserRepository.Update(_editedUser);
+                    Snackbar.Add(@L["Account"] + _editedUser.FullName + @L["has been updated[O]"], Severity.Success);
                 }
                 else
                 {
@@ -244,13 +244,13 @@ namespace ProfileMatch.Components.Admin.Dialogs
         private async Task CreateUserWithUserRole()
         {
             var hasher = new PasswordHasher<ApplicationUser>();
-            EditedUser.PasswordHash = hasher.HashPassword(null, PasswordHash);
-            EditedUser.UserName = EditedUser.Email;
-            EditedUser = await ApplicationUserRepository.Insert(EditedUser);
-            Snackbar.Add(@L["Account"] + $" {EditedUser.FirstName} " + $" {EditedUser.LastName} " + @L["has been created[O]"], Severity.Success);
-            created = true;
+            _editedUser.PasswordHash = hasher.HashPassword(null, _passwordHash);
+            _editedUser.UserName = _editedUser.Email;
+            _editedUser = await ApplicationUserRepository.Insert(_editedUser);
+            Snackbar.Add(@L["Account"] + $" {_editedUser.FirstName} " + $" {_editedUser.LastName} " + @L["has been created[O]"], Severity.Success);
+            _created = true;
             // add "User" role
-            await IdentityUserRoleRepository.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = EditedUser.Id });
+            await IdentityUserRoleRepository.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = _editedUser.Id });
         }
         /// <summary>
         /// send confirmation email after creating user
@@ -258,23 +258,23 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         private async Task SendConfirmationEmail()
         {
-            var token = await UserManager.GenerateEmailConfirmationTokenAsync(EditedUser);
+            var token = await UserManager.GenerateEmailConfirmationTokenAsync(_editedUser);
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             var uriBuilder = new UriBuilder(NavigationManager.ToAbsoluteUri(NavigationManager.BaseUri))
             {
                 Path = $"Identity/Account/ConfirmEmail",
-                Query = $"userId={EditedUser.Id}&code={token}"
+                Query = $"userId={_editedUser.Id}&code={token}"
             };
 
             var subject = "Potwierdzenie rejestracji";
-            var body = $"<h1>Witaj {EditedUser.FirstName} {EditedUser.LastName}</h1><br/><br/>" +
+            var body = $"<h1>Witaj {_editedUser.FirstName} {_editedUser.LastName}</h1><br/><br/>" +
                 $"<p>w serwisie <b>Profile Match</b></p><br/><br/>" +
                 $"<p>Aby potwierdzić swoje konto kliknij w poniższy link:</p><br/><br/>" +
                 $"<a href='{uriBuilder.Uri}'>Potwierdź konto</a><br/><br/>" +
                 $"<p>Jeśli nie potwierdzisz konta w ciągu 24 godzin, zostanie ono usunięte.</p><br/><br/>" +
                 $"<p>Pozdrawiamy,</p><br/><br/>" +
                 $"<p>Zespół ProfileMatch.pl</p>";
-            EmailSender.SendEmail(EditedUser, subject, body);
+            EmailSender.SendEmail(_editedUser, subject, body);
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 return;
             }
 
-            var resetToken = await UserManager.GeneratePasswordResetTokenAsync(EditedUser);
+            var resetToken = await UserManager.GeneratePasswordResetTokenAsync(_editedUser);
 
-            var passwordChangeResult = await UserManager.ResetPasswordAsync(EditedUser, resetToken, passwordString);
+            var passwordChangeResult = await UserManager.ResetPasswordAsync(_editedUser, resetToken, passwordString);
 
             if (!passwordChangeResult.Succeeded)
             {
@@ -318,7 +318,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         async Task DeleteUser(string userId)
         {
-            if (CurrentUser != null && EditedUser != CurrentUser)
+            if (_currentUser != null && _editedUser != _currentUser)
             {
                 var user = await ApplicationUserRepository.GetById(userId);
                 if (user != null)
@@ -357,8 +357,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         async Task UploadImage(InputFileChangeEventArgs e)
         {
             string wwwPath;
-            string contentPath = $"Files/{EditedUser.Id}/Profile.png";
-            string path = Path.Combine(Environment.WebRootPath, "Files", EditedUser.Id);
+            string contentPath = $"Files/{_editedUser.Id}/Profile.png";
+            string path = Path.Combine(Environment.WebRootPath, "Files", _editedUser.Id);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -390,7 +390,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 await imageStream.CopyToAsync(fs);
                 fs.Close();
                 imageStream.Close();
-                EditedUser.PhotoPath = contentPath;
+                _editedUser.PhotoPath = contentPath;
                 StateHasChanged();
 
             }
@@ -404,9 +404,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
         private async Task CanChangeRolesCheck()
         {
             await Task.Delay(0);
-            if (CurrentUser.Id != OpenedUser.UserId&&OpenedUser!=null&&!string.IsNullOrWhiteSpace( OpenedUser.UserId))
+            if (_currentUser.Id != OpenedUser.UserId&&OpenedUser!=null&&!string.IsNullOrWhiteSpace( OpenedUser.UserId))
             {
-                canChangeRoles = true;
+                _canChangeRoles = true;
             }
         }
 

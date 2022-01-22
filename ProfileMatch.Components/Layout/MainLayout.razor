@@ -4,7 +4,7 @@
                    NoHeader="false"
                    Position="DialogPosition.Center" />
 <MudSnackbarProvider />
-<MudThemeProvider Theme="currentTheme"/>
+<MudThemeProvider Theme="_currentTheme"/>
 <MudLayout>
             
                 <MudAppBar Elevation="4">
@@ -14,7 +14,7 @@
                         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" /></MudHidden>
                             </AuthorizeView>
                     <MudHidden Breakpoint="Breakpoint.Xs">
-                        @if (isDarkTheme)
+                        @if (_isDarkTheme)
                         {
                         <div><img src='../../images/logo-dark.svg' alt='Profile Match' /></div>
                         }else{
@@ -22,7 +22,7 @@
                         }
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                        @if (isDarkTheme)
+                        @if (_isDarkTheme)
                         {
                         <div><img src='../../images/logo-dark.svg' alt='logo' /></div>
                         }else{
@@ -32,7 +32,7 @@
                     <MudSpacer />
                     
                     <CultureSelector />
-                   @if (isDarkTheme)
+                   @if (_isDarkTheme)
                         {
                             <MudIconButton Class="darkSwitch" OnClick="@(()=>ChangeTheme())" Icon="@Icons.Outlined.LightMode" Style="@($"color:{Colors.Amber.Darken1};")"/>
                         }
@@ -43,10 +43,10 @@
                         <AuthorizeView>
                     <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
                         <ActivatorContent>
-                            <MudAvatar Image="@CurrentUser?.PhotoPath" />
+                            <MudAvatar Image="@_currentUser?.PhotoPath" />
                         </ActivatorContent>
                         <ChildContent>
-                            <CascadingValue Value="CurrentUser">
+                            <CascadingValue Value="_currentUser">
                                 <UserCard Class="mt-n2" />
                             </CascadingValue>
                             <MudDivider Class="mb-2" />
@@ -64,7 +64,7 @@
                 <AuthorizeView>
                     <Authorized>
                 <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
-                    <CascadingValue Value="CurrentUser">
+                    <CascadingValue Value="_currentUser">
                         <NavMenu />
                     </CascadingValue>
                 </MudDrawer>
@@ -80,7 +80,7 @@
                             }
                         </MudToolBar>
                     </MudHidden>
-                    <CascadingValue Value="CurrentUser" Name="CurrentUser">
+                    <CascadingValue Value="_currentUser" Name="CurrentUser">
                         @Body
                     </CascadingValue>
                 </MudMainContent>

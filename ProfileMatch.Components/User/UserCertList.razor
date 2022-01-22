@@ -5,7 +5,7 @@
     </MudItem>
     <MudItem xs="12" md="5">
         <MudTextField Class="d-flex justify-end"
-                      @bind-Value="searchString"
+                      @bind-Value="_searchString"
                       Placeholder=@L["Search"]
                       Adornment="Adornment.Start"
                       Immediate="true"
@@ -13,7 +13,7 @@
                       IconSize="Size.Medium"></MudTextField>
     </MudItem>
 </MudGrid>
-<MudDataGrid T="Certificate" Items="certificates"  Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter">
+<MudDataGrid T="Certificate" Items="_certificates"  Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter">
     <Columns>
         <Column T="Certificate" Field="Name" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
             <HeaderTemplate>

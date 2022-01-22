@@ -6,17 +6,17 @@
                     @L["My Categories"] <AuthorizeView>
                         @if ((context.User.Identity.Name).ToUpper() == CurrentUser.NormalizedEmail)
                         {
-                            <MudSwitch @bind-Checked="@edit">@L["Edit"]</MudSwitch>
+                            <MudSwitch @bind-Checked="@_edit">@L["Edit"]</MudSwitch>
                         }
                     </AuthorizeView>
                 </MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            @if (!edit)
+            @if (!_edit)
             {
 
-                @foreach (var uc in UserCategoryVMs.Where(c=>c.IsSelected))
+                @foreach (var uc in _userCategoryVMs.Where(c=>c.IsSelected))
                 {
                     @if(ShareResource.IsEn()){
                     <MudChip Text="@uc.CategoryName"></MudChip>
@@ -25,9 +25,9 @@
                     }
                 }
             }
-            @if (edit)
+            @if (_edit)
             {
-                <MudTable Items="UserCategoryVMs" T="UserCategoryVM">
+                <MudTable Items="_userCategoryVMs" T="UserCategoryVM">
                     <HeaderContent>
                         <MudTh>@L["Category"]</MudTh>
                         <MudTh>@L["I want to develop"]</MudTh>
