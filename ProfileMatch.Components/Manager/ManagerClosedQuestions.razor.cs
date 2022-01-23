@@ -40,10 +40,13 @@ namespace ProfileMatch.Components.Manager
         List<ClosedQuestion> _questions;
         private IEnumerable<string> Cats { get; set; } = new HashSet<string>() { };
         string _searchString;
+        public ManagerClosedQuestions()
+        {
 
+        }
         public ManagerClosedQuestions(bool loading)
         {
-            this._loading = loading;
+            _loading = loading;
         }
 
         protected override async Task OnInitializedAsync()
