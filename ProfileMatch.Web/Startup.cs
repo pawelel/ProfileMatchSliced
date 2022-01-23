@@ -68,14 +68,11 @@ services.AddSingleton<IEmailSender, EmailSender>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddMvc()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                    {
-                        var assemblyName = new AssemblyName(typeof(LanguageService).GetTypeInfo().Assembly.FullName);
-                        return factory.Create("LanguageService", assemblyName.Name);
-                    };
-                });
+                .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) =>
+{
+    var assemblyName = new AssemblyName(typeof(LanguageService).GetTypeInfo().Assembly.FullName);
+    return factory.Create("LanguageService", assemblyName.Name);
+});
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var culturesSupported = new[]
@@ -123,7 +120,6 @@ services.AddSingleton<IEmailSender, EmailSender>();
                 // The default HSTS value is 30 days. You may IsSelected to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseStaticFiles(new StaticFileOptions

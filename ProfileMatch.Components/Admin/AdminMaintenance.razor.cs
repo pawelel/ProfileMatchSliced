@@ -44,10 +44,7 @@ foreach (var c in categories)
                 await CategoryRepository.Insert(c);
                 Snackbar.Add($"{c.Name} " + @L["created."], Severity.Success);
             }
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+            await InvokeAsync(() => StateHasChanged());
         }
     }
 }

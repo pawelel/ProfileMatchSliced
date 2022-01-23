@@ -19,9 +19,7 @@ namespace ProfileMatch.Data.Migrations
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                table.PrimaryKey("PK_AspNetRoles", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -35,9 +33,7 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                table.PrimaryKey("PK_Categories", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Departments",
@@ -51,9 +47,7 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departments", x => x.Id);
-                });
+                table.PrimaryKey("PK_Departments", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "JobTitles",
@@ -67,9 +61,7 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobTitles", x => x.Id);
-                });
+                table.PrimaryKey("PK_JobTitles", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "OpenQuestions",
@@ -83,9 +75,7 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_OpenQuestions", x => x.Id);
-                });
+                table.PrimaryKey("PK_OpenQuestions", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
