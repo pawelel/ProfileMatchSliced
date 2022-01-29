@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
+using Serilog;
+
 namespace ProfileMatch
 {
     public class Program
@@ -12,6 +14,10 @@ namespace ProfileMatch
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                }).UseSerilog((hostingContext, loggerConfiguration) =>
+loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
     }
 }

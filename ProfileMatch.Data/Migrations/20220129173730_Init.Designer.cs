@@ -12,8 +12,8 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220118213045_Initial")]
-    partial class Initial
+    [Migration("20220129173730_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -494,7 +494,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("JobTitleId")
+                    b.Property<int>("JobId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -540,7 +540,7 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("JobTitleId");
+                    b.HasIndex("JobId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -557,22 +557,22 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34e16015-3f60-49af-96b4-150187063bb8",
+                            ConcurrencyStamp = "1a664068-8ac4-443a-b380-769a1709b229",
                             DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Klark",
                             IsActive = true,
-                            JobTitleId = 1,
+                            JobId = 1,
                             LastName = "Kent",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENea/NTnGje94C7V+1KF2D5+hirT0ftBHfHCM7SyTx6Metzc7cGT05NNBzgItipKtw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPozkfkWCJiRF33EwgjbOooBumQ/4C9l0XHnNMpgUIZCS1py7n+h4h/kCS6lGt4rqw==",
                             PhoneNumberConfirmed = false,
                             PhotoPath = "/blank-profile.png",
-                            SecurityStamp = "ea4d1fe0-92f4-41d5-a862-97a31f4883c3",
+                            SecurityStamp = "20b52613-bcb8-4164-8578-d1d51a90888e",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -837,7 +837,7 @@ namespace ProfileMatch.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.Job", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -859,7 +859,7 @@ namespace ProfileMatch.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobTitles");
+                    b.ToTable("Jobs");
 
                     b.HasData(
                         new
@@ -1093,15 +1093,15 @@ namespace ProfileMatch.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProfileMatch.Models.Models.JobTitle", "JobTitle")
+                    b.HasOne("ProfileMatch.Models.Models.Job", "Job")
                         .WithMany("ApplicationUsers")
-                        .HasForeignKey("JobTitleId")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Department");
 
-                    b.Navigation("JobTitle");
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("ProfileMatch.Models.Models.Certificate", b =>
@@ -1223,7 +1223,7 @@ namespace ProfileMatch.Data.Migrations
                     b.Navigation("ApplicationUsers");
                 });
 
-            modelBuilder.Entity("ProfileMatch.Models.Models.JobTitle", b =>
+            modelBuilder.Entity("ProfileMatch.Models.Models.Job", b =>
                 {
                     b.Navigation("ApplicationUsers");
                 });

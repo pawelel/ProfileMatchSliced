@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin.Dialogs
 {
-    public partial class AdminJobTitleDialog : ComponentBase
+    public partial class AdminJobDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public JobTitle JobTitle { get; set; } = new();
+        [Parameter] public Job Job { get; set; } = new();
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
@@ -31,17 +31,17 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         protected override void OnInitialized()
         {
-            TempName = JobTitle.Name;
-            TempNamePl = JobTitle.NamePl;
-            TempDescription = JobTitle.Description;
-            TempDescriptionPl = JobTitle.DescriptionPl;
+            TempName = Job.Name;
+            TempNamePl = Job.NamePl;
+            TempDescription = Job.Description;
+            TempDescriptionPl = Job.DescriptionPl;
         }
         private IEnumerable<string> MaxCharacters(string ch)
         {
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
                 yield return L["Max 20 characters"];
         }
-        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
+        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
 
         private MudForm _form;
 
@@ -56,10 +56,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                JobTitle.Name = TempName;
-                JobTitle.Description = TempDescription;
-                JobTitle.NamePl = TempNamePl;
-                JobTitle.DescriptionPl = TempDescriptionPl;
+                Job.Name = TempName;
+                Job.Description = TempDescription;
+                Job.NamePl = TempNamePl;
+                Job.DescriptionPl = TempDescriptionPl;
                 try
                 {
                     await Save();
@@ -69,22 +69,22 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(JobTitle));
+                MudDialog.Close(DialogResult.Ok(Job));
             }
         }
         private async Task Delete()
         {
-            if (await JobTitleRepository.ExistById(JobTitle.Id))
+            if (await JobRepository.ExistById(Job.Id))
             {
-                await JobTitleRepository.Delete(JobTitle);
+                await JobRepository.Delete(Job);
             }
             if (ShareResource.IsEn())
             {
-                Snackbar.Add($"JobTitle {JobTitle.Name} deleted");
+                Snackbar.Add($"Job {Job.Name} deleted");
             }
             else
             {
-                Snackbar.Add($"Kategoria {JobTitle.NamePl} usunięta");
+                Snackbar.Add($"Kategoria {Job.NamePl} usunięta");
             }
 
         }
@@ -94,26 +94,26 @@ namespace ProfileMatch.Components.Admin.Dialogs
             string updated;
             if (ShareResource.IsEn())
             {
-                created = $"JobTitle {JobTitle.Name} created";
-                updated = $"JobTitle {JobTitle.Name} updated";
+                created = $"Job {Job.Name} created";
+                updated = $"Job {Job.Name} updated";
             }
             else
             {
-                created = $"Kategoria {JobTitle.NamePl} utworzona";
-                updated = $"Kategoria {JobTitle.NamePl} zaktualizowana";
+                created = $"Kategoria {Job.NamePl} utworzona";
+                updated = $"Kategoria {Job.NamePl} zaktualizowana";
             }
 
 
 
-            if (JobTitle.Id == 0)
+            if (Job.Id == 0)
             {
-                var result = await JobTitleRepository.Insert(JobTitle);
+                var result = await JobRepository.Insert(Job);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await JobTitleRepository.Update(JobTitle);
+                var result = await JobRepository.Update(Job);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

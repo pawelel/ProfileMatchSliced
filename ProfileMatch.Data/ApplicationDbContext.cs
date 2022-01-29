@@ -47,9 +47,9 @@ namespace ProfileMatch.Data
         .HasForeignKey(e => e.UserId)
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
-                user.HasOne(j => j.JobTitle)
+                user.HasOne(j => j.Job)
                 .WithMany(a => a.ApplicationUsers)
-                .HasForeignKey(a => a.JobTitleId)
+                .HasForeignKey(a => a.JobId)
                 .OnDelete(DeleteBehavior.ClientCascade);
                 user.HasData(
                 new ApplicationUser
@@ -64,7 +64,7 @@ namespace ProfileMatch.Data
                     NormalizedEmail = "ADMIN@ADMIN.COM",
                     FirstName = "Klark",
                     LastName = "Kent",
-                    JobTitleId=1,
+                    JobId=1,
                     IsActive = true,
                     PhotoPath = "/blank-profile.png",
                     DateOfBirth = new DateTime(day:26 , month:1, year:1971)
@@ -150,8 +150,8 @@ namespace ProfileMatch.Data
                      Name = "Languages"
                  }
                 );
-            builder.Entity<JobTitle>().HasData(
-                new JobTitle()
+            builder.Entity<Job>().HasData(
+                new Job()
                 {
                     Id = 1,
                     NamePl = "nie przypisano",
@@ -532,7 +532,7 @@ namespace ProfileMatch.Data
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<OpenQuestion> OpenQuestions { get; set; }
         public DbSet<UserOpenAnswer> UserOpenAnswers { get; set; }
-        public DbSet<JobTitle> JobTitles { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
 
     }

@@ -28,7 +28,7 @@ namespace ProfileMatch.Components.User
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> AppUserManager { get; set; }
-        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get;  set; }
+        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get;  set; }
         protected override async Task OnInitializedAsync()
         {
             if (!string.IsNullOrEmpty(UserId))
@@ -42,7 +42,7 @@ namespace ProfileMatch.Components.User
                 if (principal != null)
                     UserId = principal.FindFirst("UserId").Value;
                 CurrentUser = await AppUserManager.GetById(UserId);
-                CurrentUser.JobTitle = await JobTitleRepository.GetOne(q => q.Id == CurrentUser.JobTitleId);
+                CurrentUser.Job = await JobRepository.GetOne(q => q.Id == CurrentUser.JobId);
             }
             _userOpenAnswersVM = await GetUserAnswerVMAsync();
         }

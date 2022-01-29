@@ -24,8 +24,8 @@ namespace ProfileMatch.Models.Models
 
         public Gender? Gender { get; set; }
 
-        public int JobTitleId { get; set; } = 1;
-        public JobTitle JobTitle { get; set; }
+        public int JobId { get; set; } = 1;
+        public Job Job { get; set; }
         public int DepartmentId { get; set; } = 1; //NOTE had to initialize
         [Ignore]
         public Department Department { get; set; }

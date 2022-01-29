@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,9 @@ namespace ProfileMatch.Data.Migrations
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                table.PrimaryKey("PK_AspNetRoles", x => x.Id));
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -33,7 +35,9 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                table.PrimaryKey("PK_Categories", x => x.Id));
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Departments",
@@ -47,10 +51,12 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                table.PrimaryKey("PK_Departments", x => x.Id));
+                {
+                    table.PrimaryKey("PK_Departments", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                name: "JobTitles",
+                name: "Jobs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -61,7 +67,9 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                table.PrimaryKey("PK_JobTitles", x => x.Id));
+                {
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "OpenQuestions",
@@ -75,7 +83,9 @@ namespace ProfileMatch.Data.Migrations
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                table.PrimaryKey("PK_OpenQuestions", x => x.Id));
+                {
+                    table.PrimaryKey("PK_OpenQuestions", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -131,7 +141,7 @@ namespace ProfileMatch.Data.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
-                    JobTitleId = table.Column<int>(type: "int", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -160,9 +170,9 @@ namespace ProfileMatch.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_JobTitles_JobTitleId",
-                        column: x => x.JobTitleId,
-                        principalTable: "JobTitles",
+                        name: "FK_AspNetUsers_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
                         principalColumn: "Id");
                 });
 
@@ -415,7 +425,7 @@ namespace ProfileMatch.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "JobTitles",
+                table: "Jobs",
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
                 values: new object[] { 1, "Initial Job Title", "Wstępne stanowisko", "not assigned", "nie przypisano" });
 
@@ -434,8 +444,8 @@ namespace ProfileMatch.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobTitleId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "34e16015-3f60-49af-96b4-150187063bb8", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAENea/NTnGje94C7V+1KF2D5+hirT0ftBHfHCM7SyTx6Metzc7cGT05NNBzgItipKtw==", null, false, "/blank-profile.png", "ea4d1fe0-92f4-41d5-a862-97a31f4883c3", false, "admin@admin.com" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "1a664068-8ac4-443a-b380-769a1709b229", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEPozkfkWCJiRF33EwgjbOooBumQ/4C9l0XHnNMpgUIZCS1py7n+h4h/kCS6lGt4rqw==", null, false, "/blank-profile.png", "20b52613-bcb8-4164-8578-d1d51a90888e", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -552,9 +562,9 @@ namespace ProfileMatch.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_JobTitleId",
+                name: "IX_AspNetUsers_JobId",
                 table: "AspNetUsers",
-                column: "JobTitleId");
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -642,7 +652,7 @@ namespace ProfileMatch.Data.Migrations
                 name: "Departments");
 
             migrationBuilder.DropTable(
-                name: "JobTitles");
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "Categories");

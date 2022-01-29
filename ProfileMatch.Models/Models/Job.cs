@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Models.Models
 {
-    public class JobTitle
+    public class Job
     {
         public int Id { get; set; }
         public string Name { get; set; }

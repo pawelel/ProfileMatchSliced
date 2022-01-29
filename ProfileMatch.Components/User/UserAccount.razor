@@ -16,9 +16,9 @@
                     <MudText Align="Align.Center">@CurrentUser?.FirstName @CurrentUser?.LastName</MudText>
                     @if (ShareResource.IsEn())
                     {
-                    <MudText Align="Align.Center">@CurrentUser?.JobTitle?.Name</MudText>
+                    <MudText Align="Align.Center">@CurrentUser?.Job?.Name</MudText>
                     }else{
-                          <MudText Align="Align.Center">@CurrentUser?.JobTitle?.NamePl</MudText>
+                          <MudText Align="Align.Center">@CurrentUser?.Job?.NamePl</MudText>
                     }   
                 </MudCardContent>
             </MudCard>

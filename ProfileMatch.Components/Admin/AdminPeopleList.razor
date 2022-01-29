@@ -1,4 +1,4 @@
-﻿@if (_users == null|| _jobTitles==null)
+﻿@if (_users == null|| _jobs==null)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 }
@@ -43,12 +43,12 @@ else
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Field="JobTitleName" Title="Job Title">
+                <Column T="DepartmentUserVM" Field="JobName" Title="Job Title">
                     <HeaderTemplate>
-                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobTitleUpdate())" Variant="Variant.Outlined" />
+                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobUpdate())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
-                        @context.JobTitleName
+                        @context.JobName
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Field="IsActive" Title="Is Active">
@@ -100,12 +100,12 @@ else
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                 </Column>
-                <Column T="DepartmentUserVM" Field="JobTitleNamePl" Title="Stanowisko">
+                <Column T="DepartmentUserVM" Field="JobNamePl" Title="Stanowisko">
                     <HeaderTemplate>
-                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobTitleUpdate())" Variant="Variant.Outlined" />
+                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobUpdate())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
-                        @context.JobTitleNamePl
+                        @context.JobNamePl
                     </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Field="UserRolesVM" Title="Role">

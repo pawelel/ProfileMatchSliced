@@ -9,11 +9,11 @@
                     <MudText Typo="Typo.body2">@CurrentUser?.FullName</MudText>
                     @if (ShareResource.IsEn())
                     {
-                        <MudText Typo="Typo.caption">@CurrentUser?.JobTitle?.Name</MudText>
+                        <MudText Typo="Typo.caption">@CurrentUser?.Job?.Name</MudText>
                     }
                     else
                     {
-                        <MudText Typo="Typo.caption">@CurrentUser?.JobTitle?.NamePl</MudText>
+                        <MudText Typo="Typo.caption">@CurrentUser?.Job?.NamePl</MudText>
                     }
 
 

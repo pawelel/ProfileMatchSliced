@@ -80,9 +80,9 @@ else
                   @if (ShareResource.IsEn())
                 {
                     <MudItem xs="6">
-                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobTitleId"
+                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobId"
                        OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
-                        @foreach (JobTitle job in _jobTitles)
+                        @foreach (Job job in _jobs)
                         {
                             <MudSelectItem T="int" Value="@job.Id">@job.Name</MudSelectItem>
                         }
@@ -92,9 +92,9 @@ else
                 else
                 {
                     <MudItem xs="6">
-                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobTitleId"
+                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobId"
                        OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
-                        @foreach (JobTitle job in _jobTitles)
+                        @foreach (Job job in _jobs)
                         {
                             <MudSelectItem T="int" Value="@job.Id">@job.NamePl</MudSelectItem>
                         }

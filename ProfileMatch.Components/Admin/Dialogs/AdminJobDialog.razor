@@ -1,14 +1,14 @@
 ﻿<MudDialog>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Job Title Name EN"] Required="true" RequiredError=@L["JobTitle name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-            <MudTextField T="string" @bind-Value="@TempNamePl" Label=@L["Job Title Name PL"] Required="true" RequiredError=@L["JobTitle name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Job Title Name EN"] Required="true" RequiredError=@L["Job name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@TempNamePl" Label=@L["Job Title Name PL"] Required="true" RequiredError=@L["Job name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
             <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Job Title Description EN"] Lines="5" />
             <MudTextField T="string" @bind-Value="@TempDescriptionPl" Immediate="true" Label=@L["Job Title Description PL"] Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-       @if(JobTitle!=null&&!string.IsNullOrEmpty(JobTitle.Name))
+       @if(Job!=null&&!string.IsNullOrEmpty(Job.Name))
        {
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="Delete">@L["Delete"]</MudButton>
        }

@@ -32,7 +32,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
         [Inject] IEmailSender EmailSender { get; set; }
-        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
+        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
@@ -46,7 +46,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Parameter] public DepartmentUserVM OpenedUser { get; set; }
         ApplicationUser _currentUser;
         ApplicationUser _editedUser;
-        List<JobTitle> _jobTitles;
+        List<Job> _jobs;
         string _passwordHash;
         private List<Department> _departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
@@ -57,7 +57,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         protected override async Task OnInitializedAsync()
         {
             await GetCurrentUserAsync();
-            await LoadDepartmentsJobTitlesRolesUser();
+            await LoadDepartmentsJobsRolesUser();
             await CanChangeRolesCheck();
         }
 
@@ -78,9 +78,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// initializes data from database
         /// </summary>
         /// <returns></returns>
-        private async Task LoadDepartmentsJobTitlesRolesUser()
+        private async Task LoadDepartmentsJobsRolesUser()
         {
-            _jobTitles = await JobTitleRepository.Get();
+            _jobs = await JobRepository.Get();
             _departments = await DepartmentRepository.Get();
             _roles = await IdentityRoleRepository.Get();
 

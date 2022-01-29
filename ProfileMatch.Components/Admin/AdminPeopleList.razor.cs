@@ -29,15 +29,15 @@ namespace ProfileMatch.Components.Admin
         [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
         [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
         [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
-        [Inject] DataManager<JobTitle, ApplicationDbContext> JobTitleRepository { get; set; }
+        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
         string _searchString;
         List<IdentityRole> _roles;
-        List<JobTitle> _jobTitles=new();
+        List<Job> _jobs=new();
         List<IdentityUserRole<string>> _userIdentityRoles;
         List<DepartmentUserVM> _users;
         protected override async Task OnInitializedAsync()
         {
-            _jobTitles = await JobTitleRepository.Get();
+            _jobs = await JobRepository.Get();
             _userIdentityRoles = await IdentityUserRoleRepository.Get();
             _roles = await IdentityRoleRepository.Get();
             _users = await GetDepartmentsAsync();
@@ -48,7 +48,7 @@ namespace ProfileMatch.Components.Admin
             if (applicationUser == null) applicationUser = new()
             {
                 FirstName = L["New User"],
-                JobTitleId = 1
+                JobId = 1
             };
 
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
@@ -102,17 +102,17 @@ namespace ProfileMatch.Components.Admin
             }
 
         }
-        private async Task JobTitleUpdate(DepartmentUserVM jobTitle = null)
+        private async Task JobUpdate(DepartmentUserVM job = null)
         {
-            if (jobTitle == null)
+            if (job == null)
             {
-                var dialog = DialogService.Show<AdminJobTitleDialog>(L["Create Job Title"]);
+                var dialog = DialogService.Show<AdminJobDialog>(L["Create Job Title"]);
                 await dialog.Result;
             }
             else
             {
-                var parameters = new DialogParameters { ["JobTitle"] = jobTitle };
-                var dialog = DialogService.Show<AdminJobTitleDialog>(L["Edit Job Title"], parameters);
+                var parameters = new DialogParameters { ["Job"] = job };
+                var dialog = DialogService.Show<AdminJobDialog>(L["Edit Job Title"], parameters);
                 await dialog.Result;
             }
 
@@ -123,7 +123,7 @@ namespace ProfileMatch.Components.Admin
             var appUsers = await ApplicationUserRepository.Get();
             var depts = await DepartmentRepository.Get();
             var appDepts = (from dept in depts
-                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobTitles on appUser.JobTitleId equals jt.Id join ur in _userIdentityRoles on appUser.Id equals ur.UserId join r in _roles on ur.RoleId equals r.Id
+                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobs on appUser.JobId equals jt.Id join ur in _userIdentityRoles on appUser.Id equals ur.UserId join r in _roles on ur.RoleId equals r.Id
                             select new DepartmentUserVM()
                             {
                                 DepartmentId = dept.Id,
@@ -132,10 +132,10 @@ namespace ProfileMatch.Components.Admin
                                 FirstName = appUser.FirstName,
                                 LastName = appUser.LastName,
                                 UserId = appUser.Id,
-                                JobTitleId = appUser.JobTitleId,
+                                JobId = appUser.JobId,
                                 PhotoPath = appUser.PhotoPath,
-                                JobTitleNamePl = jt.NamePl,
-                                JobTitleName = jt.Name,
+                                JobNamePl = jt.NamePl,
+                                JobName = jt.Name,
                                 IsActive = appUser.IsActive,
                                 UserRolesVM = new List<UserRoleVM>() { new()
                                 {

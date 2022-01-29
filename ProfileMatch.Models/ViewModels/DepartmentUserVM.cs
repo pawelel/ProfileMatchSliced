@@ -16,9 +16,9 @@ namespace ProfileMatch.Models.ViewModels
         public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string JobTitleName { get; set; }
-        public string JobTitleNamePl { get; set; }
-        public int JobTitleId { get; set; }
+        public string JobName { get; set; }
+        public string JobNamePl { get; set; }
+        public int JobId { get; set; }
         public bool IsActive { get; set; }
         public string PhotoPath { get; set; }
         public DateTime? DateOfBirth { get; set; }
