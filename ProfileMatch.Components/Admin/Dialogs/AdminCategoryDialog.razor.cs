@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Models;
 using ProfileMatch.Repositories;
@@ -23,8 +24,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
-        bool _isOpen=false;
-       public void ToggleOpen()
+        bool _isOpen = false;
+        public void ToggleOpen()
         {
             _isOpen = !_isOpen;
         }
@@ -40,7 +41,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
                 yield return L["Max 20 characters"];
         }
-
 
         private MudForm _form;
 
@@ -67,24 +67,23 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 {
                     Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
                 }
-
                 MudDialog.Close(DialogResult.Ok(Cat));
             }
         }
         private async Task Delete()
         {
-            if(await UnitOfWork.Categories.ExistById(Cat.Id))
+            if (await UnitOfWork.Categories.ExistById(Cat.Id))
             {
-            await UnitOfWork.Categories.Delete(Cat);
+                await UnitOfWork.Categories.Delete(Cat);
             }
             if (ShareResource.IsEn())
             {
                 Snackbar.Add($"Category {Cat.Name} deleted");
-            }else
+            }
+            else
             {
                 Snackbar.Add($"Kategoria {Cat.NamePl} usunięta");
             }
-
         }
         private async Task Save()
         {
@@ -100,13 +99,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 created = $"Kategoria {Cat.NamePl} utworzona";
                 updated = $"Kategoria {Cat.NamePl} zaktualizowana";
             }
-
-
-
             if (Cat.Id == 0)
             {
                 var result = await UnitOfWork.Categories.Insert(Cat);
-
                 Snackbar.Add(created, Severity.Success);
             }
             else
@@ -115,7 +110,5 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 Snackbar.Add(updated, Severity.Success);
             }
         }
-
-
     }
 }
