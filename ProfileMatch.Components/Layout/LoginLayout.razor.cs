@@ -10,7 +10,7 @@ using MudBlazor;
 
 using ProfileMatch.Components.Theme;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 using ProfileMatch.Services;
 

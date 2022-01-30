@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Services;
 
 using System.Collections.Generic;

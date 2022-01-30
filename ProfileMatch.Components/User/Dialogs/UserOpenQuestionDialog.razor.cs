@@ -6,7 +6,7 @@ using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 

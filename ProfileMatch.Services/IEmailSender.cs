@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 namespace ProfileMatch.Services
 {

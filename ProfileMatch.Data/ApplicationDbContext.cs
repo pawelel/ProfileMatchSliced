@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 using System;
 using System.IO;

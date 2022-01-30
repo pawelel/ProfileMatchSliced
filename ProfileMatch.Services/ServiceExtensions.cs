@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Repositories;
 
 namespace ProfileMatch.Services

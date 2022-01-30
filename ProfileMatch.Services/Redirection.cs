@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 using System;
 using System.Collections.Generic;

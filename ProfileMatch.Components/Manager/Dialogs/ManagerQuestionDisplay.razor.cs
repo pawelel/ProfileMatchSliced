@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 
 
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 

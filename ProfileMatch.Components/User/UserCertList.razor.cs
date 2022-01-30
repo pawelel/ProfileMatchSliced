@@ -7,7 +7,7 @@ using MudBlazor;
 
 using ProfileMatch.Components.User.Dialogs;
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;

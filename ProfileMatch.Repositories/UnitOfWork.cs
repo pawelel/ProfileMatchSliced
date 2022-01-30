@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 namespace ProfileMatch.Repositories
 {

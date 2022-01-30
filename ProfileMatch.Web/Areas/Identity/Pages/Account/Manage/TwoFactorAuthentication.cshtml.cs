@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 using System.Threading.Tasks;
 

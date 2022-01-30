@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProfileMatch.Models.Models
+namespace ProfileMatch.Models.Entities
 {
     public class ApplicationUser : IdentityUser
     {

@@ -17,7 +17,7 @@ using MudBlazor.Services;
 
 
 using ProfileMatch.Data;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;

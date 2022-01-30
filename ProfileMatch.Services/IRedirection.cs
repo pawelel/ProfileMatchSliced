@@ -1,4 +1,4 @@
-﻿using ProfileMatch.Models.Models;
+﻿using ProfileMatch.Models.Entities;
 
 using System.Threading.Tasks;
 

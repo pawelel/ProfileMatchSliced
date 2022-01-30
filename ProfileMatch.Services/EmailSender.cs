@@ -7,7 +7,7 @@ using System.Runtime.Versioning;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
-using ProfileMatch.Models.Models;
+using ProfileMatch.Models.Entities;
 
 namespace ProfileMatch.Services
 {

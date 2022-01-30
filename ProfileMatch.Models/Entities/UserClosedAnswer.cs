@@ -2,7 +2,7 @@
 
 using System;
 
-namespace ProfileMatch.Models.Models
+namespace ProfileMatch.Models.Entities
 {
     public class UserClosedAnswer
     {

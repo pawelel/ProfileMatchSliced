@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProfileMatch.Models.Models
+namespace ProfileMatch.Models.Entities
 {
     public class ClosedQuestion
     {

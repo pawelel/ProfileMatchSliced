@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfileMatch.Models.Models
+namespace ProfileMatch.Models.Entities
 {
     public class Certificate
     {
