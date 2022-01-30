@@ -22,7 +22,6 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace ProfileMatch.Components.Layout
 {
