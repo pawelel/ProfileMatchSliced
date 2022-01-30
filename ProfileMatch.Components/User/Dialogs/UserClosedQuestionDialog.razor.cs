@@ -20,10 +20,10 @@ namespace ProfileMatch.Components.User.Dialogs
 {
     public partial class UserClosedQuestionDialog : ComponentBase
     {
-        [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
+       
         [Parameter] public QuestionUserLevelVM Q { get; set; }
         int _userLevel;
         [Parameter] public string UserId { get; set; }
@@ -34,7 +34,7 @@ namespace ProfileMatch.Components.User.Dialogs
             if (Q.Level == 0||Q==null) Q.Level = 1;
             _userLevel = Q.Level;
             
-            _answerOptions = await AnswerOptionRepository.Get(q=>q.ClosedQuestionId==Q.ClosedQuestionId);
+            _answerOptions = await UnitOfWork.AnswerOptions.Get(q=>q.ClosedQuestionId==Q.ClosedQuestionId);
             
             
             _tempAnswerOption = _answerOptions.FirstOrDefault(q => q.ClosedQuestionId==Q.ClosedQuestionId&&q.Level==1);
@@ -49,7 +49,7 @@ namespace ProfileMatch.Components.User.Dialogs
                 title = Q.QuestionName;
             }
             else { title = Q.QuestionNamePl; }
-            var userAnswer = await UserAnswerRepository.GetById(UserId, _tempAnswerOption.ClosedQuestionId);
+            var userAnswer = await UnitOfWork.UserClosedAnswers.GetById(UserId, _tempAnswerOption.ClosedQuestionId);
             if (userAnswer == null)
             {
                 userAnswer = new()
@@ -61,7 +61,7 @@ namespace ProfileMatch.Components.User.Dialogs
                     LastModified = DateTime.Now,
                 };
 
-                await UserAnswerRepository.Insert(userAnswer);
+                await UnitOfWork.UserClosedAnswers.Insert(userAnswer);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace ProfileMatch.Components.User.Dialogs
                 userAnswer.AnswerOptionId = _tempAnswerOption.Id;
                 userAnswer.IsConfirmed = false;
                 userAnswer.LastModified = DateTime.Now;
-                await UserAnswerRepository.Update(userAnswer);
+                await UnitOfWork.UserClosedAnswers.Update(userAnswer);
             }
 
             MudDialog.Close(DialogResult.Ok(true));
@@ -82,7 +82,7 @@ namespace ProfileMatch.Components.User.Dialogs
         {
             if (answerOption == null || answerOption.Id == 0)
             {
-                _tempAnswerOption = await AnswerOptionRepository.GetOne(a => a.ClosedQuestionId == Q.ClosedQuestionId && a.Level == 1);
+                _tempAnswerOption = await UnitOfWork.AnswerOptions.GetOne(a => a.ClosedQuestionId == Q.ClosedQuestionId && a.Level == 1);
             }
             else
             {

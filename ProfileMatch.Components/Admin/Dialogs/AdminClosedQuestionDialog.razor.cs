@@ -20,12 +20,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
     {
         bool _first = true;
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public ClosedQuestionVM Q { get; set; } = new();
         [Parameter] public bool DeleteEnabled { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
+
         public int ClosedQuestionId { get; set; }
         List<AnswerOption> _answerOptions;
         public string TempName { get; set; }
@@ -43,7 +43,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         protected override async Task OnInitializedAsync()
         {
-            _answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
+            _answerOptions = await UnitOfWork.AnswerOptions.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
             if (_answerOptions == null)
             {
 
@@ -68,7 +68,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             // question parameteer null check
             if (q.ClosedQuestionId != 0 && q != null)
             {
-                return (_tempQuestion = await ClosedQuestionRepository.GetById(q.ClosedQuestionId)) != null;
+                return (_tempQuestion = await UnitOfWork.ClosedQuestions.GetById(q.ClosedQuestionId)) != null;
             }
 
             return false;
@@ -103,7 +103,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 Snackbar.Add(title, Severity.Error);
                 return;
             }
-            var options = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == question.ClosedQuestionId);
+            var options = await UnitOfWork.AnswerOptions.Get(q => q.ClosedQuestionId == question.ClosedQuestionId);
             if (options.Any())
             {
                 ChangePage();
@@ -111,7 +111,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             else
             {
                 await AddLevels(question);
-                _tempOption = await AnswerOptionRepository.GetOne(o => o.ClosedQuestionId == question.ClosedQuestionId && o.Level == 1);
+                _tempOption = await UnitOfWork.AnswerOptions.GetOne(o => o.ClosedQuestionId == question.ClosedQuestionId && o.Level == 1);
                 ChangePage();
             }
         }
@@ -136,7 +136,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 {
                     if (Q.ClosedQuestionId == 0)
                     {
-                        var result = await ClosedQuestionRepository.Insert(question);
+                        var result = await UnitOfWork.ClosedQuestions.Insert(question);
                         switch (ShareResource.IsEn())
                         {
                             case true:
@@ -149,7 +149,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     }
                     else
                     {
-                        await ClosedQuestionRepository.Update(question);
+                        await UnitOfWork.ClosedQuestions.Update(question);
                         switch (ShareResource.IsEn())
                         {
                             case true:
@@ -170,11 +170,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         private async Task AddLevels(ClosedQuestionVM questionVM)
         {
-            if (await AnswerOptionRepository.Get(a => a.ClosedQuestionId == questionVM.ClosedQuestionId) == null && questionVM.ClosedQuestionId > 0)
+            if (await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == questionVM.ClosedQuestionId) == null && questionVM.ClosedQuestionId > 0)
             {
                 for (int i = 1; i < 6; i++)
                 {
-                    await AnswerOptionRepository.Insert(new AnswerOption()
+                    await UnitOfWork.AnswerOptions.Insert(new AnswerOption()
                     {
                         ClosedQuestionId = questionVM.ClosedQuestionId,
                         DescriptionPl = string.Empty,
@@ -210,12 +210,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 warning = "Nie można aktywować pytania - nie wszystkie poziomy są wypełnione";
             }
             //does list of answerOptions exist and any answerOption is nullOwWhiteSpace
-            List<AnswerOption> answerOptions = await AnswerOptionRepository.Get(q => q.ClosedQuestionId == question.ClosedQuestionId);
+            List<AnswerOption> answerOptions = await UnitOfWork.AnswerOptions.Get(q => q.ClosedQuestionId == question.ClosedQuestionId);
             if (answerOptions is not null && !answerOptions.Any(ao => string.IsNullOrWhiteSpace(ao.Description)))
             {
 
                 question.IsActive = !question.IsActive;
-                await ClosedQuestionRepository.Update(_tempQuestion);
+                await UnitOfWork.ClosedQuestions.Update(_tempQuestion);
                 if (question.IsActive)
                 {
                     Snackbar.Add(titleOn, Severity.Success);
@@ -235,8 +235,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
             string error;
             if (cqVM != null)
             {
-                var cat = await ClosedQuestionRepository.GetById(cqVM.ClosedQuestionId);
-                var result = await ClosedQuestionRepository.Delete(cat);
+                var cat = await UnitOfWork.ClosedQuestions.GetById(cqVM.ClosedQuestionId);
+                var result = await UnitOfWork.ClosedQuestions.Delete(cat);
                 if (result)
                 {
                     try

@@ -17,6 +17,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminDepartmentDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
         public string TempNamePl { get; set; }
@@ -32,7 +33,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             TempDescription = Dep.Description;
         }
 
-        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
+  
 
         private MudForm _form;
 
@@ -82,12 +83,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
             if (Dep.Id == 0)
             {
-                var result = await DepartmentRepository.Insert(Dep);
+                var result = await UnitOfWork.Departments.Insert(Dep);
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await DepartmentRepository.Update(Dep);
+                var result = await UnitOfWork.Departments.Update(Dep);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

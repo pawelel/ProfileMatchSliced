@@ -25,11 +25,7 @@ namespace ProfileMatch.Components.Admin
     public partial class AdminPeopleList : ComponentBase
     {
         [Inject] private IDialogService DialogService { get; set; }
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
-        [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
-        [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
-        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
-        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         string _searchString;
         List<IdentityRole> _roles;
         List<Job> _jobs=new();
@@ -37,9 +33,9 @@ namespace ProfileMatch.Components.Admin
         List<DepartmentUserVM> _users;
         protected override async Task OnInitializedAsync()
         {
-            _jobs = await JobRepository.Get();
-            _userIdentityRoles = await IdentityUserRoleRepository.Get();
-            _roles = await IdentityRoleRepository.Get();
+            _jobs = await UnitOfWork.Jobs.Get();
+            _userIdentityRoles = await UnitOfWork.IdentityUserRoles.Get();
+            _roles = await UnitOfWork.IdentityRoles.Get();
             _users = await GetDepartmentsAsync();
         }
 
@@ -120,8 +116,8 @@ namespace ProfileMatch.Components.Admin
 
         private async Task<List<DepartmentUserVM>> GetDepartmentsAsync()
         {
-            var appUsers = await ApplicationUserRepository.Get();
-            var depts = await DepartmentRepository.Get();
+            var appUsers = await UnitOfWork.ApplicationUsers.Get();
+            var depts = await UnitOfWork.Departments.Get();
             var appDepts = (from dept in depts
                             join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobs on appUser.JobId equals jt.Id join ur in _userIdentityRoles on appUser.Id equals ur.UserId join r in _roles on ur.RoleId equals r.Id
                             select new DepartmentUserVM()

@@ -22,7 +22,7 @@ namespace ProfileMatch.Components.User
     {
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] IRedirection Redirection { get; set; }
-        [Inject] DataManager<Certificate, ApplicationDbContext> CertificateRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] public ApplicationUser CurrentUser { get; set; }
 
         List<Certificate> _certificates = new();
@@ -33,7 +33,7 @@ namespace ProfileMatch.Components.User
             {
                 CurrentUser = await Redirection.GetUser();
             }
-            _certificates = await CertificateRepository.Get();
+            _certificates = await UnitOfWork.Certificates.Get();
         }
        
         

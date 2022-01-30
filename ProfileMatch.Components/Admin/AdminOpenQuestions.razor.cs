@@ -22,17 +22,15 @@ namespace ProfileMatch.Components.Admin
 {
     public partial class AdminOpenQuestions : ComponentBase
     {
-        [Inject]
-        public ISnackbar Snackbar { get; set; }
+        [Inject]        public ISnackbar Snackbar { get; set; }
 
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        [Inject]        private IDialogService DialogService { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
 
-        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
 
         private async Task<List<OpenQuestion>> GetOpenQuestions()
         {
-            return await OpenQuestionRepository.Get();
+            return await UnitOfWork.OpenQuestions.Get();
         }
 
         protected override async Task OnInitializedAsync()

@@ -27,6 +27,7 @@ namespace ProfileMatch.Components.User.Dialogs
 
        
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         UserOpenAnswer _editUserAnswer;
         [Parameter] public UserAnswerVM UserAnswerVM { get; set; }
         string _tempDescription;
@@ -38,10 +39,10 @@ namespace ProfileMatch.Components.User.Dialogs
 
         protected override async Task OnInitializedAsync()
         { 
-            _exists = await UserOpenAnswerRepository.ExistById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
+            _exists = await UnitOfWork.UserOpenAnswers.ExistById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
             if (_exists)
             {
-                _editUserAnswer = await UserOpenAnswerRepository.GetById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
+                _editUserAnswer = await UnitOfWork.UserOpenAnswers.GetById(UserAnswerVM.UserId, UserAnswerVM.AnswerId);
                 _tempDescription = _editUserAnswer.UserAnswer;
             }
             else
@@ -55,7 +56,6 @@ namespace ProfileMatch.Components.User.Dialogs
             }
             _isDisplayed = _editUserAnswer.IsDisplayed;
         }
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
 
         private MudForm _form;
 
@@ -90,12 +90,12 @@ namespace ProfileMatch.Components.User.Dialogs
         {
             if (!_exists)
             {
-                var result = await UserOpenAnswerRepository.Insert(_editUserAnswer);
+                var result = await UnitOfWork.UserOpenAnswers.Insert(_editUserAnswer);
                 Snackbar.Add(@L["Answer added"], Severity.Success);
             }
             else
             {
-                var result = await UserOpenAnswerRepository.Update(_editUserAnswer);
+                var result = await UnitOfWork.UserOpenAnswers.Update(_editUserAnswer);
                 Snackbar.Add(@L["Answer updated"], Severity.Success);
             }
         }

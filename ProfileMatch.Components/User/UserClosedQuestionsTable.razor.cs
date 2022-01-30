@@ -34,10 +34,7 @@ namespace ProfileMatch.Components.User
         [Parameter] public int Id { get; set; }
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-        [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswOptionRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
 
         [Inject] private IDialogService DialogService { get; set; }
 
@@ -63,10 +60,10 @@ namespace ProfileMatch.Components.User
 
         private async Task LoadData()
         {
-            _categories = await CategoryRepository.Get();
-            _questions = await ClosedQuestionRepository.Get(q => q.IsActive == true);
-            _userAnswers = await UserAnswerRepository.Get(u => u.ApplicationUserId == _userId);
-            _answerOptions = await AnswOptionRepository.Get();// need to filter by active question
+            _categories = await UnitOfWork.Categories.Get();
+            _questions = await UnitOfWork.ClosedQuestions.Get(q => q.IsActive == true);
+            _userAnswers = await UnitOfWork.UserClosedAnswers.Get(u => u.ApplicationUserId == _userId);
+            _answerOptions = await UnitOfWork.AnswerOptions.Get();// need to filter by active question
             _answerOptions = (from q in _questions join o in _answerOptions on q.Id equals o.ClosedQuestionId select o).ToList();
         }
 

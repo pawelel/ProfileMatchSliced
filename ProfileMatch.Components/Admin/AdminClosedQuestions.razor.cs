@@ -23,8 +23,7 @@ namespace ProfileMatch.Components.Admin
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
 
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
+[Inject] IUnitOfWork UnitOfWork { get; set; }
         bool _deleteEnabled;
         private bool _loading;
         [Parameter] public int Id { get; set; }
@@ -43,8 +42,8 @@ namespace ProfileMatch.Components.Admin
         private async Task LoadData()
         {
             _loading = true;
-            _categories = await CategoryRepository.Get();
-            _questions = await ClosedQuestionRepository.Get();
+            _categories = await UnitOfWork.Categories.Get();
+            _questions = await UnitOfWork.ClosedQuestions.Get();
             _questionVMs = (from c in _categories
                            join q in _questions on c.Id equals q.CategoryId
                            select new ClosedQuestionVM()
@@ -84,7 +83,7 @@ namespace ProfileMatch.Components.Admin
 
         private async Task CategoryUpdate(string category)
         {
-            var Cat = await CategoryRepository.GetOne(c => c.Name == category);
+            var Cat = await UnitOfWork.Categories.GetOne(c => c.Name == category);
             if (Cat != null)
             {
                 var parameters = new DialogParameters { ["Cat"] = Cat };

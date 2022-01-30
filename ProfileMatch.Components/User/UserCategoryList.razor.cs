@@ -21,8 +21,8 @@ namespace ProfileMatch.Components.User
 
         private List<UserCategoryVM> _userCategoryVMs;
 
-        [Inject] private DataManager<UserCategory, ApplicationDbContext> UserCategoryManager { get; set; }
-        [Inject] private DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
+        
         [Parameter] public ApplicationUser CurrentUser { get; set; }
 
         private List<UserCategory> _userCategories;
@@ -41,13 +41,13 @@ namespace ProfileMatch.Components.User
         private async Task LoadUserCategories()
         {
             _userCategoryVMs = new();
-            _userCategories = await UserCategoryManager.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
+            _userCategories = await UnitOfWork.UserCategories.Get(uc => uc.ApplicationUserId == CurrentUser.Id);
             if (_userCategories == null)
             {
                 _userCategories = new();
             }
 
-            _categories = await CategoryRepository.Get();
+            _categories = await UnitOfWork.Categories.Get();
             if (_categories == null)
             {
                 _categories = new();
@@ -75,7 +75,7 @@ namespace ProfileMatch.Components.User
                         CategoryId = c.Id,
                         IsSelected = false
                     };
-                    await UserCategoryManager.Insert(uc);
+                    await UnitOfWork.UserCategories.Insert(uc);
                 }
             }
         }
@@ -83,11 +83,11 @@ namespace ProfileMatch.Components.User
         //updates list of categories
         private async Task SetCategoryAsync(UserCategoryVM userCategory)
         {
-            UserCategory data = await UserCategoryManager.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == userCategory.CategoryId);
+            UserCategory data = await UnitOfWork.UserCategories.GetOne(c => c.ApplicationUserId == CurrentUser.Id && c.CategoryId == userCategory.CategoryId);
             if (data != null && data.IsSelected != userCategory.IsSelected)
             {
                 data.IsSelected = userCategory.IsSelected;
-                await UserCategoryManager.Update(data);
+                await UnitOfWork.UserCategories.Update(data);
             }
             string title = ShareResource.IsEn() ? userCategory.CategoryName : userCategory.CategoryNamePl;
             if (userCategory.IsSelected)

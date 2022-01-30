@@ -18,6 +18,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminJobDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Job Job { get; set; } = new();
         public string TempName { get; set; }
@@ -41,7 +42,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
                 yield return L["Max 20 characters"];
         }
-        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
+  
 
         private MudForm _form;
 
@@ -74,9 +75,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         private async Task Delete()
         {
-            if (await JobRepository.ExistById(Job.Id))
+            if (await UnitOfWork.Jobs.ExistById(Job.Id))
             {
-                await JobRepository.Delete(Job);
+                await UnitOfWork.Jobs.Delete(Job);
             }
             if (ShareResource.IsEn())
             {
@@ -107,13 +108,13 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
             if (Job.Id == 0)
             {
-                var result = await JobRepository.Insert(Job);
+                var result = await UnitOfWork.Jobs.Insert(Job);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await JobRepository.Update(Job);
+                var result = await UnitOfWork.Jobs.Update(Job);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

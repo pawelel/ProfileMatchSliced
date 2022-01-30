@@ -25,7 +25,7 @@ namespace ProfileMatch.Components.User.Dialogs
 
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] IWebHostEnvironment Environment { get; set; }
-        [Inject] DataManager<Certificate, ApplicationDbContext> CertificateRepository { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] IRedirection Redirection { get; set; }
         [Parameter] public Certificate OpenCertificate { get; set; } = new();
@@ -129,13 +129,13 @@ namespace ProfileMatch.Components.User.Dialogs
             if (OpenCertificate.Id == 0)
             {
 
-                var result = await CertificateRepository.Insert(OpenCertificate);
+                var result = await UnitOfWork.Certificates.Insert(OpenCertificate);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await CertificateRepository.Update(OpenCertificate);
+                var result = await UnitOfWork.Certificates.Update(OpenCertificate);
                 Snackbar.Add(updated, Severity.Success);
             }
         }
@@ -196,9 +196,9 @@ namespace ProfileMatch.Components.User.Dialogs
 
         private async Task Delete()
         {
-            if (await CertificateRepository.ExistById(OpenCertificate.Id))
+            if (await UnitOfWork.Certificates.ExistById(OpenCertificate.Id))
             {
-                await CertificateRepository.Delete(OpenCertificate);
+                await UnitOfWork.Certificates.Delete(OpenCertificate);
             }
             if (ShareResource.IsEn())
             {

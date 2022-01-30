@@ -25,21 +25,20 @@ namespace ProfileMatch.Components.User
     public partial class UserOpenQuestionsTable
     {
         [Inject] public ISnackbar Snackbar { get; set; }
-        [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
+        [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         List<OpenQuestion> _openQuestions = new();
         List<UserOpenAnswer> _userOpenAnswers = new();
-        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
-        [Inject] private NavigationManager NavigationManager { get; set; }
         string _userId;
         private async Task<List<OpenQuestion>> GetOpenQuestions()
         {
-            return await OpenQuestionRepository.Get();
+            return await UnitOfWork.OpenQuestions.Get();
         }
         private async Task<List<UserOpenAnswer>> GetUserOpenAnswers()
         {
-            return await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == _userId);
+            return await UnitOfWork.UserOpenAnswers.Get(u => u.ApplicationUserId == _userId);
         }
         
         protected override async Task OnInitializedAsync()

@@ -21,14 +21,9 @@ namespace ProfileMatch.Components.Manager
     public partial class ManagerClosedQuestions : ComponentBase
     {
         [Inject] IDialogService DialogService { get; set; }
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-        [Inject] DataManager<UserCategory, ApplicationDbContext> UserCategoryRepository { get; set; }
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> UserRepository { get; set; }
-        [Inject] DataManager<UserClosedAnswer, ApplicationDbContext> UserAnswerRepository { get; set; }
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set; }
+     
 
-
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         private bool _loading;
         [Parameter] public int Id { get; set; }
         private List<QuestionUserLevelVM> _questionUserLevels = new();
@@ -59,12 +54,12 @@ namespace ProfileMatch.Components.Manager
 
         private async Task LoadData()
         {
-            _categories = await CategoryRepository.Get();
-            _answerOptions = await AnswerOptionRepository.Get();
-            _userCategories = await UserCategoryRepository.Get();
-            _questions = await ClosedQuestionRepository.Get(include: src => src.Include(q => q.Category));
-            _userAnswers = await UserAnswerRepository.Get();
-            _users = await UserRepository.Get();
+            _categories = await UnitOfWork.Categories.Get();
+            _answerOptions = await UnitOfWork.AnswerOptions.Get();
+            _userCategories = await UnitOfWork.UserCategories.Get();
+            _questions = await UnitOfWork.ClosedQuestions.Get(include: src => src.Include(q => q.Category));
+            _userAnswers = await UnitOfWork.UserClosedAnswers.Get();
+            _users = await UnitOfWork.ApplicationUsers.Get();
             _questionUserLevels = (from q in _questions
                                   join ua in _userAnswers
                                   on q.Id
@@ -127,7 +122,7 @@ namespace ProfileMatch.Components.Manager
         };
         private async Task QuestionDisplay(int id)
         {
-            var question1 = await ClosedQuestionRepository.GetOne(q => q.Id == id);
+            var question1 = await UnitOfWork.ClosedQuestions.GetOne(q => q.Id == id);
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
             var parameters = new DialogParameters { ["Q"] = question1 };
 

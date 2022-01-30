@@ -17,6 +17,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminOpenQuestionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public OpenQuestion EditedOpenQuestion { get; set; } = new();
         public string TempName { get; set; }
@@ -32,9 +33,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
             TempDescription = EditedOpenQuestion.Description;
             TempDescriptionPl = EditedOpenQuestion.DescriptionPl;
         }
-
-        [Inject] DataManager<OpenQuestion, ApplicationDbContext> OpenQuestionRepository { get; set; }
-
         private MudForm _form;
 
         private void Cancel()
@@ -84,12 +82,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
             if (EditedOpenQuestion.Id == 0)
             {
-                var result = await OpenQuestionRepository.Insert(EditedOpenQuestion);
+                var result = await UnitOfWork.OpenQuestions.Insert(EditedOpenQuestion);
                 Snackbar.Add( $"{title} {created}" , Severity.Success);
             }
             else
             {
-                var result = await OpenQuestionRepository.Update(EditedOpenQuestion);
+                var result = await UnitOfWork.OpenQuestions.Update(EditedOpenQuestion);
                 Snackbar.Add($"{title} {updated}", Severity.Success);
             }
         }

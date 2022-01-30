@@ -11,19 +11,8 @@ namespace ProfileMatch.Services
     {
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
-            services.AddTransient<DataManager<Department, ApplicationDbContext>>();
-            services.AddTransient<DataManager<Category, ApplicationDbContext>>();
-            services.AddTransient<DataManager<ClosedQuestion, ApplicationDbContext>>();
-            services.AddTransient<DataManager<AnswerOption, ApplicationDbContext>>();
-            services.AddTransient<DataManager<UserClosedAnswer, ApplicationDbContext>>();
-            services.AddTransient<DataManager<UserCategory, ApplicationDbContext>>();
-            services.AddTransient<DataManager<OpenQuestion, ApplicationDbContext>>();
-            services.AddTransient<DataManager<UserOpenAnswer, ApplicationDbContext>>();
-            services.AddTransient<DataManager<ApplicationUser, ApplicationDbContext>>();
-            services.AddTransient<DataManager<IdentityUserRole<string>, ApplicationDbContext>>();
-            services.AddTransient<DataManager<IdentityRole, ApplicationDbContext>>();
-            services.AddTransient<DataManager<Job, ApplicationDbContext>>();
-            services.AddTransient<DataManager<Certificate, ApplicationDbContext>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+        
             services.AddScoped<IRedirection, Redirection>();
         }
     }

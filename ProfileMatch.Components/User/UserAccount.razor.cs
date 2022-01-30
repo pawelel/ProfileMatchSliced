@@ -20,20 +20,19 @@ namespace ProfileMatch.Components.User
 {
     public partial class UserAccount : ComponentBase
     {
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
+        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         public string AvatarImageLink { get; set; }
         public string AvatarIcon { get; set; }
         private List<UserAnswerVM> _userOpenAnswersVM;
-        [Inject] DataManager<UserOpenAnswer, ApplicationDbContext> UserOpenAnswerRepository { get; set; }
         [Parameter] public string UserId { get; set; }
-        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Parameter] public ApplicationUser CurrentUser { get; set; }
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> AppUserManager { get; set; }
-        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get;  set; }
+       
         protected override async Task OnInitializedAsync()
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                CurrentUser = await AppUserManager.GetById(UserId);
+                CurrentUser = await UnitOfWork.ApplicationUsers.GetById(UserId);
             }
             else
             {
@@ -41,15 +40,15 @@ namespace ProfileMatch.Components.User
                 var principal = authState.User;
                 if (principal != null)
                     UserId = principal.FindFirst("UserId").Value;
-                CurrentUser = await AppUserManager.GetById(UserId);
-                CurrentUser.Job = await JobRepository.GetOne(q => q.Id == CurrentUser.JobId);
+                CurrentUser = await UnitOfWork.ApplicationUsers.GetById(UserId);
+                CurrentUser.Job = await UnitOfWork.Jobs.GetOne(q => q.Id == CurrentUser.JobId);
             }
             _userOpenAnswersVM = await GetUserAnswerVMAsync();
         }
         private async Task<List<UserAnswerVM>> GetUserAnswerVMAsync()
         {
             List<UserOpenAnswer> answers = new();
-                answers = await UserOpenAnswerRepository.Get(u => u.ApplicationUserId == UserId, include: src => src.Include(n => n.OpenQuestion));
+                answers = await UnitOfWork.UserOpenAnswers.Get(u => u.ApplicationUserId == UserId, include: src => src.Include(n => n.OpenQuestion));
             if (answers != null)
             {
                 answers = (from n in answers where n.IsDisplayed == true select n).ToList();

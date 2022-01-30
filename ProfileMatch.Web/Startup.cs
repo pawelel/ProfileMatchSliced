@@ -27,6 +27,8 @@ using System.Globalization;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using Serilog;
+using Serilog.Events;
 
 namespace ProfileMatch
 {
@@ -35,6 +37,10 @@ namespace ProfileMatch
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -43,7 +49,7 @@ namespace ProfileMatch
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Old")));
 
             services.AddScoped(p =>
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
@@ -113,6 +119,7 @@ services.AddSingleton<IEmailSender, EmailSender>();
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+               
             }
             else
             {
@@ -120,6 +127,21 @@ services.AddSingleton<IEmailSender, EmailSender>();
                 // The default HSTS value is 30 days. You may IsSelected to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSerilogRequestLogging(options =>
+            {
+                // Customize the message template
+                options.MessageTemplate = "Handled {RequestPath}";
+
+                // Emit debug-level events instead of the defaults
+                options.GetLevel = (httpContext, elapsed, ex) => LogEventLevel.Debug;
+
+                // Attach additional properties to the request completion event
+                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+                {
+                    diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+                    diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+                };
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseStaticFiles(new StaticFileOptions

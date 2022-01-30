@@ -17,6 +17,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminLevelDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public AnswerOption O { get; set; } = new();
         public string TempDescription { get; set; }
@@ -26,7 +27,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             TempDescription = O.Description;
         }
 
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
+
 
         private MudForm _form;
 
@@ -59,12 +60,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             if (O.Id == 0)
             {
-                var result = await AnswerOptionRepository.Insert(O);
+                var result = await UnitOfWork.AnswerOptions.Insert(O);
                 Snackbar.Add(@L["Answer option created"], Severity.Success);
             }
             else
             {
-                await AnswerOptionRepository.Update(O);
+                await UnitOfWork.AnswerOptions.Update(O);
                 Snackbar.Add(@L["Answer option updated"], Severity.Success);
             }
         }

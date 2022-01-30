@@ -18,14 +18,13 @@ namespace ProfileMatch.Components.Manager.Dialogs
     {
 
         private List<AnswerOption> _qAnswerOptions;
-        [Inject] DataManager<AnswerOption, ApplicationDbContext> AnswerOptionRepository { get; set; }
-        [Inject] DataManager<ClosedQuestion, ApplicationDbContext> ClosedQuestionRepository { get; set;}
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Parameter] public ClosedQuestion Q { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            Q = await ClosedQuestionRepository.GetOne(q=>q.Id==Q.Id, include:src=>src.Include(q=>q.Category).Include(q=>q.Category));
+            Q = await UnitOfWork.ClosedQuestions.GetOne(q=>q.Id==Q.Id, include:src=>src.Include(q=>q.Category).Include(q=>q.Category));
            
-            _qAnswerOptions = await AnswerOptionRepository.Get(a => a.ClosedQuestionId == Q.Id);
+            _qAnswerOptions = await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == Q.Id);
         }
     }
 }

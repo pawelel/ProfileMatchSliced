@@ -17,6 +17,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Parameter] public Category Cat { get; set; } = new();
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
@@ -39,7 +40,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
                 yield return L["Max 20 characters"];
         }
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
+
 
         private MudForm _form;
 
@@ -72,9 +73,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         private async Task Delete()
         {
-            if(await CategoryRepository.ExistById(Cat.Id))
+            if(await UnitOfWork.Categories.ExistById(Cat.Id))
             {
-            await CategoryRepository.Delete(Cat);
+            await UnitOfWork.Categories.Delete(Cat);
             }
             if (ShareResource.IsEn())
             {
@@ -104,13 +105,13 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
             if (Cat.Id == 0)
             {
-                var result = await CategoryRepository.Insert(Cat);
+                var result = await UnitOfWork.Categories.Insert(Cat);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await CategoryRepository.Update(Cat);
+                var result = await UnitOfWork.Categories.Update(Cat);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

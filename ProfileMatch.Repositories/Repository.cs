@@ -19,7 +19,7 @@ namespace ProfileMatch.Repositories
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TDataContext"></typeparam>
-    public class DataManager<TEntity, TDataContext> : IRepository<TEntity>
+    public class Repository<TEntity, TDataContext> : IRepository<TEntity>
         where TEntity : class
         where TDataContext : DbContext
     {
@@ -28,7 +28,7 @@ namespace ProfileMatch.Repositories
 
         internal DbSet<TEntity> _dbSet;
 
-        public DataManager(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public Repository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
 
             this._contextFactory = contextFactory;

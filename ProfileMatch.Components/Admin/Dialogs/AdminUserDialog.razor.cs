@@ -28,15 +28,15 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminUserDialog : ComponentBase
     {
         [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] IWebHostEnvironment Environment { get; set; }
-        [Inject] DataManager<ApplicationUser, ApplicationDbContext> ApplicationUserRepository { get; set; }
-        [Inject] DataManager<IdentityRole, ApplicationDbContext> IdentityRoleRepository { get; set; }
+      
         [Inject] IEmailSender EmailSender { get; set; }
-        [Inject] DataManager<Job, ApplicationDbContext> JobRepository { get; set; }
+      
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
-        [Inject] DataManager<IdentityUserRole<string>, ApplicationDbContext> IdentityUserRoleRepository { get; set; }
+       
         [Inject] ISnackbar Snackbar { get; set; }
-        [Inject] DataManager<Department, ApplicationDbContext> DepartmentRepository { get; set; }
+    
         List<IdentityRole> _roles;
         string _userId;
         List<UserRoleVM> _userRolesVM;
@@ -71,7 +71,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             var principal = authState.User;
             if (principal != null)
                 _userId = principal.FindFirst("UserId").Value;
-            _currentUser = await ApplicationUserRepository.GetById(_userId);
+            _currentUser = await UnitOfWork.ApplicationUsers.GetById(_userId);
         }
 
         /// <summary>
@@ -80,15 +80,15 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         private async Task LoadDepartmentsJobsRolesUser()
         {
-            _jobs = await JobRepository.Get();
-            _departments = await DepartmentRepository.Get();
-            _roles = await IdentityRoleRepository.Get();
+            _jobs = await UnitOfWork.Jobs.Get();
+            _departments = await UnitOfWork.Departments.Get();
+            _roles = await UnitOfWork.IdentityRoles.Get();
 
             if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
             {
                 try
                 {
-                    _editedUser = await ApplicationUserRepository.GetById(OpenedUser.UserId);
+                    _editedUser = await UnitOfWork.ApplicationUsers.GetById(OpenedUser.UserId);
                     _created = true;
                     await TryToAddUserRoles();
                 }
@@ -126,7 +126,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (!string.IsNullOrWhiteSpace(_editedUser.Id))
             {
                 _userRolesVM = new();
-                _userIdentityRoles = await IdentityUserRoleRepository.Get(u => u.UserId == _editedUser.Id);
+                _userIdentityRoles = await UnitOfWork.IdentityUserRoles.Get(u => u.UserId == _editedUser.Id);
                 foreach (var role in _roles.Where(r => r.Name != "User"))
                 {
                     var userRoleVM = new UserRoleVM
@@ -154,7 +154,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 if (_created)
                 {
                     // Update the user
-                    await ApplicationUserRepository.Update(_editedUser);
+                    await UnitOfWork.ApplicationUsers.Update(_editedUser);
                     Snackbar.Add(@L["Account"] + _editedUser.FullName + @L["has been updated[O]"], Severity.Success);
                 }
                 else
@@ -179,19 +179,19 @@ namespace ProfileMatch.Components.Admin.Dialogs
         //    {
         //        if (role.RoleName == "Admin")
         //        {
-        //            var roles = await IdentityUserRoleRepository.Get(q => q.RoleId == role.RoleId);
+        //            var roles = await UnitOfWork.IdentityUserRoles.Get(q => q.RoleId == role.RoleId);
 
         //        }
 
-        //        if (role.IsSelected && !await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
+        //        if (role.IsSelected && !await UnitOfWork.IdentityUserRoles.ExistById(EditedUser.Id, role.RoleId))
         //        {
         //            IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
-        //            await IdentityUserRoleRepository.Insert(roleToInsert);
+        //            await UnitOfWork.IdentityUserRoles.Insert(roleToInsert);
         //        }
-        //        if (!role.IsSelected && await IdentityUserRoleRepository.ExistById(EditedUser.Id, role.RoleId))
+        //        if (!role.IsSelected && await UnitOfWork.IdentityUserRoles.ExistById(EditedUser.Id, role.RoleId))
         //        {
         //            IdentityUserRole<string> roleToRemove = new() { UserId = EditedUser.Id, RoleId = role.RoleId };
-        //            await IdentityUserRoleRepository.Delete(roleToRemove);
+        //            await UnitOfWork.IdentityUserRoles.Delete(roleToRemove);
         //        }
         //    }
         //}
@@ -202,10 +202,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// <returns></returns>
         private async Task UpdateUserRole(UserRoleVM uVM)
         {
-            var roles = await IdentityUserRoleRepository.Get();
+            var roles = await UnitOfWork.IdentityUserRoles.Get();
             var n = uVM.RoleName;
             var id = uVM.RoleId;
-            var userRole = await IdentityUserRoleRepository.GetById(id);
+            var userRole = await UnitOfWork.IdentityUserRoles.GetById(id);
             var filteredRoles = roles.Where(r => r.RoleId == id);
 
             if (n == "Admin" && filteredRoles.Count() > 1)
@@ -213,10 +213,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 switch (uVM.IsSelected)
                 {
                     case true:
-                        await IdentityUserRoleRepository.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
+                        await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
                         break;
                     case false:
-                        await IdentityUserRoleRepository.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
+                        await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
                         break;
                 }
             }
@@ -225,10 +225,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 switch (uVM.IsSelected)
                 {
                     case true:
-                        await IdentityUserRoleRepository.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
+                        await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
                         break;
                     case false:
-                        await IdentityUserRoleRepository.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
+                        await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
                         break;
                 }
             }
@@ -246,11 +246,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             var hasher = new PasswordHasher<ApplicationUser>();
             _editedUser.PasswordHash = hasher.HashPassword(null, _passwordHash);
             _editedUser.UserName = _editedUser.Email;
-            _editedUser = await ApplicationUserRepository.Insert(_editedUser);
+            _editedUser = await UnitOfWork.ApplicationUsers.Insert(_editedUser);
             Snackbar.Add(@L["Account"] + $" {_editedUser.FirstName} " + $" {_editedUser.LastName} " + @L["has been created[O]"], Severity.Success);
             _created = true;
             // add "User" role
-            await IdentityUserRoleRepository.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = _editedUser.Id });
+            await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = _editedUser.Id });
         }
         /// <summary>
         /// send confirmation email after creating user
@@ -320,10 +320,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             if (_currentUser != null && _editedUser != _currentUser)
             {
-                var user = await ApplicationUserRepository.GetById(userId);
+                var user = await UnitOfWork.ApplicationUsers.GetById(userId);
                 if (user != null)
                 {
-                    var deleted = await ApplicationUserRepository.Delete(user);
+                    var deleted = await UnitOfWork.ApplicationUsers.Delete(user);
                     if (deleted)
                     {
                         Snackbar.Add(L["User Deleted"], Severity.Info);

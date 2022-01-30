@@ -21,8 +21,7 @@ namespace ProfileMatch.Components.Admin
     public partial class AdminMaintenance : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
-        [Inject] DataManager<Category, ApplicationDbContext> CategoryRepository { get; set; }
-
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         string _path;
         private async Task LoadSingleFile(InputFileChangeEventArgs e)
 {
@@ -41,7 +40,7 @@ fs.Close();
             var categories = new ExcelMapper(_path).Fetch<Category>();
 foreach (var c in categories)
             {
-                await CategoryRepository.Insert(c);
+                await UnitOfWork.Categories.Insert(c);
                 Snackbar.Add($"{c.Name} " + @L["created."], Severity.Success);
             }
             await InvokeAsync(() => StateHasChanged());

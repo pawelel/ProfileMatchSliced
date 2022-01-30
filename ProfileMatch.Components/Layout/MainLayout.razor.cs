@@ -42,7 +42,7 @@ namespace ProfileMatch.Components.Layout
             _drawerOpen = !_drawerOpen;
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             if (!NavigationManager.Uri.Contains("emailconfirmation"))
             {
