@@ -1,9 +1,11 @@
-﻿<MudItem Class="pa-2" sm="12" xs="12" md="6">
+﻿               @if(_userCategoryVMs is not null || _userCategoryVMs.Count!=0)     {
+<MudItem Class="pa-2" sm="12" xs="12" md="6">
     <MudCard>
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText Typo="Typo.h6">
-                    @L["My Categories"] <AuthorizeView>
+                    @L["My Categories"]
+                    <AuthorizeView>
                         @if ((context.User.Identity.Name).ToUpper() == CurrentUser.NormalizedEmail)
                         {
                             <MudSwitch @bind-Checked="@_edit">@L["Edit"]</MudSwitch>
@@ -48,3 +50,8 @@
     </MudCard>
 </MudItem>
 
+}
+else
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}

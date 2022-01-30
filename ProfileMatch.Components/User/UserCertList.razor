@@ -1,5 +1,4 @@
-﻿
-<MudGrid Spacing="0" Class="d-flex justify-space-between">
+﻿<MudGrid Spacing="0" Class="d-flex justify-space-between">
     <MudItem xs="12" md="5">
         <MudText Typo="Typo.h6">@L["Certificates"]</MudText>
     </MudItem>
@@ -13,6 +12,7 @@
                       IconSize="Size.Medium"></MudTextField>
     </MudItem>
 </MudGrid>
+@if(_certificates is not null){
 <MudDataGrid T="Certificate" Items="_certificates"  Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter">
     <Columns>
         <Column T="Certificate" Field="Name" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
@@ -55,3 +55,8 @@
         <MudDataGridPager T="Certificate" RowsPerPageString=@L["Rows per page"] PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudDataGrid>
+}
+else
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}

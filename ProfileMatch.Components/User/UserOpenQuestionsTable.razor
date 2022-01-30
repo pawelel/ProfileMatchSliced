@@ -13,6 +13,7 @@
         </MudTextField>
     </MudItem>
 </MudGrid>
+@if(_userOpenAnswersVM is not null){
 <MudDataGrid Height="500px"
              FixedHeader="true"
              Items="@_userOpenAnswersVM"
@@ -49,3 +50,8 @@
                           InfoFormat="{first_item}-{last_item} / {all_items}" />
     </PagerContent>
 </MudDataGrid>
+}
+else
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
