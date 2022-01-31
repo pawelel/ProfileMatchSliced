@@ -2,20 +2,23 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Certificate Name"] Required="true" RequiredError=@L["Certificate name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-            <MudTextField T="string" @bind-Value="@TempDescription" Label=@L["Certificate Description EN"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-                          <MudTextField T="string" @bind-Value="@TempDescriptionPl" Label=@L["Certificate Description PL"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@_tempName" Label=@L["Certificate Name"] Required="true" RequiredError=@L["Certificate name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@_tempDescription" Label=@L["Certificate Description EN"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+                          <MudTextField T="string" @bind-Value="@_tempDescriptionPl" Label=@L["Certificate Description PL"] Required="true" RequiredError=@L["Certificate description is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
 <MudDatePicker Label=@L["Date of Issue"] @bind-Date="_tempDate" DateFormat="dd/MM/yyyy" />
+<MudCheckBox Label=@L["Has Expiration Date"] @bind-Checked="_hasValidToDate"/>
+@if(_hasValidToDate){
 <MudDatePicker Label=@L["Date Valid To"] @bind-Date="_tempValidTo" Editable="true" DateFormat="dd/MM/yyyy" />
-
+}
             <InputFile id="fileInput" OnChange="UploadImage" hidden />
-            <MudButton HtmlTag="label" Variant="Variant.Outlined"
-                    Color="Color.Primary"
-                    StartIcon="@Icons.Filled.AttachFile" 
-                    for="fileInput">@L["Upload File"]</MudButton>
+            
         </MudForm>
     </DialogContent>
     <DialogActions>
+        <MudButton HtmlTag="label" Variant="Variant.Outlined"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Filled.AttachFile" 
+                    for="fileInput">@L["Upload File"]</MudButton>
         @if (OpenCertificate!=null||OpenCertificate.Id > 0)
         {
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@ToggleOpen">@L["Delete"]</MudButton>

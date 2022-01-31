@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MudBlazor.Services;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 using MudBlazor;
 
-using ProfileMatch.Services;
-
 using ProfileMatch.Models.Entities;
 using ProfileMatch.Repositories;
-using ProfileMatch.Data;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
+using ProfileMatch.Services;
 
 namespace ProfileMatch.Components.User.Dialogs
 {
@@ -24,25 +22,28 @@ namespace ProfileMatch.Components.User.Dialogs
     {
 
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Inject] IWebHostEnvironment Environment { get; set; }
-        [Inject] IUnitOfWork UnitOfWork { get; set; }
-        [Inject] ISnackbar Snackbar { get; set; }
-        [Inject] IRedirection Redirection { get; set; }
-        [Parameter] public Certificate OpenCertificate { get; set; } = new();
-        [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
-        public string TempName { get; set; }
-        public string TempImage { get; set; }
-        public string TempUrl { get; set; }
-        DateTime? _tempDate = DateTime.Today;
-        DateTime? _tempValidTo = DateTime.Today;
+        [Inject] private IWebHostEnvironment Environment { get; set; }
+        [Inject] ILogger<UserCertDialog> Logger { get; set; }
+        [Inject] private IUnitOfWork UnitOfWork { get; set; }
+        [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] private IRedirection Redirection { get; set; }
+        [Parameter] public Certificate OpenCertificate { get; set; }
+        [Parameter] public ApplicationUser CurrentUser { get; set; }
 
-
-
-        public string TempDescription { get; set; }
-        public string TempDescriptionPl { get; set; }
-        bool _isOpen = false;
-        MudForm _form;
-
+        private string _tempName;
+        private string _tempImagePath;
+        private string _tempUrl;
+        bool _hasValidToDate;
+        private IBrowserFile _file;
+        private DateTime? _tempDate = DateTime.Today;
+        private DateTime? _tempValidTo;
+        private string _tempDescription;
+        private string _tempDescriptionPl;
+        private bool _isOpen = false;
+        private readonly string[] _imageTypes = { "image/jpeg", "image/jpg", "image/png", "image/img", "image/bmp", "image/tiff" };
+        private readonly string _pdfFile = "application/pdf";
+        private MudForm _form;
+        private readonly long _maxFileSize = 1024 * 1024 * 5;
         public void ToggleOpen()
         {
             _isOpen = !_isOpen;
@@ -60,17 +61,18 @@ namespace ProfileMatch.Components.User.Dialogs
             if (OpenCertificate == null)
             {
                 OpenCertificate = new();
-
+                _tempDate = DateTime.Today;
             }
             else
             {
                 _tempDate = OpenCertificate.DateCreated;
                 _tempValidTo = OpenCertificate.ValidToDate;
-                TempDescription = OpenCertificate.Description;
-                TempDescriptionPl = OpenCertificate.DescriptionPl;
-                TempImage = OpenCertificate.Image;
-                TempName = OpenCertificate.Name;
-                TempUrl = OpenCertificate.Url;
+                _tempDescription = OpenCertificate.Description;
+                _tempDescriptionPl = OpenCertificate.DescriptionPl;
+                _tempName = OpenCertificate.Name;
+                _tempUrl = OpenCertificate.Url;
+                _tempImagePath = OpenCertificate.ImagePath;
+
             }
 
         }
@@ -84,15 +86,14 @@ namespace ProfileMatch.Components.User.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                OpenCertificate.Description = TempDescription;
-                OpenCertificate.Image = TempImage;
-                OpenCertificate.Name = TempName;
-                OpenCertificate.Description = TempDescription;
-                OpenCertificate.Url = TempUrl;
+                OpenCertificate.Description = _tempDescription;
+                OpenCertificate.Name = _tempName;
+                OpenCertificate.Description = _tempDescription;
+                OpenCertificate.Url = _tempUrl;
                 OpenCertificate.UserId = CurrentUser.Id;
                 OpenCertificate.DateCreated = (DateTime)_tempDate;
-                OpenCertificate.ValidToDate = (DateTime)_tempValidTo;
-                OpenCertificate.DescriptionPl = TempDescriptionPl;
+                OpenCertificate.ValidToDate = _tempValidTo;
+                OpenCertificate.DescriptionPl = _tempDescriptionPl;
 
                 try
                 {
@@ -101,6 +102,7 @@ namespace ProfileMatch.Components.User.Dialogs
                 catch (Exception ex)
                 {
                     Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
+                    Logger.LogError("ex",ex);
                 }
 
                 MudDialog.Close(DialogResult.Ok(OpenCertificate));
@@ -109,7 +111,9 @@ namespace ProfileMatch.Components.User.Dialogs
         private IEnumerable<string> MaxCharacters(string ch)
         {
             if (!string.IsNullOrEmpty(ch) && 21 < ch?.Length)
+            {
                 yield return L["Max 20 characters"];
+            }
         }
         private async Task Save()
         {
@@ -129,69 +133,99 @@ namespace ProfileMatch.Components.User.Dialogs
             if (OpenCertificate.Id == 0)
             {
 
-                var result = await UnitOfWork.Certificates.Insert(OpenCertificate);
+                OpenCertificate = await UnitOfWork.Certificates.Insert(OpenCertificate);
+
+                OpenCertificate = await SaveCertificate(_file, OpenCertificate);
+                OpenCertificate = await UnitOfWork.Certificates.Update(OpenCertificate);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await UnitOfWork.Certificates.Update(OpenCertificate);
+                OpenCertificate = await SaveCertificate(_file, OpenCertificate);
+                OpenCertificate = await UnitOfWork.Certificates.Update(OpenCertificate);
                 Snackbar.Add(updated, Severity.Success);
             }
         }
 
-        async Task UploadImage(InputFileChangeEventArgs e)
+        private void UploadImage(InputFileChangeEventArgs e)
         {
-            var file = e.File;
-            var name = file.Name;
-            string wwwPath;
-            string contentPath = $"Files/{CurrentUser.Id}/{name}";
-            string path = Path.Combine(Environment.WebRootPath, "Files", CurrentUser.Id);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            long maxFileSize = 1024 * 1024 * 5;
-            string imageType = file.ContentType;
-            string[] imageTypes = { "image/jpeg", "image/jpeg", "image/png" };
-            string pdfFile = "application/pdf";
-            if (imageType == pdfFile)
-            {
-                using var fileToDisplay = file.OpenReadStream(maxFileSize);
-                wwwPath = $"{path}\\{name}";
-                using FileStream fs = File.Create(wwwPath);
-                await fileToDisplay.CopyToAsync(fs);
-                fs.Close();
-                fileToDisplay.Close();
-                TempImage = contentPath;
-                StateHasChanged();
-            }else if (!imageTypes.Any(i => i.Contains(imageType)))
-            {
-                Snackbar.Clear();
-                Snackbar.Add(@L["Wrong file format. Allowed file formats are: .jpg, .jpeg, .png, .pdf."], Severity.Error);
-                return;
-            }
-            if (file.Size > maxFileSize)
+
+            _file = e.File;
+            //verify file size
+            if (_file.Size > _maxFileSize)
             {
                 Snackbar.Clear();
                 Snackbar.Add(@L["Max allowed size is 5MB"], Severity.Error);
+                _file = null;
+                return;
+            }
+            string _fileType = _file.ContentType;
+
+            //verify file type
+            if (_fileType == _pdfFile || _imageTypes.Any(i => i.Contains(_fileType)))
+            {
+                if (ShareResource.IsEn())
+                {
+                    Snackbar.Add($"File {_file.Name} selected", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add($"Plik {_file.Name} wybrany", Severity.Success);
+                }
                 return;
             }
 
-            if (imageTypes.Any(i => i.Contains(imageType)))
-            {
+            Snackbar.Add($"{L["Wrong file format. Allowed file formats are"]}: jpeg, jpg, png, img, bmp, tiff, pdf", Severity.Error);
+            _file = null;
+            return;
+        }
 
-                var resizedImage = await file.RequestImageFileAsync(imageType, 1000, 1000);
-                using var imageStream = resizedImage.OpenReadStream(maxFileSize);
-                wwwPath = $"{path}\\{name}";
-                using FileStream fs = File.Create(wwwPath);
-                await imageStream.CopyToAsync(fs);
-                fs.Close();
-                imageStream.Close();
-                TempImage = contentPath;
-                StateHasChanged();
+        private async Task<Certificate> SaveCertificate(IBrowserFile _file, Certificate _certificate)
+        {
+            if (_file is not null)
+            {
+                string _fileType = _file.ContentType;
+                //create/update
+                _tempImagePath = $"Files/{CurrentUser.Id}/{_certificate.Id}.png";
+                //user's directory
+                string path = Path.Combine(Environment.WebRootPath, "Files", CurrentUser.Id);
+                string wwwPath = $"{path}\\{_certificate.Id}.png";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                if (_fileType == _pdfFile)
+                {
+                    //get only first page
+                    await using MemoryStream ms = new();
+                     await _file.OpenReadStream(_maxFileSize).CopyToAsync(ms);
+                    var imageData = ms.ToArray();
+                    byte[] temp = Freeware.Pdf2Png.Convert(ms, 1, 300);
+                    using Image image = Image.FromStream(new MemoryStream(temp));
+                    image.Save(wwwPath);
+                    image.Dispose();
+                    ms.Close();
+                    _certificate.ImagePath = _tempImagePath;
+                    StateHasChanged();
+                    return _certificate;
+                }
+
+                if (_imageTypes.Any(i => i.Contains(_fileType)))
+                {
+                    IBrowserFile resizedImage = await _file.RequestImageFileAsync(_fileType, 1000, 1000);
+                    await using Stream imageStream = resizedImage.OpenReadStream(_maxFileSize);
+                    await using FileStream fs = File.Create(wwwPath);
+                    await imageStream.CopyToAsync(fs);
+                    fs.Close();
+                    imageStream.Close();
+                    OpenCertificate.ImagePath = _tempImagePath;
+                    StateHasChanged();
+                    return _certificate;
+                }
             }
-            
+            return _certificate;
         }
 
         private async Task Delete()
@@ -208,8 +242,10 @@ namespace ProfileMatch.Components.User.Dialogs
             {
                 Snackbar.Add($"Certyfikat {OpenCertificate.Name} usunięty");
             }
-
+            return;
         }
+
+
     }
 
 }

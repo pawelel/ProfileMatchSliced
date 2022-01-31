@@ -1,0 +1,29 @@
+﻿<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">@Cert.Name</MudText>
+            @if (ShareResource.IsEn())
+            {
+                <MudText Typo="Typo.body2">@Cert.Description</MudText>
+            }
+            else
+            {
+               <MudText Typo="Typo.body2">@Cert.DescriptionPl</MudText> 
+            }
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudItem Class="d-flex justify-center">
+   <img src="@Cert.ImagePath" style="max-height:350px; max-width:150px;"/>
+    </MudItem>
+    <MudCardContent>
+        <MudText Typo="Typo.body2">@L["Date of Issue"]:@(Cert.DateCreated.ToShortDateString())</MudText>
+        @if (Cert.ValidToDate is not null)
+        {
+            <MudText Typo="Typo.body2">@L["Valid To Date"]:@(Cert.ValidToDate.GetValueOrDefault().ToShortDateString())</MudText>
+        }
+    </MudCardContent>
+    <MudCardActions>
+   <MudButton OnClick="DisplayCert" Color="Color.Primary">@L["Display"]</MudButton>
+   <MudButton OnClick=@CertUpdate>@L["Edit"]</MudButton>
+    </MudCardActions>
+</MudCard>

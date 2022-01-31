@@ -1,4 +1,5 @@
-﻿<MudGrid Spacing="0" Class="d-flex justify-space-between">
+﻿<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Fixed=true >
+<MudGrid  Class="d-flex justify-flex-end">
     <MudItem xs="12" md="5">
         <MudText Typo="Typo.h6">@L["Certificates"]</MudText>
     </MudItem>
@@ -10,53 +11,23 @@
                       Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"></MudTextField>
+<MudButton OnClick=@CertUpdate>@L["Add New"]</MudButton>
     </MudItem>
-</MudGrid>
+     </MudGrid>
+   <MudGrid  Class="d-flex justify-flex-center">
 @if(_certificates is not null){
-<MudDataGrid T="Certificate" Items="_certificates"  Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter">
-    <Columns>
-        <Column T="Certificate" Field="Name" Dense="true" Sortable="true" Hover="true" Bordered="false" Striped="false" QuickFilter="QuickFilter">
-            <HeaderTemplate>
-                @L["Cert name"] <MudIconButton @onclick="@(()=>CertUpdate())" Size="Size.Small" Icon="@Icons.Outlined.Add" Variant="Variant.Outlined" Color="Color.Primary" />
-            </HeaderTemplate>
-            <CellTemplate>
-                @context.Name
-            </CellTemplate>
-        </Column>
-        @if (ShareResource.IsEn())
-        {
-            <Column T="Certificate" Field="Description" Title=@L["Description"] />
-        }
-        else
-        {
-            <Column T="Certificate" Field="DescriptionPl" Title=@L["Description"] />
-        }
-        <Column T="Certificate" Field="Image" Sortable="false" Title=@L["Attachment"]>
-            <CellTemplate>
-               
-                <div class="cert">
-                 
-                    <a href="@context.Image" target="_blank" ><MudIcon Icon="@Icons.Filled.FilePresent" Size="Size.Medium" /></a>
-               
-               
-                </div>
-            </CellTemplate>
-        </Column>
-       
-        <Column T="Certificate" Field="DateCreated" Title=@L["Date of Issue"] />
-        <Column T="Certificate" Field="ValidToDate" Title="@L["Valid To Date"]" />
-        <Column T="Certificate" Sortable="false" Title=@L["Edit"]>
-            <CellTemplate >
-                <MudButton Class="guzik" @onclick="@(()=>CertUpdate(@context))" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" >@L["Edit Certificate"]</MudButton>
-            </CellTemplate>
-        </Column>
-    </Columns>
-    <PagerContent>
-        <MudDataGridPager T="Certificate" RowsPerPageString=@L["Rows per page"] PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudDataGrid>
+    foreach (var cert in _certificates)
+    {
+        @if (!IsVisible(cert))
+            continue;
+            <MudItem xs="12" md="3" lg="3">
+        <CerttificateCard Cert=@cert/> 
+        </MudItem>
+    }
 }
 else
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
 }
+    </MudGrid>
+    </MudContainer>

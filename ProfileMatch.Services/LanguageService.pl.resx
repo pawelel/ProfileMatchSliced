@@ -906,4 +906,7 @@
   <data name="Attachment" xml:space="preserve">
     <value>Zalącznik</value>
   </data>
+  <data name="Has Expiration Date" xml:space="preserve">
+    <value>Ma datę ważności</value>
+  </data>
 </root>

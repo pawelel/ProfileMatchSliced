@@ -37,24 +37,15 @@ namespace ProfileMatch.Components.User
         }
        
         
-        private async Task CertUpdate(Certificate certicicate = null)
+        private async Task CertUpdate()
         {
-                var parameters = new DialogParameters { ["OpenCertificate"] = certicicate, ["CurrentUser"]= CurrentUser };
-
-            if (certicicate == null)
-            {
-                var dialog = DialogService.Show<UserCertDialog>(L["Add Certificate"]);
+                var parameters = new DialogParameters { ["UserId"]= CurrentUser.Id };
+                var dialog = DialogService.Show<UserCertDialog>(L["Add Certificate", parameters]);
                 await dialog.Result;
-            }
-            else
-            {
-                var dialog = DialogService.Show<UserCertDialog>(L["Edit Certificate"], parameters);
-                await dialog.Result;
-            }
-
+            _certificates = await UnitOfWork.Certificates.Get();
         }
-
-        private Func<Certificate, bool> QuickFilter => cert =>
+        
+        private bool IsVisible(Certificate cert)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
@@ -65,7 +56,7 @@ namespace ProfileMatch.Components.User
             if (cert.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
-        };
+        }
 
     }
 }

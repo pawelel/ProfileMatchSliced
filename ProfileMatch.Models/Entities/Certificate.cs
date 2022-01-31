@@ -12,12 +12,12 @@ namespace ProfileMatch.Models.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string DescriptionPl { get; set; }
-        public string Image { get; set; }
+        public string ImagePath { get; set; }
         public string Url { get; set; }
         public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime ValidToDate { get; set; }
+        public DateTime? ValidToDate { get; set; }
 
     }
 }
