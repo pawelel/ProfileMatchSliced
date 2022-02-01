@@ -23,10 +23,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public ClosedQuestionVM Q { get; set; }
+        [Parameter] public string CategoryName { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         public int ClosedQuestionId { get; set; }
         List<AnswerOption> _answerOptions;
-
+        int _categoryId;
         #region parameters
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
@@ -43,15 +44,17 @@ namespace ProfileMatch.Components.Admin.Dialogs
             _isOpen = !_isOpen;
         }
         protected override async Task OnInitializedAsync()
-        {_deleteEnabled = await UnitOfWork.ClosedQuestions.ExistById(Q.ClosedQuestionId);
+        {
+            if (Q!=null)
+            {
+            _deleteEnabled = await UnitOfWork.ClosedQuestions.ExistById(Q.ClosedQuestionId);
             _answerOptions = await UnitOfWork.AnswerOptions.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
-           
-            await QuestionExists(Q);
             TempName = Q.QuestionName;
             TempNamePl = Q.QuestionNamePl;
             TempDescription = Q.Description;
             TempDescriptionPl = Q.DescriptionPl;
             TempIsActive = Q.IsActive;
+            }
         }
         void SetOption(AnswerOption option)
         {
@@ -60,16 +63,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 return;
             }
             _tempOption = option;
-        }
-        private async Task<bool> QuestionExists(ClosedQuestionVM q)
-        {
-            // question parameteer null check
-            if (q.ClosedQuestionId != 0 && q != null)
-            {
-                return (_tempQuestion = await UnitOfWork.ClosedQuestions.GetById(q.ClosedQuestionId)) != null;
-            }
-
-            return false;
         }
 
 
@@ -96,7 +89,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 title = "Najpierw uzupełnij pytanie";
             }
 
-            if (!await QuestionExists(question))
+            if (question!=null&& question.ClosedQuestionId==0)
             {
                 Snackbar.Add(title, Severity.Error);
                 return;
@@ -128,41 +121,34 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 question.NamePl = TempNamePl;
                 question.Description = TempDescription;
                 question.DescriptionPl = TempDescriptionPl;
-                question.CategoryId = Q.CategoryId;
                 question.IsActive = TempIsActive;
-                try
+                if (Q.ClosedQuestionId != 0)
                 {
-                    if (Q.ClosedQuestionId == 0)
+                    question.CategoryId = Q.CategoryId;
+                    await UnitOfWork.ClosedQuestions.Update(question);
+                    switch (ShareResource.IsEn())
                     {
-                        var result = await UnitOfWork.ClosedQuestions.Insert(question);
-                        switch (ShareResource.IsEn())
-                        {
-                            case true:
-                                Snackbar.Add($"Question {result.Name} has been created", Severity.Success);
-                                break;
-                            default:
-                                Snackbar.Add($"Pytanie {result.NamePl} zostało utworzone", Severity.Success);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        await UnitOfWork.ClosedQuestions.Update(question);
-                        switch (ShareResource.IsEn())
-                        {
-                            case true:
-                                Snackbar.Add($"Question {question.Name} has been updated", Severity.Success);
-                                break;
-                            default:
-                                Snackbar.Add($"Pytanie  {question.NamePl} zostało zaktualizowane", Severity.Success);
-                                break;
-                        }
+                        case true:
+                            Snackbar.Add($"Question {question.Name} has been updated", Severity.Success);
+                            break;
+                        default:
+                            Snackbar.Add($"Pytanie  {question.NamePl} zostało zaktualizowane", Severity.Success);
+                            break;
                     }
                 }
-                catch (Exception ex)
+                _categoryId = UnitOfWork.Categories.Get(c => c.Name == CategoryName).Id;
+                Q.CategoryId = _categoryId;
+                var result = await UnitOfWork.ClosedQuestions.Insert(question);
+                switch (ShareResource.IsEn())
                 {
-                    Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
+                    case true:
+                        Snackbar.Add($"Question {result.Name} has been created", Severity.Success);
+                        break;
+                    default:
+                        Snackbar.Add($"Pytanie {result.NamePl} zostało utworzone", Severity.Success);
+                        break;
                 }
+
             }
             MudDialog.Close(DialogResult.Ok(Q));
         }
@@ -231,7 +217,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             string success;
             string error;
-            if (_deleteEnabled&& cqVM!=null)
+            if (_deleteEnabled && cqVM != null)
             {
                 var question = await UnitOfWork.ClosedQuestions.GetById(cqVM.ClosedQuestionId);
                 var result = await UnitOfWork.ClosedQuestions.Delete(question);

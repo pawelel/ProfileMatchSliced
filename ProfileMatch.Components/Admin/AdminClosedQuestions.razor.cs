@@ -29,6 +29,7 @@ namespace ProfileMatch.Components.Admin
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         private bool _loading;
         [Parameter] public int Id { get; set; }
+
         private List<Category> _categories;
         private List<ClosedQuestion> _questions;
         List<ClosedQuestionVM> _questionVMs;
@@ -187,35 +188,31 @@ namespace ProfileMatch.Components.Admin
             string create;
             string update;
             DialogParameters parameters;
-            if (ShareResource.IsEn())
+            if (cqVM != null && cqVM.ClosedQuestionId > 0)
             {
-                update = $"Edit Question: {cqVM.CategoryName}: {cqVM.QuestionName} ";
-                create = $"Create Question for: {category}";
-            }
-            else
-            {
-                update = $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
-                create = $"Nowe pytanie dla: {category}";
-            }
-            if (cqVM != null&&cqVM.ClosedQuestionId>0)
-            {
-               
-           
-             parameters = new DialogParameters { ["Q"] = cqVM };
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
-            await dialog.Result;
+                update = ShareResource.IsEn()
+                    ? $"Edit Question: {cqVM.CategoryName}: {cqVM.QuestionName} "
+                    : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
+                parameters = new DialogParameters { ["Q"] = cqVM };
+                var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
+                await dialog.Result;
                 return;
-                }
-
-
+            }
             if (!string.IsNullOrWhiteSpace(category))
             {
+                if (ShareResource.IsEn())
+                {
+                    create = $"Create Question for: {category}";
+                }
+                else
+                {
+                    create = $"Nowe pytanie dla: {category}";
+                }
 
                 parameters = new DialogParameters { ["CategoryName"] = category };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(create, parameters);
                 await dialog.Result;
             }
         }
-
     }
 }
