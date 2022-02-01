@@ -10,7 +10,7 @@
             </MudForm>
         </DialogContent>
         <DialogActions>
-            @if(DeleteEnabled){
+            @if(_deleteEnabled){
             <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
             }
             <MudButton Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined" OnClick="@(()=>CanLevel(Q))">@L["Levels"]</MudButton>

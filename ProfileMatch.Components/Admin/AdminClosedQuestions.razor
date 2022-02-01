@@ -6,41 +6,48 @@ else
 {
     <MudText Typo="Typo.h6">@L["Closed Questions"]</MudText>
     <MudSpacer />
-    <MudGrid Spacing="0" Class="d-flex justify-space-between">
-        <MudItem xs="12" md="5">
-            <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
-                @foreach (var cat in _categories)
-                {
-                    @if (ShareResource.IsEn())
+    <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+        <MudGrid Class="d-flex justify-space-between">
+            <MudItem xs="12" md="5">
+                <MudSelect T="string" Label=@L["Select Category"] MultiSelection="true" OffsetY="true" @bind-SelectedValues="Cats">
+                    @foreach (var cat in _categories)
                     {
-                        <MudSelectItem T="string" Value="@cat.Name" />
+                        @if (ShareResource.IsEn())
+                        {
+                            <MudSelectItem T="string" Value="@cat.Name" />
+                        }
+                        else
+                        {
+                            <MudSelectItem T="string" Value="@cat.NamePl" />
+                        }
                     }
-                    else
-                    {
-                        <MudSelectItem T="string" Value="@cat.NamePl" />
-                    }
-                }
-            </MudSelect>
-        </MudItem>
-        <MudItem xs="12" md="5">
-            <MudTextField @bind-Value="_searchString"
-                      Placeholder=@L["Search"]
-                      Adornment="Adornment.Start"
-                      Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      IconSize="Size.Medium"></MudTextField>
-        </MudItem>
-    </MudGrid>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="5">
+                <MudTextField @bind-Value="_searchString"
+                          Placeholder=@L["Search"]
+                          Adornment="Adornment.Start"
+                          Immediate="true"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium"></MudTextField>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
     <MudDataGrid T="ClosedQuestionVM" Items="@(GetQuestions())" Sortable="true" Dense="true" Hover="true" Bordered="false" Striped="false" Breakpoint="Breakpoint.Sm" QuickFilter="@QuickFilter" @bind-SelectedItem="_selectedItem1">
         <ToolBarContent>
-            <MudText Typo="Typo.body2">&nbsp;&nbsp;&nbsp;@L["Selected Categories"]:&nbsp;&nbsp;&nbsp; </MudText>
+            <MudText Typo="Typo.body2">@L["Selected Categories"]:</MudText>
             @foreach (var cat in Cats)
             {
                 @if (!string.IsNullOrEmpty(cat))
-                {
-                        <MudButton Color="Color.Primary" Size="Size.Small" Variant="Variant.Outlined" OnClick="@(()=>CategoryUpdate(cat))">@L[@cat]</MudButton>
-          
-                    <MudText>&nbsp;&nbsp;&nbsp;</MudText>
+                {<MudItem Class="d-flex py-2 px-1">
+                    <MudButtonGroup Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudButton OnClick="@(()=>CategoryUpdate(cat))">@cat</MudButton>
+                        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Direction="Direction.Bottom" OffsetY="true">
+                            <MudMenuItem OnClick="() => HandleSelection(0, cat)">@L["Update Category"]</MudMenuItem>
+                            <MudMenuItem OnClick="() => HandleSelection(1, cat)">@L["Create Question"]</MudMenuItem>
+                        </MudMenu>
+                    </MudButtonGroup>
+                    </MudItem>
                 }
             }
             <MudSpacer />
@@ -68,8 +75,10 @@ else
                         {
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
-                        }else{
-<MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
+                        }
+                        else
+                        {
+                            <MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
                         }
                     </CellTemplate>
                 </Column>
@@ -92,12 +101,14 @@ else
                 <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Działania">
                     <CellTemplate>
-                         @if (context.ClosedQuestionId > 0)
+                        @if (context.ClosedQuestionId > 0)
                         {
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
-                        }else{
-<MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
+                        }
+                        else
+                        {
+                            <MudButton Color="Color.Info" OnClick="@(()=>QuestionDialog(context))">@L["New Question"]</MudButton>
                         }
                     </CellTemplate>
                 </Column>

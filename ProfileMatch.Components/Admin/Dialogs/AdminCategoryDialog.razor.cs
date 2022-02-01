@@ -25,12 +25,14 @@ namespace ProfileMatch.Components.Admin.Dialogs
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
         bool _isOpen = false;
+        bool _deleteEnabled;
         public void ToggleOpen()
         {
             _isOpen = !_isOpen;
         }
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            _deleteEnabled = await UnitOfWork.Categories.ExistById(Cat.Id);
             TempName = Cat.Name;
             TempNamePl = Cat.NamePl;
             TempDescription = Cat.Description;
@@ -72,8 +74,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         private async Task Delete()
         {
-            if (await UnitOfWork.Categories.ExistById(Cat.Id))
+            if (_deleteEnabled)
             {
+               
                 await UnitOfWork.Categories.Delete(Cat);
             }
             if (ShareResource.IsEn())

@@ -909,4 +909,10 @@
   <data name="Has Expiration Date" xml:space="preserve">
     <value>Ma datę ważności</value>
   </data>
+  <data name="Create Question" xml:space="preserve">
+    <value>Stwórz pytanie</value>
+  </data>
+  <data name="Update Category" xml:space="preserve">
+    <value>Aktualizuj kategorię</value>
+  </data>
 </root>

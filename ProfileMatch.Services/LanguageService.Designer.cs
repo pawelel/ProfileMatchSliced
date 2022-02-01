@@ -583,6 +583,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Question.
+        /// </summary>
+        public static string Create_Question {
+            get {
+                return ResourceManager.GetString("Create Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to created.
         /// </summary>
         public static string created {
@@ -2200,6 +2209,15 @@ namespace ProfileMatch.Services {
         public static string unchecked_M_ {
             get {
                 return ResourceManager.GetString("unchecked[M]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Category.
+        /// </summary>
+        public static string Update_Category {
+            get {
+                return ResourceManager.GetString("Update Category", resourceCulture);
             }
         }
         

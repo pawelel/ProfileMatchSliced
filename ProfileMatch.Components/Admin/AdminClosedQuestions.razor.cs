@@ -11,6 +11,8 @@ using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
+using Serilog;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +23,10 @@ namespace ProfileMatch.Components.Admin
     public partial class AdminClosedQuestions : ComponentBase
     {
         [Inject] ISnackbar Snackbar { get; set; }
+        [Inject] ILogger Logger { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
 
-[Inject] IUnitOfWork UnitOfWork { get; set; }
-        bool _deleteEnabled;
+        [Inject] IUnitOfWork UnitOfWork { get; set; }
         private bool _loading;
         [Parameter] public int Id { get; set; }
         private List<Category> _categories;
@@ -38,26 +40,26 @@ namespace ProfileMatch.Components.Admin
             await LoadData();
 
         }
-        
+
         private async Task LoadData()
         {
             _loading = true;
             _categories = await UnitOfWork.Categories.Get();
             _questions = await UnitOfWork.ClosedQuestions.Get();
             _questionVMs = (from c in _categories
-                           join q in _questions on c.Id equals q.CategoryId
-                           select new ClosedQuestionVM()
-                           {
-                               CategoryId = c.Id,
-                               CategoryName = c.Name,
-                               CategoryNamePl = c.NamePl,
-                               IsActive = q.IsActive,
-                               ClosedQuestionId = q.Id,
-                               QuestionNamePl = q.NamePl,
-                               QuestionName = q.Name,
-                               Description = q.Description,
-                               DescriptionPl = q.DescriptionPl
-                           }).ToList();
+                            join q in _questions on c.Id equals q.CategoryId
+                            select new ClosedQuestionVM()
+                            {
+                                CategoryId = c.Id,
+                                CategoryName = c.Name,
+                                CategoryNamePl = c.NamePl,
+                                IsActive = q.IsActive,
+                                ClosedQuestionId = q.Id,
+                                QuestionNamePl = q.NamePl,
+                                QuestionName = q.Name,
+                                Description = q.Description,
+                                DescriptionPl = q.DescriptionPl
+                            }).ToList();
             string nodata = "No questions yet";
             ClosedQuestionVM vm;
             string nodataPl = "Nie ma jeszcze pytań";
@@ -81,19 +83,46 @@ namespace ProfileMatch.Components.Admin
             _loading = false;
         }
 
+
+        async Task HandleSelection(int id, string selection)
+        {
+            switch (id)
+            {
+                case 0:
+                    await CategoryUpdate(selection);
+                    break;
+                case 1:
+                    await QuestionDialog(null, selection);
+                    break;
+                default:
+                    await CategoryUpdate(selection);
+                    break;
+            }
+        }
+
         private async Task CategoryUpdate(string category)
         {
-            var Cat = await UnitOfWork.Categories.GetOne(c => c.Name == category);
-            if (Cat != null)
+            Category Cat;
+            if (ShareResource.IsEn())
+            {
+                Cat = await UnitOfWork.Categories.GetOne(c => c.Name == category);
+            }
+            else
+            {
+                Cat = await UnitOfWork.Categories.GetOne(c => c.NamePl == category);
+            }
+            try
             {
                 var parameters = new DialogParameters { ["Cat"] = Cat };
                 var dialog = DialogService.Show<AdminCategoryDialog>(L["Edit Category"], parameters);
                 await dialog.Result;
                 await LoadData();
             }
-            else
+            catch (Exception ex)
             {
-                Snackbar.Add(L["Error"]);
+                Snackbar.Add($"{L["Error"]}: {ex.Message}");
+                Logger.Error("{ex}", ex);
+
             }
         }
         private async Task CategoryCreate()
@@ -153,37 +182,39 @@ namespace ProfileMatch.Components.Admin
             }
         }
 
-        private async Task QuestionDialog(ClosedQuestionVM cqVM)
+        private async Task QuestionDialog(ClosedQuestionVM cqVM = null, string category = "")
         {
             string create;
             string update;
-            string title;
+            DialogParameters parameters;
             if (ShareResource.IsEn())
             {
-                update = $"Edit Question {cqVM.CategoryName}: {cqVM.QuestionName} ";
-                create = $"Create Question for {cqVM.CategoryName}";
+                update = $"Edit Question: {cqVM.CategoryName}: {cqVM.QuestionName} ";
+                create = $"Create Question for: {category}";
             }
             else
             {
-                update = $"Edytuj pytanie {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
-                create = $"Nowe pytanie dla {cqVM.CategoryNamePl}";
+                update = $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
+                create = $"Nowe pytanie dla: {category}";
             }
-            if(cqVM.ClosedQuestionId > 0)
+            if (cqVM != null&&cqVM.ClosedQuestionId>0)
             {
-                title = update;
-                _deleteEnabled = true;
-            }
-            else
-            {
-                title = create;
-                _deleteEnabled = false;
-            }
-            var parameters = new DialogParameters { ["Q"] = cqVM, ["DeleteEnabled"]=_deleteEnabled };
-
-
-            var dialog = DialogService.Show<AdminClosedQuestionDialog>(title, parameters);
+               
+           
+             parameters = new DialogParameters { ["Q"] = cqVM };
+            var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
             await dialog.Result;
+                return;
+                }
 
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+
+                parameters = new DialogParameters { ["CategoryName"] = category };
+                var dialog = DialogService.Show<AdminClosedQuestionDialog>(create, parameters);
+                await dialog.Result;
+            }
         }
 
     }

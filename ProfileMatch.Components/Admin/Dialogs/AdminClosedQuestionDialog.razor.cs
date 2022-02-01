@@ -22,12 +22,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public ClosedQuestionVM Q { get; set; } = new();
-        [Parameter] public bool DeleteEnabled { get; set; }
+        [Parameter] public ClosedQuestionVM Q { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
-
         public int ClosedQuestionId { get; set; }
         List<AnswerOption> _answerOptions;
+
+        #region parameters
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
@@ -35,19 +35,17 @@ namespace ProfileMatch.Components.Admin.Dialogs
         public bool TempIsActive { get; set; }
         AnswerOption _tempOption;
         ClosedQuestion _tempQuestion = new();
-
+        bool _deleteEnabled;
         bool _isOpen = false;
+        #endregion
         public void ToggleOpen()
         {
             _isOpen = !_isOpen;
         }
         protected override async Task OnInitializedAsync()
-        {
+        {_deleteEnabled = await UnitOfWork.ClosedQuestions.ExistById(Q.ClosedQuestionId);
             _answerOptions = await UnitOfWork.AnswerOptions.Get(q => q.ClosedQuestionId == Q.ClosedQuestionId);
-            if (_answerOptions == null)
-            {
-
-            }
+           
             await QuestionExists(Q);
             TempName = Q.QuestionName;
             TempNamePl = Q.QuestionNamePl;
@@ -233,10 +231,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             string success;
             string error;
-            if (cqVM != null)
+            if (_deleteEnabled&& cqVM!=null)
             {
-                var cat = await UnitOfWork.ClosedQuestions.GetById(cqVM.ClosedQuestionId);
-                var result = await UnitOfWork.ClosedQuestions.Delete(cat);
+                var question = await UnitOfWork.ClosedQuestions.GetById(cqVM.ClosedQuestionId);
+                var result = await UnitOfWork.ClosedQuestions.Delete(question);
                 if (result)
                 {
                     try
