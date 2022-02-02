@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -25,7 +27,7 @@ namespace ProfileMatch.Components.Admin
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] ILogger Logger { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
-
+        [Inject] IMapper Mapper { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         private bool _loading;
         [Parameter] public int Id { get; set; }
@@ -46,21 +48,8 @@ namespace ProfileMatch.Components.Admin
         {
             _loading = true;
             _categories = await UnitOfWork.Categories.Get();
-            _questions = await UnitOfWork.ClosedQuestions.Get();
-            _questionVMs = (from c in _categories
-                            join q in _questions on c.Id equals q.CategoryId
-                            select new ClosedQuestionVM()
-                            {
-                                CategoryId = c.Id,
-                                CategoryName = c.Name,
-                                CategoryNamePl = c.NamePl,
-                                IsActive = q.IsActive,
-                                ClosedQuestionId = q.Id,
-                                QuestionNamePl = q.NamePl,
-                                QuestionName = q.Name,
-                                Description = q.Description,
-                                DescriptionPl = q.DescriptionPl
-                            }).ToList();
+            _questions = await UnitOfWork.ClosedQuestions.Get(include:c=>c.Include(q=>q.Category));
+            _questionVMs = Mapper.Map<List<ClosedQuestionVM>>(_questions);
             string nodata = "No questions yet";
             ClosedQuestionVM vm;
             string nodataPl = "Nie ma jeszcze pytań";
@@ -70,8 +59,8 @@ namespace ProfileMatch.Components.Admin
                 {
                     vm = new ClosedQuestionVM()
                     {
-                        QuestionName = nodata,
-                        QuestionNamePl = nodataPl,
+                        Name = nodata,
+                        NamePl = nodataPl,
                         IsActive = false,
                         CategoryId = cat.Id,
                         CategoryName = cat.Name,
@@ -144,14 +133,14 @@ namespace ProfileMatch.Components.Admin
            {
                if (question.CategoryName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
-               if (question.QuestionName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
            }
            else
            {
                if (question.CategoryNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
-               if (question.QuestionNamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+               if (question.NamePl.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                    return true;
            }
            return false;
@@ -159,28 +148,39 @@ namespace ProfileMatch.Components.Admin
 
         private List<ClosedQuestionVM> GetQuestions()
         {
-            if (!Cats.Any())
+            try
             {
-                return _questionVMs;
-            }
-            else
-            {
-                if (ShareResource.IsEn())
+
+
+                if (!Cats.Any())
                 {
-                    return (from q in _questionVMs
-                            from c in Cats
-                            where q.CategoryName == c
-                            select q).ToList();
+                    return _questionVMs;
                 }
                 else
                 {
-                    return (from q in _questionVMs
-                            from c in Cats
-                            where q.CategoryNamePl == c
-                            select q).ToList();
+                    if (ShareResource.IsEn())
+                    {
+                        return (from q in _questionVMs
+                                from c in Cats
+                                where q.CategoryName == c
+                                select q).ToList();
+                    }
+                    else
+                    {
+                        return (from q in _questionVMs
+                                from c in Cats
+                                where q.CategoryNamePl == c
+                                select q).ToList();
+                    }
                 }
-
             }
+            catch (Exception ex)
+            {
+
+                Log.Warning("ex", ex);
+            }
+            return null;
+        
         }
 
         private async Task QuestionDialog(ClosedQuestionVM cqVM = null, string category = "")
@@ -188,11 +188,11 @@ namespace ProfileMatch.Components.Admin
             string create;
             string update;
             DialogParameters parameters;
-            if (cqVM != null && cqVM.ClosedQuestionId > 0)
+            if (cqVM != null && cqVM.Id > 0)
             {
                 update = ShareResource.IsEn()
-                    ? $"Edit Question: {cqVM.CategoryName}: {cqVM.QuestionName} "
-                    : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.QuestionNamePl}";
+                    ? $"Edit Question: {cqVM.CategoryName}: {cqVM.Name} "
+                    : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.NamePl}";
                 parameters = new DialogParameters { ["Q"] = cqVM };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
                 await dialog.Result;

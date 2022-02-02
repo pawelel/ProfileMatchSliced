@@ -61,8 +61,8 @@ else
                         @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
-                <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Question Id" />
-                <Column Field="QuestionName" T="ClosedQuestionVM" Title="Question" />
+                <Column Field="Id" T="ClosedQuestionVM" Title="Question Id" />
+                <Column Field="Name" T="ClosedQuestionVM" Title="Question" />
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
                     <CellTemplate>
                         @(context.IsActive?"Yes":"No")
@@ -71,7 +71,7 @@ else
                 <Column Field="Description" T="ClosedQuestionVM" Title="Description" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Actions">
                     <CellTemplate>
-                        @if (context.ClosedQuestionId > 0)
+                        @if (context.Id > 0)
                         {
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            Variant="Variant.Outlined">@L["Edit Question"]</MudButton>
@@ -91,8 +91,8 @@ else
                         @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
-                <Column Field="ClosedQuestionId" T="ClosedQuestionVM" Title="Id Pytania" />
-                <Column Field="QuestionNamePl" T="ClosedQuestionVM" Title="Pytanie" />
+                <Column Field="Id" T="ClosedQuestionVM" Title="Id Pytania" />
+                <Column Field="NamePl" T="ClosedQuestionVM" Title="Pytanie" />
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Aktywne">
                     <CellTemplate>
                         @(context.IsActive?"Tak":"Nie")
@@ -101,7 +101,7 @@ else
                 <Column Field="DescriptionPl" T="ClosedQuestionVM" Title="Opis" />
                 <Column Sortable="false" T="ClosedQuestionVM" Title="Działania">
                     <CellTemplate>
-                        @if (context.ClosedQuestionId > 0)
+                        @if (context.Id > 0)
                         {
                             <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDialog(context))" Size="Size.Small"
                            Variant="Variant.Outlined">@L["Edit Question"]</MudButton>

@@ -40,6 +40,11 @@ namespace ProfileMatch.Data
             base.OnModelCreating(builder);
             //a hasher to hash the password before seeding the user to the db
             var hasher = new PasswordHasher<ApplicationUser>();
+            builder.Entity<Category>().HasMany(q=>q.ClosedQuestions)
+                .WithOne(q => q.Category)
+                .HasForeignKey(q => q.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
             builder.Entity<ApplicationUser>(user =>
             {
                 user.HasMany(e => e.UserRoles)

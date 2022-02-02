@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileMatch.Data.Migrations
 {
-    public partial class PdfPath : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -292,8 +292,7 @@ namespace ProfileMatch.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DescriptionPl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PdfPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -446,7 +445,7 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "fe2ec594-0be8-4b7f-b6b6-dac62d677209", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEBlOjsS1mYAm/18gRHFZo/Q+HRd3lUFyXNaZsDABAmPWTkRUg6Hq1Ht9z7vLMKJCng==", null, false, "/blank-profile.png", "62604232-2d84-43e0-952e-1bf620df24eb", false, "admin@admin.com" });
+                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "39c9920d-a462-4869-a225-7b24b503bef6", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEMtiaxhdxKIY3uu81gEZk7LZECsKtopCW8nv0lH6XSswRsATc5TunyXzH9uUaZaN1Q==", null, false, "/blank-profile.png", "3c757ea5-0dba-40ec-93f3-78241e324e36", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",

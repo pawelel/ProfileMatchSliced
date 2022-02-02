@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Localization;
@@ -15,18 +14,14 @@ using Microsoft.AspNetCore.Localization;
 using MudBlazor;
 using MudBlazor.Services;
 
-
 using ProfileMatch.Data;
 using ProfileMatch.Models.Entities;
 using ProfileMatch.Services;
 using ProfileMatch.Web.Areas.Identity;
 
 using System;
-using System.IO;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http;
 using Serilog;
 using Serilog.Events;
 
@@ -53,7 +48,7 @@ namespace ProfileMatch
 
             services.AddScoped(p =>
             p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>

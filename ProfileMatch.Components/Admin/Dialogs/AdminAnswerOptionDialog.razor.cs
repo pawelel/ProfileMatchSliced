@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin.Dialogs
 {
-    public partial class AdminLevelDialog : ComponentBase
+    public partial class AdminAnswerOptionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }

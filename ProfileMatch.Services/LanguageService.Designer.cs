@@ -2411,6 +2411,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You need to save question first.
+        /// </summary>
+        public static string You_need_to_save_question_first {
+            get {
+                return ResourceManager.GetString("You need to save question first", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;re not loggged in..
         /// </summary>
         public static string You_re_not_loggged_in_ {

@@ -915,4 +915,7 @@
   <data name="Update Category" xml:space="preserve">
     <value>Aktualizuj kategorię</value>
   </data>
+  <data name="You need to save question first" xml:space="preserve">
+    <value>Najpierw zapisz pytanie</value>
+  </data>
 </root>

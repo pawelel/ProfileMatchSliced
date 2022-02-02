@@ -555,7 +555,7 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe1e7003-5535-4569-8b19-66622f59f73b",
+                            ConcurrencyStamp = "39c9920d-a462-4869-a225-7b24b503bef6",
                             DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
@@ -567,10 +567,10 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELmQhGYdpt9U1cG+adqBmaKAsXjJi70sdd1lcPVlbXguB/Rsk7ObCgdMfi95wEtdlA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMtiaxhdxKIY3uu81gEZk7LZECsKtopCW8nv0lH6XSswRsATc5TunyXzH9uUaZaN1Q==",
                             PhoneNumberConfirmed = false,
                             PhotoPath = "/blank-profile.png",
-                            SecurityStamp = "2f37dc7e-2a79-4f29-b681-93f7a6672dcc",
+                            SecurityStamp = "3c757ea5-0dba-40ec-93f3-78241e324e36",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

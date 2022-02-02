@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
+
 using ProfileMatch.Data;
+
+using Serilog;
 
 namespace ProfileMatch.Repositories
 {
@@ -25,13 +28,11 @@ namespace ProfileMatch.Repositories
     {
         private readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
 
-
         internal DbSet<TEntity> _dbSet;
 
         public Repository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-
-            this._contextFactory = contextFactory;
+            _contextFactory = contextFactory;
         }
 
         public virtual async Task<bool> Delete(TEntity entityToDelete)
@@ -89,6 +90,15 @@ namespace ProfileMatch.Repositories
             await context.SaveChangesAsync();
             return entity;
         }
+        public virtual async Task<List<TEntity>> InsertRange(List<TEntity> entities)
+        {
+            using ApplicationDbContext context = _contextFactory.CreateDbContext();
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            await context.AddRangeAsync(entities);
+            await context.SaveChangesAsync();
+            return entities;
+        }
+
 
         public virtual async Task<TEntity> Update(TEntity entityToUpdate)
         {
@@ -145,7 +155,7 @@ namespace ProfileMatch.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.InnerException);
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -176,7 +186,7 @@ namespace ProfileMatch.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.InnerException);
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
