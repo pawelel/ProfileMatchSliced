@@ -40,13 +40,10 @@ else
             {
                 @if (!string.IsNullOrEmpty(cat))
                 {<MudItem Class="d-flex py-2 px-1">
-                    <MudButtonGroup Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">
-                        <MudButton OnClick="@(()=>CategoryUpdate(cat))">@cat</MudButton>
-                        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Direction="Direction.Bottom" OffsetY="true">
-                            <MudMenuItem OnClick="() => HandleSelection(0, cat)">@L["Update Category"]</MudMenuItem>
+                        <MudMenu  Size="Size.Small" Label="@cat" Color="Color.Primary" EndIcon="@Icons.Material.Filled.ArrowDropDown" Variant="Variant.Outlined"  Direction="Direction.Bottom" OffsetY="true">
+                            <MudMenuItem OnClick="() => HandleSelection(0, cat)">@L["Update"] @cat</MudMenuItem>
                             <MudMenuItem OnClick="() => HandleSelection(1, cat)">@L["Create Question"]</MudMenuItem>
                         </MudMenu>
-                    </MudButtonGroup>
                     </MudItem>
                 }
             }

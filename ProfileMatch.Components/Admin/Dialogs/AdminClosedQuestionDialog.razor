@@ -10,6 +10,7 @@
         <DialogActions>
             @if(_deleteEnabled){
             <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
+              <MudButton Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined" OnClick="@(()=>EditLevels())">@L["Levels"]</MudButton>
             }
             <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Save" Color="Color.Success" Size="Size.Small" OnClick="SaveAndClose">@L["Save"]</MudButton>

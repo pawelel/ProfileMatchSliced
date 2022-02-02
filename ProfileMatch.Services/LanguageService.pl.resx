@@ -918,4 +918,7 @@
   <data name="You need to save question first" xml:space="preserve">
     <value>Najpierw zapisz pytanie</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Aktualizuj</value>
+  </data>
 </root>

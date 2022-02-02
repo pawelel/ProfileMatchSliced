@@ -29,7 +29,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Parameter] public string CategoryName { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] IMapper Mapper { get; set; }
-
         //new view model for question
         ClosedQuestionVM _closedQVM;
         ClosedQuestion _tempQuestion;
@@ -37,32 +36,83 @@ namespace ProfileMatch.Components.Admin.Dialogs
         bool _isOpen = false;
         private MudForm _form;
 
-        
         protected override async Task OnInitializedAsync()
-        {if(QuestionId==0)
+        {
+            if (QuestionId == 0)
             {
                 _closedQVM = new();
             }
             else
             {
                 //get question
-            _tempQuestion = await UnitOfWork.ClosedQuestions.GetOne(q => q.Id == QuestionId, q=>q.Include(q=>q.Category));
+                _tempQuestion = await UnitOfWork.ClosedQuestions.GetOne(q => q.Id == QuestionId, q => q.Include(q => q.Category));
                 //map question to vm
                 _closedQVM = Mapper.Map<ClosedQuestionVM>(_tempQuestion);
                 _deleteEnabled = true;
-            }            
+            }
         }
-        
         async Task SaveAndClose()
         {
-
+            await Save();
+            MudDialog.Close(true);
         }
-        async Task EditLevels()
+        async Task Create()
         {
-            if (_closedQVM.AnswerOptionsVM==null|| _closedQVM.AnswerOptionsVM.Count==0)
+            _tempQuestion = await UnitOfWork.ClosedQuestions.Insert(_tempQuestion);
+            switch (ShareResource.IsEn())
+            {
+                case true:
+                    Snackbar.Add($"Question {_tempQuestion.Name} has been created", Severity.Success);
+                    break;
+                default:
+                    Snackbar.Add($"Pytanie {_tempQuestion.NamePl} zostało utworzone", Severity.Success);
+                    break;
+            }
+            return;
+        }
+
+        async Task Save()
+        {
+            await _form.Validate();
+            if (_form.IsValid)
+            {
+                switch (_tempQuestion.Id == 0)
+                {
+                    case true:
+                        await Create();
+                        break;
+                    case false:
+                        await Update();
+                        break;
+                }
+            }
+            else
             {
 
             }
+        }
+
+
+        async Task Update()
+        {
+            await UnitOfWork.ClosedQuestions.Update(_tempQuestion);
+            switch (ShareResource.IsEn())
+            {
+                case true:
+                    Snackbar.Add($"Question {_tempQuestion.Name} has been updated", Severity.Success);
+                    break;
+                default:
+                    Snackbar.Add($"Pytanie  {_tempQuestion.NamePl} zostało zaktualizowane", Severity.Success);
+                    break;
+            }
+            return;
+        }
+
+
+        async Task EditLevels()
+        {
+            await Save();
+
         }
 
 
@@ -80,6 +130,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
             Snackbar.Add(L["Operation cancelled"], Severity.Warning);
         }
 
-    
+
     }
 }
