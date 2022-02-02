@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
+using NPOI.OpenXmlFormats.Wordprocessing;
+using NPOI.SS.Formula.Functions;
+
 using ProfileMatch.Data;
 using ProfileMatch.Models.Entities;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
+
+using Serilog;
 
 using System;
 using System.Collections.Generic;
@@ -19,12 +27,16 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
-        [Parameter] public Category Cat { get; set; } = new();
+        [Inject] ILogger Logger { get; set; }
+        [Inject] IMapper Mapper { get; set; }
+        [Parameter] public int CategoryId { get; set; }
+        CategoryVM _categoryVM;
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
         bool _isOpen = false;
+        Category _tempCategory;
         bool _deleteEnabled;
         public void ToggleOpen()
         {
@@ -32,11 +44,17 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
         protected override async Task OnInitializedAsync()
         {
-            _deleteEnabled = await UnitOfWork.Categories.ExistById(Cat.Id);
-            TempName = Cat.Name;
-            TempNamePl = Cat.NamePl;
-            TempDescription = Cat.Description;
-            TempDescriptionPl = Cat.DescriptionPl;
+            //_deleteEnabled 
+            _tempCategory = await UnitOfWork.Categories.GetOne(q => q.Id == CategoryId);
+            if (_tempCategory!=null)
+            {
+                _categoryVM = Mapper.Map<CategoryVM>(_tempCategory);
+                _deleteEnabled = true;
+            }
+            else
+            {
+                _categoryVM = new();
+            }
         }
         private IEnumerable<string> MaxCharacters(string ch)
         {
@@ -57,10 +75,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                Cat.Name = TempName;
-                Cat.Description = TempDescription;
-                Cat.NamePl = TempNamePl;
-                Cat.DescriptionPl = TempDescriptionPl;
+               _tempCategory = Mapper.Map<Category>(_categoryVM);
                 try
                 {
                     await Save();
@@ -68,8 +83,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 catch (Exception ex)
                 {
                     Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
+                    Logger.Error("ex", ex);
                 }
-                MudDialog.Close(DialogResult.Ok(Cat));
+                MudDialog.Close(DialogResult.Ok(true));
             }
         }
         private async Task Delete()
@@ -77,16 +93,17 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (_deleteEnabled)
             {
                
-                await UnitOfWork.Categories.Delete(Cat);
+                await UnitOfWork.Categories.Delete(_tempCategory);
             }
             if (ShareResource.IsEn())
             {
-                Snackbar.Add($"Category {Cat.Name} deleted");
+                Snackbar.Add($"Category {_tempCategory.Name} deleted");
             }
             else
             {
-                Snackbar.Add($"Kategoria {Cat.NamePl} usunięta");
+                Snackbar.Add($"Kategoria {_tempCategory.NamePl} usunięta");
             }
+            MudDialog.Close(DialogResult.Ok(true));
         }
         private async Task Save()
         {
@@ -94,22 +111,22 @@ namespace ProfileMatch.Components.Admin.Dialogs
             string updated;
             if (ShareResource.IsEn())
             {
-                created = $"Category {Cat.Name} created";
-                updated = $"Category {Cat.Name} updated";
+                created = $"Category {_tempCategory.Name} created";
+                updated = $"Category {_tempCategory.Name} updated";
             }
             else
             {
-                created = $"Kategoria {Cat.NamePl} utworzona";
-                updated = $"Kategoria {Cat.NamePl} zaktualizowana";
+                created = $"Kategoria {_tempCategory.NamePl} utworzona";
+                updated = $"Kategoria {_tempCategory.NamePl} zaktualizowana";
             }
-            if (Cat.Id == 0)
+            if (_tempCategory.Id == 0)
             {
-                var result = await UnitOfWork.Categories.Insert(Cat);
+                var result = await UnitOfWork.Categories.Insert(_tempCategory);
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await UnitOfWork.Categories.Update(Cat);
+                var result = await UnitOfWork.Categories.Update(_tempCategory);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

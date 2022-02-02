@@ -1,15 +1,16 @@
-﻿<MudDialog>
+﻿@if(_categoryVM is not null){
+<MudDialog>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField T="string" @bind-Value="@TempName" Label=@L["Category Name EN"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-            <MudTextField T="string" @bind-Value="@TempNamePl" Label=@L["Category Name PL"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Category Description EN"] Lines="5" />
-            <MudTextField T="string" @bind-Value="@TempDescriptionPl" Immediate="true" Label=@L["Category Description PL"] Lines="5" />
+            <MudTextField T="string" @bind-Value="@_categoryVM.Name" Label=@L["Category Name EN"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@_categoryVM.NamePl" Label=@L["Category Name PL"] Required="true" RequiredError=@L["Category name is required!"] Counter="20"        MaxLength="20" HelperText=@L["Max length"]  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" @bind-Value="@_categoryVM.Description" Immediate="true" Label=@L["Category Description EN"] Lines="5" />
+            <MudTextField T="string" @bind-Value="@_categoryVM.DescriptionPl" Immediate="true" Label=@L["Category Description PL"] Lines="5" />
         </MudForm>
     </DialogContent>
     <DialogActions>
 
-        @if (Cat.Id > 0)
+        @if (_deleteEnabled)
         {
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="@ToggleOpen">@L["Delete"]</MudButton>
         }
@@ -32,3 +33,4 @@
         <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">Close</MudButton>
     </div>
 </MudPopover>
+}

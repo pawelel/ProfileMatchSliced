@@ -92,18 +92,18 @@ namespace ProfileMatch.Components.Admin
 
         private async Task CategoryUpdate(string category)
         {
-            Category Cat;
+            int _catId;
             if (ShareResource.IsEn())
             {
-                Cat = await UnitOfWork.Categories.GetOne(c => c.Name == category);
+            _catId = (await UnitOfWork.Categories.GetOne(c => c.Name == category)).Id;
             }
             else
             {
-                Cat = await UnitOfWork.Categories.GetOne(c => c.NamePl == category);
+                _catId = (await UnitOfWork.Categories.GetOne(c => c.NamePl == category)).Id;
             }
             try
             {
-                var parameters = new DialogParameters { ["Cat"] = Cat };
+                var parameters = new DialogParameters { ["CategoryId"] = _catId };
                 var dialog = DialogService.Show<AdminCategoryDialog>(L["Edit Category"], parameters);
                 await dialog.Result;
                 await LoadData();
@@ -193,7 +193,7 @@ namespace ProfileMatch.Components.Admin
                 update = ShareResource.IsEn()
                     ? $"Edit Question: {cqVM.CategoryName}: {cqVM.Name} "
                     : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.NamePl}";
-                parameters = new DialogParameters { ["Q"] = cqVM };
+                parameters = new DialogParameters { ["questionId"] = cqVM.Id };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
                 await dialog.Result;
                 return;

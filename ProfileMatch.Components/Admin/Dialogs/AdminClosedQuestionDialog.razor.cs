@@ -29,7 +29,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Parameter] public string CategoryName { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] IMapper Mapper { get; set; }
-        int _categoryId;
 
         //new view model for question
         ClosedQuestionVM _closedQVM;
