@@ -169,43 +169,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 NavigationManager.NavigateTo("admin/dashboard", true);
             }
         }
-        /// <summary>
-        /// add or remove Manager or Admin role
-        /// </summary>
-        /// <returns></returns>
-        //private async Task UpdateUserRoles()
-        //{
-        //    foreach (var role in UserRolesVM)
-        //    {
-        //        if (role.RoleName == "Admin")
-        //        {
-        //            var roles = await UnitOfWork.IdentityUserRoles.Get(q => q.RoleId == role.RoleId);
-
-        //        }
-
-        //        if (role.IsSelected && !await UnitOfWork.IdentityUserRoles.ExistById(EditedUser.Id, role.RoleId))
-        //        {
-        //            IdentityUserRole<string> roleToInsert = new() { RoleId = role.RoleId, UserId = EditedUser.Id };
-        //            await UnitOfWork.IdentityUserRoles.Insert(roleToInsert);
-        //        }
-        //        if (!role.IsSelected && await UnitOfWork.IdentityUserRoles.ExistById(EditedUser.Id, role.RoleId))
-        //        {
-        //            IdentityUserRole<string> roleToRemove = new() { UserId = EditedUser.Id, RoleId = role.RoleId };
-        //            await UnitOfWork.IdentityUserRoles.Delete(roleToRemove);
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// add or remove Manager or Admin role
-        /// </summary>
-        /// <returns></returns>
         private async Task UpdateUserRole(UserRoleVM uVM)
         {
             var roles = await UnitOfWork.IdentityUserRoles.Get();
             var n = uVM.RoleName;
             var id = uVM.RoleId;
-            var userRole = await UnitOfWork.IdentityUserRoles.GetById(id);
+            var userRole = await UnitOfWork.IdentityUserRoles.GetById(_editedUser.Id, id);
             var filteredRoles = roles.Where(r => r.RoleId == id);
 
             if (n == "Admin" && filteredRoles.Count() > 1)
@@ -213,7 +182,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 switch (uVM.IsSelected)
                 {
                     case true:
-                        await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
+                        await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = uVM.UserId, RoleId = uVM.RoleId  });
                         break;
                     case false:
                         await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
@@ -224,10 +193,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             {
                 switch (uVM.IsSelected)
                 {
-                    case true:
-                        await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = uVM.RoleId, UserId = uVM.UserId });
-                        break;
                     case false:
+                    
+                        await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
+                        break;
+                    case true:
                         await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
                         break;
                 }

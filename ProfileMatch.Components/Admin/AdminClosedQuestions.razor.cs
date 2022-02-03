@@ -26,6 +26,7 @@ namespace ProfileMatch.Components.Admin
     {
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] ILogger Logger { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         [Inject] IMapper Mapper { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
@@ -48,7 +49,7 @@ namespace ProfileMatch.Components.Admin
         {
             _loading = true;
             _categories = await UnitOfWork.Categories.Get();
-            _questions = await UnitOfWork.ClosedQuestions.Get(include:c=>c.Include(q=>q.Category));
+            _questions = await UnitOfWork.ClosedQuestions.Get(include: c => c.Include(q => q.Category));
             _questionVMs = Mapper.Map<List<ClosedQuestionVM>>(_questions);
             string nodata = "No questions yet";
             ClosedQuestionVM vm;
@@ -95,7 +96,7 @@ namespace ProfileMatch.Components.Admin
             int _catId;
             if (ShareResource.IsEn())
             {
-            _catId = (await UnitOfWork.Categories.GetOne(c => c.Name == category)).Id;
+                _catId = (await UnitOfWork.Categories.GetOne(c => c.Name == category)).Id;
             }
             else
             {
@@ -150,8 +151,6 @@ namespace ProfileMatch.Components.Admin
         {
             try
             {
-
-
                 if (!Cats.Any())
                 {
                     return _questionVMs;
@@ -180,7 +179,7 @@ namespace ProfileMatch.Components.Admin
                 Log.Warning("ex", ex);
             }
             return null;
-        
+
         }
 
         private async Task QuestionDialog(ClosedQuestionVM cqVM = null, string category = "")
@@ -193,7 +192,7 @@ namespace ProfileMatch.Components.Admin
                 update = ShareResource.IsEn()
                     ? $"Edit Question: {cqVM.CategoryName}: {cqVM.Name} "
                     : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.NamePl}";
-                parameters = new DialogParameters { ["questionId"] = cqVM.Id };
+                parameters = new DialogParameters { ["QuestionId"] = cqVM.Id };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
                 await dialog.Result;
                 return;
@@ -212,6 +211,7 @@ namespace ProfileMatch.Components.Admin
                 parameters = new DialogParameters { ["CategoryName"] = category };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(create, parameters);
                 await dialog.Result;
+                NavigationManager.NavigateTo("admin/dashboard");
             }
         }
     }

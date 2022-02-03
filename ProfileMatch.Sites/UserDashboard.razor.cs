@@ -8,6 +8,6 @@ namespace ProfileMatch.Sites
 {
     public partial class UserDashboard : ComponentBase
     {
-
+        [Parameter] public int ActiveIndex { get; set; }
     }
 }

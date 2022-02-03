@@ -17,6 +17,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminOpenQuestionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public OpenQuestion EditedOpenQuestion { get; set; } = new();
@@ -60,6 +61,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 }
 
                 MudDialog.Close(DialogResult.Ok(EditedOpenQuestion));
+                NavigationManager.NavigateTo("admin/dashboard/2", true);
             }
         }
 

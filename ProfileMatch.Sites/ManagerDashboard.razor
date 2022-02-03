@@ -1,4 +1,5 @@
 ﻿@page "/manager/dashboard"
+@page "/manager/dashboard/{ActiveIndex:int}"
     <AuthorizeView Roles="Manager, Admin">
         <Authorized>
             <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@L["Manager Dashboard"]</MudText>

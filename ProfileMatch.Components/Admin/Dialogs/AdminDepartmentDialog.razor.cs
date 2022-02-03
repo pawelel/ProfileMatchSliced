@@ -18,6 +18,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     {
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public Department Dep { get; set; } = new();
         public string TempNamePl { get; set; }
@@ -62,6 +63,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 }
 
                 MudDialog.Close(DialogResult.Ok(Dep));
+                NavigationManager.NavigateTo("admin/dashboard/0", true);
             }
         }
 

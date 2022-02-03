@@ -921,4 +921,25 @@
   <data name="Update" xml:space="preserve">
     <value>Aktualizuj</value>
   </data>
+  <data name="Option Description EN" xml:space="preserve">
+    <value>Opis opcji EN</value>
+  </data>
+  <data name="Option Description PL" xml:space="preserve">
+    <value>Opis opcji PL</value>
+  </data>
+  <data name="Fill all fields" xml:space="preserve">
+    <value>Wypełnij wszystkie pola</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Włącz</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Wyłącz</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Włączone</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Wyłączone</value>
+  </data>
 </root>

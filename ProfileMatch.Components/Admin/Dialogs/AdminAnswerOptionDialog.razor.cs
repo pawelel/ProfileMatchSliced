@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 
 using MudBlazor;
@@ -6,10 +8,12 @@ using MudBlazor;
 
 using ProfileMatch.Data;
 using ProfileMatch.Models.Entities;
+using ProfileMatch.Models.ViewModels;
 using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProfileMatch.Components.Admin.Dialogs
@@ -17,17 +21,32 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminAnswerOptionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] IMapper Mapper { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public AnswerOption O { get; set; } = new();
-        public string TempDescription { get; set; }
-
-        protected override void OnInitialized()
+        [Parameter] public int QuestionId { get; set; }
+        List<AnswerOption> _answerOptions;
+        List<AnswerOptionVM> _answerOptionVMs = new();
+        
+        protected override async Task OnInitializedAsync()
         {
-            TempDescription = O.Description;
+            _answerOptions = await UnitOfWork.AnswerOptions.Get(a=>a.ClosedQuestionId==QuestionId);
+            _answerOptionVMs = Mapper.Map<List<AnswerOptionVM>>(_answerOptions);
+            if (_answerOptionVMs is null || _answerOptionVMs.Count < 5)
+            {
+                _answerOptionVMs = new();
+                for (int i = 1; i < 6; i++)
+                {
+                    _answerOptionVMs.Add(new()
+                    {
+                        ClosedQuestionId = QuestionId,
+                        DescriptionPl = string.Empty,
+                        Description = string.Empty,
+                        Level = i
+                    });
+                }
+            }
         }
-
-
 
         private MudForm _form;
 
@@ -42,32 +61,24 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                O.Description = TempDescription;
-                try
-                {
-                    await Save();
-                }
-                catch (Exception ex)
-                {
-                    Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
-                }
-
-                MudDialog.Close(DialogResult.Ok(O));
+               await Save();
             }
         }
 
         private async Task Save()
         {
-            if (O.Id == 0)
+            if (_answerOptions is null || _answerOptions.Count ==0)
             {
-                var result = await UnitOfWork.AnswerOptions.Insert(O);
-                Snackbar.Add(@L["Answer option created"], Severity.Success);
-            }
-            else
+                _answerOptions = Mapper.Map<List<AnswerOption>>(_answerOptionVMs);
+                _answerOptions = await UnitOfWork.AnswerOptions.InsertRange(_answerOptions);
+            }else
             {
-                await UnitOfWork.AnswerOptions.Update(O);
-                Snackbar.Add(@L["Answer option updated"], Severity.Success);
-            }
+                _answerOptions = Mapper.Map<List<AnswerOption>>(_answerOptionVMs);
+                foreach (var option in _answerOptions)
+                {
+                    await UnitOfWork.AnswerOptions.Update(option);
+                }; 
+            }    
         }
 
     }

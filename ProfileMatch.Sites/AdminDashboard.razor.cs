@@ -7,6 +7,6 @@ namespace ProfileMatch.Sites
 {
     public partial class AdminDashboard : ComponentBase
     {
-
+        [Parameter]public  int ActiveIndex { get; set; }
     }
 }

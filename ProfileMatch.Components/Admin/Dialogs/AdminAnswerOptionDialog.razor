@@ -1,11 +1,59 @@
-﻿<MudDialog>
-    <DialogContent>
-        <MudForm @ref="_form">
-            <MudTextField T="string" @bind-Value="@TempDescription" Immediate="true" Label=@L["Level Description"] Required="true" RequiredError=@L["Level Description is required!"] Lines="5" MaxLength="1500" />
-        </MudForm>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success"  Size="Size.Small" OnClick="HandleSave">@L["Save"]</MudButton>
-    </DialogActions>
-</MudDialog>
+﻿@if (_answerOptionVMs.Count == 5)
+{
+    <MudDialog>
+        <DialogContent>
+            <MudForm @ref="_form">
+                <MudTabs Outlined="true"
+                 Position="Position.Top"
+                 Rounded="true"
+                 Border="true"
+                 ApplyEffectsToContainer="true"
+                 DisableSliderAnimation="true"
+                 HideSlider="true"
+                 PanelClass="pa-6 d-block">
+                    @foreach (var option in _answerOptionVMs)
+                    {
+                        <MudTabPanel Text="@option.Level.ToString()">
+                            <MudTextField Required=true T="string" @bind-Value="@option.Description" Immediate="true" Label=@L["Option Description EN"] Lines="5" />
+                            <MudTextField Required=true RequiredError=@($"{L["Level description"]} {option.Level.ToString()} PL {L["is required"]}") T="string" @bind-Value="@option.DescriptionPl" Immediate="true" Label=@L["Option Description PL"] Lines="5" />
+                        </MudTabPanel>
+                    }
+                </MudTabs>
+            </MudForm>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
+            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success"  Size="Size.Small" OnClick="HandleSave">@L["Save"]</MudButton>
+        </DialogActions>
+    </MudDialog>
+}
+else
+    {
+        <MudProgressLinear Indeterminate=true Color=Color.Primary></MudProgressLinear>
+    }
+    <style>
+    .mud-tab {
+        min-width: 50px !important;
+    }
+
+
+    .mud-tabs .mud-tabs-toolbar .mud-tooltip-root {
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+    }
+
+
+    .mud-tab::before { /*::after is already used for ripple effect*/
+        width: 0;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        transition: width .2s cubic-bezier(.64,.09,.08,1);
+    }
+
+    .mud-tab.mud-tab-active::before {
+        width: 50px !important;
+        background: var(--mud-palette-primary);
+    }
+</style>

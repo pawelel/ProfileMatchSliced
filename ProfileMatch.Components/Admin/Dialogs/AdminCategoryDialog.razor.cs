@@ -25,6 +25,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminCategoryDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] ILogger Logger { get; set; }
@@ -86,6 +87,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     Logger.Error("ex", ex);
                 }
                 MudDialog.Close(DialogResult.Ok(true));
+                NavigationManager.NavigateTo("admin/dashboard/1", true);
             }
         }
         private async Task Delete()
@@ -104,6 +106,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 Snackbar.Add($"Kategoria {_tempCategory.NamePl} usunięta");
             }
             MudDialog.Close(DialogResult.Ok(true));
+            NavigationManager.NavigateTo("admin/dashboard/1", true);
         }
         private async Task Save()
         {

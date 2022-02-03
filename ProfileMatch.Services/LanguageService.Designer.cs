@@ -772,6 +772,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable.
+        /// </summary>
+        public static string Disable {
+            get {
+                return ResourceManager.GetString("Disable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display.
         /// </summary>
         public static string Display {
@@ -916,6 +934,24 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        public static string Enable {
+            get {
+                return ResourceManager.GetString("Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the email address linked to your account and you will recieve an email containing a link to reset your password..
         /// </summary>
         public static string Enter_the_email_address_linked_to_your_account_and_you_will_recieve_an_email_containing_a_link_to_reset_your_password_ {
@@ -958,6 +994,15 @@ namespace ProfileMatch.Services {
         public static string File {
             get {
                 return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill all fields.
+        /// </summary>
+        public static string Fill_all_fields {
+            get {
+                return ResourceManager.GetString("Fill all fields", resourceCulture);
             }
         }
         
@@ -1543,6 +1588,24 @@ namespace ProfileMatch.Services {
         public static string Opisz_swój_problem {
             get {
                 return ResourceManager.GetString("Opisz swój problem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option Description EN.
+        /// </summary>
+        public static string Option_Description_EN {
+            get {
+                return ResourceManager.GetString("Option Description EN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option Description PL.
+        /// </summary>
+        public static string Option_Description_PL {
+            get {
+                return ResourceManager.GetString("Option Description PL", resourceCulture);
             }
         }
         
