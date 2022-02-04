@@ -35,11 +35,8 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel=@L["Id"]>@context.Id</MudTd>
-                <MudTd DataLabel=@L["Name"]>@context.Name</MudTd>
+                <MudTd DataLabel=@L["Name"]><MudIconButton Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />@context.Name</MudTd>
                 <MudTd DataLabel=@L["Description"]>@context.Description</MudTd>
-                <MudTd DataLabel=@L["Edit"]>
-                    <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))">@L["Edit Question"]</MudButton>
-                </MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager RowsPerPageString=@L["Rows per page"] />
@@ -53,25 +50,12 @@
                 <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary" OnClick="(()=>OpenQuestionUpdate())">@L["Add New"]</MudButton>
                 <MudSpacer />
             </ToolBarContent>
-            <ColGroup>
-                <col />
-                <col style="width: 60%;" />
-                <col />
-                <col />
-            </ColGroup>
             <HeaderContent>
-                <MudTh>@L["Id"]</MudTh>
                 <MudTh>@L["Name"]</MudTh>
                 <MudTh>@L["Description"]</MudTh>
-                <MudTh>@L["Actions"]</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel=@L["Id"]>@context.Id</MudTd>
-                <MudTd DataLabel=@L["Name"]>@context.NamePl</MudTd>
-                <MudTd DataLabel=@L["Description"]>@context.DescriptionPl</MudTd>
-                <MudTd DataLabel=@L["Edit"]>
-                    <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))">@L["Edit Question"]</MudButton>
-                </MudTd>
+                <MudTd DataLabel=@L["Name"]><MudIconButton Color="Color.Primary" OnClick="((e)=>OpenQuestionUpdate(context))" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />@context.NamePl</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager RowsPerPageString=@L["Rows per page"] />
