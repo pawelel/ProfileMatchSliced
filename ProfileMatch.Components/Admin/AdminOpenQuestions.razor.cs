@@ -62,7 +62,7 @@ namespace ProfileMatch.Components.Admin
         private async Task OpenQuestionUpdate(OpenQuestion OpenQuestion = null)
         {
             var parameters = new DialogParameters { ["EditedOpenQuestion"] = OpenQuestion };
-            if (OpenQuestion.Id > 0) { 
+            if (OpenQuestion is not null) { 
             var dialog = DialogService.Show<AdminOpenQuestionDialog>(L["Edit Question"], parameters);
                 await dialog.Result;
             }
