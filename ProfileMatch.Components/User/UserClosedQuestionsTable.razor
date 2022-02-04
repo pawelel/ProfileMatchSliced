@@ -48,11 +48,10 @@ else
                 <Column Field="QuestionNamePl" T="QuestionUserLevelVM" Title=@L["Question"] />
                 <Column Field="DescriptionPl" T="QuestionUserLevelVM" Title=@L["Description"] />
             }
-            <Column Field="Level" T="QuestionUserLevelVM" Title=@L["Answer"] />
-            <Column Sortable="false" T="QuestionUserLevelVM" Title=@L["Actions"]>
-                <CellTemplate>
-                    <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(()=>UserAnswerDialog(context))">@L["Edit Answer"]</MudButton>
-                </CellTemplate>
+            <Column Field="Level" T="QuestionUserLevelVM" Title=@L["Answer"]>
+              <CellTemplate>
+                   <MudButton Color="Color.Primary" OnClick="@(()=>UserAnswerDialog(context))" Size="Size.Small" Variant="Variant.Outlined">@context.Level.ToString()</MudButton>
+              </CellTemplate>
             </Column>
         </Columns>
         <PagerContent>
