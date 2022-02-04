@@ -54,7 +54,7 @@ else
             {
                 <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category">
                     <HeaderTemplate>
-                        @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
+                        @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" /><MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Settings" Size="Size.Small" OnClick="CategoryList" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                 </Column>
                 <Column Field="Name" T="ClosedQuestionVM" Title="Question" >

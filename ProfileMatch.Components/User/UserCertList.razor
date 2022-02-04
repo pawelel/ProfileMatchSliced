@@ -11,8 +11,10 @@
                       Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"></MudTextField>
- <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary" OnClick=@CertUpdate>@L["Add New"]</MudButton>
     </MudItem>
+      <MudItem xs="12" md="5">
+ <MudButton Variant=Variant.Outlined Size="Size.Small" Color="Color.Primary" OnClick=@CertUpdate>@L["Add New"]</MudButton>
+      </MudItem>
      </MudGrid>
    <MudGrid  Class="d-flex justify-flex-center">
 @if(_certificates is not null){

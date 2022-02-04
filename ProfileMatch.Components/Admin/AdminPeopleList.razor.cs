@@ -145,12 +145,14 @@ namespace ProfileMatch.Components.Admin
 
         void DepartmentList()
         {
-            DialogService.Show<AdminDepartmentListDialog>();
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+            DialogService.Show<AdminDepartmentListDialog>(L["Departments"],options: maxWidth);
         }
 
         void JobList()
         {
-            DialogService.Show<AdminJobListDialog>();
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+            DialogService.Show<AdminJobListDialog>(L["Jobs"], options: maxWidth);
         }
     }
 }

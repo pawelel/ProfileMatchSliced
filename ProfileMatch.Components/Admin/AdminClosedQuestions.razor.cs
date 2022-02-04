@@ -200,5 +200,10 @@ namespace ProfileMatch.Components.Admin
                 NavigationManager.NavigateTo("admin/dashboard");
             }
         }
+        void CategoryList()
+        {
+            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+            DialogService.Show<AdminCategoryListDialog>(L["Categories"], options: maxWidth);
+        }
     }
 }
