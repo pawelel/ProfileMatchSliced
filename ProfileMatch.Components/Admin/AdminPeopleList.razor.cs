@@ -48,7 +48,7 @@ namespace ProfileMatch.Components.Admin
             };
 
             DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Large, FullWidth = true };
-            var parameters = new DialogParameters { ["OpenedUser"] = applicationUser };
+            var parameters = new DialogParameters { ["UserId"] = applicationUser.UserId };
 
             var dialog = DialogService.Show<AdminUserDialog>(L.GetString("Account") + $": {applicationUser.FirstName} {applicationUser.LastName}", parameters, maxWidth);
             await dialog.Result;
@@ -119,7 +119,7 @@ namespace ProfileMatch.Components.Admin
             var appUsers = await UnitOfWork.ApplicationUsers.Get();
             var depts = await UnitOfWork.Departments.Get();
             var appDepts = (from dept in depts
-                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobs on appUser.JobId equals jt.Id join ur in _userIdentityRoles on appUser.Id equals ur.UserId join r in _roles on ur.RoleId equals r.Id
+                            join appUser in appUsers on dept.Id equals appUser.DepartmentId join jt in _jobs on appUser.JobId equals jt.Id
                             select new DepartmentUserVM()
                             {
                                 DepartmentId = dept.Id,
@@ -133,13 +133,12 @@ namespace ProfileMatch.Components.Admin
                                 JobNamePl = jt.NamePl,
                                 JobName = jt.Name,
                                 IsActive = appUser.IsActive,
-                                UserRolesVM = new List<UserRoleVM>() { new()
+                                UserRolesVM = (from userRole in _userIdentityRoles where userRole.UserId==appUser.Id join role in _roles on userRole.RoleId equals role.Id select new UserRoleVM()
                                 {
-                                    RoleId = ur.RoleId,
-                                    UserId = appUser.Id,
-                                    RoleName = r.Name,
-                                    IsSelected = true
-                                } }
+                                    RoleId = role.Id,
+                                    RoleName = role.Name,
+                                    UserId = userRole.UserId
+                                }).ToList(),
                             }).ToList();
             return appDepts;
         }

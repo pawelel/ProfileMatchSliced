@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using AutoMapper;
 
+using Microsoft.AspNetCore.Identity;
+
 using ProfileMatch.Models.Entities;
 using ProfileMatch.Models.ViewModels;
 
@@ -18,6 +20,10 @@ namespace ProfileMatch.Models
             CreateMap<AnswerOption, AnswerOptionVM>().ReverseMap();
             CreateMap<ClosedQuestion, ClosedQuestionVM>().ReverseMap();
             CreateMap<Category, CategoryVM>().ReverseMap();
+            CreateMap<IdentityUserRole<string>, UserRoleVM>().ReverseMap();
+            CreateMap<Department, DepartmentVM>().ReverseMap();
+            CreateMap<Job, JobVM>().ReverseMap();
+            CreateMap<ApplicationUser, ApplicationUserVM>().ReverseMap();
         }
     }
 }

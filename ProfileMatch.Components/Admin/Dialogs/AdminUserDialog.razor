@@ -1,168 +1,144 @@
-﻿@if (_editedUser == null || _departments == null)
+﻿@if (_openedUser == null || _departments == null || _jobs == null||_openedUser.UserRolesVM==null)
 {
     <MudProgressLinear Indeterminate="true"></MudProgressLinear>
 }
 else
 {
-   
     <MudDialog>
-
         <DialogContent>
-           
             <MudForm @ref="Form">
-              <MudGrid>
-                  
-               
-                
-                       
-                      <MudItem xs="6" >
-                <MudTextField T="string" @bind-Value="@_editedUser.FirstName" Immediate="true" Label=@L["First Name"]
-                          Required="true" RequiredError=@L["Person name is required!"]  /></MudItem>
-              <MudItem xs="6"><MudTextField T="string" @bind-Value="@_editedUser.LastName" Immediate="true" Label=@L["Last Name"]
-                   Required="true" RequiredError=@L["Person name is required!"] /> </MudItem>
-                  
- 
-                  <MudItem xs="6">
-                <MudDatePicker @bind-Date="@_editedUser.DateOfBirth"
-                           Required="true"
-                           Rounded="true"
-                           Elevation="1"
-                           RequiredError=@L["BirthDate is Required"]
-                           Label=@L["Select Date of Birth"]
-                           Editable="false" /></MudItem>
-                <MudItem xs="6">
-                <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@_editedUser.Gender"
-                       OffsetY="true" RequiredError=@L["Gender is required!"]
-                       CloseIcon="@Icons.Material.Filled.LocationCity"
-                       HelperText=@L["Select Gender"]
-                       AdornmentColor="Color.Tertiary">
-                    @foreach (Gender? g in Enum.GetValues(typeof(Gender)))
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudTextField T="string" @bind-Value="@_openedUser.FirstName" Immediate="true" Label=@L["First Name"]
+                                  Required="true" RequiredError=@L["Person name is required!"] />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" @bind-Value="@_openedUser.LastName" Immediate="true" Label=@L["Last Name"]
+                                  Required="true" RequiredError=@L["Person name is required!"] />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudDatePicker @bind-Date="@_openedUser.DateOfBirth"
+                                   Required="true"
+                                   Rounded="true"
+                                   Elevation="1"
+                                   RequiredError=@L["BirthDate is Required"]
+                                   Label=@L["Select Date of Birth"]
+                                   Editable="false" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudSelect Required="true" T="Gender?" Label=@L["Select Gender"] @bind-Value="@_openedUser.Gender"
+                               OffsetY="true" RequiredError=@L["Gender is required!"]
+                               CloseIcon="@Icons.Material.Filled.LocationCity"
+                               HelperText=@L["Select Gender"]
+                               AdornmentColor="Color.Tertiary">
+                            @foreach (Gender? g in Enum.GetValues(typeof(Gender)))
+                            {
+                                <MudSelectItem Value="@g">@L[g.ToString()]</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    @if (ShareResource.IsEn())
                     {
-                        <MudSelectItem Value="@g">@L[g.ToString()]</MudSelectItem>
-                    }
-                </MudSelect>
-                </MudItem>
-
-            
-                
-                @if (ShareResource.IsEn())
-                {
-                     <MudItem xs="6">
-                    <MudSelect @bind-Value="@_editedUser.DepartmentId"
-                       T="int"
-                       OffsetY="true"
-                       CloseIcon="@Icons.Material.Filled.LocationCity"
-                       HelperText=@L["Select Department"]
-                       AdornmentColor="Color.Tertiary">
-                        @foreach (var dept in _departments)
-                        {
-                            <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                     </MudItem>
-                }
-                else
-                {
-                    <MudItem xs="6">
-                    <MudSelect @bind-Value="@_editedUser.DepartmentId"
-                       T="int"
-                       OffsetY="true"
-                       CloseIcon="@Icons.Material.Filled.LocationCity"
-                       HelperText=@L["Select Department"]
-                       AdornmentColor="Color.Tertiary">
-                        @foreach (var dept in _departments)
-                        {
-                            <MudSelectItem Value="@(dept.Id)">@dept.NamePl</MudSelectItem>
-                        }
-                    </MudSelect>
-                    </MudItem>
-                }
-                  @if (ShareResource.IsEn())
-                {
-                    <MudItem xs="6">
-                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobId"
-                       OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
-                        @foreach (Job job in _jobs)
-                        {
-                            <MudSelectItem T="int" Value="@job.Id">@job.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                    </MudItem>
-                }
-                else
-                {
-                    <MudItem xs="6">
-                    <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_editedUser.JobId"
-                       OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
-                        @foreach (Job job in _jobs)
-                        {
-                            <MudSelectItem T="int" Value="@job.Id">@job.NamePl</MudSelectItem>
-                        }
-                    </MudSelect>
-                    </MudItem>
-                }
-                           
-                <MudItem xs="6"> <MudTextField T="string" Label=@L["Email"] @bind-Value="@_editedUser.Email" Required="true" RequiredError=@L["Email is required!"] /> </MudItem>
-                @if (_created)
-                {<MudItem xs="6">
-                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" InputType="InputType.Password" @bind-Value="@_passwordHash" />
-                </MudItem>
-                }
-                else
-                {
-                    <MudItem xs="6">
-                    <MudTextField Required="true" InputType="InputType.Password" RequiredError="@L["Password is required"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" @bind-Value="@_passwordHash" />
-               </MudItem>
-                }
-
-
-                @if (_canChangeRoles)
-                {
-                    <MudItem xs="6">
-                    <MudTable Items="@_userRolesVM">
-                        <HeaderContent>
-                            <MudTh>@L["Role Name"]</MudTh>
-                            <MudTh>@L["Assigned"]</MudTh>
-                        </HeaderContent>
-                        <RowTemplate>
-                            <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
-                            <MudTd DataLabel=@L["Assigned"]>
-                                <MudCheckBox T="bool" CheckedChanged="@(()=>UpdateUserRole(context))" />
-                            </MudTd>
-                        </RowTemplate>
-                    </MudTable>
-                    </MudItem>
-                     }
-
-                     @if (_created)
-                {
-                    <MudItem xs="6">
-                    <MudAvatar Image="@_editedUser.PhotoPath">
-                    </MudAvatar>
-                    <InputFile hidden OnChange="@UploadImage" id="fileInput" accept=".jpg, .jpeg, .png" />
-                    <MudButton HtmlTag="label" for="fileInput">@L["Upload Photo"]</MudButton>
-
-                      <MudSwitch @bind-Checked="@_editedUser.IsActive"
-                      Class="pa-6 mt-auto"
-                       T="bool"
-                       Label=@L["Is Active?"]
-                       Color="Color.Success" />
+                        <MudItem xs="6">
+                            <MudSelect @bind-Value="@_openedUser.DepartmentId"
+                               T="int"
+                               OffsetY="true"
+                               CloseIcon="@Icons.Material.Filled.LocationCity"
+                               HelperText=@L["Select Department"]
+                               AdornmentColor="Color.Tertiary">
+                                @foreach (var dept in _departments)
+                                {
+                                    <MudSelectItem Value="@(dept.Id)">@dept.Name</MudSelectItem>
+                                }
+                            </MudSelect>
                         </MudItem>
-                        
                     }
                     else
                     {
-                        <MudItem xs="6"></MudItem>
-
+                        <MudItem xs="6">
+                            <MudSelect @bind-Value="@_openedUser.DepartmentId"
+                               T="int"
+                               OffsetY="true"
+                               CloseIcon="@Icons.Material.Filled.LocationCity"
+                               HelperText=@L["Select Department"]
+                               AdornmentColor="Color.Tertiary">
+                                @foreach (var dept in _departments)
+                                {
+                                    <MudSelectItem Value="@(dept.Id)">@dept.NamePl</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    }
+                    @if (ShareResource.IsEn())
+                    {
+                        <MudItem xs="6">
+                            <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_openedUser.JobId"
+                               OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
+                                @foreach (Job job in _jobs)
+                                {
+                                    <MudSelectItem T="int" Value="@job.Id">@job.Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    }
+                    else
+                    {
+                        <MudItem xs="6">
+                            <MudSelect Required="true" T="int" Label=@L["Select Job Title"] @bind-Value="@_openedUser.JobId"
+                               OffsetY="true" RequiredError=@L["Job Title is required!"] HelperText=@L["Select Job Title"] AdornmentColor="Color.Tertiary">
+                                @foreach (Job job in _jobs)
+                                {
+                                    <MudSelectItem T="int" Value="@job.Id">@job.NamePl</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
                     }
 
-
-               </MudGrid>
+                    <MudItem xs="6"> <MudTextField T="string" Label=@L["Email"] @bind-Value="@_openedUser.Email" Required="true" RequiredError=@L["Email is required!"] /> </MudItem>
+                    @if (_created)
+                    {
+                        <MudItem xs="6">
+                            <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" InputType="InputType.Password" @bind-Value="@_passwordHash" />
+                        </MudItem>
+                    }
+                    else
+                    {
+                        <MudItem xs="6">
+                            <MudTextField Required="true" InputType="InputType.Password" RequiredError="@L["Password is required"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Warning" AdornmentColor="Color.Warning" T="String" Label="@L["New Password"]" @bind-Value="@_passwordHash" />
+                        </MudItem>
+                    }
+                    @if (_canChangeRoles)
+                    {
+                        <MudItem xs="6">
+                            <MudTable Items="@_openedUser.UserRolesVM">
+                                <HeaderContent>
+                                    <MudTh>@L["Role Name"]</MudTh>
+                                    <MudTh>@L["Assigned"]</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel=@L["Role Name"]>@L[context.RoleName]</MudTd>
+                                    <MudTd DataLabel=@L["Assigned"]>
+                                        <MudCheckBox T="bool" @bind-Checked="@context.IsSelected" />
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudItem>
+                    }
+                    <MudItem xs="6">
+                        <MudAvatar Image="@_openedUser.PhotoPath">
+                        </MudAvatar>
+                        <InputFile hidden OnChange="@UploadImage" id="fileInput" accept=".jpg, .jpeg, .png" />
+                        <MudButton HtmlTag="label" for="fileInput">@L["Upload Photo"]</MudButton>
+                        <MudSwitch @bind-Checked="@_openedUser.IsActive"
+                               Class="pa-6 mt-auto"
+                               T="bool"
+                               Label=@L["Is Active?"]
+                               Color="Color.Success" />
+                    </MudItem>
+                </MudGrid>
             </MudForm>
-           
         </DialogContent>
         <DialogActions>
-           
             @if (_created)
             {
                 <MudButton Size="Size.Small" Variant=Variant.Outlined Color="Color.Warning" OnClick="@(()=>ResetPassword(_passwordHash))">@L["Change Password"]</MudButton>
@@ -171,29 +147,24 @@ else
             {
                 <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="ToggleOpen">@L["Delete"]</MudButton>
             }
-            
             <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudButton OnClick="@HandleSave" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Small">@L["Save"]</MudButton>
-       
+
         </DialogActions>
-         
     </MudDialog>
-    
 }
 <MudPopover AnchorOrigin="Origin.CenterCenter" Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
-     
+
     <div class="d-flex flex-column">
         @if (ShareResource.IsEn())
         {
-            <MudText>@($"\nAre you sure that you want to delete User {_editedUser.FullName}?")</MudText>
+            <MudText>@($"\nAre you sure that you want to delete User {_openedUser.FullName}?")</MudText>
         }
         else
         {
-            <MudText>@($"\nNa pewno usunąć użytkownika {_editedUser.FullName}?")</MudText>
+            <MudText>@($"\nNa pewno usunąć użytkownika {_openedUser.FullName}?")</MudText>
         }
-         
-        <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>DeleteUser(_editedUser.Id))">@L["Delete"]</MudButton>
+        <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>DeleteUser(_openedUser.Id))">@L["Delete"]</MudButton>
         <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">@L["Cancel"]</MudButton>
     </div>
-    
 </MudPopover>

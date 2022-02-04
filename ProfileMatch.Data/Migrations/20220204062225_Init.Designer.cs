@@ -12,7 +12,7 @@ using ProfileMatch.Data;
 namespace ProfileMatch.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220202131449_Init")]
+    [Migration("20220204062225_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,6 +167,11 @@ namespace ProfileMatch.Data.Migrations
                         {
                             UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             RoleId = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a"
+                        },
+                        new
+                        {
+                            UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2"
                         });
                 });
 
@@ -557,7 +562,7 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "39c9920d-a462-4869-a225-7b24b503bef6",
+                            ConcurrencyStamp = "39b7a975-2c2e-4fe9-a6b0-41765b4a198a",
                             DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
@@ -569,10 +574,10 @@ namespace ProfileMatch.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMtiaxhdxKIY3uu81gEZk7LZECsKtopCW8nv0lH6XSswRsATc5TunyXzH9uUaZaN1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELVI5SFAQy/tcrvFG6H6VSnJ4wQZZQk5SVVjtUAcm5nALZCR2ndocc5tb2Rib3yHOA==",
                             PhoneNumberConfirmed = false,
                             PhotoPath = "/blank-profile.png",
-                            SecurityStamp = "3c757ea5-0dba-40ec-93f3-78241e324e36",
+                            SecurityStamp = "3b1fc8a3-a9a3-4ccb-9983-9aa588ff95e1",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

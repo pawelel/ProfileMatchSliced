@@ -75,12 +75,19 @@ namespace ProfileMatch.Data
                     DateOfBirth = new DateTime(day:26 , month:1, year:1971)
                 }
                             );
-            });
+            }); 
             //Seeding the relation between our user and role to AspNetUserRoles table
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
                     RoleId = "8c916fc5-5d08-4164-8594-7ac0e2b6e16a",
+                    UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647"
+                }
+            );
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2",
                     UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647"
                 }
             );

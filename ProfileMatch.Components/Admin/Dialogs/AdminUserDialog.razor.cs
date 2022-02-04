@@ -20,8 +20,9 @@ using ProfileMatch.Repositories;
 using ProfileMatch.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.WebUtilities;
-using NPOI.SS.Formula.Functions;
 using System.Text;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProfileMatch.Components.Admin.Dialogs
 {
@@ -30,20 +31,22 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] IWebHostEnvironment Environment { get; set; }
-      
+        [Inject] IMapper Mapper { get; set; }
+
         [Inject] IEmailSender EmailSender { get; set; }
-      
+
         [Inject] UserManager<ApplicationUser> UserManager { get; set; }
-       
+
         [Inject] ISnackbar Snackbar { get; set; }
-    
+
         List<IdentityRole> _roles;
+        List<IdentityUserRole<string>> _userRoles;
         string _userId;
-        List<UserRoleVM> _userRolesVM;
-        List<IdentityUserRole<string>> _userIdentityRoles;
+
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         protected MudForm Form { get; set; }
-        [Parameter] public DepartmentUserVM OpenedUser { get; set; }
+        [Parameter] public string UserId { get; set; }
+        ApplicationUserVM _openedUser;
         ApplicationUser _currentUser;
         ApplicationUser _editedUser;
         List<Job> _jobs;
@@ -57,8 +60,49 @@ namespace ProfileMatch.Components.Admin.Dialogs
         protected override async Task OnInitializedAsync()
         {
             await GetCurrentUserAsync();
-            await LoadDepartmentsJobsRolesUser();
-            await CanChangeRolesCheck();
+            await LoadDepartmentsJobsRoles();
+            await GetEditedUser();
+        }
+
+        async Task GetEditedUser()
+        {
+            _editedUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.Id == UserId, a => a.Include(a => a.Department).Include(a => a.Job));
+            if (_editedUser == null)
+            {
+                _openedUser = new()
+                {
+                    PhotoPath = "blank-profile.png",
+                    DateOfBirth = DateTime.Now,
+                    UserRolesVM = (from role in _roles
+                                   where role.Name != "User"
+                                   select new UserRoleVM()
+                                   {
+                                       IsSelected = false,
+                                       RoleId = role.Id,
+                                       RoleName = role.Name
+                                   }).ToList()
+                };
+                _canChangeRoles = true;
+            }
+            else
+            {
+                _openedUser = Mapper.Map<ApplicationUserVM>(_editedUser);
+                _openedUser.UserRolesVM = new();
+                _openedUser.UserRolesVM = (from r in _roles
+                                           select new UserRoleVM()
+                                           {
+                                               UserId = _openedUser.Id,
+                                               IsSelected = _userRoles.Any(a => a.RoleId == r.Id),
+                                               RoleId = r.Id,
+                                               RoleName = r.Name
+                                           }).ToList();
+                Console.WriteLine(_openedUser);
+                if (UserId != _userId)
+                {
+                    _canChangeRoles = true;
+                }
+                _created = true;
+            }
         }
 
         /// <summary>
@@ -78,34 +122,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
         /// initializes data from database
         /// </summary>
         /// <returns></returns>
-        private async Task LoadDepartmentsJobsRolesUser()
+        private async Task LoadDepartmentsJobsRoles()
         {
-            _jobs = await UnitOfWork.Jobs.Get();
             _departments = await UnitOfWork.Departments.Get();
+            _jobs = await UnitOfWork.Jobs.Get();
             _roles = await UnitOfWork.IdentityRoles.Get();
-
-            if (!string.IsNullOrEmpty(OpenedUser.UserId) && OpenedUser != null)
-            {
-                try
-                {
-                    _editedUser = await UnitOfWork.ApplicationUsers.GetById(OpenedUser.UserId);
-                    _created = true;
-                    await TryToAddUserRoles();
-                }
-                catch (Exception ex)
-                {
-                    Snackbar.Add(ex.Message, Severity.Error);
-                }
-            }
-            else
-            {
-                _created = false;
-                _editedUser = new()
-                {
-                    PhotoPath = "blank-profile.png",
-                    DateOfBirth = DateTime.Now
-                };
-            }
+            _userRoles = await UnitOfWork.IdentityUserRoles.Get(a => a.UserId == UserId);
         }
 
         /// <summary>
@@ -117,29 +139,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         }
 
 
-        /// <summary>
-        /// add rolesVM after user is created
-        /// </summary>
-        /// <returns></returns>
-        private async Task TryToAddUserRoles()
-        {
-            if (!string.IsNullOrWhiteSpace(_editedUser.Id))
-            {
-                _userRolesVM = new();
-                _userIdentityRoles = await UnitOfWork.IdentityUserRoles.Get(u => u.UserId == _editedUser.Id);
-                foreach (var role in _roles.Where(r => r.Name != "User"))
-                {
-                    var userRoleVM = new UserRoleVM
-                    {
-                        RoleId = role.Id,
-                        RoleName = role.Name,
-                        UserId = _editedUser.Id,
-                        IsSelected = _userIdentityRoles.Any(r => r.RoleId == role.Id)
-                    };
-                    _userRolesVM.Add(userRoleVM);
-                }
-            }
-        }
+
         /// <summary>
         /// Handle user update
         /// </summary>
@@ -155,6 +155,13 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 {
                     // Update the user
                     await UnitOfWork.ApplicationUsers.Update(_editedUser);
+                    if (_canChangeRoles)
+                    {
+                        foreach (var role in _openedUser.UserRolesVM)
+                        {
+                            await UpdateIdentityUserRole(role);
+                        }
+                    }
                     Snackbar.Add(@L["Account"] + _editedUser.FullName + @L["has been updated[O]"], Severity.Success);
                 }
                 else
@@ -162,49 +169,26 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     await CreateUserWithUserRole();
                     await SendConfirmationEmail();
                 }
-                await TryToAddUserRoles();
-                //await UpdateUserRoles();
+
                 MudDialog.Close(DialogResult.Ok(true));
-                await Task.Delay(2000);
-                NavigationManager.NavigateTo("admin/dashboard", true);
+
+                NavigationManager.NavigateTo("admin/dashboard/0", true);
             }
         }
-        private async Task UpdateUserRole(UserRoleVM uVM)
+
+    
+        async Task UpdateIdentityUserRole(UserRoleVM role)
         {
-            var roles = await UnitOfWork.IdentityUserRoles.Get();
-            var n = uVM.RoleName;
-            var id = uVM.RoleId;
-            var userRole = await UnitOfWork.IdentityUserRoles.GetById(_editedUser.Id, id);
-            var filteredRoles = roles.Where(r => r.RoleId == id);
-
-            if (n == "Admin" && filteredRoles.Count() > 1)
+            var userRole = await UnitOfWork.IdentityUserRoles.GetById(role.UserId, role.RoleId);
+            if (userRole == null && role.IsSelected)
             {
-                switch (uVM.IsSelected)
-                {
-                    case true:
-                        await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = uVM.UserId, RoleId = uVM.RoleId  });
-                        break;
-                    case false:
-                        await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
-                        break;
-                }
+                userRole = new() { UserId = role.UserId, RoleId = role.RoleId };
+                userRole = await UnitOfWork.IdentityUserRoles.Insert(userRole);
             }
-            else
+            if (userRole != null && !role.IsSelected)
             {
-                switch (uVM.IsSelected)
-                {
-                    case false:
-                    
-                        await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
-                        break;
-                    case true:
-                        await UnitOfWork.IdentityUserRoles.Delete(new() { UserId = uVM.UserId, RoleId = uVM.RoleId });
-                        break;
-                }
+                await UnitOfWork.IdentityUserRoles.Delete(userRole);
             }
-
-
-
         }
 
         /// <summary>
@@ -220,7 +204,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             Snackbar.Add(@L["Account"] + $" {_editedUser.FirstName} " + $" {_editedUser.LastName} " + @L["has been created[O]"], Severity.Success);
             _created = true;
             // add "User" role
-            await UnitOfWork.IdentityUserRoles.Insert(new() { RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2", UserId = _editedUser.Id });
+            await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = _editedUser.Id, RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2" });
         }
         /// <summary>
         /// send confirmation email after creating user
@@ -310,8 +294,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
             else
             {
-            Snackbar.Add(L["You cannot delete your account here."], Severity.Error);
-            return;
+                Snackbar.Add(L["You cannot delete your account here."], Severity.Error);
+                return;
             }
         }
         private void Cancel()
@@ -363,20 +347,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 _editedUser.PhotoPath = contentPath;
                 StateHasChanged();
 
-            }
-        }
-        //prevent edit own role
-
-        /// <summary>
-        /// prevent of taking back admin role for current user - this way there should be always one admin - but it only partially
-        /// </summary>
-        /// <returns></returns>
-        private async Task CanChangeRolesCheck()
-        {
-            await Task.Delay(0);
-            if (_currentUser.Id != OpenedUser.UserId&&OpenedUser!=null&&!string.IsNullOrWhiteSpace( OpenedUser.UserId))
-            {
-                _canChangeRoles = true;
             }
         }
 
