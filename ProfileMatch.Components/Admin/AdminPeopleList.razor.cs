@@ -147,5 +147,10 @@ namespace ProfileMatch.Components.Admin
         {
             DialogService.Show<AdminDepartmentListDialog>();
         }
+
+        void JobList()
+        {
+            DialogService.Show<AdminJobListDialog>();
+        }
     }
 }

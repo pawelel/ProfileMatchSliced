@@ -48,7 +48,7 @@ else
                 </Column>
                 <Column T="DepartmentUserVM" Field="JobName" Title="Job Title">
                     <HeaderTemplate>
-                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobUpdate())" Variant="Variant.Outlined" />
+                        @L["Job Title"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> JobUpdate())" Variant="Variant.Outlined" /><MudIconButton Color="Color.Primary" OnClick="JobList" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
                         @context.JobName
