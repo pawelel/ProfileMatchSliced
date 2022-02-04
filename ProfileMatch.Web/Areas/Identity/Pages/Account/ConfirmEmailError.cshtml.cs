@@ -14,12 +14,12 @@ namespace ProfileMatch.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailErrorModel : PageModel
     {
-        //private readonly UserManager<ApplicationUser> _userManager;
+//        private readonly UserManager<ApplicationUser> _userManager;
 
-        //public ConfirmEmailErrorModel(UserManager<ApplicationUser> userManager)
-        //{
-        //    _userManager = userManager;
-        //}
-  
+//        public ConfirmEmailErrorModel(UserManager<ApplicationUser> userManager)
+//        {
+//            _userManager = userManager;
+//        }
+
     }
 }

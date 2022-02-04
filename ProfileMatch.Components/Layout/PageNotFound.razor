@@ -1,0 +1,15 @@
+﻿
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager;
+
+
+<MudText Typo="Typo.h1" Color="Color.Error" Align="Align.Center">404</MudText>
+<MudText Typo="Typo.h4" Align="Align.Center">@L["OOPS! PAGE YOU REQUESTED COULD NOT FOUND"]</MudText>
+ <br />
+<MudItem Class="d-flex justify-center">
+   
+<MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="BackHome">@L["Back"]</MudButton>
+</MudItem>
+
+@code {
+    void BackHome() => NavigationManager.NavigateTo("/");
+}

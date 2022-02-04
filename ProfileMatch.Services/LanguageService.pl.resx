@@ -945,4 +945,10 @@
   <data name="User with this Email alread exists" xml:space="preserve">
     <value>Użytkownik o takim adresie Email już istnieje</value>
   </data>
+  <data name="OOPS! PAGE YOU REQUESTED COULD NOT FOUND" xml:space="preserve">
+    <value>UPS! NIE MOŻNA ZNALEŹĆ STRONY, KTÓREJ POTRZEBUJESZ</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Powrót</value>
+  </data>
 </root>
