@@ -25,7 +25,7 @@ else
                 <Column T="DepartmentUserVM" Field="DepartmentId" Title="Department Id" />
                 <Column T="DepartmentUserVM" Field="DepartmentName" Title="Department">
                     <HeaderTemplate>
-                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" /><MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />
+                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" /><MudIconButton Color="Color.Primary" OnClick="DepartmentList" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
                         @(string.IsNullOrWhiteSpace(context.DepartmentName)? "unassigned" : context.DepartmentName)

@@ -20,18 +20,27 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Department Dep { get; set; } = new();
+        [Parameter] public int DepartmentId { get; set; }
+        private Department _dep;
         public string TempNamePl { get; set; }
         public string TempName { get; set; }
         public string TempDescription { get; set; }
         public string TempDescriptionPl { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            TempNamePl = Dep.NamePl;
-            TempName = Dep.Name;
-            TempDescriptionPl = Dep.DescriptionPl;
-            TempDescription = Dep.Description;
+            _dep = await UnitOfWork.Departments.GetOne(d=>d.Id == DepartmentId);
+            if (_dep is not null &&_dep.Id>0)
+            {
+            TempNamePl = _dep.NamePl;
+            TempName = _dep.Name;
+            TempDescriptionPl = _dep.DescriptionPl;
+            TempDescription = _dep.Description;
+            }
+            else
+            {
+                _dep = new();
+            }
         }
 
   
@@ -49,10 +58,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                Dep.NamePl = TempNamePl;
-                Dep.Name = TempName;
-                Dep.DescriptionPl = TempDescriptionPl;
-                Dep.Description = TempDescription;
+                _dep.NamePl = TempNamePl;
+                _dep.Name = TempName;
+                _dep.DescriptionPl = TempDescriptionPl;
+                _dep.Description = TempDescription;
                 try
                 {
                     await Save();
@@ -62,7 +71,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     Snackbar.Add(@L[$"There was an error:"] + $" {ex.Message}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(Dep));
+                MudDialog.Close(DialogResult.Ok(_dep));
                 NavigationManager.NavigateTo("admin/dashboard/0", true);
             }
         }
@@ -73,24 +82,24 @@ namespace ProfileMatch.Components.Admin.Dialogs
             string updated;
             if (ShareResource.IsEn())
             {
-                created = $"Department {Dep.Name} created";
-                updated = $"Department {Dep.Name} updated";
+                created = $"Department {_dep.Name} created";
+                updated = $"Department {_dep.Name} updated";
             }
             else
             {
-                updated = $"Nazwa działu {Dep.NamePl} zaktualizowana";
-                created = $"Nazwa działu {Dep.NamePl} utworzona";
+                updated = $"Nazwa działu {_dep.NamePl} zaktualizowana";
+                created = $"Nazwa działu {_dep.NamePl} utworzona";
             }
 
 
-            if (Dep.Id == 0)
+            if (_dep.Id == 0)
             {
-                var result = await UnitOfWork.Departments.Insert(Dep);
+                var result = await UnitOfWork.Departments.Insert(_dep);
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await UnitOfWork.Departments.Update(Dep);
+                var result = await UnitOfWork.Departments.Update(_dep);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

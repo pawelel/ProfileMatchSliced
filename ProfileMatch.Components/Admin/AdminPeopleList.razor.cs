@@ -142,5 +142,10 @@ namespace ProfileMatch.Components.Admin
                             }).ToList();
             return appDepts;
         }
+
+        void DepartmentList()
+        {
+            DialogService.Show<AdminDepartmentListDialog>();
+        }
     }
 }

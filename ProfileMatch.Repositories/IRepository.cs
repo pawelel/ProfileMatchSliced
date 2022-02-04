@@ -2,6 +2,8 @@
 
 using NPOI.SS.Formula.Functions;
 
+using ProfileMatch.Models.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,6 @@ namespace ProfileMatch.Repositories
         Task<TEntity> GetOne(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
         Task<TEntity> Insert(TEntity entity);
         Task<List<TEntity>> InsertRange(List<TEntity> entities);
-
         Task<TEntity> Update(TEntity entityToUpdate);
     }
 }
