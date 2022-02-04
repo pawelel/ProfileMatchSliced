@@ -427,7 +427,12 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Jobs",
                 columns: new[] { "Id", "Description", "DescriptionPl", "Name", "NamePl" },
-                values: new object[] { 1, "Initial Job Title", "Wstępne stanowisko", "not assigned", "nie przypisano" });
+                values: new object[,]
+                {
+                    { 1, "Initial Job Title", "Wstępne stanowisko", "not assigned", "nie przypisano" },
+                    { 2, "Programmer Job Title", "Stanowisko programisty", "programmer", "programista" },
+                    { 3, "Analyst Job Title", "Stanowisko analisty", "analyst", "analityk" }
+                });
 
             migrationBuilder.InsertData(
                 table: "OpenQuestions",
@@ -445,7 +450,12 @@ namespace ProfileMatch.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "39b7a975-2c2e-4fe9-a6b0-41765b4a198a", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", null, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAELVI5SFAQy/tcrvFG6H6VSnJ4wQZZQk5SVVjtUAcm5nALZCR2ndocc5tb2Rib3yHOA==", null, false, "/blank-profile.png", "3b1fc8a3-a9a3-4ccb-9983-9aa588ff95e1", false, "admin@admin.com" });
+                values: new object[,]
+                {
+                    { "223eea6c-5cfc-4413-ba83-257db573452c", 0, "972981d6-aefb-4b4a-b5e0-66ea28ddf42e", new DateTime(2004, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "manager@manager.com", true, "Luis", 0, true, 3, "Lejn", false, null, "MANAGER@MANAGER.COM", "MANAGER@MANAGER.COM", "AQAAAAEAACcQAAAAEIzwbLlj1iJMCfbDsOWchl30Cq54GQFuZhCWhDPmSUBxJydaz9KV2UtMl1ic/A5YsQ==", null, false, "/images/blank-profile.png", "6cdfd68c-89f9-47e5-9a9f-e42f0dd95deb", false, "manager@manager.com" },
+                    { "5877932b-ce30-45be-a63f-12e5e6e42ed3", 0, "3b4761ac-7368-43b3-9de3-b0d3475d3ea8", new DateTime(1980, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "user@user.com", true, "Brat", 0, true, 2, "Pit", false, null, "USER@USER.COM", "USER@USER.COM", "AQAAAAEAACcQAAAAEE0kpXo6gQNgIF8r9FBtUqUqz0Czvu3KG4ZblTW1ChcKNltO0glYhnGGTakP2ptQ6A==", null, false, "/images/blank-profile.png", "e72ec43e-dacc-458d-818b-2c9b4217222b", false, "user@user.com" },
+                    { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "f3263d37-f11e-4216-a312-7ff953b8d22f", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", 1, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEBqlEQFZyr90GGhR0PJLMbUUNJrwb+wvyqCWjopecxQ4Je1M25wWQ2YlR7H5jag7DQ==", null, false, "/images/blank-profile.png", "d6b84ac7-8a3d-43b4-8320-0929e2ea82f2", false, "admin@admin.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "ClosedQuestions",
@@ -504,8 +514,10 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", "a96d7c75-47f4-409b-a4d1-03f93c105647" },
-                    { "9588cfdb-8071-49c0-82cf-c51f20d305d2", "a96d7c75-47f4-409b-a4d1-03f93c105647" }
+                    { "af138749-2fc8-4bcf-8492-fadb9e0d5415", "223eea6c-5cfc-4413-ba83-257db573452c" },
+                    { "9588cfdb-8071-49c0-82cf-c51f20d305d2", "5877932b-ce30-45be-a63f-12e5e6e42ed3" },
+                    { "af138749-2fc8-4bcf-8492-fadb9e0d5415", "5877932b-ce30-45be-a63f-12e5e6e42ed3" },
+                    { "8c916fc5-5d08-4164-8594-7ac0e2b6e16a", "a96d7c75-47f4-409b-a4d1-03f93c105647" }
                 });
 
             migrationBuilder.InsertData(

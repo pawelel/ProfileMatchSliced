@@ -168,8 +168,18 @@ namespace ProfileMatch.Data.Migrations
                         },
                         new
                         {
-                            UserId = "a96d7c75-47f4-409b-a4d1-03f93c105647",
+                            UserId = "223eea6c-5cfc-4413-ba83-257db573452c",
+                            RoleId = "af138749-2fc8-4bcf-8492-fadb9e0d5415"
+                        },
+                        new
+                        {
+                            UserId = "5877932b-ce30-45be-a63f-12e5e6e42ed3",
                             RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2"
+                        },
+                        new
+                        {
+                            UserId = "5877932b-ce30-45be-a63f-12e5e6e42ed3",
+                            RoleId = "af138749-2fc8-4bcf-8492-fadb9e0d5415"
                         });
                 });
 
@@ -560,24 +570,73 @@ namespace ProfileMatch.Data.Migrations
                         {
                             Id = "a96d7c75-47f4-409b-a4d1-03f93c105647",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "39b7a975-2c2e-4fe9-a6b0-41765b4a198a",
+                            ConcurrencyStamp = "f3263d37-f11e-4216-a312-7ff953b8d22f",
                             DateOfBirth = new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Klark",
+                            Gender = 1,
                             IsActive = true,
                             JobId = 1,
                             LastName = "Kent",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELVI5SFAQy/tcrvFG6H6VSnJ4wQZZQk5SVVjtUAcm5nALZCR2ndocc5tb2Rib3yHOA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBqlEQFZyr90GGhR0PJLMbUUNJrwb+wvyqCWjopecxQ4Je1M25wWQ2YlR7H5jag7DQ==",
                             PhoneNumberConfirmed = false,
-                            PhotoPath = "/blank-profile.png",
-                            SecurityStamp = "3b1fc8a3-a9a3-4ccb-9983-9aa588ff95e1",
+                            PhotoPath = "/images/blank-profile.png",
+                            SecurityStamp = "d6b84ac7-8a3d-43b4-8320-0929e2ea82f2",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "223eea6c-5cfc-4413-ba83-257db573452c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "972981d6-aefb-4b4a-b5e0-66ea28ddf42e",
+                            DateOfBirth = new DateTime(2004, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            Email = "manager@manager.com",
+                            EmailConfirmed = true,
+                            FirstName = "Luis",
+                            Gender = 0,
+                            IsActive = true,
+                            JobId = 3,
+                            LastName = "Lejn",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MANAGER@MANAGER.COM",
+                            NormalizedUserName = "MANAGER@MANAGER.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIzwbLlj1iJMCfbDsOWchl30Cq54GQFuZhCWhDPmSUBxJydaz9KV2UtMl1ic/A5YsQ==",
+                            PhoneNumberConfirmed = false,
+                            PhotoPath = "/images/blank-profile.png",
+                            SecurityStamp = "6cdfd68c-89f9-47e5-9a9f-e42f0dd95deb",
+                            TwoFactorEnabled = false,
+                            UserName = "manager@manager.com"
+                        },
+                        new
+                        {
+                            Id = "5877932b-ce30-45be-a63f-12e5e6e42ed3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3b4761ac-7368-43b3-9de3-b0d3475d3ea8",
+                            DateOfBirth = new DateTime(1980, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            Email = "user@user.com",
+                            EmailConfirmed = true,
+                            FirstName = "Brat",
+                            Gender = 0,
+                            IsActive = true,
+                            JobId = 2,
+                            LastName = "Pit",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@USER.COM",
+                            NormalizedUserName = "USER@USER.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE0kpXo6gQNgIF8r9FBtUqUqz0Czvu3KG4ZblTW1ChcKNltO0glYhnGGTakP2ptQ6A==",
+                            PhoneNumberConfirmed = false,
+                            PhotoPath = "/images/blank-profile.png",
+                            SecurityStamp = "e72ec43e-dacc-458d-818b-2c9b4217222b",
+                            TwoFactorEnabled = false,
+                            UserName = "user@user.com"
                         });
                 });
 
@@ -872,6 +931,22 @@ namespace ProfileMatch.Data.Migrations
                             DescriptionPl = "Wstępne stanowisko",
                             Name = "not assigned",
                             NamePl = "nie przypisano"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Programmer Job Title",
+                            DescriptionPl = "Stanowisko programisty",
+                            Name = "programmer",
+                            NamePl = "programista"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Analyst Job Title",
+                            DescriptionPl = "Stanowisko analisty",
+                            Name = "analyst",
+                            NamePl = "analityk"
                         });
                 });
 
