@@ -1,0 +1,25 @@
+﻿@if (_loading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudDataGrid MultiSelection="true" Items="@Departments" Sortable="true" Filterable="true" QuickFilter="@_quickFilter">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Periodic Departments</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <Columns>
+            <Column T="Department" Field="Number" Title="Nr" Sortable="false" Filterable="false" />
+            <Column T="Department" Field="Sign" />
+            <Column T="Department" Field="Name" SortBy="@_sortBy" />
+            <Column T="Department" Field="Position" />
+            <Column T="Department" Field="Molar" Title="Molar mass" />
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="Department" />
+        </PagerContent>
+    </MudDataGrid>
+}
