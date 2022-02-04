@@ -22,7 +22,6 @@ else
         <Columns>
             @if (ShareResource.IsEn())
             {
-                <Column T="DepartmentUserVM" Field="DepartmentId" Title="Department Id" />
                 <Column T="DepartmentUserVM" Field="DepartmentName" Title="Department">
                     <HeaderTemplate>
                         @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" /><MudIconButton Color="Color.Primary" OnClick="DepartmentList" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />
@@ -78,7 +77,6 @@ else
             }
             else
             {
-                <Column T="DepartmentUserVM" Field="DepartmentId" Title="Id działu" />
                 <Column T="DepartmentUserVM" Field="DepartmentNamePl" Title="Dział">
                     <HeaderTemplate>
                         @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" />
