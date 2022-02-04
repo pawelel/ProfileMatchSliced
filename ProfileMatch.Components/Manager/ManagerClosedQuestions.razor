@@ -56,7 +56,7 @@ else
             <Column T="QuestionUserLevelVM" Field="Description" Title=@L["Description"] />
             <Column T="QuestionUserLevelVM" Field="Level" Title=@L["Level"]>
                 <CellTemplate>
-                    <MudButton OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))">@context.Level</MudButton>
+                               <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))" Size="Size.Small" Variant="Variant.Outlined">@context.Level.ToString()</MudButton>
                 </CellTemplate>
             </Column>
             <Column T="QuestionUserLevelVM" Field="FullName" Title=@L["Full Name"] />
@@ -71,7 +71,7 @@ else
             <Column T="QuestionUserLevelVM" Field="DescriptionPl" Title="Opis" />
             <Column T="QuestionUserLevelVM" Field="Level" Title="Poziom">
                 <CellTemplate>
-                    <MudButton OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))">@context.Level</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(()=>QuestionDisplay(context.ClosedQuestionId))" Size="Size.Small" Variant="Variant.Outlined">@context.Level.ToString()</MudButton>
                 </CellTemplate>
             </Column>
             <Column T="QuestionUserLevelVM" Field="FullName" Title="Imię i nazwisko" />

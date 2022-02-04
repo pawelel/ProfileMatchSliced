@@ -117,7 +117,7 @@ namespace ProfileMatch.Components.User
                 return true;
             return false;
         };
-        private async Task UserNoteUpdate(UserAnswerVM userAnswerVM)
+        private async Task UserOpenAnswerUpdate(UserAnswerVM userAnswerVM)
         {
             var Title = ShareResource.IsEn()?userAnswerVM.OpenQuestionName:userAnswerVM.OpenQuestionNamePl;
 

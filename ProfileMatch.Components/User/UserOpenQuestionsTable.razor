@@ -32,17 +32,17 @@
         {
             <Column Field="OpenQuestionName" T="UserAnswerVM" Title=@L["Name"] />
             <Column T="UserAnswerVM" Field="OpenQuestionDescription" Title=@L["Description"] />
-            <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"] />
         }
         else
         {
             <Column Field="OpenQuestionNamePl" T="UserAnswerVM" Title=@L["Name"] />
             <Column T="UserAnswerVM" Field="OpenQuestionDescriptionPl" Title=@L["Description"] />
-            <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"] />
         }
-        <Column Sortable="false" T="UserAnswerVM" Title="@L["Edit"]">
-            <CellTemplate><MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" OnClick="((e)=>UserNoteUpdate(context))">@L["Edit Answer"]</MudButton></CellTemplate>
-        </Column>
+            <Column T="UserAnswerVM" Field="UserDescription" Title=@L["Answer"] >
+                <CellTemplate>
+                    <MudIconButton Color="Color.Primary" OnClick="((e)=>UserOpenAnswerUpdate(context))" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />@context.UserDescription
+                </CellTemplate>
+            </Column>
     </Columns>
     <PagerContent>
         <MudDataGridPager T="UserAnswerVM" Class="pl-2 pr-2"
