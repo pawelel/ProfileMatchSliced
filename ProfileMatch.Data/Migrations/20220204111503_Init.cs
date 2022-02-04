@@ -136,7 +136,7 @@ namespace ProfileMatch.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValueSql: "NEWID()"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -452,9 +452,9 @@ namespace ProfileMatch.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "DepartmentId", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActive", "JobId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PhotoPath", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "223eea6c-5cfc-4413-ba83-257db573452c", 0, "972981d6-aefb-4b4a-b5e0-66ea28ddf42e", new DateTime(2004, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "manager@manager.com", true, "Luis", 0, true, 3, "Lejn", false, null, "MANAGER@MANAGER.COM", "MANAGER@MANAGER.COM", "AQAAAAEAACcQAAAAEIzwbLlj1iJMCfbDsOWchl30Cq54GQFuZhCWhDPmSUBxJydaz9KV2UtMl1ic/A5YsQ==", null, false, "/images/blank-profile.png", "6cdfd68c-89f9-47e5-9a9f-e42f0dd95deb", false, "manager@manager.com" },
-                    { "5877932b-ce30-45be-a63f-12e5e6e42ed3", 0, "3b4761ac-7368-43b3-9de3-b0d3475d3ea8", new DateTime(1980, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "user@user.com", true, "Brat", 0, true, 2, "Pit", false, null, "USER@USER.COM", "USER@USER.COM", "AQAAAAEAACcQAAAAEE0kpXo6gQNgIF8r9FBtUqUqz0Czvu3KG4ZblTW1ChcKNltO0glYhnGGTakP2ptQ6A==", null, false, "/images/blank-profile.png", "e72ec43e-dacc-458d-818b-2c9b4217222b", false, "user@user.com" },
-                    { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "f3263d37-f11e-4216-a312-7ff953b8d22f", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", 1, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEBqlEQFZyr90GGhR0PJLMbUUNJrwb+wvyqCWjopecxQ4Je1M25wWQ2YlR7H5jag7DQ==", null, false, "/images/blank-profile.png", "d6b84ac7-8a3d-43b4-8320-0929e2ea82f2", false, "admin@admin.com" }
+                    { "223eea6c-5cfc-4413-ba83-257db573452c", 0, "adad1707-f051-402b-8924-9d33bf39770a", new DateTime(2004, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "manager@manager.com", true, "Luis", 0, true, 3, "Lejn", false, null, "MANAGER@MANAGER.COM", "MANAGER@MANAGER.COM", "AQAAAAEAACcQAAAAEJeusjrOx0yvRg+8C7xX8TV6CfuVBuDmdIeiAQO+ec9I0ljh4eS5rpL7TwqiGTbn+Q==", null, false, "/images/blank-profile.png", "2410cff7-be1f-4046-9309-da398670c9dd", false, "manager@manager.com" },
+                    { "5877932b-ce30-45be-a63f-12e5e6e42ed3", 0, "fcf34dd8-4e92-4f03-bc7e-c428ccb3f248", new DateTime(1980, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "user@user.com", true, "Brat", 0, true, 2, "Pit", false, null, "USER@USER.COM", "USER@USER.COM", "AQAAAAEAACcQAAAAEG16RVYA9or8ZXaI3CqIHDiBHZtxge7sJiKRUZayJXrzdY5aeo6/C+j6baxGK3USHw==", null, false, "/images/blank-profile.png", "0f244f12-9fa2-44c9-bb8d-532c8e061465", false, "user@user.com" },
+                    { "a96d7c75-47f4-409b-a4d1-03f93c105647", 0, "7591f3af-806d-41fd-9381-2178636915ca", new DateTime(1971, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "admin@admin.com", true, "Klark", 1, true, 1, "Kent", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAELxAQp48nMeXPTJ91XkbXqG1d9JA+yC8eotnWvmnCvcxX94wq/n8OYaCk/lfbB93UQ==", null, false, "/images/blank-profile.png", "8c527367-1588-4c34-9251-916bf448b8e5", false, "admin@admin.com" }
                 });
 
             migrationBuilder.InsertData(

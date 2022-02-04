@@ -69,7 +69,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
             _editedUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.Id == UserId, a => a.Include(a => a.Department).Include(a => a.Job));
             if (_editedUser == null)
             {
-                _openedUser = new()
+                   _openedUser = new()
                 {
                     PhotoPath = "blank-profile.png",
                     DateOfBirth = DateTime.Now,
@@ -149,9 +149,16 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
+                _editedUser = Mapper.Map<ApplicationUser>(_openedUser);
+                var tempUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.NormalizedEmail == _editedUser.Email.ToUpper());
+                if (tempUser != null)
+                {
+                    Snackbar.Add(L["User with this Email already exists"], Severity.Error);
+                    return;
+                }
                 _editedUser.NormalizedEmail = _editedUser.Email.ToUpper();
                 _editedUser.NormalizedUserName = _editedUser.Email.ToUpper();
-                if (_created)
+                if (!string.IsNullOrWhiteSpace(_editedUser.Id))
                 {
                     // Update the user
                     await UnitOfWork.ApplicationUsers.Update(_editedUser);
@@ -202,9 +209,12 @@ namespace ProfileMatch.Components.Admin.Dialogs
             _editedUser.UserName = _editedUser.Email;
             _editedUser = await UnitOfWork.ApplicationUsers.Insert(_editedUser);
             Snackbar.Add(@L["Account"] + $" {_editedUser.FirstName} " + $" {_editedUser.LastName} " + @L["has been created[O]"], Severity.Success);
-            _created = true;
+            
             // add "User" role
             await UnitOfWork.IdentityUserRoles.Insert(new() { UserId = _editedUser.Id, RoleId = "9588cfdb-8071-49c0-82cf-c51f20d305d2" });
+            _created = true;
+            MudDialog.Close(true);
+            NavigationManager.NavigateTo("admin/dashboard/0", true);
         }
         /// <summary>
         /// send confirmation email after creating user

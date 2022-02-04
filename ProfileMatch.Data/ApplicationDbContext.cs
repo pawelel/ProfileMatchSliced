@@ -45,7 +45,9 @@ namespace ProfileMatch.Data
                 .WithMany(a => a.ApplicationUsers)
                 .HasForeignKey(a => a.JobId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+                user.Property(x => x.Id).HasDefaultValueSql("NEWID()");
             });
+
             builder.Entity<UserClosedAnswer>(entity =>
             {
                 entity.HasKey(x => new { x.ApplicationUserId, x.ClosedQuestionId });

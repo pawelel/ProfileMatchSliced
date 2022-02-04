@@ -942,4 +942,7 @@
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
+  <data name="User with this Email alread exists" xml:space="preserve">
+    <value>User with this Email already exists</value>
+  </data>
 </root>

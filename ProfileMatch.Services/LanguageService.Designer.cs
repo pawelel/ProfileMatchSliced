@@ -2375,6 +2375,15 @@ namespace ProfileMatch.Services {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User with this Email already exists.
+        /// </summary>
+        public static string User_with_this_Email_alread_exists {
+            get {
+                return ResourceManager.GetString("User with this Email alread exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UserName.
         /// </summary>
         public static string UserName {
