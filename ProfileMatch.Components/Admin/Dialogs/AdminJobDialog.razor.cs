@@ -20,7 +20,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Job Job { get; set; } = new();
+        [Parameter] public int JobId { get; set; }
+        private Job _job;
         public string TempName { get; set; }
         public string TempNamePl { get; set; }
         public string TempDescription { get; set; }
@@ -30,12 +31,19 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             _isOpen = !_isOpen;
         }
-        protected override void OnInitialized()
-        {
-            TempName = Job.Name;
-            TempNamePl = Job.NamePl;
-            TempDescription = Job.Description;
-            TempDescriptionPl = Job.DescriptionPl;
+        protected override async Task OnInitializedAsync()
+        {_job = await UnitOfWork.Jobs.GetOne(a=>a.Id == JobId);
+            if (_job is not null)
+            {
+            TempName = _job.Name;
+            TempNamePl = _job.NamePl;
+            TempDescription = _job.Description;
+            TempDescriptionPl = _job.DescriptionPl;
+            }
+            else
+            {
+                _job = new();
+            }
         }
         private IEnumerable<string> MaxCharacters(string ch)
         {
@@ -57,10 +65,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await _form.Validate();
             if (_form.IsValid)
             {
-                Job.Name = TempName;
-                Job.Description = TempDescription;
-                Job.NamePl = TempNamePl;
-                Job.DescriptionPl = TempDescriptionPl;
+                _job.Name = TempName;
+                _job.Description = TempDescription;
+                _job.NamePl = TempNamePl;
+                _job.DescriptionPl = TempDescriptionPl;
                 try
                 {
                     await Save();
@@ -70,22 +78,22 @@ namespace ProfileMatch.Components.Admin.Dialogs
                     Snackbar.Add(@L[$"There was an error:"] + $" {@L[ex.Message]}", Severity.Error);
                 }
 
-                MudDialog.Close(DialogResult.Ok(Job));
+                MudDialog.Close(DialogResult.Ok(_job));
             }
         }
         private async Task Delete()
         {
-            if (await UnitOfWork.Jobs.ExistById(Job.Id))
+            if (await UnitOfWork.Jobs.ExistById(_job.Id))
             {
-                await UnitOfWork.Jobs.Delete(Job);
+                await UnitOfWork.Jobs.Delete(_job);
             }
             if (ShareResource.IsEn())
             {
-                Snackbar.Add($"Job {Job.Name} deleted");
+                Snackbar.Add($"Job {_job.Name} deleted");
             }
             else
             {
-                Snackbar.Add($"Kategoria {Job.NamePl} usunięta");
+                Snackbar.Add($"Kategoria {_job.NamePl} usunięta");
             }
 
         }
@@ -95,26 +103,26 @@ namespace ProfileMatch.Components.Admin.Dialogs
             string updated;
             if (ShareResource.IsEn())
             {
-                created = $"Job {Job.Name} created";
-                updated = $"Job {Job.Name} updated";
+                created = $"Job {_job.Name} created";
+                updated = $"Job {_job.Name} updated";
             }
             else
             {
-                created = $"Kategoria {Job.NamePl} utworzona";
-                updated = $"Kategoria {Job.NamePl} zaktualizowana";
+                created = $"Kategoria {_job.NamePl} utworzona";
+                updated = $"Kategoria {_job.NamePl} zaktualizowana";
             }
 
 
 
-            if (Job.Id == 0)
+            if (_job.Id == 0)
             {
-                var result = await UnitOfWork.Jobs.Insert(Job);
+                var result = await UnitOfWork.Jobs.Insert(_job);
 
                 Snackbar.Add(created, Severity.Success);
             }
             else
             {
-                var result = await UnitOfWork.Jobs.Update(Job);
+                var result = await UnitOfWork.Jobs.Update(_job);
                 Snackbar.Add(updated, Severity.Success);
             }
         }

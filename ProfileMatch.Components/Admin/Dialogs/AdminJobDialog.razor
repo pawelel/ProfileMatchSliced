@@ -8,7 +8,7 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-       @if(Job!=null&&!string.IsNullOrEmpty(Job.Name))
+       @if(_job!=null&&!string.IsNullOrEmpty(_job.Name))
        {
         <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Error" OnClick="Delete">@L["Delete"]</MudButton>
        }
