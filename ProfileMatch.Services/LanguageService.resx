@@ -945,10 +945,7 @@
   <data name="User with this Email alread exists" xml:space="preserve">
     <value>User with this Email already exists</value>
   </data>
-  <data name="OOPS! PAGE YOU REQUESTED COULD NOT FOUND" xml:space="preserve">
-    <value>OOPS! PAGE YOU REQUESTED COULD NOT FOUND</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
+  <data name="Password minimum length is 8 characters" xml:space="preserve">
+    <value>Password minimum length is 8 characters</value>
   </data>
 </root>

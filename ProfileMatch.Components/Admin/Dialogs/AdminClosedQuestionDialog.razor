@@ -1,10 +1,10 @@
-﻿@if (_closedQVM is not null)
+﻿@if (_tempQuestion is not null)
 {
     <MudDialog>
         <DialogContent>
             @for (int i = 0; i < _answerOptionLevels.Count; i++)
             {
-                int x = i+1;
+                int x = i + 1;
                 if (_answerOptionLevels[i])
                 {
                     <MudChip Color=Color.Success>@x</MudChip>
@@ -15,21 +15,24 @@
                 }
             }
             <MudForm @ref="_form">
-                <MudTextField T="string" @bind-Value="@_closedQVM.Name" Immediate="true" Label=@L["Question Name EN"] Required="true" RequiredError=@L["Question name is required!"] />
-                <MudTextField T="string" @bind-Value="@_closedQVM.Description" Immediate="true" Label=@L["Question Description EN"] Lines="5" />
-                <MudTextField T="string" @bind-Value="@_closedQVM.NamePl" Immediate="true" Label=@L["Question Name PL"] Required="true" RequiredError=@L["Question name is required!"] />
-                <MudTextField T="string" @bind-Value="@_closedQVM.DescriptionPl" Immediate="true" Label=@L["Question Description PL"] Lines="5" />
+                <MudTextField T="string" @bind-Value="@_tempQuestion.Name" Immediate="true" Label=@L["Question Name EN"] Required="true" RequiredError=@L["Question name is required!"] />
+                <MudTextField T="string" @bind-Value="@_tempQuestion.Description" Immediate="true" Label=@L["Question Description EN"] Lines="5" />
+                <MudTextField T="string" @bind-Value="@_tempQuestion.NamePl" Immediate="true" Label=@L["Question Name PL"] Required="true" RequiredError=@L["Question name is required!"] />
+                <MudTextField T="string" @bind-Value="@_tempQuestion.DescriptionPl" Immediate="true" Label=@L["Question Description PL"] Lines="5" />
             </MudForm>
         </DialogContent>
         <DialogActions>
             @if (_canActivate)
             {
-            <MudButton Size="Size.Small" OnClick="@ToggleEnable" Color="Color.Primary" Variant="Variant.Outlined"> @(_closedQVM.IsActive?L["Enabled"]: L["Disabled"])</MudButton>
-            }   
+                <MudButton Size="Size.Small" OnClick="@ToggleEnable" Color="Color.Primary" Variant="Variant.Outlined"> @(_tempQuestion.IsActive?L["Enabled"]: L["Disabled"])</MudButton>
+            }
             @if (_deleteEnabled)
             {
                 <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@ToggleOpenDelete">@L["Delete"]</MudButton>
-                <MudButton Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined" OnClick="@(()=>EditLevels())">@L["Levels"]</MudButton>
+                @if (_levelsEnabled)
+                {
+                    <MudButton Size="Size.Small" Color="Color.Info" Variant="Variant.Outlined" OnClick="@(()=>EditLevels())">@L["Levels"]</MudButton>
+                }
             }
             <MudButton Size="Size.Small" Color="Color.Warning" Variant="Variant.Outlined" OnClick="Cancel">@L["Cancel"]</MudButton>
             <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Save" Color="Color.Success" Size="Size.Small" OnClick="SaveAndClose">@L["Save"]</MudButton>
@@ -42,14 +45,14 @@ else
 }
 <MudPopover AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter" Open="@_isOpen" Fixed="true" Class="px-4 pt-4">
     <div class="d-flex flex-column">
-            @if (ShareResource.IsEn())
-            {
-        <MudText>@($"Removing Question {_tempQuestion.Name} will also remove all answers.\nAre you sure?")</MudText>
-            }
-            else
-            {
-                <MudText>@($"Usunięcie pytania {_tempQuestion.NamePl} usunie także odpowiedzi.\nUsunąć?")</MudText>
-            }
+        @if (ShareResource.IsEn())
+        {
+            <MudText>@($"Removing Question {_tempQuestion.Name} will also remove all answers.\nAre you sure?")</MudText>
+        }
+        else
+        {
+            <MudText>@($"Usunięcie pytania {_tempQuestion.NamePl} usunie także odpowiedzi.\nUsunąć?")</MudText>
+        }
         <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Outlined" OnClick="@(()=>Delete(_tempQuestion))">@L["Delete"]</MudButton>
         <MudButton OnClick="@ToggleOpenDelete" Class="ml-auto mr-n3 mb-1" Color="Color.Warning">@L["Close"]</MudButton>
     </div>

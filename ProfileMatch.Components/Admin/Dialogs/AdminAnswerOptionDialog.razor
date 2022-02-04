@@ -1,4 +1,4 @@
-﻿@if (_answerOptionVMs.Count == 5)
+﻿@if (_answerOptions is not null &&_answerOptions.Count == 5)
 {
     <MudDialog>
         <DialogContent>
@@ -11,7 +11,7 @@
                  DisableSliderAnimation="true"
                  HideSlider="true"
                  PanelClass="pa-6 d-block">
-                    @foreach (var option in _answerOptionVMs)
+                    @foreach (var option in _answerOptions)
                     {
                         <MudTabPanel Text="@option.Level.ToString()">
                             <MudTextField Required=true T="string" @bind-Value="@option.Description" Immediate="true" Label=@L["Option Description EN"] Lines="5" />

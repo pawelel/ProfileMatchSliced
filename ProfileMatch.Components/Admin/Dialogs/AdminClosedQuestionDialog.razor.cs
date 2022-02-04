@@ -22,7 +22,6 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminClosedQuestionDialog : ComponentBase
     {
 
-        [Inject] IMapper Mapper { get; set; }
         [Inject] private ISnackbar Snackbar { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
@@ -30,10 +29,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
         [Parameter] public int QuestionId { get; set; }
-        [Parameter] public string CategoryName { get; set; }
-        Category _category;
+        [Parameter] public int CategoryId { get; set; }
         //new view model for question
-        ClosedQuestionVM _closedQVM;
         ClosedQuestion _tempQuestion;
         List<bool> _answerOptionLevels = new();
         List<AnswerOption> _answerOptions;
@@ -41,54 +38,32 @@ namespace ProfileMatch.Components.Admin.Dialogs
         bool _isOpen = false;
         bool _canActivate = false;
         private MudForm _form;
-        
+        bool _levelsEnabled = false;
         protected override async Task OnInitializedAsync()
-        { if (ShareResource.IsEn())
+        {
+            _tempQuestion = await UnitOfWork.ClosedQuestions.GetOne(q => q.Id == QuestionId, q => q.Include(q => q.Category));
+            if (_tempQuestion == null)
             {
-                 _category = await UnitOfWork.Categories.GetOne(q => q.Name == CategoryName);
+                _tempQuestion = new()
+                {
+                    CategoryId = CategoryId,
+                    IsActive = false,
+                    AnswerOptions = new()
+                };
             }
             else
             {
-                _category = await UnitOfWork.Categories.GetOne(q => q.NamePl == CategoryName);
-            }
-            switch (QuestionId)
-            {
-                case 0:
-                    {
-                        _closedQVM = new();
-                        _closedQVM.CategoryId = _category.Id;
-                        _closedQVM.CategoryName = _category.Name;
-                        _closedQVM.CategoryNamePl = _category.NamePl;
-                        break;
-                    }
-                default:
-                    {
-                        //get question
-                        _tempQuestion = await UnitOfWork.ClosedQuestions.GetOne(q => q.Id == QuestionId, q => q.Include(q => q.Category));
-                        //map question to vm
-                        _closedQVM = Mapper.Map<ClosedQuestionVM>(_tempQuestion);
-                        _deleteEnabled = true;
-                        _answerOptions = await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == QuestionId);
-                        if (_answerOptions is null)
-                        {
-                            _answerOptionLevels = Enumerable.Repeat(false, 5).ToList();
-                        }
-                        else
-                        {
-                            for (int i = 1; i < 6; i++)
-                            {
-                                if (_answerOptions.Any(a => a.Level == i && !string.IsNullOrWhiteSpace(a.Description)))
-                                {
-                                    _answerOptionLevels.Add(true);
-                                }
-                                else
-                                {
-                                    _answerOptionLevels.Add(false);
-                                }
-                            }
-                        }
-                        break;
-                    }
+                _deleteEnabled = true;
+                _answerOptions = await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == QuestionId);
+                if (_answerOptions is null)
+                {
+                    _answerOptionLevels = Enumerable.Repeat(false, 5).ToList();
+                }
+                else
+                {
+                    GetLevels();
+                    _levelsEnabled = true;
+                }
             }
             CanActivate();
         }
@@ -98,41 +73,43 @@ namespace ProfileMatch.Components.Admin.Dialogs
             MudDialog.Close(true);
             NavigationManager.NavigateTo("admin/dashboard/1", true);
         }
-        async Task Create()
-        {
-           
-            _tempQuestion = await UnitOfWork.ClosedQuestions.Insert(_tempQuestion);
-            switch (ShareResource.IsEn())
-            {
-                case true:
-                    Snackbar.Add($"Question {_tempQuestion.Name} has been created", Severity.Success);
-                    break;
-                default:
-                    Snackbar.Add($"Pytanie {_tempQuestion.NamePl} zostało utworzone", Severity.Success);
-                    break;
-            }
-            return;
-        }
+
         void ToggleEnable()
         {
-            _closedQVM.IsActive = !_closedQVM.IsActive;
+            _tempQuestion.IsActive = !_tempQuestion.IsActive;
         }
         async Task Save()
         {
-            _tempQuestion = Mapper.Map<ClosedQuestion>(_closedQVM);
             await _form.Validate();
             if (_form.IsValid)
             {
-                switch (_tempQuestion.Id == 0)
+                if (_tempQuestion.Id == 0)
                 {
-                    case true:
-                        await Create();
-                        break;
-                    case false:
-                        await Update();
-                        break;
+
+                    _tempQuestion = await UnitOfWork.ClosedQuestions.Insert(_tempQuestion);
+                    switch (ShareResource.IsEn())
+                    {
+                        case true:
+                            Snackbar.Add($"Question {_tempQuestion.Name} has been created", Severity.Success);
+                            break;
+                        default:
+                            Snackbar.Add($"Pytanie {_tempQuestion.NamePl} zostało utworzone", Severity.Success);
+                            break;
+                    }
                 }
-                CanActivate();
+                else
+                {
+                    await UnitOfWork.ClosedQuestions.Update(_tempQuestion);
+                    switch (ShareResource.IsEn())
+                    {
+                        case true:
+                            Snackbar.Add($"Question {_tempQuestion.Name} has been updated", Severity.Success);
+                            break;
+                        default:
+                            Snackbar.Add($"Pytanie  {_tempQuestion.NamePl} zostało zaktualizowane", Severity.Success);
+                            break;
+                    }
+                }
             }
             else
             {
@@ -140,32 +117,34 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
         }
 
-
-        async Task Update()
-        {
-            await UnitOfWork.ClosedQuestions.Update(_tempQuestion);
-            switch (ShareResource.IsEn())
+        async Task EditLevels()
+        {if (_tempQuestion.Id >0)
             {
-                case true:
-                    Snackbar.Add($"Question {_tempQuestion.Name} has been updated", Severity.Success);
-                    break;
-                default:
-                    Snackbar.Add($"Pytanie  {_tempQuestion.NamePl} zostało zaktualizowane", Severity.Success);
-                    break;
+                DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Medium };
+                var parameters = new DialogParameters { ["QuestionId"] = _tempQuestion.Id };
+                var dialog = DialogService.Show<AdminAnswerOptionDialog>(L["Edit Answer Options"],
+                    parameters, maxWidth);
+                _answerOptions = await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == _tempQuestion.Id);
+                GetLevels();
+                _levelsEnabled = false;
+                await dialog.Result;
             }
-            return;
         }
 
-
-        async Task EditLevels()
+        private void GetLevels()
         {
-            await Save();
-            DialogOptions maxWidth = new() { MaxWidth = MaxWidth.Medium };
-            var parameters = new DialogParameters { ["QuestionId"] = _tempQuestion.Id };
-            var dialog = DialogService.Show<AdminAnswerOptionDialog>(L["Edit Answer Options"],
-                parameters, maxWidth);
-            await dialog.Result;
-            CanActivate();
+            _answerOptionLevels = new();
+            for (int i = 1; i < 6; i++)
+            {
+                if (_answerOptions.Any(a => a.Level == i && !string.IsNullOrWhiteSpace(a.Description)))
+                {
+                    _answerOptionLevels.Add(true);
+                }
+                else
+                {
+                    _answerOptionLevels.Add(false);
+                }
+            }
         }
 
         // open delete dialog
@@ -178,7 +157,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
         {
             if (QuestionId == 0)
                 return;
-            if (_answerOptions.Any(a => string.IsNullOrWhiteSpace(a.Description)) || _answerOptions == null || _answerOptions.Count < 5 || string.IsNullOrWhiteSpace(_tempQuestion.NamePl) || string.IsNullOrWhiteSpace(_tempQuestion.Name))
+            if (_answerOptions.Any(a => string.IsNullOrWhiteSpace(a.Description)) || _answerOptions == null || _answerOptions.Count < 5 || string.IsNullOrWhiteSpace(_tempQuestion.NamePl) || string.IsNullOrWhiteSpace(_tempQuestion.Name)||_tempQuestion == null)
             {
                 _canActivate = false;
             }
@@ -214,10 +193,10 @@ namespace ProfileMatch.Components.Admin.Dialogs
                         {
                             success = $"Pytanie {cq.NamePl} usunięte";
                         }
-                            Snackbar.Add(success, Severity.Info);
-                            _isOpen = false;
-                            MudDialog.Close(true);
-                            NavigationManager.NavigateTo("admin/dashboard/1", true);
+                        Snackbar.Add(success, Severity.Info);
+                        _isOpen = false;
+                        MudDialog.Close(true);
+                        NavigationManager.NavigateTo("admin/dashboard/1", true);
                     }
                     catch (Exception ex)
                     {

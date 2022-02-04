@@ -173,7 +173,7 @@ namespace ProfileMatch.Components.Admin
             if (cqVM != null && cqVM.Id > 0)
             {
                 update = ShareResource.IsEn()
-                    ? $"Edit Question: {cqVM.CategoryName}: {cqVM.Name} "
+                    ? $"Edit Question: {cqVM.CategoryName}: {cqVM.Name}"
                     : $"Edytuj pytanie: {cqVM.CategoryNamePl}: {cqVM.NamePl}";
                 parameters = new DialogParameters { ["QuestionId"] = cqVM.Id };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(update, parameters);
@@ -182,16 +182,19 @@ namespace ProfileMatch.Components.Admin
             }
             if (!string.IsNullOrWhiteSpace(category))
             {
+                int _catId;
                 if (ShareResource.IsEn())
                 {
+                    _catId = (await UnitOfWork.Categories.GetOne(c => c.Name == category)).Id;
                     create = $"Create Question for: {category}";
                 }
                 else
                 {
+                    _catId = (await UnitOfWork.Categories.GetOne(c => c.NamePl == category)).Id;
                     create = $"Nowe pytanie dla: {category}";
                 }
 
-                parameters = new DialogParameters { ["CategoryName"] = category };
+                parameters = new DialogParameters { ["CategoryId"] = _catId };
                 var dialog = DialogService.Show<AdminClosedQuestionDialog>(create, parameters);
                 await dialog.Result;
                 NavigationManager.NavigateTo("admin/dashboard");

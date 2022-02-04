@@ -21,23 +21,21 @@ namespace ProfileMatch.Components.Admin.Dialogs
     public partial class AdminAnswerOptionDialog : ComponentBase
     {
         [Inject] private ISnackbar Snackbar { get; set; }
-        [Inject] IMapper Mapper { get; set; }
         [Inject] IUnitOfWork UnitOfWork { get; set; }
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
         [Parameter] public int QuestionId { get; set; }
         List<AnswerOption> _answerOptions;
-        List<AnswerOptionVM> _answerOptionVMs = new();
-        
+
         protected override async Task OnInitializedAsync()
         {
-            _answerOptions = await UnitOfWork.AnswerOptions.Get(a=>a.ClosedQuestionId==QuestionId);
-            _answerOptionVMs = Mapper.Map<List<AnswerOptionVM>>(_answerOptions);
-            if (_answerOptionVMs is null || _answerOptionVMs.Count < 5)
+            _answerOptions = await UnitOfWork.AnswerOptions.Get(a => a.ClosedQuestionId == QuestionId);
+
+            if (_answerOptions is null || _answerOptions.Count < 5)
             {
-                _answerOptionVMs = new();
+                _answerOptions = new();
                 for (int i = 1; i < 6; i++)
                 {
-                    _answerOptionVMs.Add(new()
+                    _answerOptions.Add(new()
                     {
                         ClosedQuestionId = QuestionId,
                         DescriptionPl = string.Empty,
@@ -55,31 +53,24 @@ namespace ProfileMatch.Components.Admin.Dialogs
             MudDialog.Cancel();
             Snackbar.Add(@L["Operation cancelled"], Severity.Warning);
         }
-
         protected async Task HandleSave()
         {
             await _form.Validate();
             if (_form.IsValid)
             {
-               await Save();
-            }
-        }
-
-        private async Task Save()
-        {
-            if (_answerOptions is null || _answerOptions.Count ==0)
-            {
-                _answerOptions = Mapper.Map<List<AnswerOption>>(_answerOptionVMs);
-                _answerOptions = await UnitOfWork.AnswerOptions.InsertRange(_answerOptions);
-            }else
-            {
-                _answerOptions = Mapper.Map<List<AnswerOption>>(_answerOptionVMs);
                 foreach (var option in _answerOptions)
                 {
-                    await UnitOfWork.AnswerOptions.Update(option);
-                }; 
-            }    
+                    if (option.Id > 0)
+                    {
+                        await UnitOfWork.AnswerOptions.Update(option);
+                    }
+                    else
+                    {
+                        await UnitOfWork.AnswerOptions.Insert(option);
+                    }
+                }
+                MudDialog.Close(true);
+            }
         }
-
     }
 }

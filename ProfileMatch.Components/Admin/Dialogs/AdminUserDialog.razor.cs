@@ -149,15 +149,25 @@ namespace ProfileMatch.Components.Admin.Dialogs
             await Form.Validate();
             if (Form.IsValid)
             {
-                _editedUser = Mapper.Map<ApplicationUser>(_openedUser);
-                var tempUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.NormalizedEmail == _editedUser.Email.ToUpper());
-                if (tempUser != null)
+                ApplicationUser tempUser;
+                _editedUser.DepartmentId = _openedUser.DepartmentId;
+                _editedUser.JobId = _openedUser.JobId;
+                _editedUser.FirstName = _openedUser.FirstName;
+                _editedUser.LastName = _openedUser.LastName;
+                _editedUser.Email = _openedUser.Email;
+                _editedUser.PhotoPath= _openedUser.PhotoPath;
+                _editedUser.DateOfBirth = _openedUser.DateOfBirth;
+                _editedUser.UserName = _openedUser.Email;
+                _editedUser.Gender = _openedUser.Gender;
+                _editedUser.NormalizedEmail = _editedUser.Email.ToUpper();
+                _editedUser.NormalizedUserName = _editedUser.Email.ToUpper();
+                _editedUser.UserName = _editedUser.Email;
+                tempUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.NormalizedEmail == _editedUser.Email.ToUpper());
+                if (tempUser != null&&_editedUser.Id != tempUser.Id)
                 {
                     Snackbar.Add(L["User with this Email already exists"], Severity.Error);
                     return;
                 }
-                _editedUser.NormalizedEmail = _editedUser.Email.ToUpper();
-                _editedUser.NormalizedUserName = _editedUser.Email.ToUpper();
                 if (!string.IsNullOrWhiteSpace(_editedUser.Id))
                 {
                     // Update the user
@@ -251,6 +261,11 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (string.IsNullOrEmpty(passwordString))
             {
                 Snackbar.Add(@L["Password cannot be empty!"], Severity.Warning);
+                return;
+            }
+            if (passwordString.Length<8)
+            {
+                Snackbar.Add(@L["Password minimum length is 8 characters"], Severity.Warning);
                 return;
             }
 
