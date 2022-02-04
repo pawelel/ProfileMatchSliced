@@ -31,6 +31,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
         [Parameter] public int QuestionId { get; set; }
         [Parameter] public string CategoryName { get; set; }
+        Category _category;
         //new view model for question
         ClosedQuestionVM _closedQVM;
         ClosedQuestion _tempQuestion;
@@ -42,24 +43,24 @@ namespace ProfileMatch.Components.Admin.Dialogs
         private MudForm _form;
         
         protected override async Task OnInitializedAsync()
-        {
-
+        { if (ShareResource.IsEn())
+            {
+                 _category = await UnitOfWork.Categories.GetOne(q => q.Name == CategoryName);
+            }
+            else
+            {
+                _category = await UnitOfWork.Categories.GetOne(q => q.NamePl == CategoryName);
+            }
             switch (QuestionId)
             {
                 case 0:
                     {
                         _closedQVM = new();
-                        if (ShareResource.IsEn())
-                        {
-                            _closedQVM.CategoryId = (await UnitOfWork.Categories.GetOne(q => q.Name == CategoryName)).Id;
-                        }
-                        else
-                        {
-                            _closedQVM.CategoryId = (await UnitOfWork.Categories.GetOne(q => q.NamePl == CategoryName)).Id;
-                        }
+                        _closedQVM.CategoryId = _category.Id;
+                        _closedQVM.CategoryName = _category.Name;
+                        _closedQVM.CategoryNamePl = _category.NamePl;
                         break;
                     }
-
                 default:
                     {
                         //get question

@@ -51,25 +51,8 @@ namespace ProfileMatch.Components.Admin
             _categories = await UnitOfWork.Categories.Get();
             _questions = await UnitOfWork.ClosedQuestions.Get(include: c => c.Include(q => q.Category));
             _questionVMs = Mapper.Map<List<ClosedQuestionVM>>(_questions);
-            string nodata = "No questions yet";
-            ClosedQuestionVM vm;
-            string nodataPl = "Nie ma jeszcze pytań";
-            foreach (var cat in _categories)
-            {
-                if (!_questionVMs.Any(q => q.CategoryId == cat.Id && q.CategoryId != 0))
-                {
-                    vm = new ClosedQuestionVM()
-                    {
-                        Name = nodata,
-                        NamePl = nodataPl,
-                        IsActive = false,
-                        CategoryId = cat.Id,
-                        CategoryName = cat.Name,
-                        CategoryNamePl = cat.NamePl
-                    };
-                    _questionVMs.Add(vm);
-                }
-            }
+            
+            
             Cats = new HashSet<string>() { };
             _loading = false;
         }

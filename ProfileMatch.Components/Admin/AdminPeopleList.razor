@@ -25,7 +25,7 @@ else
                 <Column T="DepartmentUserVM" Field="DepartmentId" Title="Department Id" />
                 <Column T="DepartmentUserVM" Field="DepartmentName" Title="Department">
                     <HeaderTemplate>
-                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" />
+                        @L["Department"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> DepartmentUpdate())" Variant="Variant.Outlined" /><MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />
                     </HeaderTemplate>
                     <CellTemplate>
                         @(string.IsNullOrWhiteSpace(context.DepartmentName)? "unassigned" : context.DepartmentName)
@@ -42,6 +42,10 @@ else
                     <HeaderTemplate>
                         @L["User"] <MudIconButton Color="Color.Primary" Icon="@Icons.Outlined.Add" Size="Size.Small" OnClick="@(()=> EditProfile())" Variant="Variant.Outlined" />
                     </HeaderTemplate>
+                    <CellTemplate>
+                         <MudIconButton Color="Color.Primary" Icon=@Icons.Outlined.Settings OnClick="@(()=>EditProfile(context))" Size=Size.Small Variant="Variant.Outlined"/>
+                        @context.FullName
+                    </CellTemplate>
                 </Column>
                 <Column T="DepartmentUserVM" Field="JobName" Title="Job Title">
                     <HeaderTemplate>
@@ -69,11 +73,6 @@ else
                                 <MudChip>@role.RoleName</MudChip>
                             }
                         }
-                    </CellTemplate>
-                </Column>
-                <Column T="DepartmentUserVM" Sortable="false" Title="Actions">
-                    <CellTemplate>
-                        <MudButton Color="Color.Primary" OnClick="@(()=>EditProfile(context))" Size=Size.Small Variant="Variant.Outlined">@L["Edit User"]</MudButton>
                     </CellTemplate>
                 </Column>
             }

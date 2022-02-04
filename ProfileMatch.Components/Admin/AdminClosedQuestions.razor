@@ -52,13 +52,11 @@ else
         <Columns>
             @if (ShareResource.IsEn())
             {
-                <Column Field="CategoryId" T="ClosedQuestionVM" Title=" Category Id" />
                 <Column Field="CategoryName" T="ClosedQuestionVM" Title="Category">
                     <HeaderTemplate>
                         @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
-                <Column Field="Id" T="ClosedQuestionVM" Title="Question Id" />
                 <Column Field="Name" T="ClosedQuestionVM" Title="Question" />
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Active">
                     <CellTemplate>
@@ -82,13 +80,12 @@ else
             }
             else
             {
-                <Column Field="CategoryId" T="ClosedQuestionVM" Title="Id Kategorii" />
+        
                 <Column T="ClosedQuestionVM" Field="CategoryNamePl" Title="Kategoria">
                     <HeaderTemplate>
                         @L["Category"] <MudIconButton OnClick="@(()=>CategoryCreate())" Size="Size.Small" Variant=Variant.Outlined Color="Color.Primary" Icon="@Icons.Outlined.Add" />
                     </HeaderTemplate>
                 </Column>
-                <Column Field="Id" T="ClosedQuestionVM" Title="Id Pytania" />
                 <Column Field="NamePl" T="ClosedQuestionVM" Title="Pytanie" />
                 <Column Field="IsActive" T="ClosedQuestionVM" Title="Aktywne">
                     <CellTemplate>
