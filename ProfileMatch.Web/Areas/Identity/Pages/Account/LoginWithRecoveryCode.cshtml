@@ -4,7 +4,7 @@
     ViewData["Title"] = "Recovery code verification";
 }
 
-<h1>@ViewData["Title"]</h1>
+@*<h1>@ViewData["Title"]</h1>
 <hr />
 <p>
     You have requested to log in with a recovery code. This login will not be remembered until you provide
@@ -26,4 +26,12 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@
+<header class="text-center">
+    <h1 class="text-danger display-1">404</h1>
+    <h2>OOPS! PAGE YOU REQUESTED COULD NOT FOUND</h2>
+    <p/>
+    <div>
+    <a class="btn btn-primary" href="/" role="button">@L["Back"]</a>
+</div>
+</header>
