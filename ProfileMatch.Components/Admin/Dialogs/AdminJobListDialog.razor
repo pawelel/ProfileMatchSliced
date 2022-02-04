@@ -1,0 +1,28 @@
+﻿@if (_loading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudDataGrid MultiSelection="true" Items="@_jobs" Sortable="true" Filterable="true" QuickFilter="@QuickFilter">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Periodic Jobs</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <Columns>
+            <Column T="Job" Field="Name" Title="Name">
+                <CellTemplate>
+                  <MudIconButton Color="Color.Primary" OnClick="@(()=> JobUpdate(context))" Icon="@Icons.Outlined.Settings" Size="Size.Small" Variant="Variant.Outlined" />  @context.Name
+                </CellTemplate>
+            </Column>
+            <Column T="Job" Field="NamePl" Title="NamePl"/>
+            <Column T="Job" Field="Description" Title="Description"/>
+            <Column T="Job" Field="DescriptionPl" Title="DescriptionPl"/>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="Job" />
+        </PagerContent>
+    </MudDataGrid>
+}
