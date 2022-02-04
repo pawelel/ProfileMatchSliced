@@ -1,0 +1,12 @@
+﻿@page "/404"
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Localization
+@using ProfileMatch.Services
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager;
+@inject IStringLocalizer<LanguageService> L
+
+<header class="text-center">
+    <h1 class="text-danger display-1">404</h1>
+    <h2>@L["OOPS! PAGE YOU REQUESTED COULD NOT FOUND"]</h2>
+</header>
+<a class="btn btn-primary" href="/" role="button">@L["Back"]</a>
