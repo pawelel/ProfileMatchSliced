@@ -50,6 +50,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
         ApplicationUser _currentUser;
         ApplicationUser _editedUser;
         List<Job> _jobs;
+        int _jobId;
+        int _departmentId;
         string _passwordHash;
         private List<Department> _departments = new();
         [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
@@ -66,7 +68,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
 
         async Task GetEditedUser()
         {
-            _editedUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.Id == UserId, a => a.Include(a => a.Department).Include(a => a.Job));
+            _editedUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.Id == UserId);
             if (_editedUser == null)
             {
                    _openedUser = new()
@@ -86,6 +88,8 @@ namespace ProfileMatch.Components.Admin.Dialogs
             }
             else
             {
+                _departmentId = _editedUser.DepartmentId;
+                _jobId = _editedUser.JobId;
                 _openedUser = Mapper.Map<ApplicationUserVM>(_editedUser);
                 _openedUser.UserRolesVM = new();
                 _openedUser.UserRolesVM = (from r in _roles
@@ -150,18 +154,9 @@ namespace ProfileMatch.Components.Admin.Dialogs
             if (Form.IsValid)
             {
                 ApplicationUser tempUser;
-                _editedUser.DepartmentId = _openedUser.DepartmentId;
-                _editedUser.JobId = _openedUser.JobId;
-                _editedUser.FirstName = _openedUser.FirstName;
-                _editedUser.LastName = _openedUser.LastName;
-                _editedUser.Email = _openedUser.Email;
-                _editedUser.PhotoPath= _openedUser.PhotoPath;
-                _editedUser.DateOfBirth = _openedUser.DateOfBirth;
-                _editedUser.UserName = _openedUser.Email;
-                _editedUser.Gender = _openedUser.Gender;
-                _editedUser.NormalizedEmail = _editedUser.Email.ToUpper();
-                _editedUser.NormalizedUserName = _editedUser.Email.ToUpper();
-                _editedUser.UserName = _editedUser.Email;
+                _editedUser = Mapper.Map<ApplicationUser>(_openedUser);
+                _editedUser.DepartmentId = _departmentId;
+                _editedUser.JobId = _jobId;
                 tempUser = await UnitOfWork.ApplicationUsers.GetOne(a => a.NormalizedEmail == _editedUser.Email.ToUpper());
                 if (tempUser != null&&_editedUser.Id != tempUser.Id)
                 {
@@ -369,7 +364,7 @@ namespace ProfileMatch.Components.Admin.Dialogs
                 await imageStream.CopyToAsync(fs);
                 fs.Close();
                 imageStream.Close();
-                _editedUser.PhotoPath = contentPath;
+                _openedUser.PhotoPath = contentPath;
                 StateHasChanged();
 
             }

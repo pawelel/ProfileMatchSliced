@@ -24,9 +24,9 @@ namespace ProfileMatch.Models.Entities
 
         public Gender? Gender { get; set; }
 
-        public int JobId { get; set; } = 1;
+        public int JobId { get; set; }
         public Job Job { get; set; }
-        public int DepartmentId { get; set; } = 1; //NOTE had to initialize
+        public int DepartmentId { get; set; } 
         [Ignore]
         public Department Department { get; set; }
         [Ignore]
